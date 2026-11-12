@@ -1,0 +1,53 @@
+$ nuclear help words --platform web
+
+dialect react: nuclear help <word> --dialect react
+
+kinds:
+  aggregate          A business aggregate: rules several use cases share, with its own dependencies.
+  appConfig          The configuration of the whole app (in `config/`): its connections and its global services.
+  appcomponent       The facade of a component: the only thing other components and the screens see. Each line gives a name to a
+  component          A global component (in `shared/components/`): a cross-cutting use case; a method with `@on(Event)` runs with
+  config             The configuration of one component (in `components/<c>/config/`): connections and services only that
+  event              A global event (in `shared/events/`): published with `Events.publish(ForceLogout(reason = "expired"))`, received
+  guard              A custom access check (in `shared/guards/`): `canActivate()` says whether the
+  model              A domain model: only its fields. Nuclear writes the immutable class, `fromJson`/`toJson` and `copyWith`. No
+  repository         The http calls of a component (in `data/`). Each method without a body and with a verb decorator is one
+  service            A domain service: helpers the use cases share (mapping, rules on values).
+  stateful           A view with state: its fields live while the view is shown; `setState(() => ...)` changes
+  stateless          A view without state of its own: its parameters are its inputs, `build()` returns the elements.
+  statemanager       The state of a screen: a `StateManager` whose methods emit the states of its state model.
+  statemodel         A state model (in `state_models/`): each parameter is a state of the screen; a boolean carries no data.
+  tests              A test suite (vitest + jsdom, in `test/`): the app starts with its real config and every request is canned;
+  usecase            One business operation: a class with `exec(...)` that returns `Result`. Its dependencies are the constructor
+
+decorators:
+  @acl                On the `exec` of a `usecase`: the session must pass this access rule; otherwise it returns `Err` without running.
+  @after              On a method of a `statemanager`: calls another method after this one.
+  @before             On a method of a `statemanager`: calls another method before this one (usually the `loading` state).
+  @body               On a parameter of a repository method: it is the body, even for a GET.
+  @delete             A DELETE method of a `repository`.
+  @get                A GET method of a `repository`. Arguments: `path` (`:name` takes a parameter), `headers`, `cache = true`,
+  @key                On a field of a `model` or an `event`: its name in the JSON.
+  @mock               On a `tests` group: those classes are mocks in the injector; `when(Class.method).thenReturn(value)` prepares an
+  @on                 On a method of a global `component`: the method runs with every event of that class, wherever the user is.
+  @patch              A PATCH method of a `repository`.
+  @path               On a parameter of a repository method: it goes in the path (`:name`), even for a POST.
+  @post               A POST method of a `repository`: the parameters not in the path are the JSON body. `retry = n` repeats a
+  @put                A PUT method of a `repository` (the body is the parameters not in the path; retried twice by itself).
+  @query              On a parameter of a repository method: it goes in the query, even for a POST.
+  @repository         On a `repository`: `path` (added to the connection's `baseUrl`) and `connection` (the `connectionName` to use).
+  @requires           On the `exec` of a `usecase`: what must hold before it runs; otherwise it returns `Err` without running.
+  @screen             Makes a `stateless` or `stateful` a screen of the router: its route, the managers it creates and who may
+  @state              On a method of a `statemanager`: the method's value is emitted as that state. A `Result` that fails emits
+  @stateModel         On a `statemanager`: its state model (the states it emits). The manager starts in `Model.initial()`.
+  @states             A statemanager test: the parameter is the manager (from the injector), the body is what it does and `expect`
+  @test               A unit test in a `tests` group. The argument is its description.
+  @widget             A component test: renders a screen in a memory router (`renderScreen`) and looks at the page with
+
+words:
+  abstract           `abstract`: a module that cannot be built; other modules extend it. Methods without a body are the
+  declare            `declare`: a field that exists at run time but that this class does not initialize (a decorator or
+  get                `get`: a getter, a member read like a field but computed on every read.
+  readonly           `readonly`: a field that cannot be assigned after the constructor.
+  set                `set`: a setter, code that runs when a value is assigned to the member. It never returns.
+  static             `static`: a member of the module itself, not of each object. Called on the module: `Ids.take()`.

@@ -1,0 +1,87 @@
+// The planner: splits a spec into pieces of one file each, in the order they can be written (the local plan when no
+// frontier model leads the work). The model names each piece's kind, declaration, component and screen; its path
+// comes from the platform's layout (`nuclear help layout`), so a small model never guesses a folder. Prompts:
+// agents/plan.md, agents/plan-again.md.
+@state(PieceState)
+graph Planner(bench: Workbench, toolchain: Toolchain)
+  @start
+  @next("split")
+  recall(state: PieceState) <string, any>
+    found = ~bench.recall("project structure components kinds ${state.task}", state.platform, "plan")
+    layout = ~toolchain.help("layout", state.platform)
+    { "guide": found.guide, "knowledge": "${layout}\n\n${found.knowledge}", "trace": state.trace + [bench.step("recall", "plan guide, the platform's layout and structure")] }
+
+  @next("end")
+  split(state: PieceState) <string, any>
+    prompt = ~bench.prompt("plan", { "guide": state.guide, "knowledge": state.knowledge, "task": state.task })
+    raw = ~bench.ask("default", prompt)
+    planned = ~pieces(raw, state.platform, state.task)
+    if planned.length == 0
+      raw = ~bench.ask("default", ~bench.prompt("plan-again", { "prompt": prompt, "answer": raw }))
+      planned = ~pieces(raw, state.platform, state.task)
+    { "pieces": planned, "report": raw, "trace": state.trace + [bench.step("split", "${planned.length} pieces")] }
+
+  // The lines `kind | Name | component | screen | what` → pieces with the layout's path. A small model may move the
+  // columns: the kind is the cell the layout knows, the name the first one in PascalCase. Left out: a line without
+  // both, a name already planned and, when the spec names its declarations, a name it does not (the planner splits
+  // the spec; it does not design more). A component that is not a plain name takes the one the other lines give.
+  // Each piece's task ends with the spec's own sentence about it: the model's summary may lose a detail.
+  pieces(raw: string, platform: string, spec: string) <string, string>[]
+    layout: <string, string> = ~toolchain.layout(platform)
+    plain = Regex(r"^[a-z][a-z0-9_]*$")
+    pascal = Regex(r"^[A-Z][A-Za-z0-9]*$")
+    rows: <string, string>[] = []
+    components: string[] = []
+    for line in raw.split("\n")
+      cells = line.replaceAll("`", "").split("|").map((c) => c.trim())
+      kinds = cells.filter((c) => c in layout)
+      names = cells.filter((c) => pascal.test(c))
+      if cells.length >= 3 and kinds.length > 0 and names.length > 0
+        ordered = cells[0] == kinds[0] and cells.length >= 5
+        component = ordered and plain.test(cells[2].lower()) ? cells[2].lower() : ""
+        if component.length > 0
+          components.add(component)
+        screen = ordered and cells[3] != "-" ? cells[3] : ""
+        what = ordered ? cells.slice(4).join("|").trim() : cells[cells.length - 1]
+        rows.add({ "kind": kinds[0], "name": names[0], "component": component, "screen": screen, "what": what })
+    // what the spec introduces with a kind word ("A model NewReader", "a use case AllBooks") is that kind: it corrects
+    // the model's label and adds the pieces it forgot
+    for m in Regex(r"\b([a-z]+)(?:\s([a-z]+))?\s+([A-Z][A-Za-z0-9]*)").findAll(spec)
+      first = m[1] ?? ""
+      second = m[2] ?? ""
+      name = m[3] ?? ""
+      // "a use case X" → usecase; "the model X" → model; "an application component X" is not `component`
+      kind = "${first}${second}" in layout ? "${first}${second}" : second in layout and first in ["a", "an", "the"] ? second : first in layout and second.length == 0 ? first : ""
+      if kind.length > 0 and name.length > 0
+        same = rows.filter((r) => r["name"]! == name)
+        if same.length == 0
+          rows.add({ "kind": kind, "name": name, "component": "", "screen": "", "what": "" })
+        for r in same
+          r["kind"] = kind
+    mentioned = Regex(r"\bcomponent\s+([a-z][a-z0-9_]*)").find(spec)
+    plural = rows.length > 0 ? "${rows[0]["name"]!.lower()}s" : "app"
+    fallback = components.length > 0 ? components[0] : mentioned != null ? mentioned![1] ?? plural : plural
+    named = rows.filter((r) => r["name"]! in spec)
+    if named.length > 0
+      // in the order the spec gives them: a spec lists what it builds on first
+      rows = named
+      rows.sortBy((r) => spec.indexOf(r["name"]!))
+    out: <string, string>[] = []
+    planned: string[] = []
+    for r in rows
+      name = r["name"]!
+      kind = r["kind"]!
+      component = r["component"]!.length > 0 ? r["component"]! : fallback
+      path: string = ~toolchain.pathOf(platform, kind, name, component, r["screen"]!)
+      if path.length > 0 and not (name in planned)
+        planned.add(name)
+        // the sentence that introduces it: the first one that names it as a word (`Book`, not `BookRepository`); later
+        // ones only use it (`Result<BookError, Book[]>`) and would make the coder write their declarations too
+        word = Regex("\\b${name}\\b")
+        introduced = spec.split(". ").filter((x) => word.test(x))
+        said = introduced.length > 0 ? introduced[0].trim() : ""
+        // the spec's own sentence is the task; the model's summary only when the spec has none (a 2B summary turned
+        // an alias `booksOf() = BooksOfAuthor.exec` into a method signature, and the coder followed it)
+        task = said.length > 0 ? "${kind} ${name}. The spec says: ${said}" : "${kind} ${name}: ${r["what"]!}"
+        out.add({ "path": path, "kind": kind, "task": task })
+    out

@@ -1,0 +1,16 @@
+// The documenter: reads the journal of a run (what every agent did, step by step) and writes what was done in plain
+// English for the person or the frontier model that reviews it. It documents; it does not change the code. Prompt:
+// agents/document.md (over the `docs` guide).
+@state(PieceState)
+graph Documenter(bench: Workbench)
+  @start
+  @next("write")
+  recall(state: PieceState) <string, any>
+    found = ~bench.recall("documentation ${state.task}", state.platform, "docs")
+    { "guide": found.guide, "trace": state.trace + [bench.step("recall", "docs guide")] }
+
+  @next("end")
+  write(state: PieceState) <string, any>
+    prompt = ~bench.prompt("document", { "guide": state.guide, "journal": state.context })
+    report = ~bench.ask("default", prompt)
+    { "code": "", "report": report.trim(), "check": "ok", "attempts": 1, "trace": state.trace + [bench.step("document", bench.firstLine(report))] }

@@ -1,0 +1,9 @@
+// The platform this project is written for and the dialect it is built with (ADR-0093).
+dragonfly(platform = "backend", dialect = "fastapi")
+app(name = "nuclear_developer", description = "Nuclear Developer: local agents (coder, tester, security, planner) on a small model, fed by the Nuclear Smart Graph.", version = "0.1.0")
+
+// The optional parts this project uses (nuclear help backend).
+plugins(ai = true, ollama = true)
+
+// The Nuclear Smart Graph's client and the NuclearLang tools (their type definitions are in defs/).
+dependencies(nuclear_graph = "../nuclear-graph")

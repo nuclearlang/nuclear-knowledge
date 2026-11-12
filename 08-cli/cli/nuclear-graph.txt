@@ -1,0 +1,29 @@
+$ nuclear-graph --help
+
+usage: nuclear-graph [-h]
+                     {serve,mcp,ingest,search,stats,connect,allow,deny,web-key,knowledge,requests,revoke} ...
+
+`nuclear-graph`: run, fill and guard the Nuclear Smart Graph.
+
+positional arguments:
+  {serve,mcp,ingest,search,stats,connect,allow,deny,web-key,knowledge,requests,revoke}
+    serve               run the graph on 127.0.0.1 (NUCLEAR_GRAPH_PORT,
+                        default 7878)
+    mcp                 the MCP server on stdio (for Claude Code, Codex,
+                        Cursor...)
+    ingest              fill the knowledge from the NuclearLang source roots
+    search              search the graph
+    stats               the size of each collection
+    connect             give a client (a program) access and keep its token in
+                        the keyring
+    allow               allow a pending request
+    deny                deny a pending request
+    web-key             keep the key of a search engine for the local agents
+                        (read from stdin): brave
+    knowledge           the knowledge base folder (nuclear-developer/data):
+                        build it from the sources, or check it
+    requests            pending access requests and the allowed clients
+    revoke              take a client's access away
+
+options:
+  -h, --help            show this help message and exit

@@ -1,0 +1,49 @@
+// The parts of the agents that need no model: how a prompt is put together, an unreachable graph, the compiler.
+tests WorkbenchTests
+  @test("the prompt file starts with the guide, ends with the task and drops an empty section")
+  compose() void
+    bench = inject<Workbench>()
+    state = PieceState(task = "A model NewBook", platform = "backend", path = "a.nuc", kind = "model", guide = "GUIDE", knowledge = "KNOWLEDGE", examples = "EXAMPLES")
+    prompt = ~bench.compose(state)
+    expect(prompt.startsWith("GUIDE"))
+    expect(prompt.endsWith("A model NewBook"))
+    expect("KNOWLEDGE" in prompt and "EXAMPLES" in prompt and "File `a.nuc`." in prompt)
+    expect(not ("## The files it uses" in prompt))
+
+  @test("an unreachable graph is a note, not an error")
+  unreachable() void
+    bench = Workbench(GraphClient(url = "http://127.0.0.1:9"), Toolchain())
+    found = ~bench.recall("a model", "backend", "piece")
+    expect(found.note.startsWith("the Nuclear Smart Graph is not reachable"))
+    expect(found.knowledge == "")
+
+  @test("the compiler accepts valid Nuclear and explains invalid Nuclear")
+  check() void
+    bench = inject<Workbench>()
+    expect(~bench.toolchain.check("model NewBook\n  title: string\n", "backend") == "ok")
+    expect("N0114" in ~bench.toolchain.check("model A\n  n: string\n  size() int\n    n.lenght\n", "backend"))
+
+  @test("a plan's paths come from the platform's layout, and the spec corrects what the model forgot or mislabeled")
+  plan() void
+    planner = inject<Planner>()
+    raw = "kind | Book | model | | id: int\nrepository | BookRepository | books/data | - | all()\nservice | Extra | books | - | not in the spec"
+    planned = ~planner.pieces(raw, "mobile", "A model Book (id: int). A repository BookRepository. A use case AllBooksUseCase(books: BookRepository).")
+    expect(planned.length == 3)
+    expect(planned[0]["path"] == "components/books/domain/models/book.nuc")
+    expect(planned[1]["path"] == "components/books/data/book_repository.nuc")
+    expect(planned[2]["path"] == "components/books/domain/usecases/all_books_use_case.nuc")
+    expect(planned[0]["task"]! == "model Book. The spec says: A model Book (id: int)")
+    expect(not ("BookRepository" in planned[0]["task"]!))
+
+  @test("a failure is classified by rules, and each kind says what to do")
+  classify() void
+    diagnoser = inject<Diagnoser>()
+    expect(diagnoser.classify("the local developer is not running at http://127.0.0.1:7879 (fetch failed)") == "transient")
+    expect(diagnoser.classify("dragonfly: command not found") == "environment")
+    expect(diagnoser.classify("a.nuc:3:5 N0106 'book' is not defined") == "code")
+    expect(diagnoser.classify("FAILED tests/books_test.py::test_add - assert 0 == 1") == "test")
+    expect(diagnoser.classify("the planner gave 0 pieces") == "spec")
+    expect(diagnoser.classify("CharactersAppComponent is not in the plan: the plan does not cover the spec. N0220 'CharactersAppComponent'") == "spec")
+    expect(diagnoser.classify("something else") == "unknown")
+    expect(diagnoser.actionOf("transient").startsWith("retry"))
+    expect(diagnoser.tail("abcdef", 2) == "ef")

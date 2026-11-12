@@ -1,0 +1,4915 @@
+{
+ "sections": [
+  {
+   "id": "01-introduction",
+   "title": "What NuclearLang and Dragonfly are",
+   "agents": true
+  },
+  {
+   "id": "02-language",
+   "title": "The language: the guide, then the rules, the library and the errors",
+   "agents": true
+  },
+  {
+   "id": "03-compiler",
+   "title": "The compiler: projects, dialects, type definitions, the language server",
+   "agents": true
+  },
+  {
+   "id": "03-compiler-targets",
+   "title": "What the base language becomes in each target language",
+   "agents": false
+  },
+  {
+   "id": "04-dragonfly",
+   "title": "Dragonfly: the framework, its kinds, the tutorial",
+   "agents": true
+  },
+  {
+   "id": "05-backend",
+   "title": "The backend platform",
+   "agents": true
+  },
+  {
+   "id": "05-backend-dialects",
+   "title": "The backend dialects underneath: fastapi and nestjs, their runtimes",
+   "agents": false
+  },
+  {
+   "id": "06-mobile",
+   "title": "The mobile platform",
+   "agents": true
+  },
+  {
+   "id": "06-mobile-dialects",
+   "title": "The mobile dialect underneath: flutter, its runtimes",
+   "agents": false
+  },
+  {
+   "id": "07-web",
+   "title": "The web platform",
+   "agents": true
+  },
+  {
+   "id": "07-web-dialects",
+   "title": "The web dialect underneath: react, its runtime",
+   "agents": false
+  },
+  {
+   "id": "08-cli",
+   "title": "The command line: nuclear, dragonfly, nuclear-loop, nuclear-graph (their help as they print it)",
+   "agents": true
+  },
+  {
+   "id": "09-editors",
+   "title": "The editors: the language server, VS Code, Android Studio, Zed",
+   "agents": true
+  },
+  {
+   "id": "10-ai",
+   "title": "AI: the Smart Graph and its MCP server, the Nuclear Developer, the Loop, the agent skill",
+   "agents": true
+  },
+  {
+   "id": "11-decisions",
+   "title": "Every decision and why (ADRs) and the plans",
+   "agents": false
+  },
+  {
+   "id": "12-tools",
+   "title": "The tools of the working tree: checks, evaluations, benchmarks",
+   "agents": true
+  },
+  {
+   "id": "13-status",
+   "title": "What is done and what is pending",
+   "agents": true
+  }
+ ],
+ "files": [
+  {
+   "path": "01-introduction/AGENTS.md",
+   "source": "AGENTS.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 8783,
+   "sha256": "c8d0ed0f47aeacdefc83d1102a9564dd8e408960d8e34457fd3af32fb845d48f"
+  },
+  {
+   "path": "01-introduction/CHANGELOG.md",
+   "source": "CHANGELOG.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 346,
+   "sha256": "ebd95f35af25fc326ece7035f010b228f78b6f3106bef8b0b879c9809fa3aff1"
+  },
+  {
+   "path": "01-introduction/CONTRIBUTING.md",
+   "source": "CONTRIBUTING.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 1484,
+   "sha256": "a70c82d6a1eb971e7c43e7df6e80b65b57df913c95a932cde25013f723940620"
+  },
+  {
+   "path": "01-introduction/README.md",
+   "source": "README.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 14403,
+   "sha256": "046a36d1d5f989a3fdf98fc9e223c63622cfec17bd464c156972c41960018a6b"
+  },
+  {
+   "path": "13-status/STATUS.md",
+   "source": "STATUS.md",
+   "repo": "nuclearlang",
+   "section": "13-status",
+   "agents": true,
+   "bytes": 147935,
+   "sha256": "44ea9c4d89fc738cea9d1bdb187f7a7c37763a35f19e04187e70e5ad82afe74d"
+  },
+  {
+   "path": "10-ai/agents/project/AGENTS.md",
+   "source": "agents/project/AGENTS.md",
+   "repo": "nuclearlang",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 679,
+   "sha256": "d4e84c6730efda32c5b1bff74d948a2e92cb2fca4d761d86da4957b1b474b12a"
+  },
+  {
+   "path": "10-ai/agents/skills/nuclear/SKILL.md",
+   "source": "agents/skills/nuclear/SKILL.md",
+   "repo": "nuclearlang",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 4432,
+   "sha256": "fe001cc502ab6d03a56604ece1cc0c76bf65245a9a856e2012ef1971b4f2126b"
+  },
+  {
+   "path": "08-cli/cli/dragonfly.txt",
+   "source": "cli/dragonfly.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 6751,
+   "sha256": "2b8a07b9f2d5a6f1be9b1e101f8541dd04e9a933f1060bb79406102fb9be9d21"
+  },
+  {
+   "path": "08-cli/cli/nuclear-dialect-list.txt",
+   "source": "cli/nuclear-dialect-list.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 964,
+   "sha256": "9aee45f9a12180c95c6a76d2cbe49233996dc65f455ddf552d7aecc3ae3550a9"
+  },
+  {
+   "path": "08-cli/cli/nuclear-graph.txt",
+   "source": "cli/nuclear-graph.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 1386,
+   "sha256": "9cca4edf1f3e4ad73a8632597f38412a5c2781ae4d120489b2f24e2ee6d0a511"
+  },
+  {
+   "path": "08-cli/cli/nuclear-help-layout-backend.txt",
+   "source": "cli/nuclear-help-layout-backend.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 1110,
+   "sha256": "256e4fbc62b73e5770d5b6e3a8480e4eba96345e0a8cebd1457aab270241e046"
+  },
+  {
+   "path": "08-cli/cli/nuclear-help-layout-mobile.txt",
+   "source": "cli/nuclear-help-layout-mobile.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 1659,
+   "sha256": "8035280f13e1f3db0a11e85f4f4801ce5f1ba170ca61fa69a8c9218d0d119dab"
+  },
+  {
+   "path": "08-cli/cli/nuclear-help-layout-web.txt",
+   "source": "cli/nuclear-help-layout-web.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 1129,
+   "sha256": "156ced4dda76095262d736fd61aa1e750f86f3dd426c7bb8a3db6ec38b35820e"
+  },
+  {
+   "path": "08-cli/cli/nuclear-help-words-backend.txt",
+   "source": "cli/nuclear-help-words-backend.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 5654,
+   "sha256": "4ddfec57f9000f95350f084a3c7c20a7d3d54b49c8de34794be25c71fb7ba4e1"
+  },
+  {
+   "path": "08-cli/cli/nuclear-help-words-mobile.txt",
+   "source": "cli/nuclear-help-words-mobile.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 10065,
+   "sha256": "cabf3625c35d4e64710caf707d599bf375e21ed522006fe3d6d8ef844483d7ac"
+  },
+  {
+   "path": "08-cli/cli/nuclear-help-words-web.txt",
+   "source": "cli/nuclear-help-words-web.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 5135,
+   "sha256": "cf9b432e2c3129587b6bf8caf8ee46229d202a2210551b5f2deaa7bffc72221b"
+  },
+  {
+   "path": "08-cli/cli/nuclear-loop.txt",
+   "source": "cli/nuclear-loop.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 1338,
+   "sha256": "76123627b4a78d9d7a90c858270baa23c9047c2fc6ee304b29e1954a36f22b8f"
+  },
+  {
+   "path": "08-cli/cli/nuclear.txt",
+   "source": "cli/nuclear.txt",
+   "repo": "cli",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 7375,
+   "sha256": "1fcc1bd4b9fdadb2bae61fe90814424043134268d5d84ef7942837cf761fdaf9"
+  },
+  {
+   "path": "03-compiler/crates/nuclear-lsp/README.md",
+   "source": "crates/nuclear-lsp/README.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 6172,
+   "sha256": "b9f0ea724f3e76c667fba87840fa935b5875314b79ea03814c8e9ee41633d98f"
+  },
+  {
+   "path": "03-compiler-targets/dialects/dart/docs.toml",
+   "source": "dialects/dart/docs.toml",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 4277,
+   "sha256": "09dd38b2552d9c3eb75e462968a3e1bd2acb5c7e57c1344c6758f9dfbf6650ed"
+  },
+  {
+   "path": "03-compiler-targets/dialects/python/docs.toml",
+   "source": "dialects/python/docs.toml",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 634,
+   "sha256": "9803aeb5835b8f77c5f26109462ba0bae7f6f9899b8a190a9c659b0529f95941"
+  },
+  {
+   "path": "03-compiler-targets/dialects/typescript/docs.toml",
+   "source": "dialects/typescript/docs.toml",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 1631,
+   "sha256": "2452434c15c9c1efcd23b5d822fb23ebca09b34b32993fc2dacb70a66fa7bcbf"
+  },
+  {
+   "path": "11-decisions/docs/adr/0001-file-extension.md",
+   "source": "docs/adr/0001-file-extension.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 388,
+   "sha256": "69fc3ba70f5368d2b5245cb4226a90a66599c544bce33f52169c6bfcfeac3c9f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0002-functions-without-keyword.md",
+   "source": "docs/adr/0002-functions-without-keyword.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 530,
+   "sha256": "f219b63f0929bd0d6e6c7921c20733f599eae4bf8256357380546c88d923c330"
+  },
+  {
+   "path": "11-decisions/docs/adr/0003-variables.md",
+   "source": "docs/adr/0003-variables.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 469,
+   "sha256": "2dd3fb5e19e4d584399d0d739a0ef114312a0d0da787d1527527b33e82d39d2b"
+  },
+  {
+   "path": "11-decisions/docs/adr/0004-logical-operators.md",
+   "source": "docs/adr/0004-logical-operators.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 410,
+   "sha256": "a22232fd7b47b04196a40d0b2f0725b589b1262e9a19096ca9cbf642eb2054b4"
+  },
+  {
+   "path": "11-decisions/docs/adr/0005-implicit-return.md",
+   "source": "docs/adr/0005-implicit-return.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 478,
+   "sha256": "e4ce8e9151f583cd4b79ca5384bc4b7be29b5a384eefd674213a09bd68a5b1e1"
+  },
+  {
+   "path": "11-decisions/docs/adr/0006-implicit-self.md",
+   "source": "docs/adr/0006-implicit-self.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 522,
+   "sha256": "9f05fa03a666e03e395301d2e8bffdef433d693e5f07bf239697e12058ff946a"
+  },
+  {
+   "path": "11-decisions/docs/adr/0007-no-visibility.md",
+   "source": "docs/adr/0007-no-visibility.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 437,
+   "sha256": "43721bfb2186cf4f88e88e26591ce0039817ad7320e2a5d70f85b78676208b07"
+  },
+  {
+   "path": "11-decisions/docs/adr/0008-construct-with-pascalcase.md",
+   "source": "docs/adr/0008-construct-with-pascalcase.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 430,
+   "sha256": "b662809f4967669722e28c3c571675fcf11696e1873abb8fcd4b9254f30187bc"
+  },
+  {
+   "path": "11-decisions/docs/adr/0009-quotes.md",
+   "source": "docs/adr/0009-quotes.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 384,
+   "sha256": "ac243c3657157b664b25f899de96b9ae24d396be61c0ce4e5b5755645ccd2445"
+  },
+  {
+   "path": "11-decisions/docs/adr/0010-interpolation.md",
+   "source": "docs/adr/0010-interpolation.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 318,
+   "sha256": "4585cb74d2c06194e153f27409bee84b9097475f56918e6019c47995f04ca613"
+  },
+  {
+   "path": "11-decisions/docs/adr/0011-indentation.md",
+   "source": "docs/adr/0011-indentation.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 348,
+   "sha256": "f59c41e0e90d5555543e72208b08a2539da93db04ede75e2762f6ee4fd099a92"
+  },
+  {
+   "path": "11-decisions/docs/adr/0012-automatic-async.md",
+   "source": "docs/adr/0012-automatic-async.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 392,
+   "sha256": "a65b3de18ff9b8959498282c6dec33a8a5b07b212622695d6c5ff8c93a777d57"
+  },
+  {
+   "path": "11-decisions/docs/adr/0013-await-with-tilde.md",
+   "source": "docs/adr/0013-await-with-tilde.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 420,
+   "sha256": "45151fcbfaec06acfd1c5e5a105d718c37179fbbc2fc6a78ab2a36d5f56c0d89"
+  },
+  {
+   "path": "11-decisions/docs/adr/0014-imports-by-transpiler.md",
+   "source": "docs/adr/0014-imports-by-transpiler.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 536,
+   "sha256": "2fba7a2d97fa6f9c6e893dc231562affa1479f21bfdf400828a8dd380e1986cc"
+  },
+  {
+   "path": "11-decisions/docs/adr/0015-versioned-technologies.md",
+   "source": "docs/adr/0015-versioned-technologies.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 562,
+   "sha256": "874b67b43696fd4366495e28237cab056aabfc3236aff4c2dcff61be962f9e0f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0016-not-object-oriented.md",
+   "source": "docs/adr/0016-not-object-oriented.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 471,
+   "sha256": "37d8abdbee13fd69a0914c8bcb1ec5c142a3615707bb8b1adadeccc658266dfb"
+  },
+  {
+   "path": "11-decisions/docs/adr/0017-generated-code-context.md",
+   "source": "docs/adr/0017-generated-code-context.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 547,
+   "sha256": "fd4e7db5df71ada6522351cce3a37077cabe3285afbe0411b16b70ab596ed668"
+  },
+  {
+   "path": "11-decisions/docs/adr/0018-map-type.md",
+   "source": "docs/adr/0018-map-type.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 403,
+   "sha256": "2868d230f99df47406c59533b1390f036077b240d7b2f87498776e143ff39dfb"
+  },
+  {
+   "path": "11-decisions/docs/adr/0019-no-nested-functions.md",
+   "source": "docs/adr/0019-no-nested-functions.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 445,
+   "sha256": "9cb483426d9bf87642dd14866a7ee07ad2c7841d60851c49903c898dc280db34"
+  },
+  {
+   "path": "11-decisions/docs/adr/0020-braced-parameters.md",
+   "source": "docs/adr/0020-braced-parameters.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 404,
+   "sha256": "892d087c04847b0ea5058d09b57952fed8b237bd6ced25d895d7e3b46066a09b"
+  },
+  {
+   "path": "11-decisions/docs/adr/0021-one-line-lambdas.md",
+   "source": "docs/adr/0021-one-line-lambdas.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 332,
+   "sha256": "1069e0083020f098bdbee978e82f22278a5f73c814152c3d2104d108705e605b"
+  },
+  {
+   "path": "11-decisions/docs/adr/0022-block-scope.md",
+   "source": "docs/adr/0022-block-scope.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 509,
+   "sha256": "1b8991b9e4346c2d42bbdb0cefc79eb90be200252fcbad24e578c428b0f252a7"
+  },
+  {
+   "path": "11-decisions/docs/adr/0023-explicit-parameters.md",
+   "source": "docs/adr/0023-explicit-parameters.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 459,
+   "sha256": "b67ab362edb332adedcffcbdbcd8f75d3f2447f45c98a9782dd388075e73dce5"
+  },
+  {
+   "path": "11-decisions/docs/adr/0024-no-type-keyword.md",
+   "source": "docs/adr/0024-no-type-keyword.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 362,
+   "sha256": "4a8e41e3f5cd1fd115c34e15883c7a7df2afa93c471528330aa457c0c3a86674"
+  },
+  {
+   "path": "11-decisions/docs/adr/0025-dialect-specs.md",
+   "source": "docs/adr/0025-dialect-specs.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 407,
+   "sha256": "bf4a96971eb6d3d0889f21151f8d3d46b4586cdea7b023b74e2a2b3606198c00"
+  },
+  {
+   "path": "11-decisions/docs/adr/0026-enum-item-without-value.md",
+   "source": "docs/adr/0026-enum-item-without-value.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 407,
+   "sha256": "bdcfe0aeb511b39336957da6c0d7dec29ce7e3188a706a7fa3e872f0086d4f3b"
+  },
+  {
+   "path": "11-decisions/docs/adr/0027-cast-non-null-generic-call.md",
+   "source": "docs/adr/0027-cast-non-null-generic-call.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 439,
+   "sha256": "a08e807d662c010e3bb50a7d0c87336b69731946eda397acf9ffce061bb27bd6"
+  },
+  {
+   "path": "11-decisions/docs/adr/0028-bounded-generics.md",
+   "source": "docs/adr/0028-bounded-generics.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 357,
+   "sha256": "078054cd40cd4206eecb9f65cf7f20e0d552a7e77aaee9142327e78d819af952"
+  },
+  {
+   "path": "11-decisions/docs/adr/0029-generators.md",
+   "source": "docs/adr/0029-generators.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 433,
+   "sha256": "83b6bd2a6a311967ca3d569e91edbda284e530f773f2fdbd690e32160ce7cab8"
+  },
+  {
+   "path": "11-decisions/docs/adr/0030-cascades.md",
+   "source": "docs/adr/0030-cascades.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 371,
+   "sha256": "ea683e78ce4c67653eb11b0a57776f2127dce1a82c180dafe4b5f412da33274f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0031-no-records.md",
+   "source": "docs/adr/0031-no-records.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 403,
+   "sha256": "3b5442a6246d2a3e25dfad3030446fe167234337843593995bd21b047cc5fa38"
+  },
+  {
+   "path": "11-decisions/docs/adr/0032-destructuring.md",
+   "source": "docs/adr/0032-destructuring.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 515,
+   "sha256": "e7892e357033470cde8db4ca8e9dd4397fb2e8ee03608e5b363e6d2545979011"
+  },
+  {
+   "path": "11-decisions/docs/adr/0033-if-in-lists.md",
+   "source": "docs/adr/0033-if-in-lists.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 394,
+   "sha256": "0be75adc6a9dc3182140c9b78457811c8adfe2b9f7c7425ae451abc5ac7f6792"
+  },
+  {
+   "path": "11-decisions/docs/adr/0034-inheriting-constructors.md",
+   "source": "docs/adr/0034-inheriting-constructors.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 551,
+   "sha256": "ebd3d2e663028d2f0de258acbc75693b5732d764c1b7932eb9dd76860f5ce2b7"
+  },
+  {
+   "path": "11-decisions/docs/adr/0035-external-classes.md",
+   "source": "docs/adr/0035-external-classes.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 488,
+   "sha256": "0aecb3043dd1d628802c64f578ba3abd3a8ceaa6dc61061c4708bc2fbeccccca"
+  },
+  {
+   "path": "11-decisions/docs/adr/0036-results.md",
+   "source": "docs/adr/0036-results.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 946,
+   "sha256": "4d085b21c4c75c23a118e82c8bed28b480a755bbaf6c20d4e833f709f1846cf7"
+  },
+  {
+   "path": "11-decisions/docs/adr/0037-function-aliases.md",
+   "source": "docs/adr/0037-function-aliases.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 621,
+   "sha256": "f48e35e74ca32422b9e02cf4fbc91b26a20cc52be90191ca1759bf8f3c275d40"
+  },
+  {
+   "path": "11-decisions/docs/adr/0038-golden-rule.md",
+   "source": "docs/adr/0038-golden-rule.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 448,
+   "sha256": "d3b5607d04de94d2121a71d397c21227788017cef5233cfc4751d6adb3fffc2f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0039-flutter-dialect-as-framework.md",
+   "source": "docs/adr/0039-flutter-dialect-as-framework.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 778,
+   "sha256": "1d77cb8f71ee536c3d6d9ca532ca131bb544d5818fc05ca056946ab41f18d83a"
+  },
+  {
+   "path": "11-decisions/docs/adr/0040-type-definitions.md",
+   "source": "docs/adr/0040-type-definitions.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 854,
+   "sha256": "ba486b880d5d9532f5dcd3f81495e20890bd076051679db65500caec1e3b494b"
+  },
+  {
+   "path": "11-decisions/docs/adr/0041-dragonfly.md",
+   "source": "docs/adr/0041-dragonfly.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 554,
+   "sha256": "7febc92d34bdeeb0f1862e92f6a5a23e7360112fb7ac2aa6cb4d401bdebfa350"
+  },
+  {
+   "path": "11-decisions/docs/adr/0042-component-structure.md",
+   "source": "docs/adr/0042-component-structure.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 587,
+   "sha256": "45abc32849a0f2a9051b6365ceb117055d9b4917f64377b56f8d05f4aaad40a6"
+  },
+  {
+   "path": "11-decisions/docs/adr/0043-dependency-injection.md",
+   "source": "docs/adr/0043-dependency-injection.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 413,
+   "sha256": "3538c1af388a7406b5d139dfbc7d6341a6295ea1e2b4dfce90d192770261e373"
+  },
+  {
+   "path": "11-decisions/docs/adr/0044-json.md",
+   "source": "docs/adr/0044-json.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 388,
+   "sha256": "fba7c5f07446d229adffa139806863fda59d6e3e21c73b4981ee9b185773a618"
+  },
+  {
+   "path": "11-decisions/docs/adr/0045-separate-project.md",
+   "source": "docs/adr/0045-separate-project.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 429,
+   "sha256": "7ad7a6583e466cc8b5473c2e9138229a1c1ec054479ad453ef56eeda6478d1da"
+  },
+  {
+   "path": "11-decisions/docs/adr/0046-architecture-rules.md",
+   "source": "docs/adr/0046-architecture-rules.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 519,
+   "sha256": "6d312fc1bfac798c69bcd1bacabbe7ac80e035d3d60eb21875a773e286517543"
+  },
+  {
+   "path": "11-decisions/docs/adr/0047-result-order-dart-runtime.md",
+   "source": "docs/adr/0047-result-order-dart-runtime.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 706,
+   "sha256": "26c9b5fb2ca3a0ef6ed5644eddfb9793785691db7b88316e0253d0b846f5c62f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0048-ok-error-by-callback-return.md",
+   "source": "docs/adr/0048-ok-error-by-callback-return.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 573,
+   "sha256": "545ff1f11692c0e4d3d4763f223cc8f7729fe684b8639b07af9dc4297f5d1770"
+  },
+  {
+   "path": "11-decisions/docs/adr/0049-tests-in-nuclear.md",
+   "source": "docs/adr/0049-tests-in-nuclear.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 576,
+   "sha256": "eae3abac775b5ebdb4c2ba74ef8b6e6320371c40f6a0d9a2a2cef2bb2d87afb5"
+  },
+  {
+   "path": "11-decisions/docs/adr/0050-nuc-only-project.md",
+   "source": "docs/adr/0050-nuc-only-project.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 471,
+   "sha256": "a5d8731ab9e378000a425f6af9646fc660656ca18227812c6c8cc05e3f3baaf7"
+  },
+  {
+   "path": "11-decisions/docs/adr/0051-dragonfly-package-and-dialect.md",
+   "source": "docs/adr/0051-dragonfly-package-and-dialect.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 618,
+   "sha256": "63eb4cb9d2ab367c5e85806232d86bbd8de27ba9ed482a5cdfc5fb99cd22d6d7"
+  },
+  {
+   "path": "11-decisions/docs/adr/0052-global-events.md",
+   "source": "docs/adr/0052-global-events.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 636,
+   "sha256": "128d4800c02c8492eec484b6ccb75934ee2d009b0857df49a8ef1ade2506a345"
+  },
+  {
+   "path": "11-decisions/docs/adr/0053-global-components.md",
+   "source": "docs/adr/0053-global-components.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 465,
+   "sha256": "69890103c87993e0e698f5b6a03e7efc79e9452d23514ced7f7779922e49b5a6"
+  },
+  {
+   "path": "11-decisions/docs/adr/0054-session.md",
+   "source": "docs/adr/0054-session.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 459,
+   "sha256": "c963ea8ac7fab52c7b1edc5b63d40dd799c13ab2118615c0697ab536f05daa41"
+  },
+  {
+   "path": "11-decisions/docs/adr/0055-screen-decorator.md",
+   "source": "docs/adr/0055-screen-decorator.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 598,
+   "sha256": "b3e121f0287b9a22c5b7448b55e279c8c7adeaccc3d841320831260a06623f9d"
+  },
+  {
+   "path": "11-decisions/docs/adr/0056-acl.md",
+   "source": "docs/adr/0056-acl.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 490,
+   "sha256": "6aedb81d009dbc9aa7176d0b4f078253d89ef0596fbae4926362d8fe3c3d3968"
+  },
+  {
+   "path": "11-decisions/docs/adr/0057-routes.md",
+   "source": "docs/adr/0057-routes.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 450,
+   "sha256": "2b1cefb095c721879e1cb97f4e2a33a47de333cb0a76b929ca63d2368b928f5c"
+  },
+  {
+   "path": "11-decisions/docs/adr/0058-forms.md",
+   "source": "docs/adr/0058-forms.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 682,
+   "sha256": "fbd28ffdd321697424c5fbe48dd315f6ce3e09d0993e18562c7700ac44430bb1"
+  },
+  {
+   "path": "11-decisions/docs/adr/0059-dialogs.md",
+   "source": "docs/adr/0059-dialogs.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 558,
+   "sha256": "cc915dbf9f50f2ae72c71ec947fb38045866a43576b3f205cb817133cbcc9f11"
+  },
+  {
+   "path": "11-decisions/docs/adr/0060-translations.md",
+   "source": "docs/adr/0060-translations.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 530,
+   "sha256": "ee7619b83a320ab208fb331682caa4ebd6c79502a5204b0de8a04d81e3b29a36"
+  },
+  {
+   "path": "11-decisions/docs/adr/0061-splash.md",
+   "source": "docs/adr/0061-splash.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 569,
+   "sha256": "7bbc2234144ef5747c0a5678e9a86f8c94ba2a77b99164e75e86ead9144646fe"
+  },
+  {
+   "path": "11-decisions/docs/adr/0062-generic-models.md",
+   "source": "docs/adr/0062-generic-models.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 642,
+   "sha256": "eb4f5b6d0e3642ff44abdb614c53fb2cb894892663e46ccc66031095546f9606"
+  },
+  {
+   "path": "11-decisions/docs/adr/0063-native-splash.md",
+   "source": "docs/adr/0063-native-splash.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 699,
+   "sha256": "2d9c10c55c35f9c7d007e9e46193938ead023ffb89c67351a49c2665bb8a0dcf"
+  },
+  {
+   "path": "11-decisions/docs/adr/0064-json-names-and-converters.md",
+   "source": "docs/adr/0064-json-names-and-converters.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 718,
+   "sha256": "eb911273ee187732aadadef2ede0a7a4057e7bad38f086251d1d2c91b8e9257c"
+  },
+  {
+   "path": "11-decisions/docs/adr/0065-manifest-in-nuclear.md",
+   "source": "docs/adr/0065-manifest-in-nuclear.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 826,
+   "sha256": "117e553847f5ce9135b7ea89f217c2540c673adf5d1e607979b705ca4d6e5374"
+  },
+  {
+   "path": "11-decisions/docs/adr/0066-third-party-packages-defs.md",
+   "source": "docs/adr/0066-third-party-packages-defs.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 701,
+   "sha256": "a1106d2a265306c9597279be97269e0819dd04f786c4303303cd7a321733f371"
+  },
+  {
+   "path": "11-decisions/docs/adr/0067-commands-per-dialect.md",
+   "source": "docs/adr/0067-commands-per-dialect.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 635,
+   "sha256": "6f08b787441484a40fa0189f73fcf27391feac945546f43a4a14e904b091f1eb"
+  },
+  {
+   "path": "11-decisions/docs/adr/0068-debug-nuc.md",
+   "source": "docs/adr/0068-debug-nuc.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 821,
+   "sha256": "ccf2016e039f8effb5918ded4b05be261cf0855ca505519d84879052f242ef8f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0069-only-third-party-packages.md",
+   "source": "docs/adr/0069-only-third-party-packages.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 757,
+   "sha256": "5cf2f09643f2de5a259f2d932c77ddcede35ee5d81612a1c15aa801c49a7ded0"
+  },
+  {
+   "path": "11-decisions/docs/adr/0070-no-empty-config-sections.md",
+   "source": "docs/adr/0070-no-empty-config-sections.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 561,
+   "sha256": "7af3439c0ba115d76608ab0c0b6a12f5c899522860ababdf9bb6482f58971709"
+  },
+  {
+   "path": "11-decisions/docs/adr/0071-assets-by-convention.md",
+   "source": "docs/adr/0071-assets-by-convention.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 740,
+   "sha256": "37e4b510724e2934991d445e6f0010211ab2df340232acf83dd8e8150a8659d1"
+  },
+  {
+   "path": "11-decisions/docs/adr/0072-dragonfly-language-independent.md",
+   "source": "docs/adr/0072-dragonfly-language-independent.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 610,
+   "sha256": "de89f2ebca18247a88fa760833c1fe782c83b58e0f65a39081bc4da770de3555"
+  },
+  {
+   "path": "11-decisions/docs/adr/0073-dialects-with-agents.md",
+   "source": "docs/adr/0073-dialects-with-agents.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 567,
+   "sha256": "99c91fda9a96d7d6798680c08180f4ee368f8d30537b85ed8050238bb88af24a"
+  },
+  {
+   "path": "11-decisions/docs/adr/0074-dragonfly-device.md",
+   "source": "docs/adr/0074-dragonfly-device.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 932,
+   "sha256": "58a73c6de699cde0e9053816a33c24fcbd8ba3f1f170160a3f32051ffa145654"
+  },
+  {
+   "path": "11-decisions/docs/adr/0075-code-in-english.md",
+   "source": "docs/adr/0075-code-in-english.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 717,
+   "sha256": "53542150efdb43f4df1083764b92c0df9c20b3a54afbb308e08d1721bcb09fe2"
+  },
+  {
+   "path": "11-decisions/docs/adr/0076-mixed-debugging.md",
+   "source": "docs/adr/0076-mixed-debugging.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 822,
+   "sha256": "4d9addf8a8b77795356403971c65248b25e911a21a32d7e6cf93d2ade48b43a4"
+  },
+  {
+   "path": "11-decisions/docs/adr/0077-editor-extensions-per-framework.md",
+   "source": "docs/adr/0077-editor-extensions-per-framework.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 871,
+   "sha256": "7f7affcf2ec8194aba7fb36acf7dfd4b58753c207b4ab6b8ed3c8650ae02895f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0078-component-logs.md",
+   "source": "docs/adr/0078-component-logs.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 1186,
+   "sha256": "00660d2000d1f229c62f769c4002798b71418a78c6c31b5e7a2138a53a3f8d22"
+  },
+  {
+   "path": "11-decisions/docs/adr/0079-editor-documentation.md",
+   "source": "docs/adr/0079-editor-documentation.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 851,
+   "sha256": "d33b5f75a47dac0b29ac203c28535248ef3eb500e1f4f1fce6b6316f7f23008b"
+  },
+  {
+   "path": "11-decisions/docs/adr/0080-comment-lines-with-star.md",
+   "source": "docs/adr/0080-comment-lines-with-star.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 660,
+   "sha256": "d525f77564478f972415deba7e5d5fdcc349f4c0fb235414c4680a04115ca960"
+  },
+  {
+   "path": "11-decisions/docs/adr/0081-cli-devices.md",
+   "source": "docs/adr/0081-cli-devices.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 1061,
+   "sha256": "e42df3c0be5344f755a9b9c4f8a68deee73f85f4848f756e40cf147becc464b1"
+  },
+  {
+   "path": "11-decisions/docs/adr/0082-documentation-in-english.md",
+   "source": "docs/adr/0082-documentation-in-english.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 620,
+   "sha256": "c87b206876cbad572c1464aac5006a9701a3e810a346d57c84257b19dcb5de72"
+  },
+  {
+   "path": "11-decisions/docs/adr/0083-repository-split.md",
+   "source": "docs/adr/0083-repository-split.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 1393,
+   "sha256": "837d08cd20986990abe19fdfa1b82888c509906b0be56e7bedf965562a876f3f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0084-layered-ai-context.md",
+   "source": "docs/adr/0084-layered-ai-context.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 908,
+   "sha256": "aa3213a337019f99069103425bb1b4d69b1670dfb21436faec75690dc5ab343f"
+  },
+  {
+   "path": "11-decisions/docs/adr/0085-dragonfly-proposals-accepted.md",
+   "source": "docs/adr/0085-dragonfly-proposals-accepted.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3426,
+   "sha256": "e06085bd87c1c4e4b8363dc1fca7e5550a0c1f7c1ec6811539bda7adb181aa5d"
+  },
+  {
+   "path": "11-decisions/docs/adr/0086-operators-and-the-targets-library.md",
+   "source": "docs/adr/0086-operators-and-the-targets-library.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3409,
+   "sha256": "81387dfad0add4a51bf90862bd76771083f7b204a7955b7e0fd045a26f686417"
+  },
+  {
+   "path": "11-decisions/docs/adr/0087-agent-support.md",
+   "source": "docs/adr/0087-agent-support.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 2730,
+   "sha256": "2d291ec35bf420fc2da26fba4656e4b4c096d1a11285be074bf40dcd8e684503"
+  },
+  {
+   "path": "11-decisions/docs/adr/0088-compiler-corrects-agents.md",
+   "source": "docs/adr/0088-compiler-corrects-agents.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3182,
+   "sha256": "b8e3c19eb9eebba3a675feb5ab0775af46e3a8bcaca86ee759e0b039ccd65421"
+  },
+  {
+   "path": "11-decisions/docs/adr/0089-python-dialect.md",
+   "source": "docs/adr/0089-python-dialect.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3376,
+   "sha256": "33548e244efb24c6bcadcb04441b60a2366795feb436caadf37c200e06eee6ec"
+  },
+  {
+   "path": "11-decisions/docs/adr/0090-dragonfly-python-langgraph.md",
+   "source": "docs/adr/0090-dragonfly-python-langgraph.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3420,
+   "sha256": "03652572c8324aac9cdc75dbd32502477eb8157d1f26b764436cdfa956d014ba"
+  },
+  {
+   "path": "11-decisions/docs/adr/0091-dragonfly-nestjs-sequelize.md",
+   "source": "docs/adr/0091-dragonfly-nestjs-sequelize.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3988,
+   "sha256": "27bb76f1d702a55a9169093545fb6420ae41135c89a63e7ee48baa8290010dc8"
+  },
+  {
+   "path": "11-decisions/docs/adr/0092-plugins-and-genkit.md",
+   "source": "docs/adr/0092-plugins-and-genkit.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3353,
+   "sha256": "be2614ef7bde35695585b49a781b4afb05beb225563f91071f33bbd8d8e434ec"
+  },
+  {
+   "path": "11-decisions/docs/adr/0093-platforms-and-dialects.md",
+   "source": "docs/adr/0093-platforms-and-dialects.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 6751,
+   "sha256": "cb4b10115176060320ea20bdb67c4a88f891731aaa46fad73ffb71639e1f6eac"
+  },
+  {
+   "path": "11-decisions/docs/adr/0094-standard-library.md",
+   "source": "docs/adr/0094-standard-library.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 3052,
+   "sha256": "20f648b4b3ba7cd771e6a7d6d41a16565d99f7238841626aaa8091df0a7afbdc"
+  },
+  {
+   "path": "11-decisions/docs/adr/0095-kinds-as-libraries.md",
+   "source": "docs/adr/0095-kinds-as-libraries.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 8482,
+   "sha256": "146746631bb1869e3eeb3b01dad2384bf3c641be6988a770f85f371045dd78f7"
+  },
+  {
+   "path": "11-decisions/docs/adr/0096-mobile-local-database.md",
+   "source": "docs/adr/0096-mobile-local-database.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 7408,
+   "sha256": "9a2678b5256ac52eed6b13fa8e02c4bc821cb08008f59c747bb2f9bbec066c5e"
+  },
+  {
+   "path": "11-decisions/docs/adr/0097-web-platform-react.md",
+   "source": "docs/adr/0097-web-platform-react.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 7895,
+   "sha256": "b9eff4de01dbbcb9341564d8f74649fde380605bad9be3a1a75cd0dd6e745c82"
+  },
+  {
+   "path": "11-decisions/docs/adr/0098-shared-contracts.md",
+   "source": "docs/adr/0098-shared-contracts.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 5742,
+   "sha256": "039c6c8896e41e49156566cb422b9b1ea5c37605e57e6cc2bb3be2c5f11a3fba"
+  },
+  {
+   "path": "11-decisions/docs/adr/0099-editor-workspace.md",
+   "source": "docs/adr/0099-editor-workspace.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 11226,
+   "sha256": "447c75a65fba83e14bfc6cea821c95a2efa6272ce98963dd647d2e03a5304c85"
+  },
+  {
+   "path": "11-decisions/docs/adr/0100-backend-data.md",
+   "source": "docs/adr/0100-backend-data.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 9836,
+   "sha256": "0a1cf34b2b109996edd74269c560abf1da883963193358d5cc2abc6437abbe79"
+  },
+  {
+   "path": "11-decisions/docs/adr/0101-toolchain-data-and-installers.md",
+   "source": "docs/adr/0101-toolchain-data-and-installers.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 2729,
+   "sha256": "c27a29f42c7fd11900c646cadca55069551e7fa6661029621e82af3a93485210"
+  },
+  {
+   "path": "10-ai/docs/adr/0102-ai-loop.md",
+   "source": "docs/adr/0102-ai-loop.md",
+   "repo": "nuclearlang",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 15131,
+   "sha256": "7f584cbaa15ffd8d720c13a2ecc66c2c9b052f611449810e73717ea7c24c2155"
+  },
+  {
+   "path": "11-decisions/docs/adr/0103-generators.md",
+   "source": "docs/adr/0103-generators.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 6498,
+   "sha256": "c82c95648967123be6a00651231b5fc93a2e19d678fc346525a386e83a8805fd"
+  },
+  {
+   "path": "11-decisions/docs/adr/README.md",
+   "source": "docs/adr/README.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 10905,
+   "sha256": "b92cf537208056ccd22e084d84c425122f794921b834cca8e6615af50695730c"
+  },
+  {
+   "path": "11-decisions/docs/adr/_template.md",
+   "source": "docs/adr/_template.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 514,
+   "sha256": "50de4e9af32e62b1964491acd07aa190e1735aa810ff21514603a9d8108de9b5"
+  },
+  {
+   "path": "10-ai/docs/ai/loop.md",
+   "source": "docs/ai/loop.md",
+   "repo": "nuclearlang",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 11046,
+   "sha256": "d8e0311aa23dd048eec626931fbae48faae4a4de0f35822805fe353a24f1a1c1"
+  },
+  {
+   "path": "01-introduction/docs/architecture.md",
+   "source": "docs/architecture.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 6268,
+   "sha256": "f824182976c8730182ceaab27062c3c427471f2469216d6870f686cbf7a5d6f0"
+  },
+  {
+   "path": "01-introduction/docs/context/README.md",
+   "source": "docs/context/README.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 5179,
+   "sha256": "9336cb7f226441dfece529374994ddb67d4e536222685bc977cac0de0e027f9f"
+  },
+  {
+   "path": "01-introduction/docs/context/architecture.md",
+   "source": "docs/context/architecture.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 8628,
+   "sha256": "7c92e044a4d522c762679dcc8a7f4eb4d178836858774c608e7b26ca39dc1650"
+  },
+  {
+   "path": "09-editors/docs/context/editors/CONTEXT.md",
+   "source": "docs/context/editors/CONTEXT.md",
+   "repo": "nuclearlang",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 7109,
+   "sha256": "4f09b9946bd8d21b8364164ca05d02d6b2fe73c7ae0fb48a194438b6f2ec71b1"
+  },
+  {
+   "path": "09-editors/docs/context/editors/lsp.md",
+   "source": "docs/context/editors/lsp.md",
+   "repo": "nuclearlang",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 4983,
+   "sha256": "bdd33a1e8682fd196d24039020bfbaca18637ab1e876117f9efa7eebb16da1eb"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/CONTEXT.md",
+   "source": "docs/context/nuclear/CONTEXT.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 8025,
+   "sha256": "0e20a508b3aae17b5e787e213fbd1d15bc913ad2ecf2b046ce26a615e23adec7"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/dialect-format.md",
+   "source": "docs/context/nuclear/dialect-format.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 2979,
+   "sha256": "53f1f31690c745f976ad70f08f8456434ce9c31626ded466d694c1d763d2a045"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/emitter.md",
+   "source": "docs/context/nuclear/emitter.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 8577,
+   "sha256": "69b019f88db6df9caeb46ec42047f02d7166ab4955c171479d924566ca452718"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/limits.md",
+   "source": "docs/context/nuclear/limits.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 1448,
+   "sha256": "10d33a1a880d148d8d21a71e7f48536c71a3900cc6deb70ec3e01db104a0cd97"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/projects.md",
+   "source": "docs/context/nuclear/projects.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 1969,
+   "sha256": "3745d0b02c7cb29c25c61a9b3d0931e94812e033d5aa1115834d0344350da466"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/result.md",
+   "source": "docs/context/nuclear/result.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 2177,
+   "sha256": "b07c62350b6d03539b7415e9e00aaa3f2e958529541ce157221a5e9e4ab052e0"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/syntax.md",
+   "source": "docs/context/nuclear/syntax.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 3006,
+   "sha256": "b44e7290029aaf85e75ac175075b59c8892e7a46728f8af7653ad110a7133ce2"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/testing.md",
+   "source": "docs/context/nuclear/testing.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 2220,
+   "sha256": "cd8745e1cc5609fc00df05c132f1feb286c2dd722695e06e2a395647e9ff66d1"
+  },
+  {
+   "path": "03-compiler/docs/context/nuclear/type-definitions.md",
+   "source": "docs/context/nuclear/type-definitions.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 2047,
+   "sha256": "e6418f8ce1883f4041e2647748128e69b713d619a8572d158cb953d822b3bba3"
+  },
+  {
+   "path": "01-introduction/docs/context/product/prd.md",
+   "source": "docs/context/product/prd.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 4939,
+   "sha256": "661558054a1ffa4594b4906536a0d1c232838b58d701d403d3667acd49293834"
+  },
+  {
+   "path": "01-introduction/docs/context/tech.md",
+   "source": "docs/context/tech.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 5579,
+   "sha256": "073ccdd8417f4eddc8953059c7be40512f66dcd67e5d2255a96dbb9d189bc786"
+  },
+  {
+   "path": "01-introduction/docs/context/workflow.md",
+   "source": "docs/context/workflow.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 3974,
+   "sha256": "a65deb08601cbfe92acefef803c6e52dbfa807ad800f5d2a11bb37ee7019b20f"
+  },
+  {
+   "path": "03-compiler/docs/dialects/create-with-agent.md",
+   "source": "docs/dialects/create-with-agent.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 5769,
+   "sha256": "c831d4b5e7c1173935c85af906688cc6d686e025ff7120c91f4611f1701a34d7"
+  },
+  {
+   "path": "02-language/docs/language/01-syntax.md",
+   "source": "docs/language/01-syntax.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 6035,
+   "sha256": "34b2b36022a31bf9c021d794b79f26c1f822017ad55d4910a1518b99400f0f70"
+  },
+  {
+   "path": "02-language/docs/language/02-variables.md",
+   "source": "docs/language/02-variables.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 5513,
+   "sha256": "f7213f82973f0140bc9f5a8f10b1c9dca1f1b15f847d3c5c179be8ae394fdabf"
+  },
+  {
+   "path": "02-language/docs/language/03-types.md",
+   "source": "docs/language/03-types.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 2446,
+   "sha256": "97f90896a4f313db2893441109aeed3498dc508baab8912949b0864ae9c62942"
+  },
+  {
+   "path": "02-language/docs/language/04-functions.md",
+   "source": "docs/language/04-functions.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 7903,
+   "sha256": "12681db713d9c881d7aa0d705c7c65471ddd49b9ea460e89f44553520c3bd83b"
+  },
+  {
+   "path": "02-language/docs/language/05-lambdas.md",
+   "source": "docs/language/05-lambdas.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 3233,
+   "sha256": "e9df4eff6f825ead287a412b1503903ad437a029c3a9a649ec62b4425a98d67e"
+  },
+  {
+   "path": "02-language/docs/language/06-modules.md",
+   "source": "docs/language/06-modules.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 6338,
+   "sha256": "9a7261af8e591e49bd185c984040fd79058a300dd9b9bc18f3d81eb3def1a3af"
+  },
+  {
+   "path": "02-language/docs/language/07-inheritance.md",
+   "source": "docs/language/07-inheritance.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 4570,
+   "sha256": "c55988939784046e8d5c6a1772a7e6d75540ef59866ce8ed8e71ea1cc88311b2"
+  },
+  {
+   "path": "02-language/docs/language/08-generics.md",
+   "source": "docs/language/08-generics.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 2093,
+   "sha256": "9236d675b93aed9c4de8a04399efd33898fe543ee498deaba2b59bf0e19dc54c"
+  },
+  {
+   "path": "02-language/docs/language/09-expressions.md",
+   "source": "docs/language/09-expressions.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 3202,
+   "sha256": "9d844d1ad4db0f67551f962c9b97b4abc65bf35d5b971da208ba1b2483ef7a9c"
+  },
+  {
+   "path": "02-language/docs/language/10-control.md",
+   "source": "docs/language/10-control.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 2938,
+   "sha256": "5ada4359db33f7d4c0cd0f1e83747131d5da7bf82d024de2013ba240e751093a"
+  },
+  {
+   "path": "02-language/docs/language/11-use.md",
+   "source": "docs/language/11-use.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 1288,
+   "sha256": "7f0872f9cf27d682c776885737d77e34e013d47d852eb10afabbec5f402543cc"
+  },
+  {
+   "path": "02-language/docs/language/12-errors.md",
+   "source": "docs/language/12-errors.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 2839,
+   "sha256": "92b2122d871b06f80d723ef672cee33a087e6bb9ec96c7b7a006e1d58fd688a7"
+  },
+  {
+   "path": "02-language/docs/language/13-results.md",
+   "source": "docs/language/13-results.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 17639,
+   "sha256": "fb70a06c4258aaf74a685dc663f26994a25100117e1398ceb151e2d4510266a5"
+  },
+  {
+   "path": "02-language/docs/language/14-operations.md",
+   "source": "docs/language/14-operations.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 6110,
+   "sha256": "e7004da4820207a3ce0a0a59fba781f06a1dfd8c780b912df1888d220d264954"
+  },
+  {
+   "path": "02-language/docs/language/README.md",
+   "source": "docs/language/README.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 4862,
+   "sha256": "37173ece7b80ca581509a3a05ca18237bd6fa828d15782ad816c6f1cd1d30e70"
+  },
+  {
+   "path": "02-language/docs/language/reference.md",
+   "source": "docs/language/reference.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 12403,
+   "sha256": "5c92092e9a90fec52932b1ba581d07caeab9a04cc728c1b849910ad3eda04e31"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/AGENTS.md",
+   "source": "dragonfly-backend/AGENTS.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 1298,
+   "sha256": "2815b234a1d36202e662d6119c66b7bf0822241ca99f1187b36b6dee7fdf88ec"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/CHANGELOG.md",
+   "source": "dragonfly-backend/CHANGELOG.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 362,
+   "sha256": "7906d6df29c4c048ac193603b0b4ed82f634bf46e6469f1970679fb2ef0b5ee2"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/CONTRIBUTING.md",
+   "source": "dragonfly-backend/CONTRIBUTING.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 1570,
+   "sha256": "65ccd6f3141efc72c4bf06b810ddd8d3fefad860eb3a18ff50e1a8fb1243ffc9"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/README.md",
+   "source": "dragonfly-backend/README.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 1421,
+   "sha256": "9a27825b4a087bd37f6a163c845abf1c5fa97d20c8d71bb09cea131258b562ac"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/dialects/backend/fastapi/docs.toml",
+   "source": "dragonfly-backend/dialects/backend/fastapi/docs.toml",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 17352,
+   "sha256": "d1f82b715a8b9fa7ea8724ee61df0d92fd4ae72b2c97f948e64dce25fe372bee"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/dialects/backend/nestjs/docs.toml",
+   "source": "dragonfly-backend/dialects/backend/nestjs/docs.toml",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 16704,
+   "sha256": "1076e108fd08e24d04bc946b5e7e7c6fabfa5159bd2b52253766a7361cf9c5b1"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/dialects/backend/platform.toml",
+   "source": "dragonfly-backend/dialects/backend/platform.toml",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 12916,
+   "sha256": "c0d7905f99b49c3f5008791e24d6d12fc5ab5599332a592b992fd1bfdcf069b6"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md",
+   "source": "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 9467,
+   "sha256": "73f1c1496434d10e14bfc75ee23c331fde9f1f6db9087164625c99af4dfbce45"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/docs/dragonfly/contracts.md",
+   "source": "dragonfly-backend/docs/dragonfly/contracts.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 4988,
+   "sha256": "2afe04a4155aafd433fc5752c82678d5f635d84de07a974e69f39e3a834be539"
+  },
+  {
+   "path": "05-backend-dialects/dragonfly-backend/docs/dragonfly/nestjs.md",
+   "source": "dragonfly-backend/docs/dragonfly/nestjs.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend-dialects",
+   "agents": false,
+   "bytes": 8436,
+   "sha256": "ce6c13104c9109e878d7f006747483a2f146ae6ad0965d8cbddf5afa391a9c68"
+  },
+  {
+   "path": "05-backend-dialects/dragonfly-backend/docs/dragonfly/python.md",
+   "source": "dragonfly-backend/docs/dragonfly/python.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend-dialects",
+   "agents": false,
+   "bytes": 9062,
+   "sha256": "97c38768ea1d0c6c10c46d08ca574ec669fb23a183953260754194acca62ff88"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/assistant_agent.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/assistant_agent.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 268,
+   "sha256": "174035c350743a48eba2d677ac12aeb4aeacceecfdb32b1443e7bd2a4fa526ab"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/planner.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/planner.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 802,
+   "sha256": "19bd655dcf9a8e63dfc78cf27ea5f03be78fb6c70bfaf9e83695ab89087d0fd7"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/states/plan_state.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/states/plan_state.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 94,
+   "sha256": "7b0b8aec8949eebdb4ad745949653fdb3f3bea3871cb967ffb5fa5cd5cf83de2"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/task_tools.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/ai/task_tools.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 1038,
+   "sha256": "e7c384088a6a66942a0eabc92e61434c2259aac807c8071d33e7964094d80781"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/api/assistant_controller.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/api/assistant_controller.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 518,
+   "sha256": "f026b9d40df9d9a2fbd20f0a235e261b04875c295e865dbd1aadf1b9387104b1"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/domain/models/assistant_models.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/assistant/domain/models/assistant_models.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 284,
+   "sha256": "1f45c1e3a3fd622701b701116cddd91480ad50c9ae9d94e5fb37b20716259df5"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/api/projects_controller.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/api/projects_controller.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 480,
+   "sha256": "d64db799f7497e26f3879f16a3923a48d064fcbf3858b7f668bd1881fd489cf5"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/api/tasks_controller.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/api/tasks_controller.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 747,
+   "sha256": "84de3459d89cdb0a760a7718d0080601daab85d68f95bdedf5beaaf8fdded05a"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/entities/project.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/entities/project.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 234,
+   "sha256": "8037b1460f909d5785c808a572fe7cefb7ab2b9baaf29288c9dc55030d9c3d83"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/entities/tag.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/entities/tag.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 260,
+   "sha256": "9f72f7fefe856c5f9f4d95b492a60171dec664c3b0d3d9bf06073e23a55c5655"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/entities/task.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/entities/task.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 502,
+   "sha256": "14bfcf0cf191e3d2cde767be50ad61611093ad861da15dff9358fd699536ebbc"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/repositories/holiday_repository.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/repositories/holiday_repository.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 272,
+   "sha256": "d50942cca65424a6c09f1370f657306edc43d4091dbb8cceee8218a68908ebe0"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/repositories/project_repository.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/repositories/project_repository.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 207,
+   "sha256": "b6026cbbc7d788a1ce5697016e1c021f67697cba5589ebed2e89f1291520c49e"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/repositories/task_repository.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/data/repositories/task_repository.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 589,
+   "sha256": "f48812980fa6fe75fb61bf78dd93af902edc34b0f87f0148108b957f9f1b972d"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/models/holiday.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/models/holiday.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 91,
+   "sha256": "13ce859cb2b00783107cc461c58ee2f6333cc1379205db89d153d08eb567dfd4"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/models/task_models.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/models/task_models.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 530,
+   "sha256": "fe8ee0a33de492430159dd93ede712d6871ca0fd3f008ac9e0764b8686a40bd5"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/close_project.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/close_project.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 428,
+   "sha256": "1319be3f32031c90664a99c74e62ef7af34136c8029733db5d03f351c409abf6"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/create_project.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/create_project.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 151,
+   "sha256": "ae4b16194519e9d4ca1627213888535378e8d2b7132cc1346a69771d152dec4f"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/create_task.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/create_task.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 523,
+   "sha256": "319d109d3e19a1101b89c44f612e81abd8fced23be741bc1f92ce1dbc85485dc"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/delete_task.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/delete_task.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 208,
+   "sha256": "c6e9a9f65a86955b6a4711bd871953cc56aa3a1a47fa7ed1dd41ca2204e0d5ec"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/get_project.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/get_project.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 159,
+   "sha256": "7ac9a8a9c5a15c7d4ee312b5a59e6bcedeb1fb06e2bc7a024931aabc5e59eb96"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/get_task.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/get_task.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 95,
+   "sha256": "2bf5363631bd107c9e8d0683fdaa1e4d3d9c9c57e39dd325359c001c1571e1d3"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/list_tasks.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/list_tasks.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 237,
+   "sha256": "cf02ac94f9b1f0ac3fa8382392ee11240232d5fc4e8fc8ad2c8857a2cac49b7f"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/page_tasks.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/page_tasks.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 168,
+   "sha256": "a31ef36042a228a8f61527a52d77f1d3c82b4a9355b49b2a9dc28871e8efdff3"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/update_task.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/domain/usecases/update_task.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 391,
+   "sha256": "3e4ceccc899ad62cb542164cb4a55faf5f21dd73ae1aa17167d6a89af4763b7d"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/events/task_events.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/events/task_events.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 233,
+   "sha256": "24f7ec92aa2af90a9f6ace7a00cdeffab75dd9e2a609a95a2e8c148192f9c762"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/tasks_appcomponent.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/components/tasks/tasks_appcomponent.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 361,
+   "sha256": "3311bbe36f3a6f024a67c552ca1d3c7c005590a72819f210694008a433ec4619"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/config.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/config.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 360,
+   "sha256": "4fdf9f822c2b9bf6f49eb823a3caaf4702c844e9f7ce2f20b5e3666efb6c9a09"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/config/project_config.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/config/project_config.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 430,
+   "sha256": "a30ec0a6cf1ad1b69b7fb3a78ded9501c87f2336f3f404c7237e975299b8d662"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-backend/tasks_api/test/tasks_test.nuc",
+   "source": "dragonfly-backend/examples/examples-backend/tasks_api/test/tasks_test.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 2509,
+   "sha256": "86add48d4a9d544aba1986b387ca0be7dc6118722b6f5e62aaaa80c79fb5ee84"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/character_tools.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/character_tools.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 270,
+   "sha256": "e443286acee906e8ebb259623a158a492385da125750791a5337b9e263659186"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/guide.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/guide.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 194,
+   "sha256": "e828168d36b3814342fa0868ee4e710755e4d2375184d94afb763074c7d0bd29"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/review.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/review.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 393,
+   "sha256": "7801fa2f35bd9169d9a5170284fba89fb2aa002c6615ed0d4123258c46a45e99"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/states/review_state.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/ai/states/review_state.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 100,
+   "sha256": "13a9a13c9e276942bea08618c559172ecbea1851eafe50100c5baa4be5121949"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/api/characters_controller.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/api/characters_controller.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 346,
+   "sha256": "d7593e11a96310424c625623b16363421c1706ce4dbe246a31ffffdb24f53897"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/api/guide_controller.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/api/guide_controller.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 149,
+   "sha256": "3ddb79a5cb44287611dd00800b046a86fd2e6cb5fd34833ed6eb1c8c04e15b3e"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/characters_appcomponent.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/characters_appcomponent.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 193,
+   "sha256": "fb08ec178c71848a057e38aeed0de5d15d7c52c24af7c3e178ee42c595d20074"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/data/entities/character.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/data/entities/character.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 243,
+   "sha256": "1752014cb3425017355c315cc4cfe2854889c0fadf41a44cbe5c77c24a0b65e1"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/data/repositories/character_repository.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/data/repositories/character_repository.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 314,
+   "sha256": "6512987ef968b5a8d659a1f0eed3561c0c9ded502a69728cf121f006fb142365"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/models/new_character.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/models/new_character.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 156,
+   "sha256": "40547d20f6e085716a694dc0b4f8882894bd82c22e4cefd5878a14a795c5d4f9"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/models/question.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/models/question.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 47,
+   "sha256": "eb2366abaf2c5bdb1c8dd42d506b5e8dac20c14528966f31e81a27d3ac148538"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/usecases/alive_characters.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/usecases/alive_characters.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 121,
+   "sha256": "d6c8c232f3b60d1b18d3b0018759d2117e89abd87ec974020ccf763cb7618d0d"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/usecases/create_character.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/usecases/create_character.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 412,
+   "sha256": "dad10c7f064001886bf125abb03967fc2ee849e0e0e71bc8e99dd6d5aedc3ff2"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/usecases/get_character.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/components/characters/domain/usecases/get_character.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 120,
+   "sha256": "45feb9c2e0b77c71a5b482c455b464d39185c1d4bbf68bdaff1276fcdb273a86"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/config.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/config.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 375,
+   "sha256": "2d77b4b6830f548934064488610cf2c38bd53cbcb7d259a9435de293fbcb3251"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/config/project_config.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/config/project_config.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 249,
+   "sha256": "b53166204a5d6188153940ac21cb6e66f093e428e596201367f3c19cf333cae3"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-fastapi/rick_api/test/characters_test.nuc",
+   "source": "dragonfly-backend/examples/examples-fastapi/rick_api/test/characters_test.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 553,
+   "sha256": "4766990bc56818d5120ebd247fa33ebbf7c7022bcdbd4c14e803254ed7c14951"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/examples/examples-nestjs/users.nuc",
+   "source": "dragonfly-backend/examples/examples-nestjs/users.nuc",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 1032,
+   "sha256": "ffacf457ea3d263a71e6b6736e8325dfc5286362e82ab6dd719d5b7867d9801c"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/spec/backend.md",
+   "source": "dragonfly-backend/spec/backend.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 19647,
+   "sha256": "b22a4dc24d2f40e3af190b4693d1461109d021c3bdcf9f58edc43b07c7ba2f9e"
+  },
+  {
+   "path": "05-backend/dragonfly-backend/spec/brief/backend.md",
+   "source": "dragonfly-backend/spec/brief/backend.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend",
+   "agents": true,
+   "bytes": 4025,
+   "sha256": "342ca1ec9cea028c731ce4d0574ccb88d29ecacfc2e001d198aa2c2ce0e987ac"
+  },
+  {
+   "path": "05-backend-dialects/dragonfly-backend/spec/brief/fastapi.md",
+   "source": "dragonfly-backend/spec/brief/fastapi.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend-dialects",
+   "agents": false,
+   "bytes": 493,
+   "sha256": "bbc20f6f5a7ed3cc65637fd665dcb3bd1dcdd562c775160f879160ac0027c0ac"
+  },
+  {
+   "path": "05-backend-dialects/dragonfly-backend/spec/brief/nestjs.md",
+   "source": "dragonfly-backend/spec/brief/nestjs.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend-dialects",
+   "agents": false,
+   "bytes": 393,
+   "sha256": "c3a776d0e753adb236bf59337b7af9851700135578acae34b0d6f3a138fe7f28"
+  },
+  {
+   "path": "05-backend-dialects/dragonfly-backend/spec/fastapi.md",
+   "source": "dragonfly-backend/spec/fastapi.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend-dialects",
+   "agents": false,
+   "bytes": 22146,
+   "sha256": "38607156b70e288caa25e5fb30358a0aef98f95c222db621a328a309f8a2fd11"
+  },
+  {
+   "path": "05-backend-dialects/dragonfly-backend/spec/nestjs.md",
+   "source": "dragonfly-backend/spec/nestjs.md",
+   "repo": "dragonfly-backend",
+   "section": "05-backend-dialects",
+   "agents": false,
+   "bytes": 25191,
+   "sha256": "bf1157e7db6341c4ef4a540dbc6698f7fa8456e95a939ba327bae7ec5b6e32d0"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/AGENTS.md",
+   "source": "dragonfly-mobile/AGENTS.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1357,
+   "sha256": "f32009e4324c1315c4024f86895f54b70b17a41857c2a828af5b6ca960d98383"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/CHANGELOG.md",
+   "source": "dragonfly-mobile/CHANGELOG.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 325,
+   "sha256": "f56f95b58e763d46bc47061aba6fe3c561a20b31349391ece191d1642905c288"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/CONTRIBUTING.md",
+   "source": "dragonfly-mobile/CONTRIBUTING.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1436,
+   "sha256": "8a70d34542ecb6bc8633f4459e0abe8f53ebbbdae84eea432283034d4520266d"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/README.md",
+   "source": "dragonfly-mobile/README.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1206,
+   "sha256": "a80896697af5182b144a319b766c1601d111068e203d9ac008d79f3831ac5f37"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/dialects/mobile/flutter/docs.toml",
+   "source": "dragonfly-mobile/dialects/mobile/flutter/docs.toml",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 35927,
+   "sha256": "6802eecf98466f532c9c9986f6f0e221011366e814db5edab5d35778b4ab117a"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/dialects/mobile/platform.toml",
+   "source": "dragonfly-mobile/dialects/mobile/platform.toml",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 9722,
+   "sha256": "6c63cbd56a5efe74c896e0bb7d2afa5d19a3f7346d0a6b959bca9bc7925fc51d"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/docs/context/dragonfly-mobile/CONTEXT.md",
+   "source": "dragonfly-mobile/docs/context/dragonfly-mobile/CONTEXT.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 4575,
+   "sha256": "b46baa9b1d4d0f57e93e56ab02044ee04844ceba00f86c5d382a799d93aa0f05"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/docs/context/dragonfly-mobile/kinds.md",
+   "source": "dragonfly-mobile/docs/context/dragonfly-mobile/kinds.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 4557,
+   "sha256": "98429a745043b8468b4fc98a92c14ed776e9e9fe553dc75f164601ab8e6f1a56"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/docs/context/dragonfly-mobile/project.md",
+   "source": "dragonfly-mobile/docs/context/dragonfly-mobile/project.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 3236,
+   "sha256": "73bffd912bd7b317a83e39da7021a41be936549839a37f45d2743344ba4034cb"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/docs/context/dragonfly-mobile/runtime.md",
+   "source": "dragonfly-mobile/docs/context/dragonfly-mobile/runtime.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 5593,
+   "sha256": "a48b23e1fd59bceb954fbd57d70eb81cf1b0cbd4aa4e6f1692178313b5021129"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/docs/context/dragonfly-mobile/security.md",
+   "source": "dragonfly-mobile/docs/context/dragonfly-mobile/security.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 831,
+   "sha256": "5d829f070e0916580831b711b2c5859faeded17dc32b93c79bfbb2140fb345a8"
+  },
+  {
+   "path": "06-mobile-dialects/dragonfly-mobile/docs/dragonfly/genkit.md",
+   "source": "dragonfly-mobile/docs/dragonfly/genkit.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile-dialects",
+   "agents": false,
+   "bytes": 6112,
+   "sha256": "6d5bf78f4e899ada8fc8757c18220d7683bf6694d36320ecd1fb39fd2d86d117"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/characters_component.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/characters_component.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 323,
+   "sha256": "8e195c780b2f166642f48f801987b5f72753a8ff10f6bf551b3f9819cb964378"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/config/characters_config.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/config/characters_config.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 365,
+   "sha256": "b1dd97d10d97dd181e18a8e648eb665806898006e74dc26b0fb666106b531f51"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/data/character_repository.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/data/character_repository.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1148,
+   "sha256": "554f7f9b1b80dc766516f6a7590bb9a083cf4c3378889a4f49cf85bdd39435b9"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/models/character.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/models/character.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 515,
+   "sha256": "8ef4f9219c02de74a715bb0eac274989a8ba9faa1816ff802bd7ee88669edac0"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/models/character_error.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/models/character_error.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 115,
+   "sha256": "adcb47dd2e76fca0869cf00759570d43193c91aa2b33c5f85386b780a0bfe414"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/models/character_params.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/models/character_params.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 169,
+   "sha256": "31e97008255513774ec3de9ac6e084b2a80d52d9374f5efddad4dff04a3f5934"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/services/character_names.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/services/character_names.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 167,
+   "sha256": "53c73d43f77fc8cf2f3bb3012f449ce4c789efff16196353a890949fa4dfe3e4"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/get_one_character_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/get_one_character_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 145,
+   "sha256": "344c6bd4a522db7756ad6a2039ba0add040a189d99791a4bfbe2660c406a5eb3"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/get_page_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/get_page_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 317,
+   "sha256": "f497070fc4fcab2279ea6a4f01788dcd4df2f8bf75bfea363499670d7221ccad"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/save_character_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/save_character_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 247,
+   "sha256": "1216de7a1a4064e4236ae0319c18683a43942bd75a1fba0dfbec54f33fea5e2c"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/search_characters_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/domain/usecases/search_characters_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 183,
+   "sha256": "c64356744ee799ec0afa16c18bb75878b3950ee898c8cc39c1de952a10c767a6"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/detail/character_detail_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/detail/character_detail_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 429,
+   "sha256": "e6fb2fa23f9faed228fa478514b10ef79802640a213a04bfbea3299a083ef445"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/favorites/favorites_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/favorites/favorites_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1066,
+   "sha256": "2afe5bd659d87e4d634f3813c94226850d9194ec99a756bde7ae58ffe82255a6"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/list/character_list_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/list/character_list_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1389,
+   "sha256": "c3da21a8708421a5c43f679afa1862dfb331dd4df27c2cace01d6b563e8ac3ee"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/list/managers/characters_manager.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/list/managers/characters_manager.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 298,
+   "sha256": "04586b1e46935d2db48a27bfb4e3a9f96ba10e5588409c68a76165373d9c60fa"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/list/state_models/characters_state.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/list/state_models/characters_state.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 132,
+   "sha256": "7acdf90add790b9aad2cbcbc9e22a5daaf34d76c038ad3c886db0eb386b3eddd"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/widgets/character_tile.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/characters/presentation/widgets/character_tile.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 398,
+   "sha256": "9efc368b144bbde24074057b3a0634ca02d06580fed78d0665a7dd4605b52ac5"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/data/episode_repository.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/data/episode_repository.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 114,
+   "sha256": "7d5c0c63a8bd9e9905f06064b631d64340a362fa7d3d09e4976fd0f9769c7a18"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/domain/models/episode.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/domain/models/episode.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 152,
+   "sha256": "68cb017719e32d593918f675e9d896460a5c8abd896cc98446fec73039e48ba9"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/domain/usecases/get_episodes_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/domain/usecases/get_episodes_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 174,
+   "sha256": "bf63b03b57df4c1956c587cb05cc72c6ded59e8bdfa9705ab1430786ac58a1a0"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/episodes_component.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/episodes/episodes_component.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 73,
+   "sha256": "3b02191e5fbaca3b686c574e6672fc3d1cc752376ec53d6c9d2763e4f6ab4d38"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/data/auth_repository.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/data/auth_repository.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 130,
+   "sha256": "e80fe273aa2f089224a3932d78e8931a35051a377827be89c3dbe1d13cb96bea"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/domain/models/auth.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/domain/models/auth.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 361,
+   "sha256": "7250c3427d07d19d8e16ce58a17bc0d8d205198b23bef186cd0d7c6e4f09370d"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/domain/usecases/login_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/domain/usecases/login_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 598,
+   "sha256": "7356c960d97bd21fc3bc687ee0f92f38ce1cc48d28317289acae364cabae9b0a"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/domain/usecases/logout_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/domain/usecases/logout_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 224,
+   "sha256": "6bdef4589e944e06b7c949989ca906d2c82e774480324d7ec1ba05e96fd4b263"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/forms/login_form.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/forms/login_form.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 301,
+   "sha256": "5f71ee01729be0ab545ec8dab1f51f4ea4d4144af92e3c7248cd7e29d3dc87ef"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/login_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/login_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1571,
+   "sha256": "fbcef4089b5b5b6c8fa837f10917d642b239b7bae3ede0374f94e45f0f5ab766"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/managers/login_form_manager.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/managers/login_form_manager.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 544,
+   "sha256": "dddcc3e4a9fa7ae0e1f4433f637b5d20e5c72b9deac2d2047078347de4941d60"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/managers/login_manager.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/managers/login_manager.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 258,
+   "sha256": "700d3edf176a87bd363e77d32e2b2463c3c014782246c47cd7198bf3da07c0ea"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/state_models/login_state.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/presentation/login/state_models/login_state.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 62,
+   "sha256": "06714fec0ce901faf9d67142cafda1b75647819531f0a7cd821d7a90634630f8"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/session_component.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/components/session/session_component.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 92,
+   "sha256": "59287316628ac5667f27b2e95914d58ff7bbc9bcf85ffceaacad8800aaff94e5"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/config.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/config.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 790,
+   "sha256": "a24d3bcc2d15fce60d3939bba8b92b414fa0a1a79230e207ef9506388464f431"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/config/project_config.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/config/project_config.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1122,
+   "sha256": "ec83f719cf1b0738b595f669c7cd5eeface7960d8d54468cafd953f79f5d7fd2"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/integration_test/app_test.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/integration_test/app_test.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 563,
+   "sha256": "f5bfa6f5edf622644fba87f70cc93798b6206c52d41e24393eeae82dc4613f6e"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/main.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/main.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 444,
+   "sha256": "53e797b0006f22bb6ae8b39c2661157d150a2a3d894b77387416446b2687dc6c"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/components/force_logout_component.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/components/force_logout_component.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 311,
+   "sha256": "78f1816023e340f3987c79e39fcfc401d4a17a30c37b1d63492edfbe6747723c"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/converters/date_converter.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/converters/date_converter.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 205,
+   "sha256": "10b70a128443323a7521427031ce580c332297b1b5c9b4c588edcd608e7fb7c6"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/converters/uri_converter.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/converters/uri_converter.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 301,
+   "sha256": "2d273505fb7b781c43bfe782aea683223fc4cd3b5d58ba21b3c512a018037560"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/events/force_logout.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/events/force_logout.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 187,
+   "sha256": "11cb88dfeaaa4bee2e48affcde4d37abf0a640131d2bf64f1cf855bc2b9414d3"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/events/force_update_required.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/events/force_update_required.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 138,
+   "sha256": "69f685035efb37a6b2f7cbf45ea1521fa7a3dad3695cd3b975c29439eb05e1f3"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/guards/premium_guard.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/guards/premium_guard.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 177,
+   "sha256": "0932d92c6447c7d100f63960d2cf135b1a39c86ebcdbeb03172cb436a489aeb6"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/models/page.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/models/page.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 281,
+   "sha256": "5044fa02a04ba5626d0413cd7f00c7f2d4d11297cb75732f69fba6c330fa6784"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/screens/denied_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/screens/denied_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 228,
+   "sha256": "416298868b12a3a8aedb05ec4cf9b75ffa0190ebb2e6f2a3b304c11f515f8512"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/screens/not_found_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/screens/not_found_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 190,
+   "sha256": "e0f577269de03914b5bff9d175b36ff4da608084b6cfe5ee8cab15cbf30023f3"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/screens/start_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/screens/start_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 755,
+   "sha256": "1600b3764f55a0e83fd311dfdec3ba423a2c5d1249b2352ea1a0f5979dd31b9a"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/widgets/main_shell.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/widgets/main_shell.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 637,
+   "sha256": "b0e4e7ace8cc97e26b7dad0a293bc616c128e4287409091eb68f479425554da0"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/widgets/offline_banner.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/shared/widgets/offline_banner.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 227,
+   "sha256": "6c17d8a6a8fe3d6e6e07405d3e7d813b6ae7a30ef85ab5f4e030c9bd90c470b0"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/test/characters_test.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/test/characters_test.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1571,
+   "sha256": "2be9f39b40c5230c4b5c2afc2c6473ff947b9eeae0895713ffbc3bf18d1e2df4"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/test/login_form_test.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/test/login_form_test.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 960,
+   "sha256": "1db3b9af48c6a1ad038f7dd33bdf8246b94120e432e01c41fae4d18031670eb0"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/test/session_test.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/clean-flutter-project/test/session_test.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 875,
+   "sha256": "9d5b35295f6b0f51ff48bc47381b7d1704ef9e12671d25032ef3ea3b39131fbd"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/dart_extension.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/dart_extension.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 644,
+   "sha256": "33271f3a4f2b7a485ecfcb638a0e264b2043d13c739f9aa39687f3b15af677c5"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/flutter_app.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/flutter_app.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 1048,
+   "sha256": "21957960b5b0002218e8c19acca48c4dc3f6e30825e4787b6d1acf26567de4a3"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/framework_libs.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/framework_libs.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 586,
+   "sha256": "bb73e3f367a2c8a575d5f68fb2b382cd56d400058f3fd74c7690538e32c97516"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/assistant.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/assistant.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 205,
+   "sha256": "b374889091af4cb683557b14fe59aa65dad9dd5cf4d5c82ea32017b0ae3a8707"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/faq.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/faq.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 276,
+   "sha256": "b03a1ae65e81448e990ce56ff58223494dc0df8974d09c11b8bf4084f99ab4d2"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/note_tools.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/note_tools.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 470,
+   "sha256": "add308598613ead6e0c06ea0e89199386ed0f6fdeedd035b862217ddb96aa2d3"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/summarize.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/ai/summarize.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 197,
+   "sha256": "0ea517a9636d8573a0f282c5fba9763f71f7ed5dec48da1afb7dffc6b79b90af"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/data/story_flows.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/data/story_flows.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 230,
+   "sha256": "877242536df8e49e29d8d5a63815da1f3b675411a52747f1449697b4c46c5ca1"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/domain/models/summary.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/domain/models/summary.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 119,
+   "sha256": "58ac32db8c23506a6683c7be895432872ab8a91b6e4667476d9cf303846a2f50"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/presentation/chat/chat_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/components/assistant/presentation/chat/chat_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 904,
+   "sha256": "32c54098eea1b03330b709ce270d57ab64dd8eca886d2b3aff49c47d32f98fed"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/config.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/config.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 557,
+   "sha256": "6612d00ecc5d8116d60b2f4edac7bd77f6cacb081b005682cded10a9504095d7"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/config/project_config.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/config/project_config.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 286,
+   "sha256": "15eb58d3e90ae132e9a9d97bea8b967726e81b583d29363163c2824417ebc227"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/main.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/main.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 171,
+   "sha256": "0c2bcd1f65b9b209133595d4840dcccfc615d2eae5849722b3ab1e15d1ff673b"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/test/assistant_test.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/genkit-assistant/test/assistant_test.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 632,
+   "sha256": "25e8bb9eb2dbdbdae9b6f81e5bc6e23a4126e634b7e4c6d8b67765b22c3bb3ab"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/domain/usecases/add_task_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/domain/usecases/add_task_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 267,
+   "sha256": "3c5c92f290bb16f70a6be51a47ad556c9a7476f17544205f62217efbfe24e410"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/domain/usecases/pending_tasks_usecase.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/domain/usecases/pending_tasks_usecase.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 226,
+   "sha256": "74b665be6532c7169778e62029e84b4a6a86737510cb98c453beb0a48f09dfd9"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/presentation/list/managers/tasks_manager.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/presentation/list/managers/tasks_manager.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 237,
+   "sha256": "1a232141e53e86400e18a0ffe60ea130253ee958e113ca2eb6e5a233624661b4"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/presentation/list/state_models/tasks_state.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/presentation/list/state_models/tasks_state.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 70,
+   "sha256": "9d2cd4445a900cc70474ca4b7dd9e081b1c70e692e6247b8097c4f2e1070e844"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/presentation/list/tasks_screen.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/presentation/list/tasks_screen.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 498,
+   "sha256": "049f8b77013b5b5b555a22371b410cf706c966f29378f95438067e3e54a54ca0"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/tasks_component.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/components/tasks/tasks_component.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 97,
+   "sha256": "8e68a6a2b26c26b88151d0fa0baa62fc3fc6b3a25573825a43cdeb13a89b451c"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/config.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/config.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 490,
+   "sha256": "ec5b36fc86335356e751b66dcf749dc5220656a4926cd1453bb635ed8c59c965"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/config/project_config.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/config/project_config.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 228,
+   "sha256": "fffd40adb2a9585516979b6100326bfda587c7cf54ae1603c4b029fd997fc588"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/assistant_repository.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/assistant_repository.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 452,
+   "sha256": "35536febe37d5ee104a201fa773baa7051746b09e6a476ef4a6649bdcf954025"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/chat_reply.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/chat_reply.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 148,
+   "sha256": "c43f72ea7c844a90971951b76e45ce2c48578d4545e3fa94be9829cb8898fe97"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/chat_request.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/chat_request.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 261,
+   "sha256": "dddad7c077a0f00ade535c07b585729bf9492d2fc24a8fbbfee0cc453f948d00"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/moved.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/moved.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 173,
+   "sha256": "c9b14aa8624a1068f5804de758fef65c1ea86385ff8c4cf6c667f44392f78ebd"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/new_project.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/new_project.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 227,
+   "sha256": "1a4c14ef5ec5b4563fe24b00b4be9330c2d7e2f6ff5114acf92193173fdb3d3f"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/new_task.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/new_task.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 280,
+   "sha256": "df98251920f81fb89788596dd53d8821ccd2bc80aabe9c52919bc479b534c09c"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/plan_reply.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/plan_reply.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 165,
+   "sha256": "6dd16db7091c8692c6d791e1a9b1793c4dc281dd2b5abcfcdbc030e21e5563da"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/plan_request.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/plan_request.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 191,
+   "sha256": "e94726639833665f484e3eff86e46d0351af861034cbf31d743fc1bc73b92951"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/project.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/project.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 257,
+   "sha256": "ce27e85512d6efbc38f557eeffe51bfd4839b406632daaa37aee8265fc1c6371"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/removed.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/removed.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 166,
+   "sha256": "e59dce168f3a42092a5020bbeb0ac2885693c012595c2d98886081d52ea54083"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/tag.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/tag.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 275,
+   "sha256": "00a472aaceaf3ba1b2fdf55ff892acd2d7d1021a7055304b0fb35be5009a42f6"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/task.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/task.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 447,
+   "sha256": "eae666a5a73dc279fbdafcac3808420ea28e17cf36bb0414ffd350eff1f27ced"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/task_changes.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/task_changes.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 285,
+   "sha256": "c3e6f6828ccb54f90611fc5a263d4e3799fb0db840084db4c09c629f61318929"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/tasks_api_error.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/models/tasks_api_error.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 249,
+   "sha256": "a1c8b6b665615842fb9850791fc114e8284879d10a45f6907f89a3f58fc4143a"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/projects_repository.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/projects_repository.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 561,
+   "sha256": "1108b77f75c0cd426664a50b86f5bedf37b2601c1d3f14f4e665a5ee600d32e9"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/tasks_repository.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/contracts/tasks_api/tasks_repository.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 821,
+   "sha256": "85c81ba31576f4a3d501f6c7ab0eae6d0c3eeb9775d3ccb4eecc1c143c4fdd1c"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/main.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/main.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 167,
+   "sha256": "75464c7b9de36b73a6b273460ba680b4930c4ff227df210d7f74ef89c554cbc4"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/test/tasks_test.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/tasks_app/test/tasks_test.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 705,
+   "sha256": "83be26714ffeb34cd07da771e0c254ac2afd7958b66ac027a89118eb8acc56d8"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/examples/examples-flutter-dialect/widgets_tour.nuc",
+   "source": "dragonfly-mobile/examples/examples-flutter-dialect/widgets_tour.nuc",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 5550,
+   "sha256": "93d1438c7c8920d259bb3ebed651abdf6f62072a7ee001ec5cadf4d227917969"
+  },
+  {
+   "path": "06-mobile-dialects/dragonfly-mobile/packages/dragonfly/CHANGELOG.md",
+   "source": "dragonfly-mobile/packages/dragonfly/CHANGELOG.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile-dialects",
+   "agents": false,
+   "bytes": 2069,
+   "sha256": "18ae252b1c28f6a9d1532009a6c70000cf0652ad410b31ec5790e1329fd961e3"
+  },
+  {
+   "path": "06-mobile-dialects/dragonfly-mobile/packages/dragonfly/README.md",
+   "source": "dragonfly-mobile/packages/dragonfly/README.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile-dialects",
+   "agents": false,
+   "bytes": 6333,
+   "sha256": "e3ecdf426f8b6bfe178bb6aa016fbd4b21c9400a3fa5fe9b99071e4df3cc6a14"
+  },
+  {
+   "path": "06-mobile-dialects/dragonfly-mobile/spec/brief/flutter.md",
+   "source": "dragonfly-mobile/spec/brief/flutter.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile-dialects",
+   "agents": false,
+   "bytes": 439,
+   "sha256": "9961c48afdafb6844ff514e7c9350808dd043e63177826f05a0f84dc99d41d51"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/spec/brief/mobile.md",
+   "source": "dragonfly-mobile/spec/brief/mobile.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 6663,
+   "sha256": "529217c67b0c8c31e55baad2033c1deb56bd40884f408c8868f8be0e309e10a0"
+  },
+  {
+   "path": "06-mobile-dialects/dragonfly-mobile/spec/dragonfly.md",
+   "source": "dragonfly-mobile/spec/dragonfly.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile-dialects",
+   "agents": false,
+   "bytes": 19108,
+   "sha256": "1c3e1c84f307953514d67d31ea801f4b13a00c0dd1c1c17eb84709770f9fb6b7"
+  },
+  {
+   "path": "06-mobile-dialects/dragonfly-mobile/spec/flutter.md",
+   "source": "dragonfly-mobile/spec/flutter.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile-dialects",
+   "agents": false,
+   "bytes": 147060,
+   "sha256": "4965653308305c131c1ae0090698c1a690be38e7654e384fea7aac317a798a0d"
+  },
+  {
+   "path": "06-mobile/dragonfly-mobile/spec/mobile.md",
+   "source": "dragonfly-mobile/spec/mobile.md",
+   "repo": "dragonfly-mobile",
+   "section": "06-mobile",
+   "agents": true,
+   "bytes": 8266,
+   "sha256": "cb606ffe57f735a0a7a286718e9226072f5bc26a5782a3392bc7419e10993397"
+  },
+  {
+   "path": "07-web/dragonfly-web/AGENTS.md",
+   "source": "dragonfly-web/AGENTS.md",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 988,
+   "sha256": "e2f15a6fa0d3c664f11ce0b2703765d2ac46adc30af75f39b0c829415841bb1f"
+  },
+  {
+   "path": "07-web/dragonfly-web/CHANGELOG.md",
+   "source": "dragonfly-web/CHANGELOG.md",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 320,
+   "sha256": "6c95f8a2681b9e1a04a8c7735c287a5c06f454ed245ccf2d11571d0a6de06981"
+  },
+  {
+   "path": "07-web/dragonfly-web/CONTRIBUTING.md",
+   "source": "dragonfly-web/CONTRIBUTING.md",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 1246,
+   "sha256": "5c1d573206bc51ebc287ea26e3fd6cee4fa9224812f9e99091a083334032ce1c"
+  },
+  {
+   "path": "07-web/dragonfly-web/README.md",
+   "source": "dragonfly-web/README.md",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 978,
+   "sha256": "45f0407dcb185738868f9e429261a34c118f3d3dfa97e088813f5ca8c8449121"
+  },
+  {
+   "path": "07-web/dragonfly-web/dialects/web/platform.toml",
+   "source": "dragonfly-web/dialects/web/platform.toml",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 9913,
+   "sha256": "9ae334945b61f26def4801766f61eec443dd975956cdd239e427e2a3fac0440e"
+  },
+  {
+   "path": "07-web/dragonfly-web/dialects/web/react/docs.toml",
+   "source": "dragonfly-web/dialects/web/react/docs.toml",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 14451,
+   "sha256": "afd3313b683e44c166e0cfcf9b1d2b1a0f61176ea1b946324c0b3c8e2094fe5b"
+  },
+  {
+   "path": "07-web/dragonfly-web/docs/context/dragonfly-web/CONTEXT.md",
+   "source": "dragonfly-web/docs/context/dragonfly-web/CONTEXT.md",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 4942,
+   "sha256": "f2824995ae07e5b9dda998aa27b9a2b27c4528f8de8fa93575a136e0af2b790f"
+  },
+  {
+   "path": "07-web-dialects/dragonfly-web/docs/dragonfly/react.md",
+   "source": "dragonfly-web/docs/dragonfly/react.md",
+   "repo": "dragonfly-web",
+   "section": "07-web-dialects",
+   "agents": false,
+   "bytes": 8208,
+   "sha256": "01eac6e40d96438d88ab511f34b692c7bcc0786fda17c06a3b8bc5e91d0bd6a6"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/characters_component.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/characters_component.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 323,
+   "sha256": "8e195c780b2f166642f48f801987b5f72753a8ff10f6bf551b3f9819cb964378"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/data/character_repository.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/data/character_repository.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 716,
+   "sha256": "18238c3e4f6569429d91df510326eccc465ecb6952c1996db144636c98602ba8"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/models/character.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/models/character.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 195,
+   "sha256": "d566c6279313bed5a26763021f15ed586556e7f3649779ef2ed31b89a45b8fe9"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/models/character_error.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/models/character_error.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 115,
+   "sha256": "adcb47dd2e76fca0869cf00759570d43193c91aa2b33c5f85386b780a0bfe414"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/models/character_params.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/models/character_params.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 111,
+   "sha256": "19a5261ab0be03983af883ea70efd0c10f6fbccd19afcb14839f423a82395db2"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/services/character_names.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/services/character_names.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 166,
+   "sha256": "5f76dc0ade59ef3b08d2fde99a1221d2f4e20f2e14232e98c8cf7a29c4245e38"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/get_one_character_usecase.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/get_one_character_usecase.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 145,
+   "sha256": "344c6bd4a522db7756ad6a2039ba0add040a189d99791a4bfbe2660c406a5eb3"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/get_page_usecase.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/get_page_usecase.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 317,
+   "sha256": "f497070fc4fcab2279ea6a4f01788dcd4df2f8bf75bfea363499670d7221ccad"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/save_character_usecase.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/save_character_usecase.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 247,
+   "sha256": "1216de7a1a4064e4236ae0319c18683a43942bd75a1fba0dfbec54f33fea5e2c"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/search_characters_usecase.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/domain/usecases/search_characters_usecase.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 183,
+   "sha256": "c64356744ee799ec0afa16c18bb75878b3950ee898c8cc39c1de952a10c767a6"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/presentation/detail/character_detail_screen.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/presentation/detail/character_detail_screen.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 1238,
+   "sha256": "9e43aace6e33ec43e3e05d206aedb880ee215f354d42213dc79ae5bb8e383d04"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/presentation/list/character_list_screen.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/presentation/list/character_list_screen.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 675,
+   "sha256": "169f1644872990bbf903b8d365a419ac1e363a8fc5e0069f3b37cf713ded9dcc"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/presentation/list/managers/characters_manager.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/presentation/list/managers/characters_manager.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 298,
+   "sha256": "04586b1e46935d2db48a27bfb4e3a9f96ba10e5588409c68a76165373d9c60fa"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/presentation/list/state_models/characters_state.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/presentation/list/state_models/characters_state.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 132,
+   "sha256": "7acdf90add790b9aad2cbcbc9e22a5daaf34d76c038ad3c886db0eb386b3eddd"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/components/characters/presentation/widgets/character_tile.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/components/characters/presentation/widgets/character_tile.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 469,
+   "sha256": "9373d9f79626263e75742125bafe6e7c88dec8664259f19d568b719a97a0120f"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/config.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/config.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 446,
+   "sha256": "c284315a4bd6a02c60db0f40cde962ea663318bae4f2554d693e86a8bd6aeb3c"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/config/project_config.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/config/project_config.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 309,
+   "sha256": "771967ae27d457165471111b7f80f2f32580acd7e66530e080bc5704caa09fd8"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/main.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/main.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 194,
+   "sha256": "987a6e40eddcc442025ab59bf6ca7f81620c0a25451221863db468179b1b0387"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/shared/components/force_logout_component.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/shared/components/force_logout_component.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 206,
+   "sha256": "d62703566758c3ba2cd98e8c97d615035430020d37cd27c4e143bb5a41f6a6e5"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/shared/events/force_logout.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/shared/events/force_logout.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 78,
+   "sha256": "3dd224b987d9bc25e7284812970f1c2844b37e4b1ad5bd822e3854d576fdffb4"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/shared/guards/premium_guard.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/shared/guards/premium_guard.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 177,
+   "sha256": "0932d92c6447c7d100f63960d2cf135b1a39c86ebcdbeb03172cb436a489aeb6"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/shared/models/page.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/shared/models/page.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 196,
+   "sha256": "a760994e8bbbe2a7784050320930e1d5eee9876ba67f60ece43ab406e57723aa"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/shared/screens/not_found_screen.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/shared/screens/not_found_screen.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 111,
+   "sha256": "1dbe79bd7ae5db16f4628534512e760c0cae819727979e06604458416e1833c9"
+  },
+  {
+   "path": "07-web/dragonfly-web/examples/examples-web/characters/test/characters_test.nuc",
+   "source": "dragonfly-web/examples/examples-web/characters/test/characters_test.nuc",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 1458,
+   "sha256": "eb5e2a5a3714e6e9e3e2a38fda3c451adf3e623644d2d4598bf0e9d61760fb61"
+  },
+  {
+   "path": "07-web-dialects/dragonfly-web/spec/brief/react.md",
+   "source": "dragonfly-web/spec/brief/react.md",
+   "repo": "dragonfly-web",
+   "section": "07-web-dialects",
+   "agents": false,
+   "bytes": 355,
+   "sha256": "1fb11a6690ef4d87ddc85fd78be0a1b07fa6d6e5c99e5f761d9e3754e5cdb4ca"
+  },
+  {
+   "path": "07-web/dragonfly-web/spec/brief/web.md",
+   "source": "dragonfly-web/spec/brief/web.md",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 5142,
+   "sha256": "51b86e3df283fc0756e14700c72c68c3002fd580113ea088e91e140d7a4d82d0"
+  },
+  {
+   "path": "07-web-dialects/dragonfly-web/spec/react.md",
+   "source": "dragonfly-web/spec/react.md",
+   "repo": "dragonfly-web",
+   "section": "07-web-dialects",
+   "agents": false,
+   "bytes": 8747,
+   "sha256": "953a150bd87c32359dec5145bede5365a594a3c4752de0723d88a690c57ad822"
+  },
+  {
+   "path": "07-web/dragonfly-web/spec/web.md",
+   "source": "dragonfly-web/spec/web.md",
+   "repo": "dragonfly-web",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 10440,
+   "sha256": "0023473d62aaa691f0cf1bc9d4e1d355adbf11c52f74ad6e6465c01bf40b90f3"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/AGENTS.md",
+   "source": "dragonfly/AGENTS.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 1216,
+   "sha256": "d4881475e9bcc00e03e8c8ae256b4eb5242a5f5829cca242d2a4c5c82de8a2d4"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/CHANGELOG.md",
+   "source": "dragonfly/CHANGELOG.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 321,
+   "sha256": "6da1d7c4a81f6a438ed3a6642a721abdce5ef0923a725d50d4fc3ddf8d38680b"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/CONTRIBUTING.md",
+   "source": "dragonfly/CONTRIBUTING.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 1263,
+   "sha256": "1ede4454c90fa48c7efa1469ffa06919fa5ea7623db0175ca618f71e265c6db1"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/README.md",
+   "source": "dragonfly/README.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 3155,
+   "sha256": "51fac646a6505d8f7b3f1a64f7625c740dc59d77109e6cd4fff88dbd3d5e1139"
+  },
+  {
+   "path": "08-cli/dragonfly/docs/context/cli/CONTEXT.md",
+   "source": "dragonfly/docs/context/cli/CONTEXT.md",
+   "repo": "dragonfly",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 9068,
+   "sha256": "d8d8f6f0a47d45d65eff877d261d74e0c9724f94921932776caf65494da01781"
+  },
+  {
+   "path": "08-cli/dragonfly/docs/context/cli/build.md",
+   "source": "dragonfly/docs/context/cli/build.md",
+   "repo": "dragonfly",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 2882,
+   "sha256": "02ef36c21fb27ed18b705c36d7d2d5e456a0a865865c5358964c1eb87cccafb4"
+  },
+  {
+   "path": "08-cli/dragonfly/docs/context/cli/devices.md",
+   "source": "dragonfly/docs/context/cli/devices.md",
+   "repo": "dragonfly",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 2770,
+   "sha256": "2215bdda7ecf16724b1bcf15262831e939d387b4ae1c6477296061d27ae61695"
+  },
+  {
+   "path": "08-cli/dragonfly/docs/context/cli/landing.md",
+   "source": "dragonfly/docs/context/cli/landing.md",
+   "repo": "dragonfly",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 2750,
+   "sha256": "81d317cfedc4a959cd94aaaa9d38f07866a737ee7732fdde2c911b986c688cd4"
+  },
+  {
+   "path": "08-cli/dragonfly/docs/context/cli/packages.md",
+   "source": "dragonfly/docs/context/cli/packages.md",
+   "repo": "dragonfly",
+   "section": "08-cli",
+   "agents": true,
+   "bytes": 2299,
+   "sha256": "7a98183b89f1cfd31c8cb2d3bcdb54bddc4f8799cfb0d31594cf9ebef8c1ce1d"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/docs/context/dragonfly/CONTEXT.md",
+   "source": "dragonfly/docs/context/dragonfly/CONTEXT.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 6022,
+   "sha256": "f3c1ff94dfe0c3f4c4227b2cbd59fd0d384ff9ea493d217978e650d1e136ca58"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/docs/dragonfly/README.md",
+   "source": "dragonfly/docs/dragonfly/README.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 7666,
+   "sha256": "3141d3b2f6560f7611e613095cef008d99b7928be69dcda4c724b7062147855c"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/docs/dragonfly/kinds.md",
+   "source": "dragonfly/docs/dragonfly/kinds.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 11053,
+   "sha256": "a4f77f533d5a458d6c165ffd27e854a5bed831e905dcca205f4707aa7e06c739"
+  },
+  {
+   "path": "04-dragonfly/dragonfly/docs/dragonfly/tutorial.md",
+   "source": "dragonfly/docs/dragonfly/tutorial.md",
+   "repo": "dragonfly",
+   "section": "04-dragonfly",
+   "agents": true,
+   "bytes": 14520,
+   "sha256": "fd46b05e3beeab55a82b13645de010a34d0caee3a331a56f63eee5dcc82950a2"
+  },
+  {
+   "path": "12-tools/examples/examples-nodejs/chat.nuc",
+   "source": "examples/examples-nodejs/chat.nuc",
+   "repo": "nuclearlang",
+   "section": "12-tools",
+   "agents": true,
+   "bytes": 672,
+   "sha256": "c8c3a83d92b2e57257689a0b125016ce4bb8a18f5eb92fa20e48ab3d925a112d"
+  },
+  {
+   "path": "12-tools/examples/examples-python/tour.nuc",
+   "source": "examples/examples-python/tour.nuc",
+   "repo": "nuclearlang",
+   "section": "12-tools",
+   "agents": true,
+   "bytes": 1864,
+   "sha256": "85330db62884b7e3f577ae9182e27a69462eb2849ed58e79c406f1c5c9d6d59c"
+  },
+  {
+   "path": "02-language/examples/projects/greetings/app/main.nuc",
+   "source": "examples/projects/greetings/app/main.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 84,
+   "sha256": "c1b77ce7c368aeaad67cc253da111c8a8ae43d98ef11ba2fb812bc644680c71d"
+  },
+  {
+   "path": "02-language/examples/projects/greetings/users/user_store.nuc",
+   "source": "examples/projects/greetings/users/user_store.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 230,
+   "sha256": "ffe8db24c28e0b6c8a3de688d2fb6bff151657348d7ee93aa6d4f84fc977a394"
+  },
+  {
+   "path": "02-language/examples/projects/greetings/users/users.nuc",
+   "source": "examples/projects/greetings/users/users.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 131,
+   "sha256": "b6fba5cbcd9e590e196fafc31a4e9036aaab3714d76e5ac08cc5be7b1fa602f5"
+  },
+  {
+   "path": "12-tools/examples/spec/base.nuc",
+   "source": "examples/spec/base.nuc",
+   "repo": "nuclearlang",
+   "section": "12-tools",
+   "agents": true,
+   "bytes": 2665,
+   "sha256": "7971a02ef5149c4d1191c7c390ecf7faa689011f4fa2c2685e64c7b70b775bde"
+  },
+  {
+   "path": "02-language/examples/stdlib/async.nuc",
+   "source": "examples/stdlib/async.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 499,
+   "sha256": "0d646d30d4b91de546451afe164f520fec66be386ca481c035c02c524eddd91b"
+  },
+  {
+   "path": "02-language/examples/stdlib/bits.nuc",
+   "source": "examples/stdlib/bits.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 775,
+   "sha256": "1bd79be1a7133d36f28779295c8d9383eb33e934d0079d771af1d0821731ff78"
+  },
+  {
+   "path": "02-language/examples/stdlib/bytes.nuc",
+   "source": "examples/stdlib/bytes.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 612,
+   "sha256": "3dc56f2311c3b8090910b732bb98baf483f36b21c9df9da38021c524f366cf41"
+  },
+  {
+   "path": "02-language/examples/stdlib/collections.nuc",
+   "source": "examples/stdlib/collections.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 1912,
+   "sha256": "56bc950f712b15779125915e64502de93950f54c66b6c6b45cefaa33d63f5ccc"
+  },
+  {
+   "path": "02-language/examples/stdlib/dates.nuc",
+   "source": "examples/stdlib/dates.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 848,
+   "sha256": "6a4b021ed7f6d2a20a134ffb631da64cb0c4742786f03c13d8a0b41a44f05fe8"
+  },
+  {
+   "path": "02-language/examples/stdlib/math.nuc",
+   "source": "examples/stdlib/math.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 1181,
+   "sha256": "8919fe92b91437bc26a0104403bf6db1aca9b338551a787a172689dfa52f2b18"
+  },
+  {
+   "path": "02-language/examples/stdlib/physics.nuc",
+   "source": "examples/stdlib/physics.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 913,
+   "sha256": "a979b8cb9be8a44200d2bc51d793d5458693e64c6f9fe21f558c8dee76042195"
+  },
+  {
+   "path": "02-language/examples/stdlib/regex.nuc",
+   "source": "examples/stdlib/regex.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 987,
+   "sha256": "421f8f6885fb900d92474f2534a10ea3ac32e1a829a2aec824fe0d5dd31eb036"
+  },
+  {
+   "path": "02-language/examples/stdlib/strings.nuc",
+   "source": "examples/stdlib/strings.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 1376,
+   "sha256": "3ee050e570369549ad196c0f7d460eb0c910849cb4fc45aaaae206da7412dcd0"
+  },
+  {
+   "path": "02-language/examples/stdlib/types.nuc",
+   "source": "examples/stdlib/types.nuc",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 1190,
+   "sha256": "e3b9bd15602663c1add49253600fb82f65f8ebbd4538acdc0da5366240ae2bbe"
+  },
+  {
+   "path": "01-introduction/github-profile/profile/README.md",
+   "source": "github-profile/profile/README.md",
+   "repo": "github-profile",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 1825,
+   "sha256": "99c69287d920ec69e042570da8a33fb1197febd14173e269b4b3b2ba24a18677"
+  },
+  {
+   "path": "02-language/languages/docs.toml",
+   "source": "languages/docs.toml",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 13565,
+   "sha256": "22edee99768afb6475527f29d26fdf21dd5d5b679bce5457908492a5957d63fc"
+  },
+  {
+   "path": "10-ai/nuclear-developer/AGENTS.md",
+   "source": "nuclear-developer/AGENTS.md",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1282,
+   "sha256": "5c7d11d5e14efd2c2e1a137ae157779fe14dae972edf37f20b1ee0ea99962dac"
+  },
+  {
+   "path": "10-ai/nuclear-developer/CHANGELOG.md",
+   "source": "nuclear-developer/CHANGELOG.md",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1243,
+   "sha256": "8dcb1704c55f76b309c1eb066c8d426cc3fbda4535c32cc098504874b6d34efe"
+  },
+  {
+   "path": "10-ai/nuclear-developer/CONTRIBUTING.md",
+   "source": "nuclear-developer/CONTRIBUTING.md",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1353,
+   "sha256": "b9f0009e0a95e264f7de98ef57b0672ffbc829ac209fe7e6137a7db1a8a3ce81"
+  },
+  {
+   "path": "10-ai/nuclear-developer/README.md",
+   "source": "nuclear-developer/README.md",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 14452,
+   "sha256": "31f72d47cbc23f3261a7b3c3cd17714b60a5cfd05253a96c463e5cdc508d5667"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/assistant.nuc",
+   "source": "nuclear-developer/components/developer/ai/assistant.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1258,
+   "sha256": "e7037d14267c71983d861b4261fb0907b555ba9e7a7870cf5da36aade4012bc7"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/coder.nuc",
+   "source": "nuclear-developer/components/developer/ai/coder.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 931,
+   "sha256": "a9d1824bea291bc86b763fb1c802b3d907512ad1d8dacc8b2f941f6750e477ae"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/diagnoser.nuc",
+   "source": "nuclear-developer/components/developer/ai/diagnoser.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 3510,
+   "sha256": "906b59dd588a855fa6b3601c7fb71b694e02180e7b6cb569914c95fa91027a8d"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/documenter.nuc",
+   "source": "nuclear-developer/components/developer/ai/documenter.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 912,
+   "sha256": "dec7b6577ff3c1887a2b1801459efd1bb03a9268aeb7e4542e1b7403f28a2750"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/planner.nuc",
+   "source": "nuclear-developer/components/developer/ai/planner.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 5541,
+   "sha256": "ac9adc2d6fb66450bd115c4df8c88788d1eecc313d008ba03c2fbd39e4b512eb"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/security.nuc",
+   "source": "nuclear-developer/components/developer/ai/security.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1027,
+   "sha256": "4e9ebf98f6e0e82a2df8bdc9298fb009b9c92951f86caa313f9c52277fc71d35"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/states/piece_state.nuc",
+   "source": "nuclear-developer/components/developer/ai/states/piece_state.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 595,
+   "sha256": "1e95430485e9484e51ff29d4ed7f1902a8af2aed3e05ed431d7a0e4315be0825"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/tester.nuc",
+   "source": "nuclear-developer/components/developer/ai/tester.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 850,
+   "sha256": "8c6248a17016cfdf51b66486a8ee40fc3deec17ace8f333477be006eca2f6f95"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/ai/workbench.nuc",
+   "source": "nuclear-developer/components/developer/ai/workbench.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 3533,
+   "sha256": "d26660fc05cd8cbc3d329993f949ed2402e6913b88f251b9e88adbc9ebb1b882"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/api/developer_controller.nuc",
+   "source": "nuclear-developer/components/developer/api/developer_controller.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 2031,
+   "sha256": "63d9e694fced0fa854de08219722fa50d4e81418e6000eb04323b824d4e3dead"
+  },
+  {
+   "path": "10-ai/nuclear-developer/components/developer/domain/models/developer_models.nuc",
+   "source": "nuclear-developer/components/developer/domain/models/developer_models.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1401,
+   "sha256": "e97cbd0df6116e8c1c699c2666551f3c5c20e53bc31a85ead9b443a1ffb4b7d9"
+  },
+  {
+   "path": "10-ai/nuclear-developer/config.nuc",
+   "source": "nuclear-developer/config.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 577,
+   "sha256": "cbe799dc3fa5747d5def799ebf21a89826a9166522fad7cc3dd988b3c711a8cd"
+  },
+  {
+   "path": "10-ai/nuclear-developer/config/project_config.nuc",
+   "source": "nuclear-developer/config/project_config.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 735,
+   "sha256": "1f19a7ebc7c2160da3ddd9870ddd5238f7b2c6a66272d3322dd44f16643599f0"
+  },
+  {
+   "path": "10-ai/nuclear-developer/test/workbench_test.nuc",
+   "source": "nuclear-developer/test/workbench_test.nuc",
+   "repo": "nuclear-developer",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 3148,
+   "sha256": "9ff25cdb5407b7564be652137429bb9d1554ac48a59ee0f8d67ed3ab6c245096"
+  },
+  {
+   "path": "10-ai/nuclear-graph/AGENTS.md",
+   "source": "nuclear-graph/AGENTS.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 929,
+   "sha256": "00bc4edb6bc5f9c06346a8eae7813ff2b2e20dee359718d53e8786da8a72c177"
+  },
+  {
+   "path": "10-ai/nuclear-graph/CHANGELOG.md",
+   "source": "nuclear-graph/CHANGELOG.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 778,
+   "sha256": "b51831e5231f4c1c86d8a11397bbb87e7a6bd28be0dabd9e6b15e49b94ae030c"
+  },
+  {
+   "path": "10-ai/nuclear-graph/CONTRIBUTING.md",
+   "source": "nuclear-graph/CONTRIBUTING.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1159,
+   "sha256": "1c95329697a97fc7c58f0dd440ad2831fda1cfee5a85ff4a9be8cb8f2488d2bc"
+  },
+  {
+   "path": "10-ai/nuclear-graph/README.md",
+   "source": "nuclear-graph/README.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 11640,
+   "sha256": "ab4f9a2f735d1313f1bca069378a461d7d7f98a5cc32fc08a3e6221d24f3f041"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/README.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/README.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1166,
+   "sha256": "9b5919ca14c24fc8e8123283420cbab7cb1fd42fc00054bf3ce798976570d5e4"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/chat.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/chat.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 218,
+   "sha256": "b70a29007508f08c2cc6ebde62a312a0b6a67412d8675091e3ac92daee4a5419"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/diagnose.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/diagnose.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 898,
+   "sha256": "5896b0b5899e9af5556c8835b09420fe11036e4bab019cb907f6c67d673ea059"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/document.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/document.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 497,
+   "sha256": "95aa1a31bb0ed8ea6fe67714e5c6756122d5ee0dd1dbf0ea103eb611b92790c1"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/piece.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/piece.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 201,
+   "sha256": "4c850f3171638784c506f0e3c89eb0ab010890a7d3c8d37588462f915b9b2315"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/plan-again.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/plan-again.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 100,
+   "sha256": "d6d53436db9f3ae24a9ffadc2e06980845b8bedbb253b24dc7350a0ca267374c"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/plan.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/plan.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 626,
+   "sha256": "380701132ad6bc4a410e95e45f5a4cba81378f0056f459275c1234de2d6ece17"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/repair.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/repair.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 145,
+   "sha256": "cca06e4bf4be6b3b60ec853a998d3af39ef29fb95e8cc1f78b18150e4926aacf"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/security.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/security.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 259,
+   "sha256": "20e016a90a6ee37cdcbacf61e7145554b8e6b83e6ac5fdf1000364409e7a9219"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/agents/test.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/agents/test.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 67,
+   "sha256": "285ba90f460e9a2eaa9aa43cb26308da439af01fbcd3627d1e317fe114abeb63"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/bug.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/bug.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 564,
+   "sha256": "95a5198a48ca12b6cc43ac78ffbb48cb30fb807f77c7a25c04f19835f3798544"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/chat.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/chat.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 796,
+   "sha256": "e9248c8d5b8600835c794d8354f2b081144b4be7f389c5728e3a462c81c8d523"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/diagram.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/diagram.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 552,
+   "sha256": "a6c48fd38a57f51e12e387fee8f6f1b7e1c9b2ee615920c6d4470f38abb68cd6"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/docs.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/docs.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 551,
+   "sha256": "e33f072a96fe00561c3221c4af7570d1391a7ec3e5ab5a4163546dba79227b87"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/feature.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/feature.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 1580,
+   "sha256": "4b1159024c4d9afdb57d7d24119cffa0b526aa994ad4a0038284d69d85562dd1"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/piece.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/piece.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 3502,
+   "sha256": "db265b411fe9d95c04a5cf1ab1d018e6ef29040eb5d4eecd1ba3441a63cbc12c"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/plan.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/plan.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 813,
+   "sha256": "154bfb8f15dcc82038918b5a15b1c62d93124c0dc8c957b44a1a7ccab8e2ba28"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/refactor.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/refactor.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 712,
+   "sha256": "e1bd7ab6b071947971b54f4444b50153db1efe85977ee01a1e8936ac59ba1543"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/security.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/security.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 722,
+   "sha256": "9e2a7408d4266c6241ea5e9433fe95d3cc477ea41b10e3da1192ab15bf32436d"
+  },
+  {
+   "path": "10-ai/nuclear-graph/src/nuclear_graph/prompts/test.md",
+   "source": "nuclear-graph/src/nuclear_graph/prompts/test.md",
+   "repo": "nuclear-graph",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 2132,
+   "sha256": "bf61f73de5fa0b1044b4a65740a094a7c265c3f5ed28873319240d79b358f6eb"
+  },
+  {
+   "path": "09-editors/nuclear-jetbrains/CHANGELOG.md",
+   "source": "nuclear-jetbrains/CHANGELOG.md",
+   "repo": "nuclear-jetbrains",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 171,
+   "sha256": "da17c75f0fb172851ee9da7b18187f1786a23cba2bfb6804e8e50d754fe273ef"
+  },
+  {
+   "path": "09-editors/nuclear-jetbrains/CONTRIBUTING.md",
+   "source": "nuclear-jetbrains/CONTRIBUTING.md",
+   "repo": "nuclear-jetbrains",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1262,
+   "sha256": "54566afe13203e7fe2df007a76feebacf97d43cb0ff67c69e7bb2c2a0ea45dd2"
+  },
+  {
+   "path": "09-editors/nuclear-jetbrains/README.md",
+   "source": "nuclear-jetbrains/README.md",
+   "repo": "nuclear-jetbrains",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1444,
+   "sha256": "6fcd9499bbd3ff0e18a6d0aa83a33b8e341b59af5a678c43fd04b29d8aade3d9"
+  },
+  {
+   "path": "09-editors/nuclear-jetbrains/docs/context/editors/jetbrains.md",
+   "source": "nuclear-jetbrains/docs/context/editors/jetbrains.md",
+   "repo": "nuclear-jetbrains",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 3498,
+   "sha256": "e1d3800c2cc5f8db31ec138e78c830e1a3dfbce4345f97bf4faa6e595bc9e6b3"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/AGENTS.md",
+   "source": "nuclear-vscode/AGENTS.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1194,
+   "sha256": "c5649b359f0cfd57a8a69fa00bf5934e626dacde3f349ae0cd85133bdcb6fbf7"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/CHANGELOG.md",
+   "source": "nuclear-vscode/CHANGELOG.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 317,
+   "sha256": "f4c0125e5070f67fc42b97918abc822a729befd4f017a09ec30c06e2cd780036"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/CONTRIBUTING.md",
+   "source": "nuclear-vscode/CONTRIBUTING.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1544,
+   "sha256": "f8d7b96468c210dc3bd716b774f410ae579680b42b027e2714ddb780ad9d60bf"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/README.md",
+   "source": "nuclear-vscode/README.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 16270,
+   "sha256": "c2210825da5bc9e3fe7dec69aea63674cc5394b745738e1c1398e8290505932b"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/THIRD-PARTY.md",
+   "source": "nuclear-vscode/THIRD-PARTY.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 702,
+   "sha256": "b94998f25d0ac96fd1c41356fad4bd75717fd062bcaab8b9f1919fc49ec1e9a6"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/docs/context/editors/theme.md",
+   "source": "nuclear-vscode/docs/context/editors/theme.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 2661,
+   "sha256": "490678300a43f0534357d99ed1d36355bd83610fd4fe83b521e194013c81aa7f"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/docs/context/editors/vscode.md",
+   "source": "nuclear-vscode/docs/context/editors/vscode.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 22366,
+   "sha256": "737d9bf6cd0adf89ba41bb4fa23c37599fb9cdda7757b98e6a74a12686a1d363"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/backend/fastapi/docs.toml",
+   "source": "nuclear-vscode/server/dialects/backend/fastapi/docs.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 17352,
+   "sha256": "d1f82b715a8b9fa7ea8724ee61df0d92fd4ae72b2c97f948e64dce25fe372bee"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/backend/nestjs/docs.toml",
+   "source": "nuclear-vscode/server/dialects/backend/nestjs/docs.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 16704,
+   "sha256": "1076e108fd08e24d04bc946b5e7e7c6fabfa5159bd2b52253766a7361cf9c5b1"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/backend/platform.toml",
+   "source": "nuclear-vscode/server/dialects/backend/platform.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 12916,
+   "sha256": "c0d7905f99b49c3f5008791e24d6d12fc5ab5599332a592b992fd1bfdcf069b6"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/dart/docs.toml",
+   "source": "nuclear-vscode/server/dialects/dart/docs.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 4277,
+   "sha256": "09dd38b2552d9c3eb75e462968a3e1bd2acb5c7e57c1344c6758f9dfbf6650ed"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/mobile/flutter/docs.toml",
+   "source": "nuclear-vscode/server/dialects/mobile/flutter/docs.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 35927,
+   "sha256": "6802eecf98466f532c9c9986f6f0e221011366e814db5edab5d35778b4ab117a"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/mobile/platform.toml",
+   "source": "nuclear-vscode/server/dialects/mobile/platform.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 9722,
+   "sha256": "6c63cbd56a5efe74c896e0bb7d2afa5d19a3f7346d0a6b959bca9bc7925fc51d"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/python/docs.toml",
+   "source": "nuclear-vscode/server/dialects/python/docs.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 634,
+   "sha256": "9803aeb5835b8f77c5f26109462ba0bae7f6f9899b8a190a9c659b0529f95941"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/typescript/docs.toml",
+   "source": "nuclear-vscode/server/dialects/typescript/docs.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1631,
+   "sha256": "2452434c15c9c1efcd23b5d822fb23ebca09b34b32993fc2dacb70a66fa7bcbf"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/web/platform.toml",
+   "source": "nuclear-vscode/server/dialects/web/platform.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 9913,
+   "sha256": "9ae334945b61f26def4801766f61eec443dd975956cdd239e427e2a3fac0440e"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/server/dialects/web/react/docs.toml",
+   "source": "nuclear-vscode/server/dialects/web/react/docs.toml",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 14451,
+   "sha256": "afd3313b683e44c166e0cfcf9b1d2b1a0f61176ea1b946324c0b3c8e2094fe5b"
+  },
+  {
+   "path": "09-editors/nuclear-vscode/theme/README.md",
+   "source": "nuclear-vscode/theme/README.md",
+   "repo": "nuclear-vscode",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 2532,
+   "sha256": "b7889fe04de624fc19e6cf70734d07a258f37a607d3518c68f3ade29d4729457"
+  },
+  {
+   "path": "09-editors/nuclear-zed/CHANGELOG.md",
+   "source": "nuclear-zed/CHANGELOG.md",
+   "repo": "nuclear-zed",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 165,
+   "sha256": "7cc4c8dbe4c3e0363a33e8e0e2aab117843e29cd932c4bc3b0d38168ddcbc423"
+  },
+  {
+   "path": "09-editors/nuclear-zed/CONTRIBUTING.md",
+   "source": "nuclear-zed/CONTRIBUTING.md",
+   "repo": "nuclear-zed",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1252,
+   "sha256": "ada67f0dec27d44b07c7bdb8a2a4cb60f9c3cbaaf9f6088abe1233196f5b43cf"
+  },
+  {
+   "path": "09-editors/nuclear-zed/README.md",
+   "source": "nuclear-zed/README.md",
+   "repo": "nuclear-zed",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1722,
+   "sha256": "4f148ad9e5da4ca1d4366a1760d80a69aece9b5459ed559c3f0b8b0d0f94a369"
+  },
+  {
+   "path": "09-editors/nuclear-zed/docs/context/editors/zed.md",
+   "source": "nuclear-zed/docs/context/editors/zed.md",
+   "repo": "nuclear-zed",
+   "section": "09-editors",
+   "agents": true,
+   "bytes": 1573,
+   "sha256": "f860e3f876cfedd2461a6e993f0ef8b749b3b20b3b0282aa3b11f5d15b92e2a3"
+  },
+  {
+   "path": "03-compiler-targets/spec/brief/dart.md",
+   "source": "spec/brief/dart.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 2570,
+   "sha256": "0debd5d9c3fb263a4aff05feac0e792575d61f9575a5940908d60951f353d530"
+  },
+  {
+   "path": "02-language/spec/brief/nuclear-base.md",
+   "source": "spec/brief/nuclear-base.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 4914,
+   "sha256": "0068afd77948002f6376b4fd166152294e13b624786b3f67286521c28f4adea3"
+  },
+  {
+   "path": "03-compiler-targets/spec/brief/python.md",
+   "source": "spec/brief/python.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 1744,
+   "sha256": "4cdfc6c09ae3dfe5d37941f65e75ae8bcd66d5b62d8f728302a532fe6c298a1e"
+  },
+  {
+   "path": "03-compiler-targets/spec/brief/typescript.md",
+   "source": "spec/brief/typescript.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 1556,
+   "sha256": "bcd22ae534827f8734946e8e7a4443a75dbac0368388b645960216d41c9e90e4"
+  },
+  {
+   "path": "03-compiler-targets/spec/dart.md",
+   "source": "spec/dart.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 24005,
+   "sha256": "012949dc6c9272509a997c3a7a5d598525f483fb572471ebf7c174422405b898"
+  },
+  {
+   "path": "11-decisions/spec/decisions.md",
+   "source": "spec/decisions.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 11597,
+   "sha256": "880f00abd3e4acb0bbac2c3de006b72500c51277345cac3e1dcae74b3af39b4e"
+  },
+  {
+   "path": "03-compiler/spec/definitions.md",
+   "source": "spec/definitions.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 11813,
+   "sha256": "70d15e1f9ef9fa26efbe077e320af8589129b792107cb6c78f611ecffa90bf91"
+  },
+  {
+   "path": "02-language/spec/diagnostics.md",
+   "source": "spec/diagnostics.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 12294,
+   "sha256": "6d00ee05201dcfccc2ba891f89d1f7792c51673e68f7d9edff2aaaaba2bbf108"
+  },
+  {
+   "path": "03-compiler/spec/dialects.md",
+   "source": "spec/dialects.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 41273,
+   "sha256": "52cd971a2a3c86611bdd4d2fe560c7a446f727acd027302d306af26089735b94"
+  },
+  {
+   "path": "02-language/spec/grammar.ebnf",
+   "source": "spec/grammar.ebnf",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 10192,
+   "sha256": "650f74221bc49ad1bf6185f7cb659337cbc66b6c069074bb40f1000c52c1d5a7"
+  },
+  {
+   "path": "02-language/spec/library.md",
+   "source": "spec/library.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 8377,
+   "sha256": "354fd817ef205b52374e461314482fba47c7bfcb97caedd06427266463c842bb"
+  },
+  {
+   "path": "03-compiler-targets/spec/nodejs.md",
+   "source": "spec/nodejs.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 1725,
+   "sha256": "56f9c056b0f9d25868cf98d672d851fb1f3a7c95558b4e797e8ec5656735cbb5"
+  },
+  {
+   "path": "02-language/spec/nuclear-base.md",
+   "source": "spec/nuclear-base.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 37608,
+   "sha256": "ea8e48819e75f4862dae9d5fadc1e585039e9fc72cb17920088d5a6078f02b99"
+  },
+  {
+   "path": "03-compiler/spec/projects.md",
+   "source": "spec/projects.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 20727,
+   "sha256": "5d17c75fae3e82b160974d5870912aa3ce04f685d69b715125bde3d5df235555"
+  },
+  {
+   "path": "03-compiler-targets/spec/python.md",
+   "source": "spec/python.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 13880,
+   "sha256": "cd0a6f3c211232b235b82cfe4924d229e7856d6c3b4187e178bad7b6868db101"
+  },
+  {
+   "path": "02-language/spec/reserved-words.md",
+   "source": "spec/reserved-words.md",
+   "repo": "nuclearlang",
+   "section": "02-language",
+   "agents": true,
+   "bytes": 3300,
+   "sha256": "e69a85b213b622060dfbabd6e40eb29131b09c01670a9562b8367aa4046ab166"
+  },
+  {
+   "path": "03-compiler-targets/spec/typescript.md",
+   "source": "spec/typescript.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler-targets",
+   "agents": false,
+   "bytes": 28136,
+   "sha256": "72fee767be798105ac28fd7cec835e4100b178848842e0fd0ba0d98526ac8359"
+  },
+  {
+   "path": "11-decisions/specs/001-agent-support/plan.md",
+   "source": "specs/001-agent-support/plan.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 12976,
+   "sha256": "59a0e7f66ec2e39e53594d6b3fda447514e9ba1a5e9d07dfe633a14b7d23d9eb"
+  },
+  {
+   "path": "11-decisions/specs/002-dialects-with-agents/plan.md",
+   "source": "specs/002-dialects-with-agents/plan.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 6756,
+   "sha256": "fe358bb7b5b34737f491e6cc8f8735413632141a2009afe743b6509424a26f97"
+  },
+  {
+   "path": "11-decisions/specs/003-shared-contracts/plan.md",
+   "source": "specs/003-shared-contracts/plan.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 10159,
+   "sha256": "263ddd677b621ec3f4833d3b9ce65d1c14a8646baf8ee5517837788ce24e7617"
+  },
+  {
+   "path": "11-decisions/specs/004-backend-parity/plan.md",
+   "source": "specs/004-backend-parity/plan.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 10206,
+   "sha256": "6bcadc25632f103d32772251552d152821d6590c8a130670d4ef7cf7d883c74a"
+  },
+  {
+   "path": "11-decisions/specs/005-language-1-0/plan.md",
+   "source": "specs/005-language-1-0/plan.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 6346,
+   "sha256": "6761db24a3376ea4839d1c76241d55ece901d3d31d6046e0a989f72256e5fe11"
+  },
+  {
+   "path": "11-decisions/specs/006-public-repositories/plan.md",
+   "source": "specs/006-public-repositories/plan.md",
+   "repo": "nuclearlang",
+   "section": "11-decisions",
+   "agents": false,
+   "bytes": 5398,
+   "sha256": "2feb371ae57aee67e8eb160ade3fcc9c302057aa4ff1373a6aaade64e226d071"
+  },
+  {
+   "path": "10-ai/specs/007-lora-nuclear-coder/plan.md",
+   "source": "specs/007-lora-nuclear-coder/plan.md",
+   "repo": "nuclearlang",
+   "section": "10-ai",
+   "agents": true,
+   "bytes": 4048,
+   "sha256": "3bd544f89130224e248d467a75604b2e7f79fa48c92a423b145278bf9a9eb446"
+  },
+  {
+   "path": "01-introduction/specs/README.md",
+   "source": "specs/README.md",
+   "repo": "nuclearlang",
+   "section": "01-introduction",
+   "agents": true,
+   "bytes": 1614,
+   "sha256": "e245c5146d35a5d096a86d7096bc98b11754714f588d1af929f7b218694f162b"
+  },
+  {
+   "path": "03-compiler/tools/context/README.md",
+   "source": "tools/context/README.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 971,
+   "sha256": "8ae0156a9f6d08e86d01698d3534216c8419861f6b6b1cbc66c4826776790fd9"
+  },
+  {
+   "path": "03-compiler/tools/defs/README.md",
+   "source": "tools/defs/README.md",
+   "repo": "nuclearlang",
+   "section": "03-compiler",
+   "agents": true,
+   "bytes": 3812,
+   "sha256": "bcb9b2c11831a5448062c00f8971f4e240e2b382dd88398998720c36bf6323af"
+  },
+  {
+   "path": "12-tools/tools/thesis/README.md",
+   "source": "tools/thesis/README.md",
+   "repo": "nuclearlang",
+   "section": "12-tools",
+   "agents": true,
+   "bytes": 6654,
+   "sha256": "d51f3d76b432279843d644bb5a4aac9eea2fec0124452c3fd52782366828587c"
+  },
+  {
+   "path": "12-tools/tools/thesis/bench/primes.nuc",
+   "source": "tools/thesis/bench/primes.nuc",
+   "repo": "nuclearlang",
+   "section": "12-tools",
+   "agents": true,
+   "bytes": 428,
+   "sha256": "1ab85b217189f2ebd3b6ea8023d18dfd4dd366941d26edb2f18db11a9fa89b79"
+  },
+  {
+   "path": "12-tools/tools/thesis/bench/wordfreq.nuc",
+   "source": "tools/thesis/bench/wordfreq.nuc",
+   "repo": "nuclearlang",
+   "section": "12-tools",
+   "agents": true,
+   "bytes": 692,
+   "sha256": "0e6802d4dc31bf6730f41e4106ba816120f2ec92a2c3167f80d78b0e73e74045"
+  },
+  {
+   "path": "07-web/website/AGENTS.md",
+   "source": "website/AGENTS.md",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 748,
+   "sha256": "259d2a68472db81d017bb1cbd20455913adcf314f7fdc6b1e6ece4d7b767f75b"
+  },
+  {
+   "path": "07-web/website/CHANGELOG.md",
+   "source": "website/CHANGELOG.md",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 165,
+   "sha256": "fcc405dae821c566b99c51df71bf0512bf1181d17296f72086736e0465d0fb53"
+  },
+  {
+   "path": "07-web/website/CONTRIBUTING.md",
+   "source": "website/CONTRIBUTING.md",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 1508,
+   "sha256": "6d9a55aac5ede95e70b7136c06a5f59af95f09bf2173169c63cf8172720ff723"
+  },
+  {
+   "path": "07-web/website/README.md",
+   "source": "website/README.md",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 3023,
+   "sha256": "b0dfcfd1bed6302133b16b69a0b2b6c491932c6e5306a128894c3d829e355541"
+  },
+  {
+   "path": "07-web/website/components/docs/data/content_repository.nuc",
+   "source": "website/components/docs/data/content_repository.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 493,
+   "sha256": "8b8e7dbd40d881c240c64564a23492e12bb64702b1a5db9957f03c60d6ec4b15"
+  },
+  {
+   "path": "07-web/website/components/docs/docs_component.nuc",
+   "source": "website/components/docs/docs_component.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 253,
+   "sha256": "1217a58be84df6bd5b169ea976d56193fde94ad6a5ccde6e219930228d7848e9"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/models/content_error.nuc",
+   "source": "website/components/docs/domain/models/content_error.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 75,
+   "sha256": "482b6f1e14c3b2beae42eeb969102c1404b486669e12bb19a7fe389df3cf5c47"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/models/home.nuc",
+   "source": "website/components/docs/domain/models/home.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 650,
+   "sha256": "8e59baec58f22463af6456d83f2bf5bed019de6ce7b2f08d8d77e57e6422aeb8"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/models/page.nuc",
+   "source": "website/components/docs/domain/models/page.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 398,
+   "sha256": "4a9169c8e323a14b541b85c5dd0859129ebe117479097615e6a192ba177f88c1"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/models/search.nuc",
+   "source": "website/components/docs/domain/models/search.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 283,
+   "sha256": "34e308a49651881ced9c979e81f91623f5b24fcadef4d0fe568c637162f4b68c"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/models/site.nuc",
+   "source": "website/components/docs/domain/models/site.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 350,
+   "sha256": "0390ad559dc1d0b1c9531128c551783dacabcfb0ce56dc59df142aa7cb1d56e0"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/services/search_score.nuc",
+   "source": "website/components/docs/domain/services/search_score.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 331,
+   "sha256": "045aa1520458cedfb47dac8f992ebf410e2b9df516e2a7401d4de17d5c05912b"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/usecases/get_home_usecase.nuc",
+   "source": "website/components/docs/domain/usecases/get_home_usecase.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 111,
+   "sha256": "9b362cd6e3bcc96e4833056d97e1bc49f560924b535a5f29a1d20437a0adc22e"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/usecases/get_page_usecase.nuc",
+   "source": "website/components/docs/domain/usecases/get_page_usecase.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 290,
+   "sha256": "22382fab0c11bf82c50a47ec5dc297492153d9746074b0d474327d7148cf3108"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/usecases/get_site_usecase.nuc",
+   "source": "website/components/docs/domain/usecases/get_site_usecase.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 111,
+   "sha256": "f6e45ddf1487f6aa2e45ff05c9cb2126faac1864484fdd52960ff7add711b19c"
+  },
+  {
+   "path": "07-web/website/components/docs/domain/usecases/search_usecase.nuc",
+   "source": "website/components/docs/domain/usecases/search_usecase.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 500,
+   "sha256": "49ea7905ed8e46862dca67d8056887a3d848744dea6132489f8c9c94151859c0"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/doc/doc_screen.nuc",
+   "source": "website/components/docs/presentation/doc/doc_screen.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 1938,
+   "sha256": "9b71b9f1c63372020737906d6e8fc4519817e12ee3adc9e8b8c1a477050364e9"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/doc/managers/page_manager.nuc",
+   "source": "website/components/docs/presentation/doc/managers/page_manager.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 270,
+   "sha256": "ece52fcbfc798e0a551f03ad7884c9ccdd94a18d3845d818d52c68d4d35b5599"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/doc/not_found_screen.nuc",
+   "source": "website/components/docs/presentation/doc/not_found_screen.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 204,
+   "sha256": "7098c3de2a4fb4d48a804dc4fad8e386bad4b33731a6ebba8f231c92aee748ba"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/doc/state_models/page_state.nuc",
+   "source": "website/components/docs/presentation/doc/state_models/page_state.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 103,
+   "sha256": "c9c7fbc6df4bc76a18ce2504faab6721d47636b8bbc880a9f9e4e4460058c6ac"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/home/home_screen.nuc",
+   "source": "website/components/docs/presentation/home/home_screen.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 2741,
+   "sha256": "4cc540854c2e2605564b493dce66420dc1b61284ac01317083a9bf46193991fc"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/home/managers/home_manager.nuc",
+   "source": "website/components/docs/presentation/home/managers/home_manager.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 296,
+   "sha256": "1d2d1f499c56849bc537808ec400b6afcfd7724ae64ca32f917fcb3150c1bcf8"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/home/state_models/home_state.nuc",
+   "source": "website/components/docs/presentation/home/state_models/home_state.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 105,
+   "sha256": "df74ce1df2ec2a0f68ba9a1df0a39ec74081cc09044213c572e995650f4c8727"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/layout/layout.nuc",
+   "source": "website/components/docs/presentation/layout/layout.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 2133,
+   "sha256": "b22e2e1d0d0b8dbe0a18486acff8c0c48b0b2cebe5e011e8315a08ab8f86cdcb"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/layout/managers/search_manager.nuc",
+   "source": "website/components/docs/presentation/layout/managers/search_manager.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 261,
+   "sha256": "5315a6c165a77f7c896d28252481053a4a7e46e47f16e7af68c7e95f9a8cb845"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/layout/managers/site_manager.nuc",
+   "source": "website/components/docs/presentation/layout/managers/site_manager.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 254,
+   "sha256": "23a12e1842b1edbc1fc62dc52afe2e0816b32f2a58a0b66f0060a70b90ac6276"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/layout/search_box.nuc",
+   "source": "website/components/docs/presentation/layout/search_box.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 639,
+   "sha256": "dbd6185ae23fc16a4a3fd1dae38fca87d717d3e0a7e2b201a34241dec20ecb6e"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/layout/state_models/search_state.nuc",
+   "source": "website/components/docs/presentation/layout/state_models/search_state.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 91,
+   "sha256": "d3fb82dde8c4f328b35944c5378c416d347e57301bad9369c45bc1feead89ead"
+  },
+  {
+   "path": "07-web/website/components/docs/presentation/layout/state_models/site_state.nuc",
+   "source": "website/components/docs/presentation/layout/state_models/site_state.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 123,
+   "sha256": "6579fd556f62b55db8313ee7ca2da22b41463c4b6208d4f80704b847cadab39c"
+  },
+  {
+   "path": "07-web/website/config.nuc",
+   "source": "website/config.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 381,
+   "sha256": "2257ce3708f5dbf99b6b8ce1a47948d48ad78e3676b33932b55c136e537d8e79"
+  },
+  {
+   "path": "07-web/website/config/project_config.nuc",
+   "source": "website/config/project_config.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 207,
+   "sha256": "f2fb1f233f12cfb37a4da121553233b10a672b3cc0c85eca719c28dcd9732468"
+  },
+  {
+   "path": "07-web/website/docs/context/website/CONTEXT.md",
+   "source": "website/docs/context/website/CONTEXT.md",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 1179,
+   "sha256": "79e49c9da4f9708f1f2581885086f35e19a2463024fd901a46e3bf695bce069e"
+  },
+  {
+   "path": "07-web/website/main.nuc",
+   "source": "website/main.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 194,
+   "sha256": "987a6e40eddcc442025ab59bf6ca7f81620c0a25451221863db468179b1b0387"
+  },
+  {
+   "path": "07-web/website/test/docs_test.nuc",
+   "source": "website/test/docs_test.nuc",
+   "repo": "website",
+   "section": "07-web",
+   "agents": true,
+   "bytes": 3178,
+   "sha256": "e47bce2ca3a96dd50be435bbbb792926f52833d3dcb3710f4286937a686cb4b2"
+  }
+ ]
+}

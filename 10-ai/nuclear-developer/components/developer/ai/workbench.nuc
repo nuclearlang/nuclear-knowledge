@@ -1,0 +1,74 @@
+// What every local agent shares: the Nuclear Smart Graph, the NuclearLang tools and the models. No method has a doc
+// comment, so none is offered to a model as a tool: the graphs call them in a fixed order, because a small model
+// follows steps better than it chooses tools.
+//
+// The prompts are files of the graph (`nuclear-graph/src/nuclear_graph/prompts/agents/<name>.md`), read with
+// `prompt(name, values)`: nothing a model reads is written inside this code.
+tools Workbench(knowledge: GraphClient, toolchain: Toolchain)
+
+  // ---- what the graph knows ----
+
+  recall(query: string, platform: string, useCase: string) Recall
+    try
+      guide = ~knowledge.prompt(useCase)
+      found = ~knowledge.search(query, collection = "nuclear", k = 4, platform = platform)
+      solved = ~knowledge.examples(query, platform = platform)
+      shapes = ~knowledge.search(query, collection = "nuclear", k = 2, platform = platform, kind = "example")
+      Recall(guide = guide, knowledge = found, examples = "${solved}\n\n${shapes}".trim(), note = "")
+    catch e
+      Recall(guide = "", knowledge = "", examples = "", note = "the Nuclear Smart Graph is not reachable: ${e.message}")
+
+  // ---- the prompts ----
+
+  // The prompt file `agents/<name>.md` with each `{{key}}` filled. A `## ` section whose body is left empty is
+  // dropped, so a model never reads an empty heading.
+  prompt(name: string, values: <string, string>) string
+    text = ~knowledge.prompt("agent.${name}")
+    for key, value in values
+      text = text.replaceAll("{{${key}}}", value)
+    parts = text.split("\n## ")
+    kept: string[] = [parts[0]]
+    for part in parts.slice(1)
+      if part.split("\n").slice(1).join("\n").trim().length > 0
+        kept.add(part)
+    kept.join("\n## ").trim()
+
+  // The prompt of a piece: the guide of the use case, then the knowledge, the examples, the files it depends on and
+  // the task, so the most important text is the last one the model reads.
+  compose(state: PieceState) string
+    where = ""
+    if state.path.length > 0
+      where = "${where} File `${state.path}`."
+    if state.kind.length > 0
+      where = "${where} Its kind: `${state.kind}`."
+    values = { "guide": state.guide, "knowledge": state.knowledge, "examples": state.examples, "context": state.context, "platform": state.platform, "where": where, "task": state.task }
+    ~prompt("piece", values)
+
+  // ---- the models ----
+
+  ask(model: string, prompt: string) string
+    reply = ~chatModel(model).ainvoke(prompt)
+    textOf(reply)
+
+  // Writes the code of a piece from its prompt (`request`) and repairs it with the compiler's errors, at most `tries`
+  // times.
+  write(state: PieceState, request: string, tries: int) PieceReply
+    code = stripFences(~ask("coder", request))
+    check = ~toolchain.check(code, state.platform)
+    attempts = 1
+    trace: <string, string>[] = state.trace + [step("write", "attempt 1: ${firstLine(check)}")]
+    while check != "ok" and attempts < tries
+      repair = ~prompt("repair", { "prompt": request, "code": code, "errors": check })
+      code = stripFences(~ask("coder", repair))
+      check = ~toolchain.check(code, state.platform)
+      attempts += 1
+      trace.add(step("repair", "attempt ${attempts}: ${firstLine(check)}"))
+    PieceReply(code = code, report = "", check = check, attempts = attempts, trace = trace)
+
+  // ---- the trace ----
+
+  step(name: string, detail: string) <string, string>
+    { "step": name, "detail": detail }
+
+  firstLine(text: string) string
+    text.split("\n")[0]

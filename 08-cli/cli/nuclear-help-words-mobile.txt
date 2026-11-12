@@ -1,0 +1,93 @@
+$ nuclear help words --platform mobile
+
+dialect flutter: nuclear help <word> --dialect flutter
+
+kinds:
+  aggregate          A business aggregate: rules of the domain that several use cases share (a cart with its
+  appConfig          The configuration of the whole app (in `config/`): its connections and its global services.
+  appcomponent       The facade of a component: aliases to the `exec` of its use cases. It is the only part of the
+  chat               A conversation with a model (plugin `genkit`): its `prompt`, its `model` (connection name) and the tools of its constructor parameters. `~chat.send(text)` answers and keeps the history; `chat.stream(text)` gives the answer piece by piece; `ChatController(chat)` is the state of a chat screen (messages, sending, error). Each `inject<Assistant>()` is a new conversation.
+  component          A global component (in `shared/components/`): a cross-cutting use case any declaration can use.
+  config             The configuration of one component (in `components/<c>/config/`): connections and services only
+  converter          A JSON converter for a model field whose type the JSON does not bring as is (a date, a color).
+  data               An immutable value: only its fields. Nuclear writes the class with a `const` constructor of
+  event              A global event: a typed message. Whoever publishes it does not know who listens.
+  extension          Adds methods to an existing type without changing it (a Dart extension).
+  flow               A Genkit flow (plugin `genkit`): one AI operation with a typed input and output (`run(input: I) O`), registered in Genkit (traces, Developer UI). Call it like a function: `~summarize(text)`. `~generateObject<Summary>(prompt)` makes the model answer a model of the app (structured output).
+  form               A form model: the fields of a form and their rules. No header
+  formmanager        The state of a form: values, errors and remote validations (`FormManager<F>`).
+  guard              A custom access check. A single method `canActivate()` (`N0215`); its
+  integration        Integration tests (in `integration_test/`): the real app on a device or emulator.
+  knowledge          A knowledge base (plugin `genkit`): texts searched by meaning with the embedder of a provider (`embedder = "..."`). `documents()` gives the first texts; `~facts.add(texts)` adds more; `~facts.search(question, k = 4)` gives the closest; `~facts.context(question)` gives them as a block for a prompt (RAG).
+  mixin              A set of members that other modules mix in with `with` (a Dart mixin). `on Base` limits it to
+  model              A domain model: only its fields. Nuclear writes the immutable class, `fromJson`/`toJson`
+  remote             Flows of a Genkit server (plugin `genkit`), called like a repository calls an API: `@remote("https://server")` on the kind, `@flow("path")` on a method that answers once, `@stream("path")` on one that streams its chunks. The input is the first parameter.
+  repository         The http calls of a component (in `data/`). Each method without a body and with a verb
+  service            Helpers of the use cases: mappings, transformations, calculations without state. Its
+  stateful           A widget with its own state: fields that change and redraw it with `setState`.
+  stateless          A widget without its own state: everything it shows comes from its parameters. With `@screen`
+  statemanager       The state of a screen. `@stateModel(S)` names its state model; each `@state` method
+  statemodel         The states of a screen. Each field is one state; a `boolean` field is a state without data. No
+  tests              A group of tests (in `test/`, no header word needed): unit, state and widget tests, with mocks
+  tools              Genkit tools (plugin `genkit`): each method with a doc comment is a tool the model can call; the doc comment is the description it reads and the parameters become its JSON schema. A method without one is a helper.
+  usecase            One business operation: a single method `exec` that returns a `Result`. Its dependencies are
+
+decorators:
+  @acl                On the `exec` of a `usecase`: the session must pass this access rule; otherwise it returns `Err`
+  @after              On a method of a `statemanager`: calls another method after this one.
+  @before             On a method of a `statemanager`: calls another method before this one (usually the `loading`
+  @body               On a parameter of a `repository` method: the parameter is the body of the request.
+  @created            On a `DateTime?` or `string?` field of a model: the local table writes the moment the row was first
+  @delete             An http DELETE on a method of a `repository`. The parameters that are not in the path go to the
+  @email              A rule of a form model field: an email address.
+  @entity             On a model with a `@primary` field: the name of its local table (default: the model's name in
+  @flow               On a method of a `remote` kind: `@flow("path")`, the flow it calls (default: the method's name); it answers once.
+  @form               On a `formmanager`: its form model.
+  @get                An http GET on a method of a `repository` (without a body).
+  @key                On a model field: its name in the JSON, when it differs from the field's.
+  @matches            A rule of a form model field: equal to another field (repeating a password).
+  @max                A rule of a form model field: the number is at most n.
+  @maxLength          A rule of a form model field: the text has at most n characters.
+  @min                A rule of a form model field: the number is at least n.
+  @minLength          A rule of a form model field: the text has at least n characters.
+  @mock               On a `tests` group: those classes are mocks (mocktail) in the injector, instead of the real ones.
+  @offline            On a `tests` group: the network is disconnected (`NetworkManager`) in its tests, so
+  @on                 On a method of a global `component`: the method runs with every event of that type, wherever the
+  @patch              An http PATCH on a method of a `repository`. The parameters go to the body. Retries only with
+  @path               On a parameter of a `repository` method: the parameter goes to the path.
+  @pattern            A rule of a form model field: the text matches a regular expression (`\\d` is written with two
+  @post               An http POST on a method of a `repository`. One parameter is the body as is; several form an
+  @primary            On a field of a model: its key in the local database. The model gets a table (`Character.table`,
+  @put                An http PUT on a method of a `repository`. The parameters go to the body. Retries 2 times on
+  @query              On a parameter of a `repository` method: the parameter goes to the query (`?name=rick`), even
+  @remote             On a `remote` kind: `@remote("https://server")`, the Genkit server whose flows its methods call.
+  @repository         On a `repository`: the base `path` of its requests, the `connection` they use and whether its GET
+  @required           A rule of a form model field: not empty. A `boolean` must be `true` (accepting the terms).
+  @requires           On the `exec` of a `usecase`: what must hold before it runs; otherwise it returns `Err` without
+  @screen             Makes a `stateless` or `stateful` a screen: its route, the managers it creates and who may open
+  @splash             The native launch screen of the screen that is the splash: the background color and image the
+  @state              On a method of a `statemanager`: the method's value is emitted as that state. A `Result` that
+  @stateModel         On a `statemanager`: its state model (the states it emits).
+  @states             A statemanager test: the parameter is the manager (from the injector), the body is
+  @stream             On a method of a `remote` kind: `@stream("path")`, a flow whose chunks it streams (the method returns a Stream).
+  @test               A unit test in a `tests` group. The argument is its description.
+  @updated            On a `DateTime?` or `string?` field of a model: the local table writes the moment of every save (as
+  @url                A rule of a form model field: a URL.
+  @validate           On a method of a `formmanager`: a remote validation of a field. It runs when the field's rules
+  @widget             A widget test in a `tests` or `integration` group: the parameter is the `WidgetTester`.
+
+words:
+  abstract           `abstract`: a module that cannot be built; other modules extend it. Methods without a body are
+  base               `base`: a module that can be extended but not implemented (`>`) outside its library.
+  const              `const`: a compile-time constant member.
+  covariant          `covariant`: a parameter of an overriding method may take a narrower type than the base method's.
+  external           `external`: a member whose body is outside Dart (native code, JS interop).
+  factory            `factory`: a constructor that may return an existing object or a subclass instead of a new one.
+  final              `final`: a field that is assigned once. Variables do not need it: one that is never reassigned is
+  get                `get`: a getter, a member read like a field but computed on every read.
+  late               `late`: a field that gets its value after the constructor, before it is read. Reading it first is
+  on                 `on Type`: in an `extension`, the extended type; in a `mixin`, the base the modules that use it
+  sealed             `sealed`: a module whose subclasses are all in the same file, so a `match` with `is` can know them
+  set                `set`: a setter, code that runs when a value is assigned to the member. It never returns.
+  static             `static`: a member of the module itself, not of each object. Called on the module:
+  with               `with Mixin, Other`: mixes the members of those mixins into the module.

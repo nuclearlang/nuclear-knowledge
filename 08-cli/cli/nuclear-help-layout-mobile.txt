@@ -1,0 +1,29 @@
+$ nuclear help layout --platform mobile
+
+where each kind's file goes in a mobile project ({component}, {screen}: folders; {file}: the name in snake_case)
+
+  aggregate      components/{component}/domain/aggregates/{file}.nuc
+  appConfig      config/project_config.nuc
+  appcomponent   components/{component}/{component}_component.nuc
+  chat           components/{component}/ai/{file}.nuc
+  component      shared/components/{file}.nuc
+  config         components/{component}/config/{component}_config.nuc
+  converter      shared/converters/{file}.nuc
+  event          shared/events/{file}.nuc
+  flow           components/{component}/ai/{file}.nuc
+  form           components/{component}/presentation/{screen}/forms/{file}.nuc
+  formmanager    components/{component}/presentation/{screen}/managers/{file}.nuc
+  guard          shared/guards/{file}.nuc
+  integration    integration_test/{file}.nuc
+  knowledge      components/{component}/ai/{file}.nuc
+  model          components/{component}/domain/models/{file}.nuc
+  remote         components/{component}/data/{file}.nuc
+  repository     components/{component}/data/{file}.nuc
+  service        components/{component}/domain/services/{file}.nuc
+  stateful       components/{component}/presentation/{screen}/{file}.nuc
+  stateless      components/{component}/presentation/{screen}/{file}.nuc
+  statemanager   components/{component}/presentation/{screen}/managers/{file}.nuc
+  statemodel     components/{component}/presentation/{screen}/state_models/{file}.nuc
+  tests          test/{file}.nuc
+  tools          components/{component}/ai/{file}.nuc
+  usecase        components/{component}/domain/usecases/{file}.nuc

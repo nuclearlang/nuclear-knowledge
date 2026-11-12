@@ -1,0 +1,17 @@
+$ nuclear-loop help
+
+nuclear-loop — the Nuclear Loop without the editor
+
+  nuclear-loop run [spec.md] [--lead local|claude]   spec → generate → plan → tests → code → verify → security →
+                                                     artifacts → deploy
+                                                     (no file: the spec of specs/ changed last)
+  nuclear-loop retry <run> [--from <stage>]          a failed run again from the step that failed (the steps that
+                                                     passed are kept); --from restarts that whole stage;
+                                                     calls to the local agents already retry by themselves with
+                                                     exponential backoff (.nuclear/loop.json "retry")
+  nuclear-loop ci [check|test|security|artifacts|deploy ...]   the commands of .nuclear/loop.json (all by default)
+  nuclear-loop export github|gitlab|bitbucket        writes the CI file that runs `nuclear-loop ci`
+  nuclear-loop runs                                  the runs kept in .nuclear/loop/runs
+
+Run it in the project or any folder inside it (the project is the closest folder up with config.nuc). The agent stages need the Nuclear Developer
+(127.0.0.1:7879) and, when Claude leads, Claude Code with the Nuclear MCP server.

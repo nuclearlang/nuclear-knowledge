@@ -1,0 +1,20 @@
+$ nuclear help layout --platform web
+
+where each kind's file goes in a web project ({component}, {screen}: folders; {file}: the name in snake_case)
+
+  aggregate      components/{component}/domain/aggregates/{file}.nuc
+  appConfig      config/project_config.nuc
+  appcomponent   components/{component}/{component}_component.nuc
+  component      shared/components/{file}.nuc
+  config         components/{component}/config/{component}_config.nuc
+  event          shared/events/{file}.nuc
+  guard          shared/guards/{file}.nuc
+  model          components/{component}/domain/models/{file}.nuc
+  repository     components/{component}/data/{file}.nuc
+  service        components/{component}/domain/services/{file}.nuc
+  stateful       components/{component}/presentation/{screen}/{file}.nuc
+  stateless      components/{component}/presentation/{screen}/{file}.nuc
+  statemanager   components/{component}/presentation/{screen}/managers/{file}.nuc
+  statemodel     components/{component}/presentation/{screen}/state_models/{file}.nuc
+  tests          test/{file}.nuc
+  usecase        components/{component}/domain/usecases/{file}.nuc

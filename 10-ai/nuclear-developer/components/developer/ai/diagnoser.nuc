@@ -1,0 +1,57 @@
+// The diagnoser: tells why a step of the pipeline failed and what to do next. The kind of failure comes from fixed
+// rules (a small model guesses it badly), the evidence from the tools (the compiler for code, `dragonfly doctor` for
+// the environment), and the local model explains it in plain words. It changes nothing. Prompt: agents/diagnose.md.
+@state(PieceState)
+graph Diagnoser(bench: Workbench, toolchain: Toolchain)
+  @start
+  @next("explain")
+  gather(state: PieceState) <string, any>
+    kind = classify(state.context)
+    evidence = ""
+    if kind == "code" and state.path.length > 0
+      evidence = ~toolchain.checkProject(state.path)
+    else if kind == "environment" and state.path.length > 0
+      evidence = ~toolchain.dragonfly(state.path, ["doctor"], timeout = 120)
+    { "failure": kind, "knowledge": evidence, "trace": state.trace + [bench.step("classify", "${kind}: ${actionOf(kind)}")] }
+
+  @next("end")
+  explain(state: PieceState) <string, any>
+    prompt = ~bench.prompt("diagnose", { "kind": state.failure, "action": actionOf(state.failure), "step": state.task, "failure": tail(state.context, 6000), "evidence": tail(state.knowledge, 4000) })
+    text = ~bench.ask("default", prompt)
+    report = "kind: ${state.failure}\naction: ${actionOf(state.failure)}\n\n${text.trim()}"
+    { "code": "", "report": report, "check": "ok", "attempts": 1, "trace": state.trace + [bench.step("explain", bench.firstLine(text))] }
+
+  // The kind of a failure from its text, the first rule that matches: transient (the services or the network:
+  // retrying helps), environment (a tool or a package is missing), code (the compiler's errors), test (a test
+  // failed), spec (nothing to do was understood), else unknown.
+  classify(text: string) string
+    rules: <string, string> = {
+      "transient": r"(?i)not running at|ECONNREFUSED|connection refused|timed out|timeout|\b(429|502|503|504)\b|temporarily unavailable",
+      "environment": r"(?i)is not installed|command not found|ModuleNotFoundError|Cannot find module|No such file or directory|permission denied",
+      // before `code`: an unknown class the plan never had is a plan that does not cover the spec
+      "spec": r"(?i)\b0 pieces\b|no pieces|no spec|the plan does not cover the spec",
+      "code": r"\bN0\d{3}\b|error\[",
+      "test": r"(?i)\bFAILED\b|AssertionError|\d+ failed|tests? failed",
+    }
+    for kind, pattern in rules
+      if Regex(pattern).test(text)
+        return kind
+    "unknown"
+
+  // The last `size` characters of a text (the end of a log is where it says what failed).
+  tail(text: string, size: int) string
+    if text.length <= size
+      return text
+    text.substring(text.length - size, text.length)
+
+  // What to do about each kind of failure.
+  actionOf(kind: string) string
+    actions = {
+      "transient": "retry: the pipeline retries it by itself with growing waits; if it still fails, start the service it names",
+      "environment": "install or start what is missing, then retry",
+      "code": "repair the code: the compiler's errors say what and where",
+      "test": "repair the code (or a wrong test), then retry from Verification",
+      "spec": "the plan does not cover the spec: name every piece in the spec with the platform's words (a model Character, a repository CharacterRepository, a use case ListCharacters, an appcomponent, a controller) or let Claude lead, then restart from Plan",
+      "unknown": "read the log of the step",
+    }
+    actions[kind] ?? actions["unknown"]!

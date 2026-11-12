@@ -1,0 +1,16 @@
+// The security reviewer: the compiler's check plus a review guided by the graph's security rules. It reports; it does
+// not change the code. Prompt: agents/security.md.
+@state(PieceState)
+graph Security(bench: Workbench, toolchain: Toolchain)
+  @start
+  @next("review")
+  recall(state: PieceState) <string, any>
+    found = ~bench.recall("security validation acl guards env secrets ${state.task}", state.platform, "security")
+    check = ~toolchain.check(state.context, state.platform)
+    { "guide": found.guide, "knowledge": found.knowledge, "check": check, "trace": state.trace + [bench.step("check", bench.firstLine(check))] }
+
+  @next("end")
+  review(state: PieceState) <string, any>
+    prompt = ~bench.prompt("security", { "guide": state.guide, "knowledge": state.knowledge, "check": state.check, "code": state.context })
+    report = ~bench.ask("default", prompt)
+    { "code": "", "report": report.trim(), "check": state.check, "attempts": 1, "trace": state.trace + [bench.step("review", bench.firstLine(report))] }

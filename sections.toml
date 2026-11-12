@@ -1,0 +1,154 @@
+# The knowledge base of NuclearLang and Dragonfly, step by step: what a person or an agent reads, in this order, to
+# know the whole project. Each section lists the files of the working tree it holds (globs from the tree's root; the
+# website is `website/`). `nuclear-graph knowledge build` copies every file as it is (not a comma changes) into
+# `<section>/<path>`; a file no section claims goes to `99-other`, so none is ever left out; `nuclear-graph knowledge
+# check` fails when the copy and the sources differ.
+#
+# `agents = false`: the local agents of the Nuclear Developer do not read the section (they write only Nuclear: the
+# target languages' specs, the dialects' internals and the runtimes are for people and frontier models). Everything
+# is in the Smart Graph's `knowledge` collection; the agents read the rest, without target-language code.
+
+# The website's checkout (a repository of its own, outside the working tree).
+website = "~/Documents/projects/nuc/react/nuclearlang_website"
+
+exclude = [
+  "**/CLAUDE.md",                 # one line that imports AGENTS.md
+  "**/icon-themes/**", "**/icons/atom/**", "**/vendor/**",
+  "tools/defs/flutter_project/**",
+  "nuclear-developer/data/**",    # this repository
+]
+
+[[section]]
+id = "01-introduction"
+title = "What NuclearLang and Dragonfly are"
+files = [
+  "README.md", "AGENTS.md", "docs/context/product/prd.md", "docs/context/README.md", "docs/architecture.md",
+  "docs/context/architecture.md", "docs/context/tech.md", "docs/context/workflow.md", "CONTRIBUTING.md",
+  "CHANGELOG.md", "github-profile/**", "specs/README.md",
+]
+
+[[section]]
+id = "02-language"
+title = "The language: the guide, then the rules, the library and the errors"
+files = [
+  "docs/language/README.md", "docs/language/0*.md", "docs/language/1*.md", "docs/language/reference.md",
+  "spec/nuclear-base.md", "spec/brief/nuclear-base.md", "spec/grammar.ebnf", "spec/reserved-words.md",
+  "spec/library.md", "spec/diagnostics.md", "languages/**", "examples/stdlib/**", "examples/projects/**",
+]
+
+[[section]]
+id = "03-compiler"
+title = "The compiler: projects, dialects, type definitions, the language server"
+files = [
+  "spec/projects.md", "spec/dialects.md", "spec/definitions.md", "docs/context/nuclear/**",
+  "docs/dialects/**", "crates/**", "tools/defs/README.md", "tools/context/README.md",
+]
+
+[[section]]
+id = "03-compiler-targets"
+title = "What the base language becomes in each target language"
+agents = false
+files = [
+  "spec/typescript.md", "spec/dart.md", "spec/python.md", "spec/nodejs.md", "spec/brief/typescript.md",
+  "spec/brief/dart.md", "spec/brief/python.md", "dialects/**",
+]
+
+[[section]]
+id = "04-dragonfly"
+title = "Dragonfly: the framework, its kinds, the tutorial"
+files = [
+  "dragonfly/README.md", "dragonfly/AGENTS.md", "dragonfly/docs/dragonfly/**", "dragonfly/docs/context/dragonfly/**",
+  "dragonfly/CHANGELOG.md", "dragonfly/CONTRIBUTING.md",
+]
+
+[[section]]
+id = "05-backend"
+title = "The backend platform"
+files = [
+  "dragonfly-backend/README.md", "dragonfly-backend/AGENTS.md", "dragonfly-backend/spec/backend.md",
+  "dragonfly-backend/spec/brief/backend.md", "dragonfly-backend/dialects/backend/platform.toml",
+  "dragonfly-backend/dialects/backend/*/docs.toml", "dragonfly-backend/docs/context/**",
+  "dragonfly-backend/docs/dragonfly/contracts.md", "dragonfly-backend/examples/**",
+  "dragonfly-backend/CHANGELOG.md", "dragonfly-backend/CONTRIBUTING.md",
+]
+
+[[section]]
+id = "05-backend-dialects"
+title = "The backend dialects underneath: fastapi and nestjs, their runtimes"
+agents = false
+files = [
+  "dragonfly-backend/spec/fastapi.md", "dragonfly-backend/spec/nestjs.md", "dragonfly-backend/spec/brief/fastapi.md",
+  "dragonfly-backend/spec/brief/nestjs.md", "dragonfly-backend/docs/dragonfly/python.md",
+  "dragonfly-backend/docs/dragonfly/nestjs.md", "dragonfly-backend/packages/**",
+]
+
+[[section]]
+id = "06-mobile"
+title = "The mobile platform"
+files = [
+  "dragonfly-mobile/README.md", "dragonfly-mobile/AGENTS.md", "dragonfly-mobile/spec/mobile.md",
+  "dragonfly-mobile/spec/brief/mobile.md", "dragonfly-mobile/dialects/mobile/platform.toml",
+  "dragonfly-mobile/dialects/mobile/*/docs.toml", "dragonfly-mobile/docs/context/**", "dragonfly-mobile/examples/**",
+  "dragonfly-mobile/CHANGELOG.md", "dragonfly-mobile/CONTRIBUTING.md",
+]
+
+[[section]]
+id = "06-mobile-dialects"
+title = "The mobile dialect underneath: flutter, its runtimes"
+agents = false
+files = [
+  "dragonfly-mobile/spec/flutter.md", "dragonfly-mobile/spec/brief/flutter.md", "dragonfly-mobile/spec/dragonfly.md",
+  "dragonfly-mobile/docs/dragonfly/**", "dragonfly-mobile/packages/**",
+]
+
+[[section]]
+id = "07-web"
+title = "The web platform"
+files = [
+  "dragonfly-web/README.md", "dragonfly-web/AGENTS.md", "dragonfly-web/spec/web.md", "dragonfly-web/spec/brief/web.md",
+  "dragonfly-web/dialects/web/platform.toml", "dragonfly-web/dialects/web/*/docs.toml", "dragonfly-web/docs/context/**",
+  "dragonfly-web/examples/**", "dragonfly-web/CHANGELOG.md", "dragonfly-web/CONTRIBUTING.md",
+  "website/**",
+]
+
+[[section]]
+id = "07-web-dialects"
+title = "The web dialect underneath: react, its runtime"
+agents = false
+files = ["dragonfly-web/spec/react.md", "dragonfly-web/spec/brief/react.md", "dragonfly-web/docs/dragonfly/**", "dragonfly-web/packages/**"]
+
+[[section]]
+id = "08-cli"
+title = "The command line: nuclear, dragonfly, nuclear-loop, nuclear-graph (their help as they print it)"
+files = ["dragonfly/docs/context/cli/**", "cli/**"]
+
+[[section]]
+id = "09-editors"
+title = "The editors: the language server, VS Code, Android Studio, Zed"
+files = [
+  "docs/context/editors/**", "nuclear-vscode/**", "nuclear-jetbrains/**", "nuclear-zed/**",
+]
+
+[[section]]
+id = "10-ai"
+title = "AI: the Smart Graph and its MCP server, the Nuclear Developer, the Loop, the agent skill"
+files = [
+  "docs/ai/**", "docs/adr/0102-*.md", "nuclear-graph/**", "nuclear-developer/**", "agents/**",
+  "specs/007-*/**",
+]
+
+[[section]]
+id = "11-decisions"
+title = "Every decision and why (ADRs) and the plans"
+agents = false
+files = ["docs/adr/**", "spec/decisions.md", "specs/**"]
+
+[[section]]
+id = "12-tools"
+title = "The tools of the working tree: checks, evaluations, benchmarks"
+files = ["tools/**", "examples/**"]
+
+[[section]]
+id = "13-status"
+title = "What is done and what is pending"
+files = ["STATUS.md"]
