@@ -1,0 +1,787 @@
+{
+ "shelf": "examples",
+ "origin": "generated",
+ "generator": "solved",
+ "about": "The validated answers of a frontier model to the evaluation's train tasks.",
+ "rows": [
+  {
+   "id": "solved:agent-librarian",
+   "type": "solved",
+   "title": "Solved — a agent: An agent Librarian(tools: BookTools) whose prompt is \"You help readers find books. Use the tools; never invent ids.\"",
+   "summary": "An agent Librarian(tools: BookTools) whose prompt is \"You help readers find books. Use the tools; never invent ids.\"",
+   "body": [
+    "Task: An agent Librarian(tools: BookTools) whose prompt is \"You help readers find books. Use the tools; never invent ids.\"",
+    "",
+    "File `components/assistant/ai/librarian.nuc`:",
+    "",
+    "```nuclear",
+    "// Helps readers find books.",
+    "agent Librarian(tools: BookTools)",
+    "  prompt: string = \"You help readers find books. Use the tools; never invent ids.\"",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "agent",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:appcomponent-books",
+   "type": "solved",
+   "title": "Solved — a appcomponent: The appcomponent BooksAppComponent with the aliases book() for GetBook.exec, create() for CreateBook.exec and…",
+   "summary": "The appcomponent BooksAppComponent with the aliases book() for GetBook.exec, create() for CreateBook.exec and byAuthor() for BooksOfAuthor.exec.",
+   "body": [
+    "Task: The appcomponent BooksAppComponent with the aliases book() for GetBook.exec, create() for CreateBook.exec and byAuthor() for BooksOfAuthor.exec.",
+    "",
+    "File `components/books/books_appcomponent.nuc`:",
+    "",
+    "```nuclear",
+    "appcomponent BooksAppComponent",
+    "  book() = GetBook.exec",
+    "  create() = CreateBook.exec",
+    "  byAuthor() = BooksOfAuthor.exec",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "appcomponent",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:controller-books",
+   "type": "solved",
+   "title": "Solved — a controller: A controller BooksController(books: BooksAppComponent) on the path \"books\": GET \"{id}\" one(id: int) calls…",
+   "summary": "A controller BooksController(books: BooksAppComponent) on the path \"books\": GET \"{id}\" one(id: int) calls books.book(id); POST create(input: NewBook) calls books.create(input).",
+   "body": [
+    "Task: A controller BooksController(books: BooksAppComponent) on the path \"books\": GET \"{id}\" one(id: int) calls books.book(id); POST create(input: NewBook) calls books.create(input).",
+    "",
+    "File `components/books/api/books_controller.nuc`:",
+    "",
+    "```nuclear",
+    "@controller(\"books\")",
+    "controller BooksController(books: BooksAppComponent)",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Book>",
+    "    ~books.book(id)",
+    "",
+    "  @post()",
+    "  create(input: NewBook) Result<Error, Book>",
+    "    ~books.create(input)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "controller",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:entity-book",
+   "type": "solved",
+   "title": "Solved — a entity: An entity Book: id (int, a generated primary key), title (string, at most 200 characters), author (string), year (int)…",
+   "summary": "An entity Book: id (int, a generated primary key), title (string, at most 200 characters), author (string), year (int) and available (boolean, default true).",
+   "body": [
+    "Task: An entity Book: id (int, a generated primary key), title (string, at most 200 characters), author (string), year (int) and available (boolean, default true).",
+    "",
+    "File `components/books/data/entities/book.nuc`:",
+    "",
+    "```nuclear",
+    "// A book of the catalog.",
+    "@entity(\"books\")",
+    "entity Book",
+    "  @primary(generated = true)",
+    "  id: int",
+    "",
+    "  @column(length = 200)",
+    "  title: string",
+    "",
+    "  author: string",
+    "  year: int",
+    "  available: boolean = true",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "entity",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:entity-loan",
+   "type": "solved",
+   "title": "Solved — a entity: An entity Loan stored in the table \"loans\": id (generated primary key), bookId (int), reader (string) and returned…",
+   "summary": "An entity Loan stored in the table \"loans\": id (generated primary key), bookId (int), reader (string) and returned (boolean, default false).",
+   "body": [
+    "Task: An entity Loan stored in the table \"loans\": id (generated primary key), bookId (int), reader (string) and returned (boolean, default false).",
+    "",
+    "File `components/loans/data/entities/loan.nuc`:",
+    "",
+    "```nuclear",
+    "@entity(\"loans\")",
+    "entity Loan",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  bookId: int",
+    "  reader: string",
+    "  returned: boolean = false",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "entity",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:feature-books-by-author/components-books-api-books-controller-nuc",
+   "type": "solved",
+   "title": "Solved — a controller: A controller BooksController(books: BooksAppComponent) on \"books\" with GET \"author/{author}\" that answers…",
+   "summary": "A controller BooksController(books: BooksAppComponent) on \"books\" with GET \"author/{author}\" that answers ~books.booksOf(author).",
+   "body": [
+    "Task: A controller BooksController(books: BooksAppComponent) on \"books\" with GET \"author/{author}\" that answers ~books.booksOf(author).",
+    "",
+    "File `components/books/api/books_controller.nuc`:",
+    "",
+    "```nuclear",
+    "@controller(\"books\")",
+    "controller BooksController(books: BooksAppComponent)",
+    "  @get(\"author/{author}\")",
+    "  byAuthor(author: string) Result<Error, Book[]>",
+    "    ~books.booksOf(author)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "controller",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:feature-books-by-author/components-books-books-app-component-nuc",
+   "type": "solved",
+   "title": "Solved — a appcomponent: An application component BooksAppComponent with booksOf() = BooksOfAuthor.exec. A controller…",
+   "summary": "An application component BooksAppComponent with booksOf() = BooksOfAuthor.exec. A controller BooksController(books: BooksAppComponent) on \"books\" with GET \"author/{author}\" that answers ~books.booksOf(author).",
+   "body": [
+    "Task: An application component BooksAppComponent with booksOf() = BooksOfAuthor.exec. A controller BooksController(books: BooksAppComponent) on \"books\" with GET \"author/{author}\" that answers ~books.booksOf(author).",
+    "",
+    "File `components/books/books_app_component.nuc`:",
+    "",
+    "```nuclear",
+    "appcomponent BooksAppComponent",
+    "  booksOf() = BooksOfAuthor.exec",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "appcomponent",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:feature-books-by-author/components-books-data-entities-book-nuc",
+   "type": "solved",
+   "title": "Solved — a entity: An entity Book (id: a generated primary key, title: string, author: string). A repository BookRepository with…",
+   "summary": "An entity Book (id: a generated primary key, title: string, author: string). A repository BookRepository with byAuthor(author: string) Book[] that filters by author and orders by title",
+   "body": [
+    "Task: An entity Book (id: a generated primary key, title: string, author: string). A repository BookRepository with byAuthor(author: string) Book[] that filters by author and orders by title",
+    "",
+    "File `components/books/data/entities/book.nuc`:",
+    "",
+    "```nuclear",
+    "@entity(\"books\")",
+    "entity Book()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  title: string",
+    "  author: string",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "entity",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:feature-books-by-author/components-books-data-repositories-book-repository-nuc",
+   "type": "solved",
+   "title": "Solved — a repository: A repository BookRepository with byAuthor(author: string) Book[] that filters by author and orders by title. A use…",
+   "summary": "A repository BookRepository with byAuthor(author: string) Book[] that filters by author and orders by title. A use case BooksOfAuthor(books: BookRepository) whose exec(author: string) returns those books",
+   "body": [
+    "Task: A repository BookRepository with byAuthor(author: string) Book[] that filters by author and orders by title. A use case BooksOfAuthor(books: BookRepository) whose exec(author: string) returns those books",
+    "",
+    "File `components/books/data/repositories/book_repository.nuc`:",
+    "",
+    "```nuclear",
+    "repository BookRepository",
+    "  byAuthor(author: string) Book[]",
+    "    where({ \"author\": author })",
+    "    orderBy(\"title\")",
+    "    getMany()",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "repository",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:feature-books-by-author/components-books-domain-usecases-books-of-author-nuc",
+   "type": "solved",
+   "title": "Solved — a usecase: A use case BooksOfAuthor(books: BookRepository) whose exec(author: string) returns those books. An application…",
+   "summary": "A use case BooksOfAuthor(books: BookRepository) whose exec(author: string) returns those books. An application component BooksAppComponent with booksOf() = BooksOfAuthor.exec",
+   "body": [
+    "Task: A use case BooksOfAuthor(books: BookRepository) whose exec(author: string) returns those books. An application component BooksAppComponent with booksOf() = BooksOfAuthor.exec",
+    "",
+    "File `components/books/domain/usecases/books_of_author.nuc`:",
+    "",
+    "```nuclear",
+    "usecase BooksOfAuthor(books: BookRepository)",
+    "  exec(author: string) Result<Error, Book[]>",
+    "    Ok(~books.byAuthor(author))",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "usecase",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:flutter-model",
+   "type": "solved",
+   "title": "Solved — a model: A model Book of the mobile app: id (int), title (string) and author (string).",
+   "summary": "A model Book of the mobile app: id (int), title (string) and author (string).",
+   "body": [
+    "Task: A model Book of the mobile app: id (int), title (string) and author (string).",
+    "",
+    "File `components/books/domain/models/book.nuc`:",
+    "",
+    "```nuclear",
+    "Book",
+    "  id: int",
+    "  title: string",
+    "  author: string",
+    "```"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "model",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:flutter-repository-post",
+   "type": "solved",
+   "title": "Solved — a repository: A repository BookRepository of the mobile app over the API's \"books\" path with a POST request save(book: Book) that…",
+   "summary": "A repository BookRepository of the mobile app over the API's \"books\" path with a POST request save(book: Book) that returns a Result with the saved Book, retried once.",
+   "body": [
+    "Task: A repository BookRepository of the mobile app over the API's \"books\" path with a POST request save(book: Book) that returns a Result with the saved Book, retried once.",
+    "",
+    "File `components/books/data/repositories/book_repository.nuc`:",
+    "",
+    "```nuclear",
+    "@repository(path = \"books\")",
+    "repository BookRepository",
+    "  @post(retry = 1)",
+    "  save(book: Book) Result<BookError, Book>",
+    "```"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "repository",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:flutter-state-model",
+   "type": "solved",
+   "title": "Solved — a statemodel: The state model BooksState of the books list screen with three states: loaded (Book[]), error (BookError) and…",
+   "summary": "The state model BooksState of the books list screen with three states: loaded (Book[]), error (BookError) and loading (boolean).",
+   "body": [
+    "Task: The state model BooksState of the books list screen with three states: loaded (Book[]), error (BookError) and loading (boolean).",
+    "",
+    "File `components/books/presentation/list/state_models/books_state.nuc`:",
+    "",
+    "```nuclear",
+    "BooksState",
+    "  (loaded: Book[], error: BookError, loading: boolean)",
+    "```"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "statemodel",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:flutter-usecase",
+   "type": "solved",
+   "title": "Solved — a usecase: A use case AllBooksUseCase of the mobile app that receives books: BookRepository and whose exec() returns the Result…",
+   "summary": "A use case AllBooksUseCase of the mobile app that receives books: BookRepository and whose exec() returns the Result of ~books.all().",
+   "body": [
+    "Task: A use case AllBooksUseCase of the mobile app that receives books: BookRepository and whose exec() returns the Result of ~books.all().",
+    "",
+    "File `components/books/domain/usecases/all_books_usecase.nuc`:",
+    "",
+    "```nuclear",
+    "usecase AllBooksUseCase",
+    "  (books: BookRepository)",
+    "",
+    "  exec() Result<BookError, Book[]>",
+    "    ~books.all()",
+    "```"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "usecase",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:listener-loans",
+   "type": "solved",
+   "title": "Solved — a listener: A listener BookEvents(books: BooksAppComponent) with a consumer of the topic \"books.created\": created(input: NewBook)…",
+   "summary": "A listener BookEvents(books: BooksAppComponent) with a consumer of the topic \"books.created\": created(input: NewBook) calls books.create(input).",
+   "body": [
+    "Task: A listener BookEvents(books: BooksAppComponent) with a consumer of the topic \"books.created\": created(input: NewBook) calls books.create(input).",
+    "",
+    "File `components/loans/events/loan_events.nuc`:",
+    "",
+    "```nuclear",
+    "listener BookEvents(books: BooksAppComponent)",
+    "  @consumer(\"books.created\")",
+    "  created(input: NewBook)",
+    "    ~books.create(input)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "listener",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:model-new-book",
+   "type": "solved",
+   "title": "Solved — a model: A model NewBook: title (string, at least 1 character), author (string) and year (int).",
+   "summary": "A model NewBook: title (string, at least 1 character), author (string) and year (int).",
+   "body": [
+    "Task: A model NewBook: title (string, at least 1 character), author (string) and year (int).",
+    "",
+    "File `components/books/domain/models/book_models.nuc`:",
+    "",
+    "```nuclear",
+    "model NewBook",
+    "  @minLength(1) title: string",
+    "  author: string",
+    "  year: int",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "model",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:model-reader",
+   "type": "solved",
+   "title": "Solved — a model: A model NewReader: name (string, 2 to 80 characters) and email (string, a valid email).",
+   "summary": "A model NewReader: name (string, 2 to 80 characters) and email (string, a valid email).",
+   "body": [
+    "Task: A model NewReader: name (string, 2 to 80 characters) and email (string, a valid email).",
+    "",
+    "File `components/readers/domain/models/reader_models.nuc`:",
+    "",
+    "```nuclear",
+    "NewReader",
+    "  @minLength(2) @maxLength(80) name: string",
+    "  @email email: string",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "model",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:repo-by-author",
+   "type": "solved",
+   "title": "Solved — a repository: A repository BookRepository with byAuthor(author: string) that returns the books of that author ordered by year.",
+   "summary": "A repository BookRepository with byAuthor(author: string) that returns the books of that author ordered by year.",
+   "body": [
+    "Task: A repository BookRepository with byAuthor(author: string) that returns the books of that author ordered by year.",
+    "",
+    "File `components/books/data/repositories/book_repository.nuc`:",
+    "",
+    "```nuclear",
+    "repository BookRepository",
+    "  byAuthor(author: string) Book[]",
+    "    where({ \"author\": author })",
+    "    orderBy(\"year\")",
+    "    getMany()",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "repository",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:repo-count-open-loans",
+   "type": "solved",
+   "title": "Solved — a repository: A repository LoanRepository with openFor(reader: string) that counts the loans of that reader that are not returned.",
+   "summary": "A repository LoanRepository with openFor(reader: string) that counts the loans of that reader that are not returned.",
+   "body": [
+    "Task: A repository LoanRepository with openFor(reader: string) that counts the loans of that reader that are not returned.",
+    "",
+    "File `components/loans/data/repositories/loan_repository.nuc`:",
+    "",
+    "```nuclear",
+    "repository LoanRepository",
+    "  openFor(reader: string) int",
+    "    where({ \"reader\": reader, \"returned\": false })",
+    "    count()",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "repository",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:tests-create-book",
+   "type": "solved",
+   "title": "Solved — a tests: Tests Books with one test \"creates a book and refuses the same title\": inject BooksAppComponent, create NewBook(title =…",
+   "summary": "Tests Books with one test \"creates a book and refuses the same title\": inject BooksAppComponent, create NewBook(title = \"Dune\", author = \"Herbert\", year = 1965), expect it is Ok, create it again and expect the error status is 409.",
+   "body": [
+    "Task: Tests Books with one test \"creates a book and refuses the same title\": inject BooksAppComponent, create NewBook(title = \"Dune\", author = \"Herbert\", year = 1965), expect it is Ok, create it again and expect the error status is 409.",
+    "",
+    "File `test/books_test.nuc`:",
+    "",
+    "```nuclear",
+    "tests Books",
+    "  books: BooksAppComponent = inject<BooksAppComponent>()",
+    "",
+    "  @test(\"creates a book and refuses the same title\")",
+    "  checkDuplicate()",
+    "    book = NewBook(title = \"Dune\", author = \"Herbert\", year = 1965)",
+    "    first = ~books.create(book)",
+    "    expect(first.isOk)",
+    "    second = ~books.create(book)",
+    "    expect(second.error.status == 409)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "tests",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:tools-books",
+   "type": "solved",
+   "title": "Solved — a tools: A tools BookTools(books: BooksAppComponent) with one tool: bookTitle(id: int) string, documented \"Gives the title of the…",
+   "summary": "A tools BookTools(books: BooksAppComponent) with one tool: bookTitle(id: int) string, documented \"Gives the title of the book with that id.\"; it matches books.book(id): Ok(b) gives b.title, Err(e) gives e.message.",
+   "body": [
+    "Task: A tools BookTools(books: BooksAppComponent) with one tool: bookTitle(id: int) string, documented \"Gives the title of the book with that id.\"; it matches books.book(id): Ok(b) gives b.title, Err(e) gives e.message.",
+    "",
+    "File `components/assistant/ai/book_tools.nuc`:",
+    "",
+    "```nuclear",
+    "tools BookTools(books: BooksAppComponent)",
+    "  // Gives the title of the book with that id.",
+    "  bookTitle(id: int) string",
+    "    match ~books.book(id)",
+    "      Ok(b) -> b.title",
+    "      Err(e) -> e.message",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "tools",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:usecase-books-of-author",
+   "type": "solved",
+   "title": "Solved — a usecase: A use case BooksOfAuthor(books: BookRepository): exec(author: string) answers Invalid when author is empty, otherwise…",
+   "summary": "A use case BooksOfAuthor(books: BookRepository): exec(author: string) answers Invalid when author is empty, otherwise Ok of the books of that author (byAuthor).",
+   "body": [
+    "Task: A use case BooksOfAuthor(books: BookRepository): exec(author: string) answers Invalid when author is empty, otherwise Ok of the books of that author (byAuthor).",
+    "",
+    "File `components/books/domain/usecases/books_of_author.nuc`:",
+    "",
+    "```nuclear",
+    "usecase BooksOfAuthor(books: BookRepository)",
+    "  exec(author: string) Result<Error, Book[]>",
+    "    if author.length == 0",
+    "      Err(Invalid(\"author is empty\"))",
+    "    else",
+    "      Ok(~books.byAuthor(author))",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "usecase",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:usecase-get-book",
+   "type": "solved",
+   "title": "Solved — a usecase: A use case GetBook(books: BookRepository): exec(id: int) returns the book with that id (the repository's find gives…",
+   "summary": "A use case GetBook(books: BookRepository): exec(id: int) returns the book with that id (the repository's find gives NotFound by itself).",
+   "body": [
+    "Task: A use case GetBook(books: BookRepository): exec(id: int) returns the book with that id (the repository's find gives NotFound by itself).",
+    "",
+    "File `components/books/domain/usecases/get_book.nuc`:",
+    "",
+    "```nuclear",
+    "usecase GetBook(books: BookRepository)",
+    "  exec(id: int) Result<Error, Book>",
+    "    ~books.find(id)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "usecase",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:web-appcomponent",
+   "type": "solved",
+   "title": "Solved — a appcomponent: The application component BooksComponent of the web app: all() is AllBooksUseCase.exec and one() is…",
+   "summary": "The application component BooksComponent of the web app: all() is AllBooksUseCase.exec and one() is GetBookUseCase.exec.",
+   "body": [
+    "Task: The application component BooksComponent of the web app: all() is AllBooksUseCase.exec and one() is GetBookUseCase.exec.",
+    "",
+    "File `components/books/books_component.nuc`:",
+    "",
+    "```nuclear",
+    "appcomponent BooksComponent",
+    "  all() = AllBooksUseCase.exec",
+    "  one() = GetBookUseCase.exec",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "appcomponent",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:web-repository",
+   "type": "solved",
+   "title": "Solved — a repository: A repository BookRepository of the web app over the API's \"books\" path: getOne(id: int) is a GET on the path \":id\",…",
+   "summary": "A repository BookRepository of the web app over the API's \"books\" path: getOne(id: int) is a GET on the path \":id\", and all() is a GET cached for 60000 ms; both return a Result with BookError.",
+   "body": [
+    "Task: A repository BookRepository of the web app over the API's \"books\" path: getOne(id: int) is a GET on the path \":id\", and all() is a GET cached for 60000 ms; both return a Result with BookError.",
+    "",
+    "File `components/books/data/book_repository.nuc`:",
+    "",
+    "```nuclear",
+    "@repository(path = \"books\")",
+    "repository BookRepository",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<BookError, Book>",
+    "",
+    "  @get(cache = true, ttl = 60000)",
+    "  all() Result<BookError, Book[]>",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "repository",
+    "validated": "sonnet + nuclear check"
+   }
+  },
+  {
+   "id": "solved:web-service",
+   "type": "solved",
+   "title": "Solved — a service: A domain service BookFilters of the web app with available(books: Book[]) Book[]: the books whose available is true.",
+   "summary": "A domain service BookFilters of the web app with available(books: Book[]) Book[]: the books whose available is true.",
+   "body": [
+    "Task: A domain service BookFilters of the web app with available(books: Book[]) Book[]: the books whose available is true.",
+    "",
+    "File `components/books/domain/services/book_filters.nuc`:",
+    "",
+    "```nuclear",
+    "service BookFilters()",
+    "  available(books: Book[]) Book[]",
+    "    books.filter(book => book.available)",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "nuclear-developer/eval/tasks.toml",
+    "nuclear-developer/eval/results/reference.json"
+   ],
+   "meta": {
+    "kind": "service",
+    "validated": "sonnet + nuclear check"
+   }
+  }
+ ]
+}

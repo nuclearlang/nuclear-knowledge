@@ -1,2 +1,0 @@
-TasksState
-  (loaded: Task[], error: TasksApiError, loading: boolean)

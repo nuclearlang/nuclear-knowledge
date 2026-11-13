@@ -1,4 +1,0 @@
-@repository(path = "episode")
-repository EpisodeRepository
-  @get(path = ":ids")
-  getMany(ids: string) Episode[]

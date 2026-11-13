@@ -1,3 +1,0 @@
-appcomponent SessionComponent
-  login() = LoginUseCase.exec
-  logout() = LogoutUseCase.exec

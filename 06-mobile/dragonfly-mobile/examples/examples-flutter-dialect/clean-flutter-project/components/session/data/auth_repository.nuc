@@ -1,4 +1,0 @@
-@repository(path = "auth")
-repository AuthRepository
-  @post(path = "login")
-  login(params: LoginParams) Result<AuthError, Auth>

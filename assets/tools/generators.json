@@ -1,0 +1,334 @@
+{
+ "shelf": "tools",
+ "origin": "generated",
+ "generator": "generators",
+ "about": "What `dragonfly gen` writes on each platform (the [[generators]] of each platform.toml).",
+ "rows": [
+  {
+   "id": "generator:backend.component",
+   "type": "generator",
+   "title": "`dragonfly gen component` on the backend platform: what it writes",
+   "summary": "The files `dragonfly gen component` writes in a backend project, finished and compiling: appcomponent.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform backend`); nothing is overwritten.",
+    "",
+    "- appcomponent `{{Component}}AppComponent`, added to the file when it exists",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen component",
+    "dragonfly gen component"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.component"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen component"
+   }
+  },
+  {
+   "id": "generator:backend.resource",
+   "type": "generator",
+   "title": "`dragonfly gen resource` on the backend platform: what it writes",
+   "summary": "The files `dragonfly gen resource` writes in a backend project, finished and compiling: appcomponent, controller, entity, model, repository, tests, usecase.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform backend`); nothing is overwritten.",
+    "",
+    "- model `{{Model}}` (when `rest`), one per `models`",
+    "- entity `{{Name}}` (when `db`)",
+    "- model `New{{Name}}` (when `db`)",
+    "- repository `{{Name}}Repository` (when `rest`), added to the file when it exists",
+    "- repository `{{Name}}Repository` (when `db`), added to the file when it exists",
+    "- usecase `{{UseCase}}`, one per `each_action`",
+    "- appcomponent `{{Component}}AppComponent`, added to the file when it exists",
+    "- controller `{{Names}}Controller`, added to the file when it exists",
+    "- tests `{{Names}}Test` (when `db`)",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen resource",
+    "dragonfly gen resource"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.resource"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen resource"
+   }
+  },
+  {
+   "id": "generator:backend.usecase",
+   "type": "generator",
+   "title": "`dragonfly gen usecase` on the backend platform: what it writes",
+   "summary": "The files `dragonfly gen usecase` writes in a backend project, finished and compiling: appcomponent, controller, usecase.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform backend`); nothing is overwritten.",
+    "",
+    "- usecase `{{UseCase}}` (when `result`)",
+    "- usecase `{{UseCase}}` (when `plain`)",
+    "- appcomponent `{{Component}}AppComponent`, added to the file when it exists",
+    "- controller `{{Controller}}` (when `route`), added to the file when it exists",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen usecase",
+    "dragonfly gen usecase"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.usecase"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen usecase"
+   }
+  },
+  {
+   "id": "generator:mobile.component",
+   "type": "generator",
+   "title": "`dragonfly gen component` on the mobile platform: what it writes",
+   "summary": "The files `dragonfly gen component` writes in a mobile project, finished and compiling: appcomponent.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform mobile`); nothing is overwritten.",
+    "",
+    "- appcomponent `{{Component}}Component`, added to the file when it exists",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen component",
+    "dragonfly gen component"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.component"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen component"
+   }
+  },
+  {
+   "id": "generator:mobile.resource",
+   "type": "generator",
+   "title": "`dragonfly gen resource` on the mobile platform: what it writes",
+   "summary": "The files `dragonfly gen resource` writes in a mobile project, finished and compiling: appcomponent, model, repository, stateless, statemanager, statemodel, tests, usecase.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform mobile`); nothing is overwritten.",
+    "",
+    "- model `{{Model}}` (when `rest`), one per `models`",
+    "- model `{{Name}}Error` (when `rest`)",
+    "- repository `{{Name}}Repository` (when `rest`), added to the file when it exists",
+    "- usecase `{{UseCase}}`, one per `each_action`",
+    "- appcomponent `{{Component}}Component`, added to the file when it exists",
+    "- statemodel `{{Names}}State` (when `screen`)",
+    "- statemanager `{{Names}}Manager` (when `screen`)",
+    "- stateless `{{Names}}Screen` (when `screen`)",
+    "- tests `{{Names}}Test` (when `actions.list`)",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen resource",
+    "dragonfly gen resource"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.resource"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen resource"
+   }
+  },
+  {
+   "id": "generator:mobile.usecase",
+   "type": "generator",
+   "title": "`dragonfly gen usecase` on the mobile platform: what it writes",
+   "summary": "The files `dragonfly gen usecase` writes in a mobile project, finished and compiling: appcomponent, usecase.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform mobile`); nothing is overwritten.",
+    "",
+    "- usecase `{{UseCase}}` (when `result`)",
+    "- appcomponent `{{Component}}Component`, added to the file when it exists",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen usecase",
+    "dragonfly gen usecase"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.usecase"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen usecase"
+   }
+  },
+  {
+   "id": "generator:web.component",
+   "type": "generator",
+   "title": "`dragonfly gen component` on the web platform: what it writes",
+   "summary": "The files `dragonfly gen component` writes in a web project, finished and compiling: appcomponent.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform web`); nothing is overwritten.",
+    "",
+    "- appcomponent `{{Component}}Component`, added to the file when it exists",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen component",
+    "dragonfly gen component"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.component"
+    }
+   ],
+   "sources": [
+    "dragonfly-web/dialects/web/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen component"
+   }
+  },
+  {
+   "id": "generator:web.resource",
+   "type": "generator",
+   "title": "`dragonfly gen resource` on the web platform: what it writes",
+   "summary": "The files `dragonfly gen resource` writes in a web project, finished and compiling: appcomponent, model, repository, stateless, statemanager, statemodel, tests, usecase.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform web`); nothing is overwritten.",
+    "",
+    "- model `{{Model}}` (when `rest`), one per `models`",
+    "- model `{{Name}}Error` (when `rest`)",
+    "- repository `{{Name}}Repository` (when `rest`), added to the file when it exists",
+    "- usecase `{{UseCase}}`, one per `each_action`",
+    "- appcomponent `{{Component}}Component`, added to the file when it exists",
+    "- statemodel `{{Names}}State` (when `screen`)",
+    "- statemanager `{{Names}}Manager` (when `screen`)",
+    "- stateless `{{Names}}Screen` (when `screen`)",
+    "- tests `{{Names}}Test` (when `actions.list`)",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen resource",
+    "dragonfly gen resource"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.resource"
+    }
+   ],
+   "sources": [
+    "dragonfly-web/dialects/web/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen resource"
+   }
+  },
+  {
+   "id": "generator:web.usecase",
+   "type": "generator",
+   "title": "`dragonfly gen usecase` on the web platform: what it writes",
+   "summary": "The files `dragonfly gen usecase` writes in a web project, finished and compiling: appcomponent, usecase.",
+   "body": [
+    "Each piece is a file at its kind's place (`nuclear help layout --platform web`); nothing is overwritten.",
+    "",
+    "- usecase `{{UseCase}}` (when `result`)",
+    "- appcomponent `{{Component}}Component`, added to the file when it exists",
+    "",
+    "The names: `{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component, `{{UseCase}}` one per action."
+   ],
+   "keys": [
+    "gen usecase",
+    "dragonfly gen usecase"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "links": [
+    {
+     "rel": "run-by",
+     "to": "tool:dragonfly.gen.usecase"
+    }
+   ],
+   "sources": [
+    "dragonfly-web/dialects/web/platform.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "gen usecase"
+   }
+  }
+ ]
+}

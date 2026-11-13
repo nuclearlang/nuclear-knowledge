@@ -1,2 +1,0 @@
-LoginState
-  (done: Auth, error: AuthError, loading: boolean)

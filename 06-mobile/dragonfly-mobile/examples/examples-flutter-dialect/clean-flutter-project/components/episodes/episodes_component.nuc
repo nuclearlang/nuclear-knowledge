@@ -1,2 +1,0 @@
-appcomponent EpisodesComponent
-  getEpisodes() = GetEpisodesUseCase.exec

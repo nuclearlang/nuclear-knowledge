@@ -1,0 +1,368 @@
+{
+ "shelf": "concepts",
+ "origin": "curated",
+ "about": "The theory behind the ecosystem, as it applies here: transpilers, clean architecture, dependency injection, state management, retrieval, agents and graphs, tests first, distillation.",
+ "rows": [
+  {
+   "id": "concept:transpiler",
+   "type": "theory",
+   "title": "Theory: what a transpiler is, and why Nuclear goes one way only",
+   "summary": "A transpiler translates source code of one language into source code of another, instead of machine code. Nuclear's goes only from `.nuc` to the target, so the `.nuc` files are the single source of truth and the generated code is never edited.",
+   "body": [
+    "- A **compiler** turns source into machine code or bytecode. A **transpiler** turns source into the source of another language, which that language's own tools then compile and run. TypeScript to JavaScript is the best known one.",
+    "- The gain: the target's ecosystem (its runtime, packages, debugger, stores) is reused whole, and the source language can be as small as its purpose needs.",
+    "- **One way only.** Nuclear never reads target code. If both sides could be edited, they would drift apart. With one direction the rule is simple: change the `.nuc`, build again.",
+    "- **Declarative.** What changes per target is data (a dialect), not the compiler. The same front end (lexer, parser, resolver) serves every target.",
+    "- **Line maps.** The build keeps a map from the generated lines to the `.nuc` lines, so a debugger and a test failure are shown at the Nuclear line."
+   ],
+   "keys": [
+    "transpiler",
+    "transpilation"
+   ],
+   "asks": [
+    "what is a transpiler",
+    "is nuclear compiled or interpreted",
+    "why can't I edit the generated code"
+   ],
+   "links": [
+    {
+     "rel": "applied",
+     "to": "concept:how-it-works"
+    },
+    {
+     "rel": "limit",
+     "to": "cannot:read-target-code"
+    }
+   ],
+   "meta": {
+    "topic": "theory"
+   }
+  },
+  {
+   "id": "concept:clean-architecture",
+   "type": "theory",
+   "title": "Theory: clean architecture, as Dragonfly applies it",
+   "summary": "Business rules sit in the middle and depend on nothing outside: a use case is one operation, a repository hides where data comes from, and entry points (a controller, a screen) only call inward. Dragonfly makes these rules kinds, and the compiler enforces them.",
+   "body": [
+    "- **Use case**: one business operation with one entry (`exec`). It knows the rules, not the HTTP route nor the screen that called it. It is the unit that is tested.",
+    "- **Repository**: the data of one entity behind an interface of meaningful queries (`byAuthor`, `availableSince`). The use case does not know whether the data comes from a database or another API.",
+    "- **Model and entity**: a model is what crosses a boundary, validated; an entity is what is stored.",
+    "- **Facade** (`appcomponent`): the one public face of a feature. Others depend on it, never on what is inside, so the inside can change freely.",
+    "- **The dependency rule**: calls go inward only: entry point → facade → use case → repository or service.",
+    "- **Feature folders** (components): code is grouped by what it does for the business, not by technical layer of the whole app.",
+    "",
+    "Why it matters for an AI agent: every piece is small, has one job and one place. A task can be split into pieces of one file that a small model writes without knowing the rest."
+   ],
+   "keys": [
+    "clean architecture",
+    "use case",
+    "repository pattern",
+    "facade"
+   ],
+   "asks": [
+    "what is clean architecture",
+    "why are there use cases and repositories",
+    "why can't a controller call a repository",
+    "what is a facade"
+   ],
+   "links": [
+    {
+     "rel": "applied",
+     "to": "concept:project-architecture"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.usecase"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.repository"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.appcomponent"
+    }
+   ],
+   "meta": {
+    "topic": "theory"
+   }
+  },
+  {
+   "id": "concept:dependency-injection",
+   "type": "theory",
+   "title": "Theory: dependency injection by type",
+   "summary": "A declaration does not create what it needs: it names its dependencies as constructor parameters and the framework hands them in, found by their type. In Nuclear that is the header line of a kind; tests ask for an instance with `inject<X>()`.",
+   "body": [
+    "```nuclear",
+    "usecase CreateBook(books: BookRepository, clock: Clock)",
+    "  exec(input: NewBook) Result<Error, Book>",
+    "    Ok(~books.save(Book(title = input.title, addedAt = clock.now())))",
+    "```",
+    "",
+    "- The header says what the use case needs; nothing in its body builds a repository.",
+    "- The dialect writes the registration in the target's injector. You never write a module or a provider list.",
+    "- A test replaces a dependency without touching the code under test (`@mock([Repository])` on mobile and web; an in-memory database on the backend).",
+    "- An `appcomponent` has no constructor parameters: it is only aliases to use cases."
+   ],
+   "keys": [
+    "dependency injection",
+    "di",
+    "inject"
+   ],
+   "asks": [
+    "how does dependency injection work in nuclear",
+    "how do I get a repository inside a use case",
+    "what does inject do"
+   ],
+   "links": [
+    {
+     "rel": "applied",
+     "to": "concept:project-architecture"
+    }
+   ],
+   "meta": {
+    "topic": "theory"
+   }
+  },
+  {
+   "id": "concept:state-management",
+   "type": "theory",
+   "title": "Theory: state management on mobile and web",
+   "summary": "A screen does not hold business state: a state manager does. It exposes methods, each method emits a named state (loading, loaded, error), and the screen draws one view per state. In Nuclear the states are a state model and the manager's methods are marked with the state they emit.",
+   "body": [
+    "```nuclear",
+    "// the states of the screen",
+    "BooksState",
+    "  (loaded: Book[], error: BookError, loading: boolean)",
+    "",
+    "@stateModel(BooksState)",
+    "statemanager BooksManager",
+    "  (books: BooksComponent)",
+    "    load()",
+    "",
+    "  @state(BooksState.loading)",
+    "  loading()",
+    "",
+    "  @before(loading)",
+    "  @state(BooksState.loaded)",
+    "  load() Result<BookError, Book[]>",
+    "    ~books.all()",
+    "```",
+    "",
+    "- The state model lists the states; a boolean is a state without data.",
+    "- A method marked `@state(S.x)` emits that state with what it returns; an `Err` emits the error state.",
+    "- The screen uses `<State>Builder` with one callback per state.",
+    "- The flow is one way: screen → state manager → facade → use case → repository."
+   ],
+   "keys": [
+    "state management",
+    "state manager",
+    "statemanager",
+    "state model"
+   ],
+   "asks": [
+    "how do I manage state in a mobile app",
+    "what is a state manager",
+    "how does a screen show loading and error"
+   ],
+   "links": [
+    {
+     "rel": "kind",
+     "to": "kind:mobile.statemanager"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:mobile.statemodel"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:web.statemanager"
+    }
+   ],
+   "platforms": [
+    "mobile",
+    "web"
+   ],
+   "meta": {
+    "topic": "theory"
+   }
+  },
+  {
+   "id": "concept:rag",
+   "type": "theory",
+   "title": "Theory: retrieval (RAG), and why a small model needs it",
+   "summary": "Retrieval-augmented generation gives a model, at the moment it answers, the few pieces of knowledge its question needs. A small model cannot remember a language it was never trained on, but it can copy a rule and an example placed in front of it. The Smart Graph is that retrieval.",
+   "body": [
+    "- **The limit it solves.** A 3B model knows little about NuclearLang and has a short context window. It cannot read the documentation; it can read five cards.",
+    "- **How it is found.** Each card is stored with a vector that represents its meaning. The question becomes a vector too, and the closest cards come back. Exact names in the question (an error code, a command) are matched as well, because meaning alone misses them.",
+    "- **What makes retrieval good.** Cards that each answer one question; a title and a summary that say what the card is; the same fact in one place only; links to what is related; nothing the reader must not use (a local agent never sees target-language code).",
+    "- **What makes it fail.** Long documents cut at arbitrary places, the same thing said in ten places, text that is about history or plans and not about how to do something.",
+    "- **Retrieval is not training.** Nothing in the model changes; the knowledge can be corrected today and is right in the next answer."
+   ],
+   "keys": [
+    "rag",
+    "retrieval",
+    "embeddings",
+    "vector search"
+   ],
+   "asks": [
+    "what is rag",
+    "how does the agent know nuclear",
+    "why does a small model need a knowledge base",
+    "how does the search of the graph work"
+   ],
+   "links": [
+    {
+     "rel": "applied",
+     "to": "concept:smart-graph"
+    },
+    {
+     "rel": "with",
+     "to": "concept:distillation"
+    }
+   ],
+   "meta": {
+    "topic": "theory"
+   }
+  },
+  {
+   "id": "concept:agents-and-graphs",
+   "type": "theory",
+   "title": "Theory: agents, tools and graphs of steps",
+   "summary": "An agent is a model that can call tools. Left free, it chooses which tool to call next; in a graph, the steps are fixed and the model only fills each one. Small models follow fixed steps far better than they choose tools, so the local agents are graphs.",
+   "body": [
+    "- **Tool**: a function a model may call, described by its name, parameters and a sentence.",
+    "- **Free agent**: the model decides the next tool from the conversation. It needs a strong model: a weak one loops, calls the wrong tool or stops early.",
+    "- **Graph of steps**: the program decides the order (recall → write → check → repair); the model writes only the content of a step. Predictable, testable, and each step can have its own prompt and its own small model.",
+    "- **Tool executor**: the step between both. The program reads a playbook (a list of steps with their tools) and runs it; the model is asked only where judgment or text is needed: to understand a spec, to write a small piece, to explain a failure.",
+    "- **In a backend written in Nuclear**: `tools Name` (each method with a doc comment is a tool), `agent Name(tools: T)` with a `prompt`, and `@state(S) graph Name` whose methods are the nodes (`@start`, `@next(\"node\")`)."
+   ],
+   "keys": [
+    "agents",
+    "agent",
+    "tools",
+    "tool calling",
+    "langgraph",
+    "graph of steps"
+   ],
+   "asks": [
+    "what is an agent",
+    "what is the difference between an agent and a graph",
+    "why do the local agents follow fixed steps",
+    "how do I write an agent in nuclear"
+   ],
+   "links": [
+    {
+     "rel": "kind",
+     "to": "kind:backend.agent"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.graph"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.tools"
+    },
+    {
+     "rel": "applied",
+     "to": "concept:nuclear-developer"
+    }
+   ],
+   "meta": {
+    "topic": "theory"
+   }
+  },
+  {
+   "id": "concept:tdd",
+   "type": "theory",
+   "title": "Theory: tests first",
+   "summary": "Writing the test before the code turns an acceptance criterion into something a machine can check. For an AI agent it is the definition of done: the code is finished when the tests that were written first pass, not when the model says so.",
+   "body": [
+    "- One test per acceptance criterion: the normal case, the edge cases (empty, missing, repeated) and each error the operation can return.",
+    "- The test is written from the spec and the plan's names, before the code exists. It may not compile alone; it compiles with the code.",
+    "- The code is written until the tests pass. A failing test is evidence, given back to whoever wrote the code.",
+    "- A test is never deleted or weakened to make a run pass; a test that is itself wrong is corrected and that is said.",
+    "- In the Loop this is the stage *Tests first*, before *Code*, and *Verification* runs them."
+   ],
+   "keys": [
+    "tdd",
+    "tests first",
+    "test driven"
+   ],
+   "asks": [
+    "why are the tests written first",
+    "what is tdd",
+    "when is a feature done"
+   ],
+   "links": [
+    {
+     "rel": "applied",
+     "to": "concept:tests-in-nuclear"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:test"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:verify"
+    }
+   ],
+   "meta": {
+    "topic": "theory"
+   }
+  },
+  {
+   "id": "concept:distillation",
+   "type": "theory",
+   "title": "How the local agents were trained: retrieval and distillation, measured",
+   "summary": "The local agents were not trained by changing weights. A frontier model answered a bank of tasks once; its answers that pass the compiler became examples in the graph; the local coder is measured against it on tasks whose answers the graph never saw, and every failure is fixed with a general rule or more knowledge.",
+   "body": [
+    "1. **Reference**: Claude Sonnet answers every task of the bank once, with the same guide and one repair with the compiler's errors.",
+    "2. **Distill**: its answers to the *train* tasks that pass become examples in the graph (`solved:` rows). The *test* tasks are held out: their answers never reach the graph.",
+    "3. **Local**: the local coder answers every task. An answer passes when `nuclear check` reports no errors and it has every acceptance text.",
+    "4. **Study each failure** and fix it with a general rule or more knowledge, never with the answer; then another round.",
+    "",
+    "The bank has 45 tasks: 42 of one file (every backend kind, and the mobile and web platforms) and 3 features of several files; 18 are held out.",
+    "",
+    "Where it stands (round 22): the local 3B coder passes 43 of the 45 tasks, Sonnet 39; every task of one file passes (42 of 42), and 16 of the 18 held-out ones (Sonnet 17). On features of several files written by the local agents alone it passes one or two of three (Sonnet three), which is why the generators and a lead exist.",
+    "",
+    "Measure again after any change to an agent, a prompt or the knowledge: `eval/run.py local`, then `eval/run.py report`."
+   ],
+   "keys": [
+    "distillation",
+    "evaluation",
+    "eval",
+    "training",
+    "benchmark"
+   ],
+   "asks": [
+    "how were the local agents trained",
+    "how good is the local agent",
+    "is the local model as good as sonnet",
+    "how is the agent evaluated"
+   ],
+   "links": [
+    {
+     "rel": "of",
+     "to": "concept:nuclear-developer"
+    },
+    {
+     "rel": "examples",
+     "to": "concept:smart-graph"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-features"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/README.md#Evaluation: how it was trained"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  }
+ ]
+}

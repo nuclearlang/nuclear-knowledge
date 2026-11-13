@@ -1,0 +1,742 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "07-web-dialects",
+ "about": "The web dialect underneath: react, its runtime",
+ "rows": [
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#1-a-project-in-vs-code-the-web-device",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — In VS Code: the web device",
+   "summary": "A web project's toolbar has ▷ Serve, ▭ Device, ◉ Debug, ↻ Reload, Build, Test and Check.",
+   "body": [
+    "A web project's toolbar has ▷ Serve, ▭ Device, ◉ Debug, ↻ Reload, Build, Test and Check. **▭ Device** opens the app",
+    "beside the code in a headless browser the editor drives, like the mobile device:",
+    "",
+    "- the size of a desktop, a laptop, a tablet or a phone (with its user agent and touch), rotated or any size",
+    "  (*Responsive*), at any zoom and always sharp;",
+    "- an address bar (back, forward, reload, an address of the app), the page in your browser, Chrome's DevTools of it;",
+    "- the color scheme (`prefers-color-scheme`), network throttling (fast 4G, slow 3G, offline), no cache;",
+    "- the page's **Console** (a line's source opens the generated file) and **Network** (method, status, address, type,",
+    "  size, time), with a filter;",
+    "- a screenshot (`build/screenshots/`).",
+    "",
+    "Saving a `.nuc` rebuilds and Vite updates the page. **◉ Debug** attaches VS Code's JavaScript debugger to the device's",
+    "page: a breakpoint in a `.nuc` stops there, the paused line is shown in the `.nuc` (`build/app/.nuclear/lines.json`,",
+    "written by every build). F5 with `build/<name>.code-workspace` debugs the app in Chrome instead."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#1-a-project.30d5bd",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — 1. A project",
+   "summary": "characters/ ├── config.nuc ├── main.nuc ├── config/project_config.nuc ├── components/characters/ │ ├── characters_component.nuc │ ├── data/character_repository.nuc │ ├── domain/models/character.nuc │ ├── domain/usecases/get_page_usecase.nuc │ └── presentation/list/ │ ├── character_list_screen.nuc…",
+   "body": [
+    "```",
+    "characters/",
+    "├── config.nuc",
+    "├── main.nuc",
+    "├── config/project_config.nuc",
+    "├── components/characters/",
+    "│   ├── characters_component.nuc",
+    "│   ├── data/character_repository.nuc",
+    "│   ├── domain/models/character.nuc",
+    "│   ├── domain/usecases/get_page_usecase.nuc",
+    "│   └── presentation/list/",
+    "│       ├── character_list_screen.nuc",
+    "│       ├── managers/characters_manager.nuc",
+    "│       └── state_models/characters_state.nuc",
+    "└── test/characters_test.nuc",
+    "```",
+    "",
+    "```nuclear",
+    "// config.nuc",
+    "dragonfly(platform = \"web\", dialect = \"react\")",
+    "app(name = \"characters\", description = \"The characters of an API.\", version = \"1.0.0\")",
+    "",
+    "// config/project_config.nuc",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [Http(baseUrl = \"https://rickandmortyapi.com/api/\")]",
+    "",
+    "// main.nuc: the App view is the router with every @screen",
+    "stateless App",
+    "  build() Element",
+    "    createElement(RouterProvider, router = appRouter())",
+    "```",
+    "",
+    "Create, build and run it with the `dragonfly` CLI (it writes `config.nuc`, `main.nuc` and",
+    "`config/project_config.nuc` as above):"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#1-a-project.676dd1",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — 1. A project",
+   "summary": "dragonfly new characters -p web -d react cd characters dragonfly check # nuclear check . dragonfly build # writes build/app (src/, test/, index.html, package.json, vite.config.ts) dragonfly install # npm install in build/app (with the dragonfly-web runtime) dragonfly run # npm run dev →…",
+   "body": [
+    "```sh",
+    "dragonfly new characters -p web -d react",
+    "cd characters",
+    "dragonfly check            # nuclear check .",
+    "dragonfly build            # writes build/app (src/, test/, index.html, package.json, vite.config.ts)",
+    "dragonfly install          # npm install in build/app (with the dragonfly-web runtime)",
+    "dragonfly run              # npm run dev → http://localhost:5173",
+    "dragonfly test             # vitest (jsdom)",
+    "```",
+    "",
+    "Without the CLI, `nuclear build .` writes the same `build/app`; then `npm install`, `npm run dev` and `npm test`",
+    "there."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#2-data-and-domain-the-mobile-words",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — 2. Data and domain, the mobile words",
+   "summary": "// domain/models/character.nuc Character id: int name: string status: string image: string // data/character_repository.nuc @repository(path = \"character\") repository CharacterRepository @get(path = \":id\") getOne(id: int) Result<CharacterError, Character> @get(cache = true, ttl = 600000)…",
+   "body": [
+    "```nuclear",
+    "// domain/models/character.nuc",
+    "Character",
+    "  id: int",
+    "  name: string",
+    "  status: string",
+    "  image: string",
+    "",
+    "// data/character_repository.nuc",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<CharacterError, Character>",
+    "",
+    "  @get(cache = true, ttl = 600000)",
+    "  getPage(page: int) Result<CharacterError, Page<Character>>",
+    "",
+    "// domain/usecases/get_page_usecase.nuc",
+    "usecase GetPageUseCase",
+    "  (repository: CharacterRepository)",
+    "",
+    "  @requires(internet = true)",
+    "  exec(page: int) Result<CharacterError, Character[]>",
+    "    data = ~repository.getPage(page)",
+    "    Ok(data.results.filter((c) => c.status == \"Alive\"))",
+    "",
+    "// characters_component.nuc",
+    "appcomponent CharactersComponent",
+    "  getPage() = GetPageUseCase.exec",
+    "```",
+    "",
+    "The model gets `fromJson`, `toJson` and `copyWith`; the repository method is a `fetch` with cache and retries; the",
+    "use case is a class the injector builds."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#3-state-and-screens.3d4c2c",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — 3. State and screens",
+   "summary": "Elements are HTML functions (`div`, `ul`, `li`, `button`, `input`, `img`...) with the attributes as named arguments and `children`; a view is called like a function.",
+   "body": [
+    "Elements are HTML functions (`div`, `ul`, `li`, `button`, `input`, `img`...) with the attributes as named arguments",
+    "and `children`; a view is called like a function. `@screen(providers = [...])` creates the managers for the screen;",
+    "`CharactersManager.loadPage(2)` inside its views uses the provided one; `CharactersStateBuilder` re-renders on",
+    "every state. `goTo(Screen, id = 7)` navigates by screen, never by address.",
+    "",
+    "A `stateful` keeps its fields while it is shown:",
+    "",
+    "```nuclear",
+    "@screen(route = \"/characters/:id\")",
+    "stateful CharacterDetailScreen(id: int)",
+    "  character?: Character",
+    "",
+    "  initState() void",
+    "    load()",
+    "",
+    "  load() void",
+    "    result: Result<CharacterError, Character> = ~inject<CharactersComponent>().getOne(id)",
+    "    match result",
+    "      Ok(c) -> setState(() => character = c)",
+    "      Err(e) -> Log.e(e.message)",
+    "",
+    "  build() Element",
+    "    section(children = [",
+    "      button(onClick = () => goBack(), children = \"Back\"),",
+    "      character != null ? h2(children = character!.name) : p(children = \"Loading...\"),",
+    "    ])",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#3-state-and-screens.525dc3",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — 3. State and screens",
+   "summary": "// presentation/list/state_models/characters_state.nuc CharactersState (full: Character[], error: CharacterError, loading: boolean) // presentation/list/managers/characters_manager.nuc @stateModel(CharactersState) statemanager CharactersManager (characters: CharactersComponent) loadPage(1)…",
+   "body": [
+    "```nuclear",
+    "// presentation/list/state_models/characters_state.nuc",
+    "CharactersState",
+    "  (full: Character[], error: CharacterError, loading: boolean)",
+    "",
+    "// presentation/list/managers/characters_manager.nuc",
+    "@stateModel(CharactersState)",
+    "statemanager CharactersManager",
+    "  (characters: CharactersComponent)",
+    "    loadPage(1)",
+    "",
+    "  @state(CharactersState.loading)",
+    "  loading()",
+    "",
+    "  @before(loading)",
+    "  @state(CharactersState.full)",
+    "  loadPage(page: int) Result<CharacterError, Character[]>",
+    "    ~characters.getPage(page)",
+    "",
+    "// presentation/list/character_list_screen.nuc",
+    "@screen(route = \"/\", providers = [CharactersManager])",
+    "stateless CharacterListScreen",
+    "  build() Element",
+    "    main(children = [",
+    "      h1(children = \"Characters\"),",
+    "      CharactersStateBuilder(",
+    "        loading = () => p(children = \"Loading...\"),",
+    "        full = (characters) => ul(children = characters.map((c) => CharacterTile(key = c.id, character = c))),",
+    "        error = (e) => p(className = \"error\", children = e.message),",
+    "      ),",
+    "      button(onClick = () => CharactersManager.loadPage(2), children = \"Next page\"),",
+    "    ])",
+    "",
+    "// presentation/widgets/character_tile.nuc",
+    "stateless CharacterTile(character: Character)",
+    "  build() Element",
+    "    li(onClick = () => goTo(CharacterDetailScreen, id = character.id), children = [",
+    "      img(src = character.image, alt = character.name),",
+    "      span(children = character.name),",
+    "    ])",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#4-tests",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — 4. Tests",
+   "summary": "@mock([CharacterRepository]) CharactersTest beforeEach() when(CharacterRepository.getPage).thenReturn(Ok(page())) @test(\"GetPageUseCase keeps only the alive characters\") aliveOnly() result = ~GetPageUseCase.exec(1) expect(okOf(result)).toEqual([character(\"Rick\", \"Alive\")]) @states(\"the manager…",
+   "body": [
+    "```nuclear",
+    "@mock([CharacterRepository])",
+    "CharactersTest",
+    "  beforeEach()",
+    "    when(CharacterRepository.getPage).thenReturn(Ok(page()))",
+    "",
+    "  @test(\"GetPageUseCase keeps only the alive characters\")",
+    "  aliveOnly()",
+    "    result = ~GetPageUseCase.exec(1)",
+    "    expect(okOf(result)).toEqual([character(\"Rick\", \"Alive\")])",
+    "",
+    "  @states(\"the manager loads the alive characters\", expect = [CharactersState.loading(), CharactersState.full([character(\"Rick\", \"Alive\")])])",
+    "  loadsPage(manager: CharactersManager)",
+    "    ~manager.loadPage(1)",
+    "",
+    "  @widget(\"the list shows the alive characters\")",
+    "  showsList()",
+    "    renderScreen(CharacterListScreen())",
+    "    ~screen.findByText(\"Rick\")",
+    "```",
+    "",
+    "The app starts with its real config; every request answers what the test prepares (`DragonflyTest.respondWith`), or",
+    "a mock answers (`@mock`, `when`, `verify`); a screen renders in a memory router and Testing Library reads it."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#5-what-is-not-there-yet-and-the-react-ecosystem",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear — 5. What is not there yet, and the React ecosystem",
+   "summary": "This first version has the mobile kinds a browser needs; forms, converters, translations, the local database and the AI kinds come next with the same words.",
+   "body": [
+    "This first version has the mobile kinds a browser needs; forms, converters, translations, the local database and",
+    "the AI kinds come next with the same words. ADR-0097 analyses zustand (as the engine of `StateManager`), TanStack",
+    "Query (background refetch for a repository method) and react-hook-form + zod (for `form`): the platform's words",
+    "stay, the dialect may use those libraries underneath.",
+    "",
+    "The complete example: `examples/examples-web/characters` (built, type-checked and tested by",
+    "`tools/react-check/check.sh`). A real site written with it: the NuclearLang website (its screens, managers, search",
+    "and content repository are Nuclear; a build script turns the repositories' docs into the JSON it reads)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/dragonfly/react.md#dragonfly-for-react-a-web-app-in-nuclear",
+   "type": "guide",
+   "title": "Dragonfly for React: a web app in Nuclear",
+   "summary": "The web platform is the mobile platform in a browser (ADR-0097): the same kinds and words, so an app's domain, state and tests read the same on a phone and on the web.",
+   "body": [
+    "The web platform is the mobile platform in a browser (ADR-0097): the same kinds and words, so an app's domain,",
+    "state and tests read the same on a phone and on the web. The `react` dialect writes React 19 (no JSX), React",
+    "Router 7, Vite and Vitest for you. Rules: [web.md](../../spec/web.md) (the platform), [react.md](../../spec/react.md)",
+    "(the dialect)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/docs/dragonfly/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/brief/react.md#dialect-react-the-web-platform-in-typescript",
+   "type": "spec",
+   "title": "Dialect `react`: the web platform in TypeScript",
+   "summary": "What this dialect adds to the platform's sheet: the app is generated as React 19 (no JSX) + React Router 7 + Vite + Vitest in `build/app` (never edit it).",
+   "body": [
+    "What this dialect adds to the platform's sheet: the app is generated as React 19 (no JSX) + React Router 7 + Vite +",
+    "Vitest in `build/app` (never edit it). `dragonfly build`, `dragonfly install` (npm), `dragonfly run` (Vite),",
+    "`dragonfly test` (Vitest + Testing Library). Full rules: `nuclear help react`."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/brief/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#1-project",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 1. Project",
+   "summary": "A folder with `config.nuc` (`dragonfly(platform = \"web\", dialect = \"react\")`) and `main.nuc`; `nuclear build .` writes `build/app`: `src/` (the app; `src/dragonfly.g.ts` and `src/index.ts` generated), `test/`, `index.html`, `package.json`, `tsconfig.json`, `vite.config.ts`.",
+   "body": [
+    "A folder with `config.nuc` (`dragonfly(platform = \"web\", dialect = \"react\")`) and `main.nuc`; `nuclear build .`",
+    "writes `build/app`: `src/` (the app; `src/dragonfly.g.ts` and `src/index.ts` generated), `test/`, `index.html`,",
+    "`package.json`, `tsconfig.json`, `vite.config.ts`. In `build/app`: `npm install`, `npm run dev` (Vite, port 5173),",
+    "`npm test` (Vitest), `npm run build` (tsc + Vite). The `[toolchain]` of the dialect gives the `dragonfly` CLI those",
+    "commands.",
+    "",
+    "Generated once per project:",
+    "",
+    "| File | Holds |",
+    "|---|---|",
+    "| `src/dragonfly.g.ts` | `startDragonfly()`, `dragonflyConfig()`, `registerModels()`, `registerDragonfly()` (configs, the injector, the `@on` subscriptions), `routes` (one `AppRoute` per `@screen`, props from the url parameters), `appRouter()` |",
+    "| `src/index.ts` | starts Dragonfly, mounts the `App` of `main.nuc` in `#root` |",
+    "| `index.html`, `vite.config.ts`, `tsconfig.json`, `package.json`, `.npmrc` | Vite's entry (title, description, the project's `public/styles.css` and `favicon.svg`), the test environment (jsdom, `test/**/*_test.ts`), TypeScript strict, the dependencies, `install-links=true` (npm copies the runtime instead of linking it, so TypeScript and Vite resolve React from the app) |"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#2-how-each-kind-is-written.59f303",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 2. How each kind is written",
+   "summary": "2. How each kind is written",
+   "body": [
+    "| Kind | TypeScript |",
+    "|---|---|",
+    "| `stateless Name(params)` | `export function Name(props: NameProps): Element` → `createElement(NameView, props)`; `NameProps` interface (`key?` added); `NameView = statelessOf(class extends StatelessView<NameProps> { build() })`; params read as `this.props.x`; with `@screen(providers)` the function wraps the view in `Providers` |",
+    "| `stateful Name(params)` + fields | the same over `statefulOf(class extends StatefulView<NameProps>)`: fields are class fields (`x: T \\| null = null` when optional), `setState`, `initState`, `dispose` |",
+    "| `appConfig`, `config` | `class extends AppConfig` / `ComponentConfig` with `override readonly connections`, `globals` |",
+    "| model | `class` with `readonly` fields, `constructor(init: {...})`, `static fromJson(json: Json)`, `toJson()`, `copyWith()`; a generic model's `fromJson(json, fromJsonT)` |",
+    "| `event` | the same, `extends AppEvent` with `eventName` |",
+    "| `@repository(path)` | `class extends Repository` with `super({ path })`; a `Result` method `return this.result(() => this.send(HttpMethod.get, ':id', { params: { id }, decode: Decode.one(Model.fromJson) }), (e) => new Error({ message: e.message }))`; another return type `return this.send(...)`; `cache` → `new Cache({ ttl })` + `purgeX()` |"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#2-how-each-kind-is-written.8dca9d",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 2. How each kind is written",
+   "summary": "2. How each kind is written",
+   "body": [
+    "| `usecase`, `service`, `aggregate`, `component` | `class` with `constructor(private readonly dep: Dep)`; `@requires` → `Guards.check({...})` + `return Err(...)`; `@acl` → `await Guards.verify({...})` |",
+    "| `appcomponent` | `class` whose methods `return await inject(UseCase).exec(...)` |",
+    "| `guard` | `class extends Guard` with `canActivate()` |",
+    "| state model `Name(a: A, flag: boolean)` | `enum NameStatus`, `class Name` (`status`, optional data fields, `static initial()`, `static a(a)`, `static flag()`), `interface NameBuilders`, `function NameBuilder(builders)` → a component that reads `useStateOf(Name)` and calls the builder of the current status |",
+    "| `@stateModel(S) statemanager` | `class extends StateManager<S>`; `@state(S.x)` methods become `async x(...): Promise<void>` that `emit` (`result.match(S.error, S.x)` for a `Result`) around a private `_x` with the body; `@before`/`@after` call the named method |",
+    "| `tests` | `describe(name, () => { beforeEach(DragonflyTest.start(...), DragonflyTest.mock(X)); ... })`; `@test` → `test(desc, async () => ...)`; `@states` → `statesOf(manager, ...)` + `expect(states).toEqual(...)`; `@widget` → `test` |"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#2-how-each-kind-is-written.9dfcfd",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 2. How each kind is written",
+   "summary": "Calls: a view, a builder or a screen is called like a function (`CharacterTile({ character: c })`): the kinds declare `construct = \"{{callee}}({{args}})\"` and the named arguments stay one object (TypeScript has no named parameters; the emitter keeps them for a kind with `named_params`).",
+   "body": [
+    "Calls: a view, a builder or a screen is **called like a function** (`CharacterTile({ character: c })`): the kinds",
+    "declare `construct = \"{{callee}}({{args}})\"` and the named arguments stay one object (TypeScript has no named",
+    "parameters; the emitter keeps them for a kind with `named_params`). `inject<X>()` is `inject(X)`;",
+    "`Manager.method()` inside a screen's views is `this.manager(Manager).method()`."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#3-equivalences.9986e2",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 3. Equivalences",
+   "summary": "A model (`model` is written when the file is not in `domain/models/`): model Origin name: string url?: string export class Origin { readonly name: string; readonly url?: string | null; constructor(init: { name: string; url?: string | null }) { this.name = init.name; this.url = init.url; } static…",
+   "body": [
+    "A model (`model` is written when the file is not in `domain/models/`):",
+    "",
+    "```nuclear",
+    "model Origin",
+    "  name: string",
+    "  url?: string",
+    "```",
+    "",
+    "```typescript",
+    "export class Origin {",
+    "  readonly name: string;",
+    "  readonly url?: string | null;",
+    "",
+    "  constructor(init: { name: string; url?: string | null }) {",
+    "    this.name = init.name;",
+    "    this.url = init.url;",
+    "  }",
+    "",
+    "  static fromJson(json: Json): Origin {",
+    "    return new Origin({",
+    "      name: json['name'] as string,",
+    "      url: json['url'] as string | null,",
+    "    });",
+    "  }",
+    "",
+    "  toJson(): Json {",
+    "    return {",
+    "      name: this.name,",
+    "      url: this.url,",
+    "    };",
+    "  }",
+    "",
+    "  /** The same value with some fields changed. */",
+    "  copyWith(changes: Partial<{ name: string; url: string | null }>): Origin {",
+    "    return new Origin({ ...this, ...changes });",
+    "  }",
+    "}",
+    "```",
+    "",
+    "A view:",
+    "",
+    "```nuclear",
+    "stateless Greeting(name: string)",
+    "  build() Element",
+    "    p(className = \"greeting\", children = \"Hello ${name}\")",
+    "```",
+    "",
+    "```typescript",
+    "export function Greeting(props: GreetingProps): Element {",
+    "  return createElement(GreetingView, props);",
+    "}",
+    "",
+    "export interface GreetingProps {",
+    "  key?: string | number;",
+    "  name: string;",
+    "}",
+    "",
+    "const GreetingView = statelessOf(",
+    "  class extends StatelessView<GreetingProps> {",
+    "    override build(): Element {",
+    "      return p({ className: 'greeting', children: `Hello ${this.props.name}` });",
+    "    }",
+    "  },",
+    ");",
+    "```",
+    "",
+    "An event:",
+    "",
+    "```nuclear",
+    "event Pinged",
+    "  n: int",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#3-equivalences.b1b4f4",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 3. Equivalences",
+   "summary": "import { AppEvent, Json } from 'dragonfly-web'; export class Pinged extends AppEvent { readonly n: number; constructor(init: { n: number }) { super(); this.n = init.n; } static fromJson(json: Json): Pinged { return new Pinged({ n: json['n'] as number, }); } get eventName(): string { return…",
+   "body": [
+    "```typescript",
+    "import { AppEvent, Json } from 'dragonfly-web';",
+    "",
+    "export class Pinged extends AppEvent {",
+    "  readonly n: number;",
+    "",
+    "  constructor(init: { n: number }) {",
+    "    super();",
+    "    this.n = init.n;",
+    "  }",
+    "",
+    "  static fromJson(json: Json): Pinged {",
+    "    return new Pinged({",
+    "      n: json['n'] as number,",
+    "    });",
+    "  }",
+    "",
+    "  get eventName(): string {",
+    "    return 'Pinged';",
+    "  }",
+    "",
+    "  toJson(): Json {",
+    "    return {",
+    "      n: this.n,",
+    "    };",
+    "  }",
+    "}",
+    "```",
+    "",
+    "The complete example: `examples/examples-web/characters` (golden `examples/expected/characters`): a characters",
+    "component with its repository, use cases, facade, state, list and detail screens, a global component, an event, a",
+    "guard and four tests (`tools/react-check/check.sh`: tsc --strict 0 errors, 4 tests, vite build)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#4-runtime-dragonfly-web.7e0d38",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 4. Runtime (`dragonfly-web`)",
+   "summary": "4. Runtime (`dragonfly-web`)",
+   "body": [
+    "| `buildRouter`, `goTo`, `pushTo`, `goBack`, `pathTo`, `RouterProvider`, `AppRoute` | routes from `@screen`, navigation by screen |",
+    "| `Log` (`d`, `i`, `s`, `w`, `e`, `sink`) | logs with the call site the transpiler passes (`at`) |",
+    "| `dragonfly-web/testing`: `DragonflyTest` (`start`, `respondWith`, `respond`, `requests`, `replace`, `mock`, `of`), `when`, `verify`, `renderScreen`, `statesOf`, `okOf`, `errOf` | tests |"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#4-runtime-dragonfly-web.e53d26",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React — 4. Runtime (`dragonfly-web`)",
+   "summary": "4. Runtime (`dragonfly-web`)",
+   "body": [
+    "| Export | What it does |",
+    "|---|---|",
+    "| `Result`, `Ok`, `Err`, `AppError`, `HttpError`, `NotFound` | the platform's Result and errors (`Error(message)` in Nuclear is `new AppError(message)`) |",
+    "| `register`, `inject`, `replace`, `resetInjector` | the injector (`{ singleton: false }` for use cases and managers) |",
+    "| `AppConfig`, `ComponentConfig`, `Connection`, `Http`, `HttpInterceptor`, `Global` | configuration |",
+    "| `Dragonfly.start/addConfig/connection/reset` | the runtime's entry point |",
+    "| `Repository` (`send`, `result`, `attempt`, `target`, `purgeCache`), `Decode`, `Cache`, `HttpMethod` | http calls over fetch; GET/PUT/DELETE retry transient failures twice |",
+    "| `StateManager<S>` (`state`, `emit`, `subscribe`, `close`) | the state of a screen |",
+    "| `StatelessView`, `StatefulView`, `statelessOf`, `statefulOf`, `Providers`, `useManager`, `useStateOf`, `useManagerState`, `Element` | views as classes over React components; the provided managers |",
+    "| `div`, `span`, `ul`, `li`, `button`, `input`, `img`, `form`... (`el`, `fragment`) | HTML without JSX: `div({ className, children })` or `div(child, child)` |",
+    "| `AppEvent`, `Events` (`publish`, `subscribe`, `decoder`, `publishJson`), `useEvent` | events |",
+    "| `SessionManager`, `SessionStarted`, `SessionEnded`, `Acl`, `NetworkManager`, `Guard`, `Guards` (`check`, `verify`, `verifySync`) | session and access |"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/spec/react.md#dialect-react-the-web-platform-in-typescript-with-react",
+   "type": "spec",
+   "title": "Dialect `react`: the `web` platform in TypeScript with React",
+   "summary": "Dialect `react`: the `web` platform in TypeScript with React",
+   "body": [
+    "> The React dialect of the [web platform](web.md) (ADR-0097), extending [typescript](https://github.com/nuclearlang/nuclear/blob/main/spec/typescript.md). The platform's",
+    "> rules, kinds and Nuclear are in `web.md`; this document holds only how this dialect writes them: **React 19**",
+    "> without JSX (`createElement` and the runtime's HTML functions), **React Router 7**, **Vite 7** to build and run,",
+    "> **Vitest 4** + jsdom + Testing Library to test. Files: `dialects/web/react/`; runtime: `packages/dragonfly-web`",
+    "> (npm `dragonfly-web`). Checked by `tools/react-check/check.sh` (tsc --strict, vitest, vite build)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-web/spec/react.md"
+   ],
+   "meta": {
+    "section": "07-web-dialects",
+    "repo": "dragonfly-web",
+    "dialect": "react"
+   }
+  }
+ ]
+}

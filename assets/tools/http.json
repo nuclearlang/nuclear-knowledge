@@ -1,0 +1,562 @@
+{
+ "shelf": "tools",
+ "origin": "generated",
+ "generator": "http",
+ "about": "The HTTP routes of the Smart Graph and of the Nuclear Developer.",
+ "rows": [
+  {
+   "id": "http:developer.analyze",
+   "type": "http",
+   "title": "`POST /developer/analyze` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local analyst on one request: `analyze(input: AnalyzeRequest) Analysis`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/analyze` → `analyze(input: AnalyzeRequest) Analysis`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/analyze",
+    "/developer/analyze"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:analyst"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/analyze"
+   }
+  },
+  {
+   "id": "http:developer.chat",
+   "type": "http",
+   "title": "`POST /developer/chat` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local assistant on one request: `chat(input: ChatRequest) PieceReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/chat` → `chat(input: ChatRequest) PieceReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/chat",
+    "/developer/chat"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:assistant"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/chat"
+   }
+  },
+  {
+   "id": "http:developer.code",
+   "type": "http",
+   "title": "`POST /developer/code` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local coder on one request: `code(input: PieceRequest) PieceReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/code` → `code(input: PieceRequest) PieceReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/code",
+    "/developer/code"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:coder"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/code"
+   }
+  },
+  {
+   "id": "http:developer.diagnose",
+   "type": "http",
+   "title": "`POST /developer/diagnose` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local diagnoser on one request: `diagnose(input: PieceRequest) PieceReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/diagnose` → `diagnose(input: PieceRequest) PieceReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/diagnose",
+    "/developer/diagnose"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:diagnoser"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/diagnose"
+   }
+  },
+  {
+   "id": "http:developer.document",
+   "type": "http",
+   "title": "`POST /developer/document` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local documenter on one request: `document(input: PieceRequest) PieceReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/document` → `document(input: PieceRequest) PieceReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/document",
+    "/developer/document"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:documenter"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/document"
+   }
+  },
+  {
+   "id": "http:developer.plan",
+   "type": "http",
+   "title": "`POST /developer/plan` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local planner on one request: `plan(input: PlanRequest) PlanReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/plan` → `plan(input: PlanRequest) PlanReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/plan",
+    "/developer/plan"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:planner"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/plan"
+   }
+  },
+  {
+   "id": "http:developer.security",
+   "type": "http",
+   "title": "`POST /developer/security` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local security on one request: `review(input: PieceRequest) PieceReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/security` → `review(input: PieceRequest) PieceReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/security",
+    "/developer/security"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:security"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/security"
+   }
+  },
+  {
+   "id": "http:developer.test",
+   "type": "http",
+   "title": "`POST /developer/test` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local tester on one request: `test(input: PieceRequest) PieceReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/test` → `test(input: PieceRequest) PieceReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/test",
+    "/developer/test"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:tester"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/test"
+   }
+  },
+  {
+   "id": "http:graph.delete.v1-documents-collection-doc-id",
+   "type": "http",
+   "title": "`DELETE /v1/documents/{collection}/{doc_id}` — the Smart Graph's HTTP API",
+   "summary": "Removes what an agent kept at run time (`memory`, `examples`).",
+   "body": [
+    "Removes what an agent kept at run time (`memory`, `examples`).",
+    "",
+    "Scope: `write`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "delete /v1/documents/{collection}/{doc_id}",
+    "/v1/documents/{collection}/{doc_id}"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "DELETE /v1/documents/{collection}/{doc_id}"
+   }
+  },
+  {
+   "id": "http:graph.get.v1-access",
+   "type": "http",
+   "title": "`GET /v1/access` — the Smart Graph's HTTP API",
+   "summary": "The pending access requests and the allowed clients.",
+   "body": [
+    "The pending access requests and the allowed clients.",
+    "",
+    "Scope: `admin`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "get /v1/access",
+    "/v1/access"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "GET /v1/access"
+   }
+  },
+  {
+   "id": "http:graph.get.v1-access-rid",
+   "type": "http",
+   "title": "`GET /v1/access/{rid}` — the Smart Graph's HTTP API",
+   "summary": "The state of an access request; once allowed, its token, a single time.",
+   "body": [
+    "The state of an access request; once allowed, its token, a single time.",
+    "",
+    "Scope: `none`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "get /v1/access/{rid}",
+    "/v1/access/{rid}"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "GET /v1/access/{rid}"
+   }
+  },
+  {
+   "id": "http:graph.get.v1-cards-card-id-path",
+   "type": "http",
+   "title": "`GET /v1/cards/{card_id:path}` — the Smart Graph's HTTP API",
+   "summary": "One row of the knowledge base by its id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`), with the title and summary of the rows it links to.",
+   "body": [
+    "One row of the knowledge base by its id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`), with the title and summary of the rows it links to.",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "get /v1/cards/{card_id:path}",
+    "/v1/cards/{card_id:path}"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "GET /v1/cards/{card_id:path}"
+   }
+  },
+  {
+   "id": "http:graph.get.v1-health",
+   "type": "http",
+   "title": "`GET /v1/health` — the Smart Graph's HTTP API",
+   "summary": "Whether the graph is running, and its version.",
+   "body": [
+    "Whether the graph is running, and its version. Needs no token.",
+    "",
+    "Scope: `none`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "get /v1/health",
+    "/v1/health"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "GET /v1/health"
+   }
+  },
+  {
+   "id": "http:graph.get.v1-kinds-platform",
+   "type": "http",
+   "title": "`GET /v1/kinds/{platform}` — the Smart Graph's HTTP API",
+   "summary": "Every way a kind of a platform is written (its own word and how people say it: `use case`, `application component`) with the kind it means: what a planner needs to read a spec.",
+   "body": [
+    "Every way a kind of a platform is written (its own word and how people say it: `use case`, `application component`) with the kind it means: what a planner needs to read a spec.",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "get /v1/kinds/{platform}",
+    "/v1/kinds/{platform}"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "GET /v1/kinds/{platform}"
+   }
+  },
+  {
+   "id": "http:graph.get.v1-prompts-use-case",
+   "type": "http",
+   "title": "`GET /v1/prompts/{use_case}` — the Smart Graph's HTTP API",
+   "summary": "The prompt file of a use case (`feature`, `piece`, `test`...) or of an agent's step (`agent.repair`).",
+   "body": [
+    "The prompt file of a use case (`feature`, `piece`, `test`...) or of an agent's step (`agent.repair`).",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "get /v1/prompts/{use_case}",
+    "/v1/prompts/{use_case}"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "GET /v1/prompts/{use_case}"
+   }
+  },
+  {
+   "id": "http:graph.get.v1-stats",
+   "type": "http",
+   "title": "`GET /v1/stats` — the Smart Graph's HTTP API",
+   "summary": "The rows of each collection, and the schema and revision of the knowledge base the graph holds.",
+   "body": [
+    "The rows of each collection, and the schema and revision of the knowledge base the graph holds.",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "get /v1/stats",
+    "/v1/stats"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "GET /v1/stats"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-access",
+   "type": "http",
+   "title": "`POST /v1/access` — the Smart Graph's HTTP API",
+   "summary": "A program asks for access with the scopes it needs; nothing is given until the user allows the request.",
+   "body": [
+    "A program asks for access with the scopes it needs; nothing is given until the user allows the request.",
+    "",
+    "Scope: `none`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/access",
+    "/v1/access"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/access"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-access-rid-decision",
+   "type": "http",
+   "title": "`POST /v1/access/{rid}/{decision}` — the Smart Graph's HTTP API",
+   "summary": "Allows or denies an access request (`allow` or `deny`).",
+   "body": [
+    "Allows or denies an access request (`allow` or `deny`).",
+    "",
+    "Scope: `admin`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/access/{rid}/{decision}",
+    "/v1/access/{rid}/{decision}"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/access/{rid}/{decision}"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-applies",
+   "type": "http",
+   "title": "`POST /v1/applies` — the Smart Graph's HTTP API",
+   "summary": "What of a spec or a task is not possible yet or was never run for real: the capabilities rows whose `triggers` the text writes, for its platform: `{text, platform}` answers `{items: [{id, type, title, summary, trigger}]}`.",
+   "body": [
+    "What of a spec or a task is not possible yet or was never run for real: the capabilities rows whose `triggers` the text writes, for its platform: `{text, platform}` answers `{items: [{id, type, title, summary, trigger}]}`. Exact, never by meaning.",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/applies",
+    "/v1/applies"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/applies"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-documents",
+   "type": "http",
+   "title": "`POST /v1/documents` — the Smart Graph's HTTP API",
+   "summary": "Keeps what an agent learned at run time: a note about a project (`memory`) or a solved example (`examples`).",
+   "body": [
+    "Keeps what an agent learned at run time: a note about a project (`memory`) or a solved example (`examples`). The rows of the knowledge base are written only by ingest; these survive it.",
+    "",
+    "Scope: `write`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/documents",
+    "/v1/documents"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/documents"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-ingest",
+   "type": "http",
+   "title": "`POST /v1/ingest` — the Smart Graph's HTTP API",
+   "summary": "Makes the knowledge base folder `roots[0]` what the graph knows; only what changed is embedded again.",
+   "body": [
+    "Makes the knowledge base folder `roots[0]` what the graph knows; only what changed is embedded again.",
+    "",
+    "Scope: `admin`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/ingest",
+    "/v1/ingest"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/ingest"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-search",
+   "type": "http",
+   "title": "`POST /v1/search` — the Smart Graph's HTTP API",
+   "summary": "Searches the graph by meaning and by exact name: `{query, collection | shelves, k, platform, agents, where, expand}` answers `{items: [{id, shelf, text, meta, distance, score, via, card, related}]}`.",
+   "body": [
+    "Searches the graph by meaning and by exact name: `{query, collection | shelves, k, platform, agents, where, expand}` answers `{items: [{id, shelf, text, meta, distance, score, via, card, related}]}`. Without a collection it searches every shelf of the knowledge base.",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/search",
+    "/v1/search"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/search"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-strategy",
+   "type": "http",
+   "title": "`POST /v1/strategy` — the Smart Graph's HTTP API",
+   "summary": "The strategy of a request: which kind of request it is (a whole system, one screen, a rename, a failing test...) and the plan of that kind.",
+   "body": [
+    "The strategy of a request: which kind of request it is (a whole system, one screen, a rename, a failing test...) and the plan of that kind. `{text, platform, existing, new}` answers `{items: [{id, title, summary, score, why, data, text}]}`, best first, at most three. By the request's exact signs first, then by meaning.",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/strategy",
+    "/v1/strategy"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/server.py"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/strategy"
+   }
+  }
+ ]
+}

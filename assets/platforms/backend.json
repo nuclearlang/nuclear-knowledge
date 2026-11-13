@@ -1,0 +1,2259 @@
+{
+ "shelf": "platforms",
+ "origin": "generated",
+ "generator": "backend",
+ "about": "The backend platform: its kinds, decorators, layout and plugins (platform.toml and the default dialect's docs.toml).",
+ "rows": [
+  {
+   "id": "decorator:backend.column",
+   "type": "decorator",
+   "title": "`@column` — a decorator of the backend platform",
+   "summary": "On an entity field: a column.",
+   "body": "On an entity field: a column. Arguments: `length`, `unique`, `index`, `nullable`, `default`, `name`.",
+   "keys": [
+    "@column",
+    "column"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "column"
+   }
+  },
+  {
+   "id": "decorator:backend.consumer",
+   "type": "decorator",
+   "title": "`@consumer` — a decorator of the backend platform",
+   "summary": "On a listener method: `@consumer(\"topic\")`, receives each message of the Kafka topic, parsed as its parameter's type.",
+   "body": "On a listener method: `@consumer(\"topic\")`, receives each message of the Kafka topic, parsed as its parameter's type.",
+   "keys": [
+    "@consumer",
+    "consumer"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "consumer"
+   }
+  },
+  {
+   "id": "decorator:backend.controller",
+   "type": "decorator",
+   "title": "`@controller` — a decorator of the backend platform",
+   "summary": "On a controller: `@controller(\"path\")`, the prefix of its routes.",
+   "body": "On a controller: `@controller(\"path\")`, the prefix of its routes.",
+   "keys": [
+    "@controller",
+    "controller"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "controller"
+   }
+  },
+  {
+   "id": "decorator:backend.created",
+   "type": "decorator",
+   "title": "`@created` — a decorator of the backend platform",
+   "summary": "On an entity field: when the row was inserted (set by the database).",
+   "body": "On an entity field: when the row was inserted (set by the database).",
+   "keys": [
+    "@created",
+    "created"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "created"
+   }
+  },
+  {
+   "id": "decorator:backend.delete",
+   "type": "decorator",
+   "title": "`@delete` — a decorator of the backend platform",
+   "summary": "On a controller method: a DELETE route (removes the resource); the route is its argument.",
+   "body": "On a controller method: a DELETE route (removes the resource); the route is its argument.",
+   "keys": [
+    "@delete",
+    "delete"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "delete"
+   }
+  },
+  {
+   "id": "decorator:backend.email",
+   "type": "decorator",
+   "title": "`@email` — a decorator of the backend platform",
+   "summary": "On a model field: the value must be an e-mail address; otherwise a 422.",
+   "body": "On a model field: the value must be an e-mail address; otherwise a 422.",
+   "keys": [
+    "@email",
+    "email"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "email"
+   }
+  },
+  {
+   "id": "decorator:backend.entity",
+   "type": "decorator",
+   "title": "`@entity` — a decorator of the backend platform",
+   "summary": "On an entity: `@entity(\"table\")` names its table (default: the name in snake_case).",
+   "body": "On an entity: `@entity(\"table\")` names its table (default: the name in snake_case).",
+   "keys": [
+    "@entity",
+    "entity"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "entity"
+   }
+  },
+  {
+   "id": "decorator:backend.get",
+   "type": "decorator",
+   "title": "`@get` — a decorator of the backend platform",
+   "summary": "On a controller method: `@get(\"{id}\")`, a GET route (`{id}` is a path parameter).",
+   "body": "On a controller method: `@get(\"{id}\")`, a GET route (`{id}` is a path parameter). Also `@post` (201), `@put`, `@patch`, `@delete`.",
+   "keys": [
+    "@get",
+    "get"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "get"
+   }
+  },
+  {
+   "id": "decorator:backend.joinColumn",
+   "type": "decorator",
+   "title": "`@joinColumn` — a decorator of the backend platform",
+   "summary": "On the side of a `@oneToOne` that keeps the column (`xId`, a field of its own).",
+   "body": [
+    "On the side of a `@oneToOne` that keeps the column (`xId`, a field of its own).",
+    "",
+    "Its arguments: none (`!` = required)."
+   ],
+   "keys": [
+    "@joincolumn",
+    "joincolumn"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "joinColumn"
+   }
+  },
+  {
+   "id": "decorator:backend.joinTable",
+   "type": "decorator",
+   "title": "`@joinTable` — a decorator of the backend platform",
+   "summary": "On the side of a `@manyToMany` that owns the join table (`<table>_<field>`).",
+   "body": [
+    "On the side of a `@manyToMany` that owns the join table (`<table>_<field>`).",
+    "",
+    "Its arguments: none (`!` = required)."
+   ],
+   "keys": [
+    "@jointable",
+    "jointable"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "joinTable"
+   }
+  },
+  {
+   "id": "decorator:backend.key",
+   "type": "decorator",
+   "title": "`@key` — a decorator of the backend platform",
+   "summary": "On a model field: `@key(\"air_date\")`, the field's name in the JSON when it is not the field's (an API that writes snake_case): the answer is read by it and written back with it.",
+   "body": [
+    "On a model field: `@key(\"air_date\")`, the field's name in the JSON when it is not the field's (an API that writes",
+    "snake_case): the answer is read by it and written back with it. `dragonfly gen` writes it.",
+    "",
+    "```nuclear",
+    "Episode",
+    "  id: int",
+    "  @key(\"air_date\")",
+    "  airDate: string",
+    "```"
+   ],
+   "keys": [
+    "@key",
+    "key"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "key"
+   }
+  },
+  {
+   "id": "decorator:backend.manyToMany",
+   "type": "decorator",
+   "title": "`@manyToMany` — a decorator of the backend platform",
+   "summary": "On an entity field `xs?: T[]`: many rows of T, and T has many of these (`inverse`: its field back).",
+   "body": [
+    "On an entity field `xs?: T[]`: many rows of T, and T has many of these (`inverse`: its field back). One side has",
+    "`@joinTable()`: the join table `<its table>_<field>` (`tasks_tags`, columns `task_id`, `tag_id`). Setting the list and",
+    "saving writes the join table.",
+    "",
+    "Its arguments: `inverse` (`!` = required)."
+   ],
+   "keys": [
+    "@manytomany",
+    "manytomany"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "manyToMany"
+   }
+  },
+  {
+   "id": "decorator:backend.manyToOne",
+   "type": "decorator",
+   "title": "`@manyToOne` — a decorator of the backend platform",
+   "summary": "On an entity field `x?: T` (T an entity): this row points to one row of T through the column of the field `xId`.",
+   "body": [
+    "On an entity field `x?: T` (T an entity): this row points to one row of T through the column of the field `xId`.",
+    "Arguments: `inverse` (the `@oneToMany` field of T), `onDelete` (`\"cascade\"`, `\"set null\"`, `\"restrict\"`). Loaded only",
+    "when a query asks for it: `relations(\"x\")`.",
+    "",
+    "```nuclear",
+    "@manyToOne(inverse = \"tasks\", onDelete = \"cascade\")",
+    "project?: Project",
+    "projectId: int",
+    "```",
+    "",
+    "Its arguments: `inverse`, `onDelete` (`!` = required)."
+   ],
+   "keys": [
+    "@manytoone",
+    "manytoone"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "manyToOne"
+   }
+  },
+  {
+   "id": "decorator:backend.max",
+   "type": "decorator",
+   "title": "`@max` — a decorator of the backend platform",
+   "summary": "On a model field: `@max(n)`, the number must be at most n.",
+   "body": "On a model field: `@max(n)`, the number must be at most n.",
+   "keys": [
+    "@max",
+    "max"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "max"
+   }
+  },
+  {
+   "id": "decorator:backend.maxLength",
+   "type": "decorator",
+   "title": "`@maxLength` — a decorator of the backend platform",
+   "summary": "On a model field: `@maxLength(n)`, the text has at most n characters.",
+   "body": "On a model field: `@maxLength(n)`, the text has at most n characters.",
+   "keys": [
+    "@maxlength",
+    "maxlength"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "maxLength"
+   }
+  },
+  {
+   "id": "decorator:backend.min",
+   "type": "decorator",
+   "title": "`@min` — a decorator of the backend platform",
+   "summary": "On a model field: `@min(n)`, the number must be at least n.",
+   "body": "On a model field: `@min(n)`, the number must be at least n.",
+   "keys": [
+    "@min",
+    "min"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "min"
+   }
+  },
+  {
+   "id": "decorator:backend.minLength",
+   "type": "decorator",
+   "title": "`@minLength` — a decorator of the backend platform",
+   "summary": "On a model field: `@minLength(n)`, the text has at least n characters.",
+   "body": "On a model field: `@minLength(n)`, the text has at least n characters.",
+   "keys": [
+    "@minlength",
+    "minlength"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "minLength"
+   }
+  },
+  {
+   "id": "decorator:backend.next",
+   "type": "decorator",
+   "title": "`@next` — a decorator of the backend platform",
+   "summary": "On a graph method: `@next(\"node\")`, the node after this one (`\"end\"` ends the graph).",
+   "body": "On a graph method: `@next(\"node\")`, the node after this one (`\"end\"` ends the graph).",
+   "keys": [
+    "@next",
+    "next"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "next"
+   }
+  },
+  {
+   "id": "decorator:backend.oneToMany",
+   "type": "decorator",
+   "title": "`@oneToMany` — a decorator of the backend platform",
+   "summary": "On an entity field `xs?: T[]`: the rows of T that point to this one; `inverse` (required) is their `@manyToOne` field.",
+   "body": [
+    "On an entity field `xs?: T[]`: the rows of T that point to this one; `inverse` (required) is their `@manyToOne`",
+    "field. Loaded only when a query asks for it: `relations(\"xs\")`.",
+    "",
+    "```nuclear",
+    "@oneToMany(inverse = \"project\")",
+    "tasks?: Task[]",
+    "```",
+    "",
+    "Its arguments: `inverse!` (`!` = required)."
+   ],
+   "keys": [
+    "@onetomany",
+    "onetomany"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "oneToMany"
+   }
+  },
+  {
+   "id": "decorator:backend.oneToOne",
+   "type": "decorator",
+   "title": "`@oneToOne` — a decorator of the backend platform",
+   "summary": "On an entity field `x?: T`: one row of T and one of this.",
+   "body": [
+    "On an entity field `x?: T`: one row of T and one of this. The side with `@joinColumn()` keeps the column `xId`;",
+    "`inverse` is the field back, `onDelete` as `@manyToOne`.",
+    "",
+    "Its arguments: `inverse`, `onDelete` (`!` = required)."
+   ],
+   "keys": [
+    "@onetoone",
+    "onetoone"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "oneToOne"
+   }
+  },
+  {
+   "id": "decorator:backend.patch",
+   "type": "decorator",
+   "title": "`@patch` — a decorator of the backend platform",
+   "summary": "On a controller method: a PATCH route (changes some fields); the route is its argument.",
+   "body": "On a controller method: a PATCH route (changes some fields); the route is its argument.",
+   "keys": [
+    "@patch",
+    "patch"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "patch"
+   }
+  },
+  {
+   "id": "decorator:backend.pattern",
+   "type": "decorator",
+   "title": "`@pattern` — a decorator of the backend platform",
+   "summary": "On a model field: `@pattern(r\"^[a-z]+$\")`, the text must match the regular expression.",
+   "body": "On a model field: `@pattern(r\"^[a-z]+$\")`, the text must match the regular expression.",
+   "keys": [
+    "@pattern",
+    "pattern"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "pattern"
+   }
+  },
+  {
+   "id": "decorator:backend.post",
+   "type": "decorator",
+   "title": "`@post` — a decorator of the backend platform",
+   "summary": "On a controller method: a POST route; answers 201. A model parameter is the JSON body.",
+   "body": "On a controller method: a POST route; answers 201. A model parameter is the JSON body.",
+   "keys": [
+    "@post",
+    "post"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "post"
+   }
+  },
+  {
+   "id": "decorator:backend.primary",
+   "type": "decorator",
+   "title": "`@primary` — a decorator of the backend platform",
+   "summary": "On an entity field: the primary key.",
+   "body": [
+    "On an entity field: the primary key. `@primary()`: the app gives it (`@primary(length = 8)` for a code);",
+    "`@primary(generated = true)`: the database gives it (auto increment for an `int`, a uuid for a `string`).",
+    "",
+    "Its arguments: `generated`, `length` (`!` = required)."
+   ],
+   "keys": [
+    "@primary",
+    "primary"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "primary"
+   }
+  },
+  {
+   "id": "decorator:backend.put",
+   "type": "decorator",
+   "title": "`@put` — a decorator of the backend platform",
+   "summary": "On a controller method: a PUT route (replaces the resource); the route is its argument.",
+   "body": "On a controller method: a PUT route (replaces the resource); the route is its argument.",
+   "keys": [
+    "@put",
+    "put"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "put"
+   }
+  },
+  {
+   "id": "decorator:backend.repository",
+   "type": "decorator",
+   "title": "`@repository` — a decorator of the backend platform",
+   "summary": "On a repository: `@repository(Entity)` when the name is not `<Entity>Repository`.",
+   "body": "On a repository: `@repository(Entity)` when the name is not `<Entity>Repository`.",
+   "keys": [
+    "@repository",
+    "repository"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "repository"
+   }
+  },
+  {
+   "id": "decorator:backend.required",
+   "type": "decorator",
+   "title": "`@required` — a decorator of the backend platform",
+   "summary": "On a model field: it cannot be empty (a text of at least one character); otherwise a 422.",
+   "body": "On a model field: it cannot be empty (a text of at least one character); otherwise a 422.",
+   "keys": [
+    "@required",
+    "required"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "required"
+   }
+  },
+  {
+   "id": "decorator:backend.start",
+   "type": "decorator",
+   "title": "`@start` — a decorator of the backend platform",
+   "summary": "On a graph method: the first node, the one the graph runs when it starts (`@start`).",
+   "body": "On a graph method: the first node, the one the graph runs when it starts (`@start`).",
+   "keys": [
+    "@start",
+    "start"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "start"
+   }
+  },
+  {
+   "id": "decorator:backend.state",
+   "type": "decorator",
+   "title": "`@state` — a decorator of the backend platform",
+   "summary": "On a graph: `@state(StateName)`, the state its nodes receive and change.",
+   "body": "On a graph: `@state(StateName)`, the state its nodes receive and change.",
+   "keys": [
+    "@state",
+    "state"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "state"
+   }
+  },
+  {
+   "id": "decorator:backend.test",
+   "type": "decorator",
+   "title": "`@test` — a decorator of the backend platform",
+   "summary": "On a tests method: `@test(\"what it checks\")`, one test.",
+   "body": "On a tests method: `@test(\"what it checks\")`, one test.",
+   "keys": [
+    "@test",
+    "test"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "test"
+   }
+  },
+  {
+   "id": "decorator:backend.transactional",
+   "type": "decorator",
+   "title": "`@transactional` — a decorator of the backend platform",
+   "summary": "On a use case's `exec`: every repository call inside shares one transaction of the default database.",
+   "body": [
+    "On a use case's `exec`: every repository call inside shares one transaction of the default database. An `Err` or an",
+    "error rolls it back; an `Ok` commits it.",
+    "",
+    "```nuclear",
+    "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository)",
+    "  @transactional",
+    "  exec(id: int, into: int) Result<Error, Moved>",
+    "    ~projects.find(into)",
+    "    moved = ~tasks.move(id, into)",
+    "    ~projects.remove(id)",
+    "    Ok(Moved(count = moved))",
+    "```"
+   ],
+   "keys": [
+    "@transactional",
+    "transactional"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "transactional"
+   }
+  },
+  {
+   "id": "decorator:backend.updated",
+   "type": "decorator",
+   "title": "`@updated` — a decorator of the backend platform",
+   "summary": "On an entity field: when the row last changed (set by the database).",
+   "body": "On an entity field: when the row last changed (set by the database).",
+   "keys": [
+    "@updated",
+    "updated"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "updated"
+   }
+  },
+  {
+   "id": "decorator:backend.url",
+   "type": "decorator",
+   "title": "`@url` — a decorator of the backend platform",
+   "summary": "On a model field: the value must be an http(s) URL; otherwise a 422.",
+   "body": "On a model field: the value must be an http(s) URL; otherwise a 422.",
+   "keys": [
+    "@url",
+    "url"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "name": "url"
+   }
+  },
+  {
+   "id": "kind:backend.agent",
+   "type": "kind",
+   "title": "`agent` — a kind of the backend platform",
+   "summary": "An agent: a model with tools and a system prompt, with memory per thread.",
+   "body": [
+    "An **agent**: a model with tools and a system prompt, with memory per thread.",
+    "",
+    "A model with tools and a system prompt, with memory per thread. Its tools are the `tools` it receives; `model` names the chat model connection. `~guide.ask(text, thread = \"user-1\")` answers; `stream(text)` gives the answer piece by piece.",
+    "",
+    "```nuclear",
+    "agent Guide(tools: CharacterTools)",
+    "  model: string = \"default\"",
+    "  prompt: string = \"You answer questions about the characters. Use the tools.\"",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/ai/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make agent books Book` writes):",
+    "",
+    "```nuclear",
+    "// What Book answers.",
+    "agent Book()",
+    "  prompt: string = \"You help with books.\"",
+    "```"
+   ],
+   "keys": [
+    "agent"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "agent",
+    "name": "agent"
+   }
+  },
+  {
+   "id": "kind:backend.aggregate",
+   "type": "kind",
+   "title": "`aggregate` — a kind of the backend platform",
+   "summary": "Business rules several use cases share (a cart with its totals).",
+   "body": [
+    "Business rules several use cases share (a cart with its totals). Only use cases call it; it may use repositories.",
+    "",
+    "Its file: `components/{component}/domain/aggregates/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make aggregate books Book` writes):",
+    "",
+    "```nuclear",
+    "// What Book keeps consistent.",
+    "aggregate Book()",
+    "```"
+   ],
+   "keys": [
+    "aggregate"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "aggregate",
+    "name": "aggregate"
+   }
+  },
+  {
+   "id": "kind:backend.appConfig",
+   "type": "kind",
+   "title": "`appConfig` — a kind of the backend platform",
+   "summary": "The configuration of the app: its connections (databases, Redis, Kafka, models, vectors).",
+   "body": [
+    "The **configuration of the app**: its connections (databases, Redis, Kafka, models, vectors).",
+    "",
+    "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`): opened at start and closed at stop. Databases: `Postgres`, `MySQL`, `SQLite` (`url` picks the async driver, `createTables = true` creates the tables); `Redis`; `Kafka(servers, group)`; models: `OpenAI(model)`, `Ollama(model, baseUrl)`, `Embeddings(model)`; `Chroma(collection, embeddings, path)`. Each has a `name` (default `\"default\"`). `env(\"VAR\", \"default\")` reads the environment.",
+    "",
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    Postgres(url = env(\"DATABASE_URL\", \"postgresql+asyncpg://localhost/rick\")),",
+    "    Redis(url = env(\"REDIS_URL\", \"redis://localhost:6379/0\")),",
+    "    Kafka(servers = env(\"KAFKA\", \"localhost:9092\"), group = \"rick\"),",
+    "    OpenAI(model = \"gpt-4o-mini\"),",
+    "  ]",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `config/project_config.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "app config",
+    "appconfig",
+    "application config"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "appConfig",
+    "name": "appConfig"
+   }
+  },
+  {
+   "id": "kind:backend.appcomponent",
+   "type": "kind",
+   "title": "`appcomponent` — a kind of the backend platform",
+   "summary": "The facade of a component: aliases to its use cases.",
+   "body": [
+    "The **facade of a component**: aliases to its use cases.",
+    "",
+    "The facade of a component: aliases to the use cases. Other components and the controllers use only this.",
+    "",
+    "```nuclear",
+    "appcomponent CharactersAppComponent",
+    "  character() = GetCharacter.exec",
+    "  create() = CreateCharacter.exec",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/{component}_appcomponent.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make appcomponent books Book` writes):",
+    "",
+    "```nuclear",
+    "// What the rest of the app sees of books.",
+    "appcomponent Book",
+    "```"
+   ],
+   "keys": [
+    "app component",
+    "appcomponent",
+    "application component"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "appcomponent",
+    "name": "appcomponent"
+   }
+  },
+  {
+   "id": "kind:backend.config",
+   "type": "kind",
+   "title": "`config` — a kind of the backend platform",
+   "summary": "The configuration of one component: connections only it uses.",
+   "body": [
+    "The **configuration of one component**: connections only it uses.",
+    "",
+    "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`): opened at start and closed at stop. Databases: `Postgres`, `MySQL`, `SQLite` (`url` picks the async driver, `createTables = true` creates the tables); `Redis`; `Kafka(servers, group)`; models: `OpenAI(model)`, `Ollama(model, baseUrl)`, `Embeddings(model)`; `Chroma(collection, embeddings, path)`. Each has a `name` (default `\"default\"`). `env(\"VAR\", \"default\")` reads the environment.",
+    "",
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    Postgres(url = env(\"DATABASE_URL\", \"postgresql+asyncpg://localhost/rick\")),",
+    "    Redis(url = env(\"REDIS_URL\", \"redis://localhost:6379/0\")),",
+    "    Kafka(servers = env(\"KAFKA\", \"localhost:9092\"), group = \"rick\"),",
+    "    OpenAI(model = \"gpt-4o-mini\"),",
+    "  ]",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/config/{component}_config.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make config books Book` writes):",
+    "",
+    "```nuclear",
+    "// The connections of books.",
+    "config Book",
+    "```"
+   ],
+   "keys": [
+    "config"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "config",
+    "name": "config"
+   }
+  },
+  {
+   "id": "kind:backend.controller",
+   "type": "kind",
+   "title": "`controller` — a kind of the backend platform",
+   "summary": "REST routes of the API.",
+   "body": [
+    "**REST routes** of the API.",
+    "",
+    "REST routes: `@controller(\"path\")` and `@get`, `@post` (201), `@put`, `@patch`, `@delete` with the route (`\"{id}\"`: a path parameter; segments without a leading slash). A parameter that is a model is the JSON body; an entity is read and answered as its fields. A `Result` answers its value, or the error's status and message.",
+    "",
+    "```nuclear",
+    "@controller(\"characters\")",
+    "controller CharactersController(characters: CharactersAppComponent)",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Character>",
+    "    ~characters.character(id)",
+    "",
+    "  @post(\"\")",
+    "  create(input: NewCharacter) Result<Error, Character>",
+    "    ~characters.create(input)",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/api/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make controller books Book` writes):",
+    "",
+    "```nuclear",
+    "// The books API.",
+    "@controller(\"books\")",
+    "controller Book()",
+    "```"
+   ],
+   "keys": [
+    "controller"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.controller"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.delete"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.get"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.patch"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.post"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.put"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "controller",
+    "name": "controller"
+   }
+  },
+  {
+   "id": "kind:backend.entity",
+   "type": "kind",
+   "title": "`entity` — a kind of the backend platform",
+   "summary": "A table of the project's database.",
+   "body": [
+    "A **table** of the project's database.",
+    "",
+    "A table. In `components/<c>/data/entities/` the kind is given by the folder; elsewhere write `entity`. `@entity(\"table\")` names the table (default: the name in snake_case). Each field is a column: `@primary(generated = true)` (a key the database gives), `@primary()` (a key the app gives), `@column(length = 100, unique = true, index = true, nullable = true, name = \"x\")`, `@created()`, `@updated()`; without a decorator it is a column too. Relations: `@manyToOne` (+ its column `<name>Id`), `@oneToMany`, `@manyToMany` + `@joinTable`, `@oneToOne` + `@joinColumn`; a relation field is optional and loaded only by `relations(...)` (N0308). Its SQL type comes from the field type; `name?: T` is nullable; a default goes to the column.",
+    "",
+    "```nuclear",
+    "@entity(\"characters\")",
+    "entity Character()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 100, unique = true)",
+    "  name: string",
+    "  @column(length = 20)",
+    "  status: string = \"alive\"",
+    "  species?: string",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/data/entities/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make entity books Book` writes):",
+    "",
+    "```nuclear",
+    "// What a Book is.",
+    "@entity(\"books\")",
+    "Book()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "```"
+   ],
+   "keys": [
+    "entity"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.column"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.created"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.entity"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.joinColumn"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.joinTable"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.manyToMany"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.manyToOne"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.oneToMany"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.oneToOne"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.primary"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.updated"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "entity",
+    "name": "entity"
+   }
+  },
+  {
+   "id": "kind:backend.graph",
+   "type": "kind",
+   "title": "`graph` — a kind of the backend platform",
+   "summary": "A graph of steps: its methods are the nodes.",
+   "body": [
+    "A **graph** of steps: its methods are the nodes.",
+    "",
+    "A graph of steps: `state` is its state (`messages: Messages` keeps a conversation). Each method of the `graph` is a node that receives the state and returns what changes; `@start` marks the first one and `@next(\"node\")` the one after it (`\"end\"` ends). A node can also return `Command(goto = \"node\", update = {...})` to choose at run time. `~review.run(state, thread)` runs it.",
+    "",
+    "```nuclear",
+    "state ReviewState",
+    "  question: string",
+    "  answer: string",
+    "",
+    "@state(ReviewState)",
+    "graph Review(guide: Guide)",
+    "  @start",
+    "  @next(\"end\")",
+    "  ask(state: ReviewState) <string, string>",
+    "    { \"answer\": ~guide.ask(state.question) }",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/ai/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "graph"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.next"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.start"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.state"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "graph",
+    "name": "graph"
+   }
+  },
+  {
+   "id": "kind:backend.listener",
+   "type": "kind",
+   "title": "`listener` — a kind of the backend platform",
+   "summary": "A Kafka consumer: `@consumer(\"topic\")` methods receive the messages.",
+   "body": [
+    "A **Kafka consumer**: `@consumer(\"topic\")` methods receive the messages.",
+    "",
+    "A Kafka consumer: each `@consumer(\"topic\")` method receives the messages of the topic, parsed as the type of its parameter (a model). `~publish(\"topic\", value)` sends one. The Redis cache: `~cacheGet(key)`, `~cacheSet(key, value, seconds = 60)`.",
+    "",
+    "```nuclear",
+    "listener CharacterEvents(characters: CharactersAppComponent)",
+    "  @consumer(\"characters.created\")",
+    "  created(input: NewCharacter) void",
+    "    ~characters.create(input)",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/events/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make listener books Book` writes):",
+    "",
+    "```nuclear",
+    "// What Book does with the events it receives.",
+    "listener Book()",
+    "```"
+   ],
+   "keys": [
+    "listener"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.consumer"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "listener",
+    "name": "listener"
+   }
+  },
+  {
+   "id": "kind:backend.model",
+   "type": "kind",
+   "title": "`model` — a kind of the backend platform",
+   "summary": "A model: what the API reads and answers, validated.",
+   "body": [
+    "A **model**: what the API reads and answers, validated.",
+    "",
+    "What the API reads and answers (in `domain/models/` by folder). The rule decorators check it: `@required`, `@minLength(n)`, `@maxLength(n)`, `@min(n)`, `@max(n)`, `@pattern(r\"...\")`, `@email`, `@url`. An invalid body is a 422.",
+    "",
+    "```nuclear",
+    "model NewCharacter",
+    "  @minLength(1)",
+    "  @maxLength(100)",
+    "  name: string",
+    "  status: string = \"alive\"",
+    "  @email",
+    "  contact?: string",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/domain/models/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make model books Book` writes):",
+    "",
+    "```nuclear",
+    "// What Book carries.",
+    "Book",
+    "```"
+   ],
+   "keys": [
+    "model"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.email"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.max"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.maxLength"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.min"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.minLength"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.pattern"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.required"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.url"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "model",
+    "name": "model"
+   }
+  },
+  {
+   "id": "kind:backend.repository",
+   "type": "kind",
+   "title": "`repository` — a kind of the backend platform",
+   "summary": "The data of one entity: CRUD without writing it and queries built line by line.",
+   "body": [
+    "The **data of one entity**: CRUD without writing it and queries built line by line.",
+    "",
+    "The data of one entity: `NameRepository` works on `Name` (or `@repository(Entity)`). It brings `find(id)` (`Ok(entity)` / `Err(NotFound)`), `findAll()`, `save(entity)` and `remove(id)`. Each method's lines build ONE query, created for that call (`q`): `where({...})` (equality, or `gt`, `gte`, `lt`, `lte`, `ne`, `like`, `ilike`, `oneOf`, `isNull`, `between`), `orderBy(field, desc = true)`, `limit(n)`, `offset(n)`, `relations(\"tasks\", \"tasks.tags\")` (the relations to load); the last line runs it: `getOne()` (`Result`), `getMany()`, `paginate(page, size)` (`Page<T>`: `items`, `page`, `size`, `total`, `pages`), `count()`, `exists()`, `update({...})`, `delete()`. The caller awaits it: `~characters.byName(name)`.",
+    "",
+    "```nuclear",
+    "repository CharacterRepository",
+    "  byName(name: string) Result<Error, Character>",
+    "    where({ \"name\": name })",
+    "    getOne()",
+    "",
+    "  aliveSince(year: int, max: int = 20) Character[]",
+    "    where({ \"status\": \"alive\", \"year\": gte(year) })",
+    "    orderBy(\"name\")",
+    "    limit(max)",
+    "    getMany()",
+    "```",
+    "",
+    "Another API instead of the database (ADR-0103): `@repository(path = \"character\")` and methods without a body with `@get(path = \":id\")`, `@post`, `@put`, `@patch` or `@delete`; they call the `Http(baseUrl)` connection, `:id` takes the parameter `id`, the rest goes to the query (GET) or the body, an error status is the `Err`.",
+    "",
+    "```nuclear",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  one(id: int) Result<Error, Character>",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/data/repositories/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make repository books Book` writes):",
+    "",
+    "```nuclear",
+    "// The queries of Book.",
+    "repository Book",
+    "```"
+   ],
+   "keys": [
+    "repository"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.delete"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.get"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.patch"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.post"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.put"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.repository"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "repository",
+    "name": "repository"
+   }
+  },
+  {
+   "id": "kind:backend.service",
+   "type": "kind",
+   "title": "`service` — a kind of the backend platform",
+   "summary": "Helpers of the use cases: mappings, transformations, calculations without state.",
+   "body": [
+    "Helpers of the use cases: mappings, transformations, calculations without state. Its dependencies are its constructor parameters (injected by type). Only use cases and aggregates call it.",
+    "",
+    "Its file: `components/{component}/domain/services/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make service books Book` writes):",
+    "",
+    "```nuclear",
+    "// The rules Book gives the use cases.",
+    "service Book()",
+    "```"
+   ],
+   "keys": [
+    "service"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "service",
+    "name": "service"
+   }
+  },
+  {
+   "id": "kind:backend.state",
+   "type": "kind",
+   "title": "`state` — a kind of the backend platform",
+   "summary": "The state of a graph.",
+   "body": [
+    "The **state of a graph**.",
+    "",
+    "A graph of steps: `state` is its state (`messages: Messages` keeps a conversation). Each method of the `graph` is a node that receives the state and returns what changes; `@start` marks the first one and `@next(\"node\")` the one after it (`\"end\"` ends). A node can also return `Command(goto = \"node\", update = {...})` to choose at run time. `~review.run(state, thread)` runs it.",
+    "",
+    "```nuclear",
+    "state ReviewState",
+    "  question: string",
+    "  answer: string",
+    "",
+    "@state(ReviewState)",
+    "graph Review(guide: Guide)",
+    "  @start",
+    "  @next(\"end\")",
+    "  ask(state: ReviewState) <string, string>",
+    "    { \"answer\": ~guide.ask(state.question) }",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/ai/states/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make state books Book` writes):",
+    "",
+    "```nuclear",
+    "// The state of a graph.",
+    "Book",
+    "  input: string",
+    "```"
+   ],
+   "keys": [
+    "state"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.next"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.start"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:backend.state"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "state",
+    "name": "state"
+   }
+  },
+  {
+   "id": "kind:backend.tests",
+   "type": "kind",
+   "title": "`tests` — a kind of the backend platform",
+   "summary": "A group of tests (in `test/`).",
+   "body": [
+    "A group of **tests** (in `test/`).",
+    "",
+    "In `test/*_test.nuc`: `tests Name` + `@test(\"what it checks\")` methods. Every test runs with the project's connections and the databases in memory; `inject<X>()` gives the instances; `expect(condition)` checks. `FakeModel([...])` answers fixed texts.",
+    "",
+    "```nuclear",
+    "tests Characters",
+    "  @test(\"an unknown id is not found\")",
+    "  unknownId() void",
+    "    app = inject<CharactersAppComponent>()",
+    "    missing = ~app.character(99)",
+    "    expect(missing.isErr)",
+    "    expect(missing.error.status == 404)",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `test/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make tests books Book` writes):",
+    "",
+    "```nuclear",
+    "// The tests of books.",
+    "tests Book",
+    "```"
+   ],
+   "keys": [
+    "tests"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.test"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "tests",
+    "name": "tests"
+   }
+  },
+  {
+   "id": "kind:backend.tools",
+   "type": "kind",
+   "title": "`tools` — a kind of the backend platform",
+   "summary": "Tools for a model: each public method with a doc comment is a tool the model can call.",
+   "body": [
+    "**Tools** for a model: each public method with a doc comment is a tool the model can call.",
+    "",
+    "Each public method with a doc comment is a tool, and the doc comment is the description the model reads; a method without one is a helper of the others (never offered to the model). A tool can use the component's repositories.",
+    "",
+    "```nuclear",
+    "tools CharacterTools(characters: CharacterRepository)",
+    "  // Tells whether a character of the show is alive, by its name.",
+    "  status(name: string) string",
+    "    match ~characters.byName(name)",
+    "      Ok(c) -> \"${c.name} is ${c.status}\"",
+    "      Err(_) -> \"nobody is called ${name}\"",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/ai/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make tools books Book` writes):",
+    "",
+    "```nuclear",
+    "// The tools an agent uses (Book): each method with a doc comment is one tool.",
+    "tools Book()",
+    "```"
+   ],
+   "keys": [
+    "tools"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "tools",
+    "name": "tools"
+   }
+  },
+  {
+   "id": "kind:backend.usecase",
+   "type": "kind",
+   "title": "`usecase` — a kind of the backend platform",
+   "summary": "One business operation: a single method `exec` that returns a `Result`.",
+   "body": [
+    "One **business operation**: a single method `exec` that returns a `Result`.",
+    "",
+    "One business operation: its dependencies are injected by type; `exec` returns `Result<E, T>`. `Error` is `AppError`; the runtime has `NotFound` (404), `Invalid` (400), `Unauthorized` (401), `Forbidden` (403) and `Conflict` (409).",
+    "",
+    "```nuclear",
+    "model NewCharacter",
+    "  name: string",
+    "  status: string = \"alive\"",
+    "",
+    "entity Character()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  status: string",
+    "",
+    "usecase CreateCharacter(characters: CharacterRepository)",
+    "  exec(input: NewCharacter) Result<Error, Character>",
+    "    taken = ~characters.where({ \"name\": input.name }).exists()",
+    "    if taken",
+    "      return Err(Conflict(\"${input.name} already exists\"))",
+    "    Ok(~characters.save(Character(name = input.name, status = input.status)))",
+    "```",
+    "",
+    "Full rules: `nuclear help backend` (spec/backend.md).",
+    "",
+    "Its file: `components/{component}/domain/usecases/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case).",
+    "",
+    "The smallest file of the kind (what `dragonfly make usecase books Book` writes):",
+    "",
+    "```nuclear",
+    "// What Book does.",
+    "usecase Book()",
+    "  exec() Result<Error, string>",
+    "    Ok(\"\")",
+    "```"
+   ],
+   "keys": [
+    "use case",
+    "usecase"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:backend.primary"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/docs.toml"
+   ],
+   "meta": {
+    "kind": "usecase",
+    "name": "usecase"
+   }
+  },
+  {
+   "id": "layout:backend",
+   "type": "layout",
+   "title": "Where each kind's file goes in a backend project",
+   "summary": "The folder and file name of every kind of a backend project: `{component}` is the component's folder, `{screen}` the screen's, `{file}` the declaration's name in snake_case.",
+   "body": [
+    "`nuclear help layout --platform backend` prints it; `dragonfly make` and the generators follow it.",
+    "",
+    "- `agent` → `components/{component}/ai/{file}.nuc`",
+    "- `aggregate` → `components/{component}/domain/aggregates/{file}.nuc`",
+    "- `appConfig` → `config/project_config.nuc`",
+    "- `appcomponent` → `components/{component}/{component}_appcomponent.nuc`",
+    "- `config` → `components/{component}/config/{component}_config.nuc`",
+    "- `controller` → `components/{component}/api/{file}.nuc`",
+    "- `entity` → `components/{component}/data/entities/{file}.nuc`",
+    "- `graph` → `components/{component}/ai/{file}.nuc`",
+    "- `listener` → `components/{component}/events/{file}.nuc`",
+    "- `model` → `components/{component}/domain/models/{file}.nuc`",
+    "- `repository` → `components/{component}/data/repositories/{file}.nuc`",
+    "- `service` → `components/{component}/domain/services/{file}.nuc`",
+    "- `state` → `components/{component}/ai/states/{file}.nuc`",
+    "- `tests` → `test/{file}.nuc`",
+    "- `tools` → `components/{component}/ai/{file}.nuc`",
+    "- `usecase` → `components/{component}/domain/usecases/{file}.nuc`"
+   ],
+   "keys": [
+    "layout",
+    "backend layout"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml"
+   ],
+   "meta": {
+    "name": "layout"
+   },
+   "asks": [
+    "where does the file of each kind go in a backend project",
+    "in which folder do I put a repository, a use case or a model of a backend project"
+   ]
+  },
+  {
+   "id": "platform:backend",
+   "type": "platform",
+   "title": "The backend platform of Dragonfly",
+   "summary": "The backend platform: HTTP APIs, data, events and AI agents. 16 kinds, 34 decorators, 11 plugins; built by the dialects fastapi, nestjs (default: fastapi).",
+   "body": [
+    "A project of the platform is written once in Nuclear and builds with any of its dialects (`fastapi`, `nestjs`; `fastapi` when none is named). Create one: `dragonfly new <name> -p backend`.",
+    "",
+    "Its kinds:",
+    "",
+    "- `appConfig`: The configuration of the app: its connections (databases, Redis, Kafka, models, vectors).",
+    "- `config`: The configuration of one component: connections only it uses.",
+    "- `entity`: A table of the project's database.",
+    "- `repository`: The data of one entity: CRUD without writing it and queries built line by line.",
+    "- `model`: A model: what the API reads and answers, validated.",
+    "- `usecase`: One business operation: a single method `exec` that returns a `Result`.",
+    "- `appcomponent`: The facade of a component: aliases to its use cases.",
+    "- `service`: Helpers of the use cases: mappings, transformations, calculations without state.",
+    "- `aggregate`: Business rules several use cases share (a cart with its totals).",
+    "- `controller`: REST routes of the API.",
+    "- `listener`: A Kafka consumer: `@consumer(\"topic\")` methods receive the messages.",
+    "- `tools`: Tools for a model: each public method with a doc comment is a tool the model can call.",
+    "- `agent`: An agent: a model with tools and a system prompt, with memory per thread.",
+    "- `state`: The state of a graph.",
+    "- `graph`: A graph of steps: its methods are the nodes.",
+    "- `tests`: A group of tests (in `test/`).",
+    "",
+    "Its plugins: `sqlite`, `postgres`, `mysql`, `mariadb`, `redis`, `kafka`, `events`, `ai`, `openai`, `ollama`, `chroma`."
+   ],
+   "keys": [
+    "backend",
+    "backend platform"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "has",
+     "to": "kind:backend.appConfig"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.config"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.entity"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.repository"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.model"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.usecase"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.appcomponent"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.service"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.aggregate"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.controller"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.listener"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.tools"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.agent"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.state"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.graph"
+    },
+    {
+     "rel": "has",
+     "to": "kind:backend.tests"
+    },
+    {
+     "rel": "has",
+     "to": "layout:backend"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml"
+   ],
+   "meta": {
+    "name": "backend"
+   }
+  },
+  {
+   "id": "plugin:backend.ai",
+   "type": "plugin",
+   "title": "`ai` — a plugin of the backend platform",
+   "summary": "LangChain and LangGraph: the tools, agent, state and graph kinds, chat models and embeddings",
+   "body": [
+    "LangChain and LangGraph: the tools, agent, state and graph kinds, chat models and embeddings",
+    "",
+    "Kinds it brings: `tools`, `agent`, `state`, `graph`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(ai = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "ai",
+    "plugin ai"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "ai"
+   }
+  },
+  {
+   "id": "plugin:backend.chroma",
+   "type": "plugin",
+   "title": "`chroma` — a plugin of the backend platform",
+   "summary": "A Chroma vector store on a Chroma server (langchain-chroma): Chroma(collection = ..., url = ...)",
+   "body": [
+    "A Chroma vector store on a Chroma server (langchain-chroma): Chroma(collection = ..., url = ...)",
+    "",
+    "It enables: `ai`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(chroma = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "chroma",
+    "plugin chroma"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "chroma"
+   }
+  },
+  {
+   "id": "plugin:backend.events",
+   "type": "plugin",
+   "title": "`events` — a plugin of the backend platform",
+   "summary": "publish and the listener kind with @consumer in the same process (Kafka optional: plugins(kafka = true))",
+   "body": [
+    "publish and the listener kind with @consumer in the same process (Kafka optional: plugins(kafka = true))",
+    "",
+    "Kinds it brings: `listener`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(events = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "events",
+    "plugin events"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "events"
+   }
+  },
+  {
+   "id": "plugin:backend.kafka",
+   "type": "plugin",
+   "title": "`kafka` — a plugin of the backend platform",
+   "summary": "Kafka topics (aiokafka): Kafka(servers = ..., group = ...); publish reaches the broker (plugins(events = true) for the listener kind)",
+   "body": [
+    "Kafka topics (aiokafka): Kafka(servers = ..., group = ...); publish reaches the broker (plugins(events = true) for the listener kind)",
+    "",
+    "Enable it in `config.nuc`: `plugins(kafka = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "kafka",
+    "plugin kafka"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "kafka"
+   }
+  },
+  {
+   "id": "plugin:backend.mariadb",
+   "type": "plugin",
+   "title": "`mariadb` — a plugin of the backend platform",
+   "summary": "MariaDB databases (aiomysql): MariaDB(url = \"mariadb://...\")",
+   "body": [
+    "MariaDB databases (aiomysql): MariaDB(url = \"mariadb://...\")",
+    "",
+    "Enable it in `config.nuc`: `plugins(mariadb = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "mariadb",
+    "plugin mariadb"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "mariadb"
+   }
+  },
+  {
+   "id": "plugin:backend.mysql",
+   "type": "plugin",
+   "title": "`mysql` — a plugin of the backend platform",
+   "summary": "MySQL databases (aiomysql): MySQL(url = \"mysql://...\")",
+   "body": [
+    "MySQL databases (aiomysql): MySQL(url = \"mysql://...\")",
+    "",
+    "Enable it in `config.nuc`: `plugins(mysql = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "mysql",
+    "plugin mysql"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "mysql"
+   }
+  },
+  {
+   "id": "plugin:backend.ollama",
+   "type": "plugin",
+   "title": "`ollama` — a plugin of the backend platform",
+   "summary": "Local Ollama models (langchain-ollama): Ollama(model = \"qwen3.5:4b\")",
+   "body": [
+    "Local Ollama models (langchain-ollama): Ollama(model = \"qwen3.5:4b\")",
+    "",
+    "It enables: `ai`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(ollama = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "ollama",
+    "plugin ollama"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "ollama"
+   }
+  },
+  {
+   "id": "plugin:backend.openai",
+   "type": "plugin",
+   "title": "`openai` — a plugin of the backend platform",
+   "summary": "OpenAI chat models and embeddings (langchain-openai): OpenAI(model = \"gpt-4o-mini\")",
+   "body": [
+    "OpenAI chat models and embeddings (langchain-openai): OpenAI(model = \"gpt-4o-mini\")",
+    "",
+    "It enables: `ai`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(openai = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "openai",
+    "plugin openai"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "openai"
+   }
+  },
+  {
+   "id": "plugin:backend.postgres",
+   "type": "plugin",
+   "title": "`postgres` — a plugin of the backend platform",
+   "summary": "PostgreSQL databases (asyncpg): Postgres(url = env(\"DATABASE_URL\", \"postgres://...\"))",
+   "body": [
+    "PostgreSQL databases (asyncpg): Postgres(url = env(\"DATABASE_URL\", \"postgres://...\"))",
+    "",
+    "Enable it in `config.nuc`: `plugins(postgres = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "postgres",
+    "plugin postgres"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "postgres"
+   }
+  },
+  {
+   "id": "plugin:backend.redis",
+   "type": "plugin",
+   "title": "`redis` — a plugin of the backend platform",
+   "summary": "The Redis cache (redis.asyncio): Redis(url = ...), cache_get, cache_set",
+   "body": [
+    "The Redis cache (redis.asyncio): Redis(url = ...), cache_get, cache_set",
+    "",
+    "Enable it in `config.nuc`: `plugins(redis = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "redis",
+    "plugin redis"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "redis"
+   }
+  },
+  {
+   "id": "plugin:backend.sqlite",
+   "type": "plugin",
+   "title": "`sqlite` — a plugin of the backend platform",
+   "summary": "SQLite databases (aiosqlite): SQLite(file = \"app.sqlite\")",
+   "body": [
+    "SQLite databases (aiosqlite): SQLite(file = \"app.sqlite\")",
+    "",
+    "Enable it in `config.nuc`: `plugins(sqlite = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "sqlite",
+    "plugin sqlite"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/dialects/backend/platform.toml",
+    "dragonfly-backend/dialects/backend/fastapi/dialect.toml"
+   ],
+   "meta": {
+    "name": "sqlite"
+   }
+  }
+ ]
+}

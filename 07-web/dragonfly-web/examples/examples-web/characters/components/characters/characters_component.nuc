@@ -1,7 +1,0 @@
-// Application component: the facade of the component. Other components and the screens use
-// characters only through these functions.
-appcomponent CharactersComponent
-  getOne() = GetOneCharacterUseCase.exec
-  getPage() = GetPageUseCase.exec
-  save() = SaveCharacterUseCase.exec
-  search() = SearchCharactersUseCase.exec

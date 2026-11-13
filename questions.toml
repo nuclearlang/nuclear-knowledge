@@ -1,0 +1,782 @@
+# The questions people and agents ask the Smart Graph, and the row each must return (ADR-0104): the acceptance test
+# of the knowledge base. `nuclear-graph knowledge ask` runs them against the running graph and fails when one does not
+# come back among its first `top` results (3 by default).
+#
+# `expect`: any of these ids counts; an id that ends with `*` is a prefix. `agents` (default true): search as a local
+# agent does. `platform`, `shelves`, `kind`: the filters of the search. Questions come in English and in Spanish:
+# people ask in both. When a change answers a new question, add it here with the change.
+#
+# `request = true`: the text is an order or a spec, not a question: it is given to the strategy selection and its first
+# strategy must be the expected one; `existing` and `new` are the declarations it names that a project has or lacks.
+#
+# `says`: the question is also asked to the local assistant (`eval/run.py chat` in nuclear-developer, the chat of the
+# editor): its answer must contain every one of these texts (the case does not matter).
+
+# ---- what it is, why, how ----
+
+[[question]]
+ask = "what is nuclear"
+expect = ["concept:nuclearlang"]
+top = 1
+
+[[question]]
+ask = "que es nuclear"
+expect = ["concept:nuclearlang"]
+top = 1
+says = ["transpil"]
+
+[[question]]
+ask = "para que sirve nuclear"
+expect = ["concept:why-nuclear", "concept:nuclearlang"]
+top = 2
+
+[[question]]
+ask = "what problem does nuclearlang solve"
+expect = ["concept:why-nuclear"]
+
+[[question]]
+ask = "ventajas"
+expect = ["concept:advantages"]
+top = 1
+says = ["dragonfly"]
+
+[[question]]
+ask = "why should I use nuclear instead of writing flutter by hand"
+expect = ["concept:advantages", "concept:comparison"]
+
+[[question]]
+ask = "como funciona nuclear"
+expect = ["concept:how-it-works"]
+
+[[question]]
+ask = "how does the compiler turn a nuc file into typescript"
+expect = ["concept:how-it-works", "concept:transpiler"]
+
+[[question]]
+ask = "what is dragonfly"
+expect = ["concept:dragonfly"]
+top = 1
+
+[[question]]
+ask = "what is the difference between a platform and a dialect"
+expect = ["concept:platforms-and-dialects"]
+top = 1
+
+[[question]]
+ask = "can I change my backend from python to typescript"
+expect = ["can:switch-dialect", "concept:platforms-and-dialects"]
+
+[[question]]
+ask = "what is a kind"
+expect = ["concept:kinds"]
+
+[[question]]
+ask = "how is a dragonfly project organized"
+expect = ["concept:project-architecture"]
+
+[[question]]
+ask = "how do I handle errors in nuclear"
+expect = ["concept:result"]
+
+[[question]]
+ask = "what are type definitions"
+expect = ["concept:type-definitions"]
+top = 1
+
+[[question]]
+ask = "how do I share models between my backend and my mobile app"
+expect = ["concept:contracts", "can:contracts"]
+
+[[question]]
+ask = "which languages and frameworks does nuclear generate"
+expect = ["faq:what-comes-out", "concept:platforms-and-dialects"]
+
+[[question]]
+ask = "como instalo nuclear"
+expect = ["faq:install"]
+
+[[question]]
+ask = "como creo un proyecto"
+expect = ["faq:start-a-project", "playbook:new-project"]
+says = ["dragonfly new"]
+
+[[question]]
+ask = "where is the generated code and can I edit it"
+expect = ["faq:generated-code"]
+top = 1
+
+[[question]]
+ask = "is nuclear open source"
+expect = ["concept:open-source"]
+top = 1
+
+# ---- the AI pieces ----
+
+[[question]]
+ask = "como funciona el MCP"
+expect = ["concept:mcp"]
+top = 1
+says = ["Model Context Protocol", "nuclear-graph mcp"]
+
+[[question]]
+ask = "how does the mcp work"
+expect = ["concept:mcp"]
+top = 1
+
+[[question]]
+ask = "how do I connect claude code to nuclear"
+expect = ["playbook:connect-an-mcp-client", "concept:mcp"]
+
+[[question]]
+ask = "what is the smart graph"
+expect = ["concept:smart-graph"]
+top = 1
+
+[[question]]
+ask = "what is the nuclear developer"
+expect = ["concept:nuclear-developer"]
+top = 1
+says = ["3B", "coder"]
+
+[[question]]
+ask = "que modelos usa el agente local"
+expect = ["faq:local-models", "concept:nuclear-developer"]
+
+[[question]]
+ask = "cuales son los pasos para completar un feature"
+expect = ["concept:loop", "playbook:feature-from-a-spec"]
+
+[[question]]
+ask = "esto corre local o envia mi codigo a la nube"
+expect = ["faq:privacy", "concept:ai-loop"]
+
+[[question]]
+ask = "how is the knowledge base kept up to date"
+expect = ["concept:knowledge-versions"]
+
+[[question]]
+ask = "how were the local agents trained"
+expect = ["concept:distillation"]
+top = 1
+
+[[question]]
+ask = "when should a frontier model lead instead of the local agents"
+expect = ["concept:local-first", "playbook:work-under-a-lead", "limit:agent-reasoning", "playbook:escalate"]
+
+# ---- what can and cannot be done, and the agent's limits ----
+
+[[question]]
+ask = "can nuclear build a rest api"
+expect = ["can:backend-api"]
+
+[[question]]
+ask = "does nuclear have database migrations"
+expect = ["can:backend-data", "playbook:migrate-the-database", "tool:dragonfly.migrate"]
+
+[[question]]
+ask = "can nuclear convert my existing flutter app"
+expect = ["cannot:read-target-code"]
+
+[[question]]
+ask = "does nuclear support express"
+expect = ["cannot:nodejs-express"]
+top = 1
+says = ["nestjs"]
+
+[[question]]
+ask = "does the backend have authentication"
+expect = ["limit:backend-not-yet"]
+
+[[question]]
+ask = "can I use forms in a web app"
+expect = ["limit:web-first-version"]
+
+[[question]]
+ask = "was it tested with postgres"
+expect = ["limit:untested", "can:backend-data"]
+
+[[question]]
+ask = "cuales son tus limitaciones"
+expect = ["limit:agent-one-file", "limit:agent-reasoning", "limit:agent-context"]
+says = ["8192"]
+
+[[question]]
+ask = "puede el agente hacer cualquier tarea"
+expect = ["limit:agent-reasoning"]
+top = 1
+
+[[question]]
+ask = "how much context does the local model have"
+expect = ["limit:agent-context"]
+top = 1
+
+[[question]]
+ask = "what happens when a task is too big for the local agent"
+expect = ["playbook:escalate", "limit:agent-reasoning", "limit:agent-one-file", "limit:agent-context"]
+
+# ---- how a task is done ----
+
+[[question]]
+ask = "how do I build a feature from a spec"
+expect = ["playbook:feature-from-a-spec"]
+
+[[question]]
+ask = "como divido un spec en tareas"
+expect = ["playbook:decompose-a-spec"]
+
+[[question]]
+ask = "implement the endpoint that lists the characters of the rick and morty api"
+expect = ["playbook:resource-from-an-api"]
+says = ["dragonfly gen resource"]
+
+[[question]]
+ask = "how do I make a crud with a database"
+expect = ["playbook:database-resource"]
+
+[[question]]
+ask = "how do I add an endpoint"
+expect = ["playbook:add-an-endpoint"]
+top = 1
+
+[[question]]
+ask = "how do I write tests"
+expect = ["playbook:write-tests", "concept:tests-in-nuclear"]
+
+[[question]]
+ask = "a test fails, what do I do"
+expect = ["playbook:fix-a-failing-test", "failure:a-test-fails"]
+
+[[question]]
+ask = "que roles tiene el agente"
+expect = ["role:*", "concept:nuclear-developer"]
+
+[[question]]
+ask = "how do I deploy and export the ci file"
+expect = ["playbook:deploy", "tool:nuclear-loop.export"]
+
+# ---- errors and failures ----
+
+[[question]]
+ask = "N0114"
+expect = ["error:N0114"]
+top = 1
+
+[[question]]
+ask = "how do I fix N0222"
+expect = ["error:N0222"]
+top = 1
+says = ["~"]
+
+[[question]]
+ask = "4:7 N0114 'lenght' is not a member of Nuclear's string (nuclear help library)"
+expect = ["error:N0114"]
+top = 1
+
+[[question]]
+ask = "'@column' has no member below it"
+expect = ["pitfall:decorator-after-its-field", "error:N0013"]
+
+[[question]]
+ask = "why is await an error"
+expect = ["error:N0022", "habit:await-load-async"]
+
+[[question]]
+ask = "why can't my controller call a repository"
+expect = ["error:N0301"]
+
+[[question]]
+ask = "xs.push(x) is not allowed"
+expect = ["error:N0114", "lib:list", "concept:standard-library", "pitfall:library-names-of-other-languages"]
+
+[[question]]
+ask = "dragonfly: command not found"
+expect = ["failure:a-command-is-not-found"]
+top = 1
+says = ["install"]
+
+[[question]]
+ask = "the local developer is not running at http://127.0.0.1:7879 (fetch failed)"
+expect = ["failure:the-developer-is-not-running"]
+top = 1
+
+[[question]]
+ask = "ModuleNotFoundError: No module named 'aiosqlite'"
+expect = ["failure:a-package-is-missing"]
+top = 1
+
+[[question]]
+ask = "the planner gave 0 pieces"
+expect = ["failure:the-plan-has-no-pieces"]
+top = 1
+
+[[question]]
+ask = "my test gets an empty list from the repository"
+expect = ["pitfall:test-reads-an-empty-database", "failure:a-test-fails"]
+
+# ---- the language and the platforms ----
+
+[[question]]
+ask = "how do I get the length of a list"
+expect = ["lib:list", "concept:standard-library", "error:N0114"]
+
+[[question]]
+ask = "how do I write a for loop"
+expect = ["lang:docs/language/10-control*", "lang:spec/brief/nuclear-base.md*", "lang:docs/language/reference.md*"]
+
+[[question]]
+ask = "what is a use case"
+platform = "backend"
+expect = ["kind:backend.usecase"]
+
+[[question]]
+ask = "how do I declare an entity with a unique column"
+platform = "backend"
+expect = ["kind:backend.entity", "decorator:backend.column"]
+
+[[question]]
+ask = "where does the file of a repository go"
+platform = "backend"
+expect = ["layout:backend", "kind:backend.repository", "concept:project-architecture"]
+
+[[question]]
+ask = "@manyToOne"
+platform = "backend"
+expect = ["decorator:backend.manyToOne"]
+top = 1
+
+[[question]]
+ask = "how do I enable sqlite"
+platform = "backend"
+expect = ["plugin:backend.sqlite", "error:N0304", "concept:plugins"]
+
+[[question]]
+ask = "what is a state manager"
+platform = "mobile"
+expect = ["kind:mobile.statemanager", "concept:state-management"]
+
+[[question]]
+ask = "an example of a controller"
+platform = "backend"
+shelves = "examples"
+kind = "controller"
+expect = ["example:*", "solved:*"]
+top = 1
+
+# ---- the tools ----
+
+[[question]]
+ask = "how do I check my code for errors"
+expect = ["tool:nuclear.check", "can:check-fix-format", "playbook:fix-compiler-errors"]
+
+[[question]]
+ask = "dragonfly gen resource"
+expect = ["tool:dragonfly.gen.resource"]
+top = 1
+
+[[question]]
+ask = "what does generate_resource do"
+expect = ["mcp:generate_resource"]
+top = 1
+
+[[question]]
+ask = "dragonfly gen usecase"
+expect = ["tool:dragonfly.gen.usecase"]
+top = 1
+
+[[question]]
+ask = "what does generate_usecase do"
+expect = ["mcp:generate_usecase"]
+top = 1
+
+[[question]]
+ask = "como agrego un caso de uso con su ruta"
+expect = ["playbook:add-a-use-case", "tool:dragonfly.gen.usecase"]
+
+[[question]]
+ask = "que herramientas tiene el servidor MCP"
+expect = ["mcp:server", "concept:mcp"]
+
+[[question]]
+ask = "how do I retry a failed run"
+expect = ["tool:nuclear-loop.retry", "concept:loop"]
+
+[[question]]
+ask = "which keyboard shortcut opens the chat with the agent"
+expect = ["editor:vscode.commands", "faq:ask-the-agent"]
+
+[[question]]
+ask = "what version is dragonfly"
+expect = ["component:dragonfly"]
+
+[[question]]
+ask = "what does the planner agent do"
+expect = ["agent:planner", "role:analyst"]
+
+[[question]]
+ask = "POST /developer/code"
+expect = ["http:developer.code"]
+top = 1
+
+[[question]]
+ask = "what does the generate stage of the loop do"
+expect = ["stage:generate"]
+
+[[question]]
+ask = "que herramientas tiene el agente"
+expect = ["service:agent-toolbox"]
+
+[[question]]
+ask = "can the agent read the files of my project"
+expect = ["service:agent-toolbox", "concept:nuclear-developer"]
+
+[[question]]
+ask = "como decide el agente que hacer con un pedido"
+expect = ["concept:strategies"]
+
+[[question]]
+ask = "why did my run skip the plan stage"
+expect = ["concept:strategies", "strategy:*", "stage:plan"]
+
+# ---- requests: the strategy each one gets (ADR-0105) ----
+# `request = true`: the text is an order or a spec, not a question; it is given to the strategy selection
+# (`POST /v1/strategy`) and the first strategy must be the expected one. None of these is among the `asks` of its row.
+
+[[question]]
+ask = "necesito una plataforma de cursos con alumnos, profesores y pagos, todo de principio a fin"
+expect = ["strategy:system"]
+request = true
+
+[[question]]
+ask = "I want an entire application for a clinic: patients, appointments and invoices"
+expect = ["strategy:system"]
+request = true
+
+[[question]]
+ask = "arranca un proyecto backend vacío llamado tienda"
+expect = ["strategy:project"]
+request = true
+
+[[question]]
+ask = "set up a fresh web project for the dashboard"
+expect = ["strategy:project"]
+request = true
+
+[[question]]
+ask = "falta el módulo de envíos completo"
+expect = ["strategy:component"]
+request = true
+
+[[question]]
+ask = "create the whole reviews component for the store"
+expect = ["strategy:component"]
+request = true
+
+[[question]]
+ask = "muestra los países de https://restcountries.com/v3.1/all"
+expect = ["strategy:resource-api"]
+request = true
+
+[[question]]
+ask = "GET https://api.example.com/v1/planets\nShow them paged"
+expect = ["strategy:resource-api"]
+request = true
+
+[[question]]
+ask = "necesito altas, bajas y cambios de proveedores con nombre y teléfono"
+expect = ["strategy:resource-db"]
+request = true
+platform = "backend"
+
+[[question]]
+ask = "keep the suppliers in a table: name, phone, city"
+expect = ["strategy:resource-db"]
+request = true
+platform = "backend"
+
+[[question]]
+ask = "the mobile app must talk to our backend through its contract"
+expect = ["strategy:client-of-backend"]
+request = true
+platform = "mobile"
+
+[[question]]
+ask = "genera los modelos de la app desde el contrato del backend"
+expect = ["strategy:client-of-backend"]
+request = true
+platform = "mobile"
+
+[[question]]
+ask = "quiero únicamente la vista del carrito, sin tocar el backend"
+expect = ["strategy:interface"]
+request = true
+platform = "mobile"
+
+[[question]]
+ask = "a profile screen with the user's name and a logout button"
+expect = ["strategy:interface"]
+request = true
+platform = "web"
+
+[[question]]
+ask = "falta el repositorio de reseñas"
+expect = ["strategy:repository"]
+request = true
+
+[[question]]
+ask = "BookRepository needs a query that returns the books of one year"
+expect = ["strategy:repository"]
+request = true
+
+[[question]]
+ask = "no se puede reservar una sala ocupada: agrega esa regla"
+expect = ["strategy:usecase"]
+request = true
+
+[[question]]
+ask = "a use case that refunds an order only when it was paid"
+expect = ["strategy:usecase"]
+request = true
+
+[[question]]
+ask = "POST /invoices/{id}/send"
+expect = ["strategy:endpoint"]
+request = true
+platform = "backend"
+
+[[question]]
+ask = "necesito un endpoint que devuelva el resumen del mes"
+expect = ["strategy:endpoint"]
+request = true
+platform = "backend"
+
+[[question]]
+ask = "un servicio TaxCalculator que calcule el impuesto"
+expect = ["strategy:declaration"]
+request = true
+
+[[question]]
+ask = "declare a model Address with street and city"
+expect = ["strategy:declaration"]
+request = true
+
+[[question]]
+ask = "Customer should have a phone number too"
+expect = ["strategy:member"]
+request = true
+
+[[question]]
+ask = "ponle un campo descuento a la entidad Invoice"
+expect = ["strategy:member"]
+request = true
+existing = ["Invoice"]
+
+[[question]]
+ask = "el caso de uso CancelOrder ahora se debe llamar RevokeOrder"
+expect = ["strategy:refactor-rename"]
+request = true
+
+[[question]]
+ask = "rename the orders component to purchases"
+expect = ["strategy:refactor-rename"]
+request = true
+
+[[question]]
+ask = "saca la validación del controlador y ponla en un servicio aparte"
+expect = ["strategy:refactor-move-extract"]
+request = true
+
+[[question]]
+ask = "this use case does two things, split it"
+expect = ["strategy:refactor-move-extract"]
+request = true
+
+[[question]]
+ask = "mi pantalla usa el repositorio sin pasar por la fachada"
+expect = ["strategy:refactor-architecture"]
+request = true
+
+[[question]]
+ask = "nuclear check says N0301 in three files"
+expect = ["strategy:refactor-architecture"]
+request = true
+
+[[question]]
+ask = "the email column must be unique from now on"
+expect = ["strategy:data-migration"]
+request = true
+platform = "backend"
+
+[[question]]
+ask = "agrega una relación de muchos a uno entre Order y Customer"
+expect = ["strategy:data-migration"]
+request = true
+platform = "backend"
+
+[[question]]
+ask = "usa MySQL en vez de SQLite"
+expect = ["strategy:configuration"]
+request = true
+
+[[question]]
+ask = "turn on the kafka plugin and set the brokers"
+expect = ["strategy:configuration"]
+request = true
+
+[[question]]
+ask = "ya no usamos el módulo de cupones, sácalo del proyecto"
+expect = ["strategy:remove"]
+request = true
+
+[[question]]
+ask = "delete the HelpScreen and everything that points to it"
+expect = ["strategy:remove"]
+request = true
+
+[[question]]
+ask = "error[N0222]: an async call is used without ~"
+expect = ["strategy:bug-compile"]
+request = true
+
+[[question]]
+ask = "después de mi cambio el proyecto dejó de compilar"
+expect = ["strategy:bug-compile"]
+request = true
+
+[[question]]
+ask = "2 failed, 14 passed in tests/orders_test"
+expect = ["strategy:bug-failing-test"]
+request = true
+
+[[question]]
+ask = "la prueba de cancelar pedido dejó de pasar desde ayer"
+expect = ["strategy:bug-failing-test"]
+request = true
+
+[[question]]
+ask = "al cancelar un pedido pagado debería rechazarlo pero lo acepta"
+expect = ["strategy:bug-behaviour"]
+request = true
+
+[[question]]
+ask = "the discount is applied twice, the total comes out wrong"
+expect = ["strategy:bug-behaviour"]
+request = true
+
+[[question]]
+ask = "AttributeError: 'NoneType' object has no attribute 'id' when I open /orders/3"
+expect = ["strategy:bug-runtime"]
+request = true
+
+[[question]]
+ask = "la app se cierra sola al entrar al detalle"
+expect = ["strategy:bug-runtime"]
+request = true
+platform = "mobile"
+
+[[question]]
+ask = "the price comes as null even though the API sends it"
+expect = ["strategy:bug-data-contract"]
+request = true
+
+[[question]]
+ask = "el backend ahora manda created_at y la app no lo lee"
+expect = ["strategy:bug-data-contract"]
+request = true
+
+[[question]]
+ask = "la pantalla de pedidos se queda con el spinner para siempre"
+expect = ["strategy:bug-interface"]
+request = true
+platform = "mobile"
+
+[[question]]
+ask = "tapping the save button does nothing on the profile view"
+expect = ["strategy:bug-interface"]
+request = true
+platform = "web"
+
+[[question]]
+ask = "pip install fails with a network error"
+expect = ["strategy:bug-environment"]
+request = true
+
+[[question]]
+ask = "el grafo no responde, connection refused en el 7878"
+expect = ["strategy:bug-environment"]
+request = true
+
+[[question]]
+ask = "faltan pruebas para el servicio de precios"
+expect = ["strategy:tests"]
+request = true
+
+[[question]]
+ask = "cover GetOrder with unit tests"
+expect = ["strategy:tests"]
+request = true
+
+[[question]]
+ask = "haz una auditoría de seguridad del módulo de pagos"
+expect = ["strategy:security-review"]
+request = true
+
+[[question]]
+ask = "check the payments code for vulnerabilities"
+expect = ["strategy:security-review"]
+request = true
+
+[[question]]
+ask = "escribe la documentación del componente de usuarios"
+expect = ["strategy:document"]
+request = true
+
+[[question]]
+ask = "add doc comments to every use case of billing"
+expect = ["strategy:document"]
+request = true
+
+[[question]]
+ask = "qué diferencia hay entre un servicio y un caso de uso"
+expect = ["strategy:question"]
+request = true
+
+[[question]]
+ask = "where do the tests of a component go?"
+expect = ["strategy:question"]
+request = true
+
+[[question]]
+ask = "sube la nueva versión a producción"
+expect = ["strategy:operate"]
+request = true
+
+[[question]]
+ask = "run the migrations and start the server"
+expect = ["strategy:operate"]
+request = true
+
+[[question]]
+ask = "tengo un proyecto en React, pásalo a Nuclear"
+expect = ["strategy:beyond"]
+request = true
+
+[[question]]
+ask = "translate this Dart widget to Nuclear"
+expect = ["strategy:beyond"]
+request = true
+
+[[question]]
+ask = "how do I install the local agents and the smart graph"
+expect = ["playbook:set-up-the-ai-services"]
+
+[[question]]
+ask = "que perfil de modelos elijo para mi maquina"
+expect = ["concept:ai-setup"]
+
+[[question]]
+ask = "can I use nuclear with claude code only, without ollama"
+expect = ["limit:remote-agents-only"]
+
+[[question]]
+ask = "the setup says a smart graph started by hand already answers"
+expect = ["failure:a-service-started-by-hand-holds-its-port"]

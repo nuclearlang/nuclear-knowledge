@@ -1,0 +1,481 @@
+{
+ "shelf": "platforms",
+ "origin": "generated",
+ "generator": "06-mobile-rules",
+ "about": "The mobile platform: its rules",
+ "rows": [
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#layout-and-kinds-the-folder-gives-the-kind-of-a-declaration-without-a-header-wor",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps — Layout and kinds (the folder gives the kind of a declaration without a header word)",
+   "summary": "main.nuc config.nuc config/ (appConfig) assets/i18n/<locale>/<component>.json shared/ widgets/ events/ models/ components/ guards/ converters/ screens/ components/<c>/<c>_component.nuc appcomponent: the facade, the only thing other components see components/<c>/data/ repository…",
+   "body": [
+    "```",
+    "main.nuc  config.nuc  config/ (appConfig)  assets/i18n/<locale>/<component>.json",
+    "shared/ widgets/ events/ models/ components/ guards/ converters/ screens/",
+    "components/<c>/<c>_component.nuc        appcomponent: the facade, the only thing other components see",
+    "components/<c>/data/                    repository",
+    "components/<c>/domain/models/           model (no word)",
+    "components/<c>/domain/usecases/         usecase",
+    "components/<c>/presentation/<screen>/   <screen>_screen.nuc, managers/, state_models/ (no word), forms/ (no word)",
+    "test/                                   tests (no word)",
+    "```",
+    "",
+    "Calls allowed (N0301/N0302): screen → statemanager → appcomponent → usecase → repository/service. Another",
+    "component sees only the appcomponent, models, events, guards and screens. Only views (`stateless`/`stateful`)",
+    "use `BuildContext` and navigate."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#pieces.1bb80c",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps — Pieces",
+   "summary": "state (`initial`, `orElse` optional).",
+   "body": [
+    "- Inside a screen, `Manager.method()` calls the screen's provider; `<State>Builder<Manager>` has one callback per",
+    "  state (`initial`, `orElse` optional). A `stateful` has `initState()` and fields.",
+    "- Navigation (views only): `context.goTo(Screen(...))`, `~context.pushTo(Screen())`, `context.goBack(value)`.",
+    "- Texts: `\"component.screen.key\".tr()` / `.tr({\"n\": 2})` from `assets/i18n/<locale>/<component>.json`.",
+    "- Logs: `Log.d/i/s/w/e(\"message\", data = {...})`. Popups: `DragonflyDialog(header = ..., child = ...).show(context)`,",
+    "  `Popups.toast(context, text)`.",
+    "- Session: `SessionManager` (`~session.start(auth, roles = [...])`, `session.get<Auth>()`, `~session.destroy()`).",
+    "- Events: `event Name` + fields in `shared/events/`; `Events.publish(Name(...))`; a `component` in",
+    "  `shared/components/` with `@on(Name)` on a method receives them; `EventBuilder<Name>` / `EventListener<Name>` in views.",
+    "- Access: `guard Name` + `(deps)` + `canActivate() boolean` (may use `~`) in `shared/guards/`;",
+    "  `@screen(acl = { roles: [\"fan\"], guards: [Name], forward: DeniedScreen })`; `@acl(roles = [...])` on a use case.",
+    "- Forms: a form model in `forms/` (`@required @email @minLength(n) @matches(\"field\")` on fields), a",
+    "  `@form(F) formmanager` in `managers/` (`@validate(\"field\")` = remote check), and in the view"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#pieces.5ff049",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps — Pieces",
+   "summary": "`DragonflyForm(manager = M, onSubmit = (form) => ..., child = ...)` with `FormTextField(\"field\", label = ...)` and `FormSubmit(child = ...)`.",
+   "body": [
+    "`DragonflyForm(manager = M, onSubmit = (form) => ..., child = ...)` with `FormTextField(\"field\", label = ...)`",
+    "  and `FormSubmit(child = ...)`.",
+    "- Tests (`test/`, no word): `@mock([Repo])` on a group; `@test(\"...\")`, `@states(\"...\", expect = [...])`,",
+    "  `@widget(\"...\")` on methods; `when(() => Repo.m(1)).thenReturnAsync(Ok(x))`, `expect(r, isOkWith(x))`,",
+    "  `~tester.pumpScreen(Screen())`."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#pieces.b40509",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps — Pieces",
+   "summary": "@state(CharactersState.loading) loading() @before(loading) @state(CharactersState.full) loadPage(page: int) Result<CharacterError, Character[]> ~characters.getPage(page) // screen: @screen(route, providers, loggedIn = { forward: X }, acl = {...}, shell = {...}, transition = ...) @screen(route =…",
+   "body": [
+    "@state(CharactersState.loading)",
+    "  loading()",
+    "",
+    "  @before(loading)",
+    "  @state(CharactersState.full)",
+    "  loadPage(page: int) Result<CharacterError, Character[]>",
+    "    ~characters.getPage(page)",
+    "",
+    "// screen: @screen(route, providers, loggedIn = { forward: X }, acl = {...}, shell = {...}, transition = ...)",
+    "@screen(route = \"/characters\", providers = [CharactersManager])",
+    "stateless CharacterListScreen",
+    "  build(context: BuildContext) Widget",
+    "    Scaffold(",
+    "      appBar = AppBar(title = Text(\"characters.list.title\".tr())),",
+    "      body = CharactersStateBuilder<CharactersManager>(",
+    "        loading = () => Center(child = CircularProgressIndicator()),",
+    "        full = (list) => ListView.builder(",
+    "          itemCount = list.length,",
+    "          itemBuilder = (context, i) => ListTile(",
+    "            title = Text(list[i].name),",
+    "            onTap = () => context.pushTo(CharacterDetailScreen(id = list[i].id)),",
+    "          ),",
+    "        ),",
+    "        error = (e) => Center(child = Text(e.message)),",
+    "      ),",
+    "    )",
+    "```"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#pieces.c401dd",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps — Pieces",
+   "summary": "// model (domain/models/): only fields; fromJson/toJson/== are generated.",
+   "body": [
+    "```nuclear",
+    "// model (domain/models/): only fields; fromJson/toJson/== are generated. @key(\"json_name\"), @DateConverter",
+    "Character",
+    "  id: int",
+    "  name: string",
+    "  status: string",
+    "",
+    "// repository (data/): each method is an HTTP call; :id goes to the path, other params to the query/body",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<CharacterError, Character>",
+    "",
+    "  @get(cache = true, ttl = Duration(minutes = 10))",
+    "  getPage(page: int, name: string = \"\") Result<CharacterError, Page<Character>>",
+    "",
+    "// usecase (domain/usecases/): one method exec, returns Result; dependencies in the constructor line",
+    "usecase GetPageUseCase",
+    "  (repository: CharacterRepository)",
+    "",
+    "  @requires(internet = true)",
+    "  exec(page: int) Result<CharacterError, Character[]>",
+    "    data = ~repository.getPage(page)",
+    "    Ok(data.results)",
+    "",
+    "// appcomponent (<c>_component.nuc): aliases to the use cases",
+    "appcomponent CharactersComponent",
+    "  getPage() = GetPageUseCase.exec",
+    "",
+    "// state model (state_models/): each field is a state of the screen; a boolean is a state without data",
+    "CharactersState",
+    "  (full: Character[], error: CharacterError, loading: boolean)",
+    "",
+    "// statemanager (managers/): @state(M.x) emits that state with the value; an Err emits `error`",
+    "@stateModel(CharactersState)",
+    "statemanager CharactersManager",
+    "  (characters: CharactersComponent)",
+    "    loadPage(1)"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#platform-mobile-brief-dragonfly-apps",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps",
+   "summary": "A Dragonfly app has only `.nuc` files and `assets/`; the app is generated in `build/app` (never edit it).",
+   "body": [
+    "A Dragonfly app has only `.nuc` files and `assets/`; the app is generated in `build/app` (never edit it). You write",
+    "the business logic; the framework writes the rest (DI, routing, JSON, states, tests). The views use the UI toolkit's",
+    "classes from the type definitions (`Text`, `Scaffold`, `Icons.add`), with `name = value` arguments."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#plugins-and-genkit",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps — Plugins and Genkit",
+   "summary": "`config.nuc` enables the optional parts: `plugins(genkit = true, googleAI = true)` (also `firebaseAI`, `vertexAI`, `openAI`, `anthropic`); a kind or class of a plugin not enabled is N0304. With `genkit`: the provider among the connections (`GoogleAI(model = \"gemini-flash-latest\")`, `OpenAI(model =…",
+   "body": [
+    "`config.nuc` enables the optional parts: `plugins(genkit = true, googleAI = true)` (also `firebaseAI`, `vertexAI`,",
+    "`openAI`, `anthropic`); a kind or class of a plugin not enabled is N0304. With `genkit`: the provider among the",
+    "connections (`GoogleAI(model = \"gemini-flash-latest\")`, `OpenAI(model = \"...\", baseUrl = \"http://localhost:11434/v1\")`)",
+    "and the kinds `tools Name` (methods with a doc comment), `chat Name(tools: T)` + `prompt` (`~chat.send(text)`,",
+    "`ChatController(chat)` for a screen), `flow Name` + `run(input: I) O` (`~generateObject<Model>(prompt)`),",
+    "`remote` (`@remote(url)`, `@flow(\"path\")`/`@stream(\"path\")`), `knowledge Name` + `documents() string[]`",
+    "(`~kb.search(q)`). Tests: `startFakeGenkit([\"answer\"])`. `nuclear help <kind> --platform mobile`."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/brief/mobile.md#work-cycle",
+   "type": "spec",
+   "title": "Platform `mobile` brief: Dragonfly apps — Work cycle",
+   "summary": "1. Skeleton first: `dragonfly make component|screen|usecase|repository|model|event|guard|widget|page|test ...` (`dragonfly help`).",
+   "body": [
+    "1. Skeleton first: `dragonfly make component|screen|usecase|repository|model|event|guard|widget|page|test ...`",
+    "   (`dragonfly help`). It puts each file in its folder with its kind.",
+    "2. Write following this sheet. Unsure about an API: `nuclear defs show <Name> --platform mobile`; a topic:",
+    "   `nuclear help mobile`; where each file goes: `nuclear help layout --platform mobile`. Never guess a constructor",
+    "   or an argument.",
+    "3. `dragonfly check --json` until `[]`, then `dragonfly test`."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/brief/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#1-project.6f7724",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — 1. Project",
+   "summary": "A backend written in Nuclear is consumed through its contract: `contracts(tasks_api = \"../tasks_api\")` in `config.nuc` generates `contracts/tasks_api/` (models with their rules and key, one repository per controller) at every build (projects.md §1.2, ADR-0098; example…",
+   "body": [
+    "A backend written in Nuclear is consumed through its contract: `contracts(tasks_api = \"../tasks_api\")` in",
+    "`config.nuc` generates `contracts/tasks_api/` (models with their rules and key, one repository per controller) at",
+    "every build ([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §1.2, ADR-0098; example `examples/examples-flutter-dialect/tasks_app`).",
+    "",
+    "Rules of the platform: §3; architecture (who uses whom, what a component shows): §4; kinds by folder: [flutter.md](flutter.md) §3."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#1-project.dcbb23",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — 1. Project",
+   "summary": "my_store/ ├── config.nuc dragonfly(...), app(...), plugins(...), dependencies(...) ├── main.nuc main() + the App widget ├── config/project_config.nuc appConfig: the connections of the app ├── components/<name>/ appcomponent, config/, data/, domain/, presentation/, ai/ ├── shared/ widgets, events,…",
+   "body": [
+    "```",
+    "my_store/",
+    "├── config.nuc                         dragonfly(...), app(...), plugins(...), dependencies(...)",
+    "├── main.nuc                           main() + the App widget",
+    "├── config/project_config.nuc          appConfig: the connections of the app",
+    "├── components/<name>/                 appcomponent, config/, data/, domain/, presentation/, ai/",
+    "├── shared/                            widgets, events, guards, screens, components shared by the app",
+    "├── assets/                            by convention (images, fonts, translations)",
+    "└── test/*_test.nuc                    tests; integration_test/ on a device",
+    "```",
+    "",
+    "`config.nuc` is the only manifest ([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §1; [flutter.md](flutter.md) §3.1): the platform and",
+    "dialect, the app, the plugins and the third-party packages. The CLI (`dragonfly`, [flutter.md](flutter.md) §11)",
+    "creates, builds, runs and tests the project; `build/` is the dialect's app, never edited.",
+    "",
+    "```nuclear",
+    "dragonfly(platform = \"mobile\", dialect = \"flutter\")",
+    "app(name = \"my_store\", description = \"A Dragonfly app.\", version = \"1.0.0+1\")",
+    "plugins(genkit = true, googleAI = true)",
+    "```"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#2-kinds",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — 2. Kinds",
+   "summary": "2. Kinds",
+   "body": [
+    "| Area | Kinds and decorators | Rules |",
+    "|---|---|---|",
+    "| Widgets | `stateless`, `stateful`, `widget` (shared) | [flutter.md](flutter.md) §5 |",
+    "| Configuration | `appConfig`, `config`; connections `Http(baseUrl, ...)`, `WebSocket`, `Database`, `Storage`, the AI providers | §6.1 |",
+    "| Data | models (`@key`, converters, `@primary` → a local table), `repository` with `@get`/`@post`... (http calls, mapping, cache; `saveLocal` and `<method>AsLocal()`; local queries as a backend repository) | §6.2, §6.3 |",
+    "| Domain | `usecase`, `appcomponent`, `service`, `aggregate` | §6.4–6.6 |",
+    "| State | state models, `statemanager` (`@on`, `emit`) | §6.7, §6.8 |",
+    "| Screens | `@screen(route, ...)`, routes, transitions, `navigate` | §6.9 |",
+    "| Events | `event`, global events, `component` with `@on(Event)` | §6.10, §6.11 |",
+    "| Session and access | `Session`, ACL, `guard` with `canActivate` | §6.12, §6.13 |",
+    "| Forms and dialogs | `form`, `formmanager`, dialogs and popups | §6.14, §6.15 |",
+    "| Translations and logs | `translations`, `Log` | §6.16, §6.17 |",
+    "| Platform services | `@splash`, offline, network, devices | §6.18, §6.19 |",
+    "| AI (plugin `genkit`) | `tools`, `chat`, `flow`, `remote`, `knowledge`; providers `FirebaseAI`, `GoogleAI`, `VertexAI`, `OpenAI`, `Anthropic` | §6.20 |",
+    "| Tests | `tests` with `@test`, `@widget`, `@states`, `@mock`; `integration` | §8 |"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#2-kinds-generators.31cf44",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — Generators",
+   "summary": "`dragonfly gen resource <component> <Name>` writes the finished, compiling code of a resource (ADR-0103): its models (nested objects become models named `<Name><Key>`; a paged answer gives `<Name>Page`), the repository (an HTTP repository over the app's `Http` connection, a named one added when…",
+   "body": [
+    "`dragonfly gen resource <component> <Name>` writes the finished, compiling code of a resource (ADR-0103): its models",
+    "(nested objects become models named `<Name><Key>`; a paged answer gives `<Name>Page`), the repository (an HTTP repository over the app's `Http` connection, a named one added when the app has another), one use",
+    "case per action (`--actions list,get,search,create,update,delete`), their aliases in the facade, with `--screen <screen>` a screen that lists it with its state manager and state model, and a test with the repository mocked. The fields",
+    "come from an example answer (`--from-json <file|url>`), a spec (`--from-spec <spec.md>`: its example answer, else its",
+    "`Key | Type` table; a `GET https://...` line gives the API) or `--fields \"id:int name:string\"`. A file that exists is",
+    "never overwritten (the facade and the repository get only the members they lack, so an action added to a resource that exists is finished); a name another file declares stops it before it writes.",
+    "`dragonfly gen inspect` answers what the project has. The agent writes only what is not standard: a use case with",
+    "its own rules, a view's details."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#2-kinds-generators.4bd3c4",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — Generators",
+   "summary": "`dragonfly gen usecase <component> <Name>` adds the alias of a use case the project declares to its component's facade; with `--calls <Repository>.<method>` it writes the use case too, when all it does is call that method of a repository.",
+   "body": [
+    "`dragonfly gen usecase <component> <Name>` adds the alias of a use case the project declares to its component's",
+    "facade; with `--calls <Repository>.<method>` it writes the use case too, when all it does is call that method of a",
+    "repository. What a screen shows of it (a state manager's method and its state) is written by hand.",
+    "",
+    "```sh",
+    "dragonfly gen resource characters Character --from-json https://rickandmortyapi.com/api/character",
+    "dragonfly gen usecase characters CharacterEpisodes --calls CharacterRepository.episodes   # a method the repository declares",
+    "```"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#2-kinds-plugins",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — Plugins",
+   "summary": "`genkit` and its providers `firebaseAI`, `googleAI`, `vertexAI`, `openAI`, `anthropic` (flutter.md §6.20, projects.md §3.3).",
+   "body": [
+    "`genkit` and its providers `firebaseAI`, `googleAI`, `vertexAI`, `openAI`, `anthropic` ([flutter.md](flutter.md)",
+    "§6.20, [projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §3.3)."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#3-rules.1be26e",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — 3. Rules",
+   "summary": "the same on every platform the toolkit builds for (phones, desktops, web); `@repository(saveLocal = true)` keeps what its GET methods answer and gives each one a `<method>AsLocal()` twin; the queries (`where`, `orderBy`, `limit`, `offset`, `getOne`, `getMany`, `paginate` → `Page<T>`, `count`,…",
+   "body": [
+    "the same on every platform the toolkit builds for (phones, desktops, web); `@repository(saveLocal = true)` keeps what",
+    "   its GET methods answer and gives each one a `<method>AsLocal()` twin; the queries (`where`, `orderBy`, `limit`,",
+    "   `offset`, `getOne`, `getMany`, `paginate` → `Page<T>`, `count`, `exists`, `update`, `delete`) are the backend's. The Nuclear never names",
+    "   the storage engine."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#3-rules.bb0665",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — 3. Rules",
+   "summary": "1. Golden rule: performance, speed and readability of the syntax.",
+   "body": [
+    "1. **Golden rule:** performance, speed and readability of the syntax.",
+    "2. **Only the business logic in Nuclear.** Constructors, overrides, registration in the injector, JSON",
+    "   serialization, http calls, state handling and imports are written by the transpiler.",
+    "3. **Light clean architecture:** data, domain and presentation layers, plus what is shared. The layers exist in the",
+    "   generated code; in Nuclear you do not write interfaces nor classes that only pass data around.",
+    "4. **Closed components:** a business component is used from another only through its `appcomponent` (facade). The",
+    "   transpiler checks it (§4).",
+    "5. **The platform's runtime and the official ecosystem of the dialect:** what the UI toolkit lacks (http connections",
+    "   with cache and retries, session, events, network, ACL, the local database) comes from the dialect's runtime package; the rest from the",
+    "   libraries the dialect names ([flutter.md](flutter.md) §1).",
+    "6. **The local database is the backend's ORM on the device** (ADR-0096): a model with `@primary` (`@primary(generated = true)`,",
+    "   `@created`, `@updated` as in a backend entity; `@entity(\"table\")` names the table) has a table, encrypted unless the",
+    "   project's or the component's config says otherwise (`local: LocalDatabase = LocalDatabase(encrypted = false)`),"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#4-architecture",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — 4. Architecture",
+   "summary": "4. Architecture",
+   "body": [
+    "| Rule | Code |",
+    "|---|---|",
+    "| A `usecase` is only used from an `appcomponent` | `N0301` |",
+    "| A `service` is only used from a `usecase` or an `aggregate` | `N0301` |",
+    "| An `aggregate` is only used from a `usecase` | `N0301` |",
+    "| A `repository` is only used from a `usecase` or an `aggregate` | `N0301` |",
+    "| From another component (or from `shared/`, `config/` and `main.nuc`) only the `appcomponent`, the models (`model`), the converters (`converter`), the events (`event`), the global components (`component`), the guards (`guard`) and the screens (`@screen`) are visible | `N0302` |",
+    "| The UI toolkit's context and router belong to the views: only a `stateless` or a `stateful` uses them (the names: [flutter.md](flutter.md) §4) | `N0301` |",
+    "| Tests (`tests`, `integration`) may use any declaration | — |"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#5-what-the-dialect-decides",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly — 5. What the dialect decides",
+   "summary": "Only how it is written: the language, the UI toolkit, the packages, the generated app and how to run it.",
+   "body": [
+    "Only how it is written: the language, the UI toolkit, the packages, the generated app and how to run it. The",
+    "rules of [flutter.md](flutter.md) §3 (project structure), §6 (the kinds) and §8 (tests) are the platform's too,",
+    "written next to their Flutter output; when a second mobile dialect exists, their Nuclear moves here and",
+    "`flutter.md` keeps the equivalences (ADR-0093 §6)."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-mobile/spec/mobile.md#the-mobile-platform-of-dragonfly",
+   "type": "spec",
+   "title": "The `mobile` platform of Dragonfly",
+   "summary": "The `mobile` platform of Dragonfly",
+   "body": [
+    "> Inherits every rule of [nuclear-base.md](https://github.com/nuclearlang/nuclear/blob/main/spec/nuclear-base.md) and the standard library ([library.md](https://github.com/nuclearlang/nuclear/blob/main/spec/library.md)).",
+    "> This document defines the mobile platform (ADR-0093): apps for Android, iOS, desktop and web through one UI",
+    "> toolkit, written in Nuclear only. Today its only dialect is `flutter` ([flutter.md](flutter.md)), whose spec",
+    "> holds both the platform's rules and how Flutter writes them; this document is the platform's index. A project's",
+    "> Nuclear never changes between the dialects of the platform; only a use of a dialect's type definitions (a",
+    "> Flutter widget, a pub.dev package) ties code to that dialect."
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/spec/mobile.md"
+   ]
+  }
+ ]
+}

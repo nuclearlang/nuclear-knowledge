@@ -1,8 +1,0 @@
-// The models of the local agents, both on Ollama: a small coder model writes the code, a small general model
-// plans and reviews. Neither may be larger than 3B parameters of effective size (the user's rule).
-// Their context window is CONTEXT_TOKENS (8192 by default; the editor passes its nuclear.ai.contextTokens).
-appConfig ProjectConfig
-  connections: Connection[] = [
-    Ollama(model = env("CODER_MODEL", "qwen2.5-coder:3b"), name = "coder", baseUrl = env("OLLAMA_URL", "http://localhost:11434"), numCtx = env("CONTEXT_TOKENS", "8192").toInt() ?? 8192),
-    Ollama(model = env("ASSISTANT_MODEL", "gemma4:e2b"), baseUrl = env("OLLAMA_URL", "http://localhost:11434"), numCtx = env("CONTEXT_TOKENS", "8192").toInt() ?? 8192),
-  ]

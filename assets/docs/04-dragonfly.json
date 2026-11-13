@@ -1,0 +1,1914 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "04-dragonfly",
+ "about": "Dragonfly: the framework, its kinds, the tutorial",
+ "rows": [
+  {
+   "id": "doc:dragonfly/AGENTS.md#agents-md-dragonfly",
+   "type": "readme",
+   "title": "AGENTS.md — dragonfly",
+   "summary": "Dragonfly, the framework of NuclearLang: the `dragonfly` CLI (new projects, generators, build, run, test, migrate, devices, the editor workspace) and the philosophy shared by its three platforms, mobile, backend and web.",
+   "body": [
+    "Dragonfly, the framework of NuclearLang: the `dragonfly` CLI (new projects, generators, build, run, test, migrate, devices, the editor workspace) and the philosophy shared by its three platforms, mobile, backend and web. Each platform is its own repository: [dragonfly-mobile](https://github.com/nuclearlang/dragonfly-mobile), [dragonfly-backend](https://github.com/nuclearlang/dragonfly-backend), [dragonfly-web](https://github.com/nuclearlang/dragonfly-web).",
+    "",
+    "This repository is a folder of the NuclearLang working tree (`nuclear/dragonfly`); the platform's rules are the",
+    "working tree's `../AGENTS.md` ([nuclear](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md)) and its state is `../STATUS.md`.",
+    "",
+    "- Context of this repository: [docs/context/cli/CONTEXT.md](docs/context/cli/CONTEXT.md).",
+    "- What is inside: `dragonfly/` (the CLI crate), `docs/dragonfly/` (the guide, the tutorial, kinds), `docs/context/` (the context for agents and contributors: `dragonfly/` the platforms, `cli/` the CLI).",
+    "- Checks:",
+    "",
+    "```sh",
+    "cargo test && cargo clippy --all-targets      # here (its own Cargo workspace)",
+    "(cd .. && ./install.sh --no-vscode)            # the installed dragonfly and its help",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/AGENTS.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to dragonfly are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to dragonfly are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "sources": [
+    "dragonfly/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/CHANGELOG.md#unreleased",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- `dragonfly gen inspect|component|resource` (ADR-0103): a resource's finished code from `--fields`, `--from-json` or `--from-spec`, for the three platforms.",
+    "- `dragonfly gen usecase <component> <Name> [--calls <Repository>.<method>] [--route \"POST orders/{id}/cancel\"]` (ADR-0103): a use case wired into its component (its alias in the facade; backend: its route in the controller of the route's prefix), its signature read from the project; with `--calls` the use case is written too. A `merge` piece adds whole members (a route keeps its decorator and its body), and a name another file declares also stops a new `merge` file.",
+    "- `docs/dragonfly/generators.md`: the generators' guide (every option, what each platform gets, a use case written and wired step by step, the refusals, the MCP tool of each command, what is not generated yet).",
+    "- `dragonfly gen resource` on a resource that exists finishes what it adds: a new action also gets the repository's method and the controller's route (it left a use case calling a method nobody had). `--source db --actions search` is refused: which column is searched is a decision (a query of the repository, wired with `gen usecase --calls`). ADR-0105."
+   ],
+   "sources": [
+    "dragonfly/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/CONTRIBUTING.md#before-a-pull-request",
+   "type": "readme",
+   "title": "Contributing to dragonfly — Before a pull request",
+   "summary": "cargo test && cargo clippy --all-targets # here (its own Cargo workspace) (cd .. && ./install.sh --no-vscode) # the installed dragonfly and its help the area, the guide, `docs/context/` for agents and contributors).",
+   "body": [
+    "```sh",
+    "cargo test && cargo clippy --all-targets      # here (its own Cargo workspace)",
+    "(cd .. && ./install.sh --no-vscode)            # the installed dragonfly and its help",
+    "```",
+    "",
+    "- Everything is written in English: code, comments, docs and messages.",
+    "- A change that the user of NuclearLang can see updates its documentation in the same pull request (the spec of",
+    "  the area, the guide, `docs/context/` for agents and contributors).",
+    "- Rules and the reasons behind them: the [nuclear repository's AGENTS.md](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md) and its",
+    "  [decision records](https://github.com/nuclearlang/nuclear/tree/main/docs/adr).",
+    "",
+    "By contributing you agree that your contribution is licensed under the [Apache License 2.0](LICENSE)."
+   ],
+   "sources": [
+    "dragonfly/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/CONTRIBUTING.md#contributing-to-dragonfly",
+   "type": "readme",
+   "title": "Contributing to dragonfly",
+   "summary": "Thank you for helping.",
+   "body": [
+    "Thank you for helping. This repository is part of [NuclearLang](https://github.com/nuclearlang): the language is the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository, and the other repositories live as folders inside a clone of it, each with its",
+    "own git (the tools find each other that way)."
+   ],
+   "sources": [
+    "dragonfly/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/CONTRIBUTING.md#set-up",
+   "type": "readme",
+   "title": "Contributing to dragonfly — Set up",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear git clone https://github.com/nuclearlang/dragonfly ./install.sh",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "git clone https://github.com/nuclearlang/dragonfly",
+    "./install.sh",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/README.md#diagnosis-and-flutter",
+   "type": "readme",
+   "title": "dragonfly (CLI) — Diagnosis and Flutter",
+   "summary": "`nuclear`, the flutter dialect and its type definitions, the dragonfly Dart package, Flutter (where it is and whether it is missing from the PATH), VS Code with the NuclearLang, Dart and Flutter extensions, and the current project.",
+   "body": [
+    "- `dragonfly doctor`: checks what NuclearLang and Dragonfly need (like `flutter doctor`): `dragonfly` and",
+    "  `nuclear`, the flutter dialect and its type definitions, the dragonfly Dart package, Flutter (where it is and",
+    "  whether it is missing from the PATH), VS Code with the NuclearLang, Dart and Flutter extensions, and the",
+    "  current project. Each problem comes with how to solve it. Flutter's own (Android, iOS, devices):",
+    "  `dragonfly flutter doctor`.",
+    "- `dragonfly setup`: installs Flutter following the official guide, asking before each step: system packages",
+    "  (apt, dnf, pacman, zypper or Apple's tools), the latest stable version checked with its sha256, unpacking into",
+    "  `~/develop` (`--dir` chooses another folder) and your shell's PATH."
+   ],
+   "sources": [
+    "dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/README.md#dragonfly-cli",
+   "type": "readme",
+   "title": "dragonfly (CLI)",
+   "summary": "Creates and works with Flutter apps written in NuclearLang: only `.nuc` files; the Flutter app is generated in `build/app`.",
+   "body": [
+    "Creates and works with Flutter apps written in NuclearLang: only `.nuc` files; the Flutter app is generated in",
+    "`build/app`. Full rules: [spec/flutter.md §11](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md) (`nuclear help flutter`).",
+    "",
+    "**Start with the tutorial:** [docs/dragonfly/tutorial.md](docs/dragonfly/tutorial.md) (`nuclear help",
+    "tutorial`): an app from scratch with a component, a repository, a screen and tests."
+   ],
+   "sources": [
+    "dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/README.md#install",
+   "type": "readme",
+   "title": "dragonfly (CLI) — Install",
+   "summary": "cd <NuclearLang repository> ./install.sh # nuclear and dragonfly in ~/.local/bin + the VS Code extension dragonfly doctor # checks everything is there: CLIs, dialect, dragonfly package, Flutter, VS Code dragonfly setup # if Flutter is missing: installs it step by step (system packages, SDK, PATH)…",
+   "body": [
+    "```sh",
+    "cd <NuclearLang repository>",
+    "./install.sh                 # nuclear and dragonfly in ~/.local/bin + the VS Code extension",
+    "dragonfly doctor             # checks everything is there: CLIs, dialect, dragonfly package, Flutter, VS Code",
+    "dragonfly setup              # if Flutter is missing: installs it step by step (system packages, SDK, PATH)",
+    "```",
+    "",
+    "`./install.sh --uninstall` removes it. Flutter is found by itself (PATH, fvm, `~/development/flutter`...);",
+    "`FLUTTER` or `FLUTTER_ROOT` choose another one."
+   ],
+   "sources": [
+    "dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/README.md#landing-page-and-credits",
+   "type": "readme",
+   "title": "dragonfly (CLI) — Landing page and credits",
+   "summary": "dragonfly arrives) and the page with the logos; afterwards, only the page.",
+   "body": [
+    "- `dragonfly` alone: the first time, an animation (the explosion, WELCOME, everything grows back and the",
+    "  dragonfly arrives) and the page with the logos; afterwards, only the page.",
+    "- `dragonfly credits` (or `author`): always the full animation, with the author and the repository.",
+    "- After WELCOME the motto appears: \"Before, everything was chaos; now everything is simpler with Dragonfly\" (in",
+    "  Spanish if your system is in Spanish).",
+    "- Every other command starts with a header with the NuclearLang and Dragonfly logos, and its messages are in",
+    "  colors: green = done, red = error, yellow = warning, blue = commands you can type.",
+    "- `dragonfly help` (or `-h`): the header and the commands with their symbols and colors. Through a pipe, or with",
+    "  `NO_COLOR`, everything comes out as plain text."
+   ],
+   "sources": [
+    "dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/README.md#use",
+   "type": "readme",
+   "title": "dragonfly (CLI) — Use",
+   "summary": "dragonfly # landing page dragonfly new shop_app # only .nuc + the Flutter app in build/app cd shop_app dragonfly code # VS Code: ▷ on a .nuc or F5 runs the app; saving a .nuc reloads it dragonfly g c products # component dragonfly gen resource characters Character --from-json…",
+   "body": [
+    "```sh",
+    "dragonfly                         # landing page",
+    "dragonfly new shop_app            # only .nuc + the Flutter app in build/app",
+    "cd shop_app",
+    "dragonfly code                    # VS Code: ▷ on a .nuc or F5 runs the app; saving a .nuc reloads it",
+    "dragonfly g c products            # component",
+    "dragonfly gen resource characters Character --from-json https://rickandmortyapi.com/api/character  # finished code from an API",
+    "dragonfly gen usecase characters CharacterEpisodes --calls CharacterRepository.episodes   # a use case over a repository method, wired",
+    "dragonfly g s products detail --route /detail -m DetailManager -st DetailView",
+    "dragonfly test",
+    "dragonfly help                    # every command",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#dragonfly-platforms-dialects-and-the-philosophy",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy",
+   "summary": "The `dragonfly` repository (ADR-0083, plan 006), with the `dragonfly` CLI (cli).",
+   "body": "The `dragonfly` repository (ADR-0083, plan 006), with the `dragonfly` CLI ([cli](../cli/CONTEXT.md)).",
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#proposals-and-open-questions",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy — Proposals and open questions",
+   "summary": "Dragonfly items waiting for the user (design, ⟨proposals⟩) are in `STATUS.md` (\"Pending: Dragonfly\").",
+   "body": [
+    "Dragonfly items waiting for the user (design, ⟨proposals⟩) are in `STATUS.md` (\"Pending: Dragonfly\").",
+    "A ⟨proposal⟩ is something Claude decided that waits for the user's review; once decided it becomes a rule and",
+    "an ADR."
+   ],
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#rules-every-platform-and-dialect-follows.50e652",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy — Rules every platform and dialect follows",
+   "summary": "8. Warn when something breaks the architecture or brings security or performance problems (dragonfly-mobile/security.md).",
+   "body": [
+    "8. **Warn** when something breaks the architecture or brings security or performance problems",
+    "   ([dragonfly-mobile/security.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/docs/context/dragonfly-mobile/security.md)).",
+    "9. **Commands per platform** in the CLI: `dragonfly <command>` reads `dragonfly(...)` (ADR-0067, 0072). The CLI knows",
+    "   no language; what it needs is declared by the dialect (`[toolchain]`, planned: today `\"flutter\"` is hard-coded).",
+    "10. Golden rule for every kind, decorator or shortcut (ADR-0038).",
+    "11. **A conformance test per platform:** one example built from the same `.nuc` with every dialect of the",
+    "    platform (ADR-0093 §9).",
+    "12. **Kinds are the libraries** (ADR-0095): native kinds in the platform contract (`dialects/<platform>/platform.toml`);",
+    "    extension kinds as packages (`kinds/<name>/`, `spec/dialects.md` §7: `nuclear kind new`, `dragonfly add`,",
+    "    `plugins(name = true)` in `config.nuc`, N0306 without an implementation for the dialect), made of TOML,",
+    "    templates, a runtime and docs only, never of compiler code. A package belongs to one platform; one implemented",
+    "    for some of its dialects ties the project to them. The loader exposes each kind's source",
+    "    (`Dialect.kind_sources`: language, platform, package with version and dialects); the editor must list only the"
+   ],
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#rules-every-platform-and-dialect-follows.859cd8",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy — Rules every platform and dialect follows",
+   "summary": "1. Light clean architecture.",
+   "body": [
+    "1. **Light clean architecture.** Components with layers (`config`, `data`, `domain`, and the platform's entry",
+    "   layer: `presentation` in mobile, `api` in backend) and a facade (`appcomponent`); the layers exist in the",
+    "   generated code, not as ceremony in Nuclear (ADR-0039, 0042).",
+    "2. **Closed components.** From another component only its public kinds are visible (facade, models, events,",
+    "   global components, guards, screens); the transpiler checks it (N0302). Who-calls-whom rules (N0301): a use",
+    "   case only from the facade; a service only from a use case or an aggregate (ADR-0046).",
+    "3. **Injection by header.** A typed parameter in a kind's header is injected (ADR-0043).",
+    "4. **Errors as values.** Use cases return `Result<E, T>` (ADR-0036, 0047); the runtime's errors carry an HTTP",
+    "   status in backend.",
+    "5. **Only `.nuc` in the project**; everything generated goes to `build/` and is never edited (ADR-0045, 0050).",
+    "6. **Only third-party packages and plugins** in `config.nuc`; the framework's packages are added automatically",
+    "   (ADR-0069, ADR-0092: a plugin's packages only when it is enabled).",
+    "7. **The same concepts in every platform, implemented natively:** events on demand, session, ACL with guards,",
+    "   forms, translations, logs by component (ADR-0052–0060, 0078); connections declared in `config/`."
+   ],
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#rules-every-platform-and-dialect-follows.964501",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy — Rules every platform and dialect follows",
+   "summary": "project's platform kinds and show the source (pending in the LSP).",
+   "body": "project's platform kinds and show the source (pending in the LSP). User guide: `docs/dragonfly/kinds.md`.",
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#what-it-is.0a0b83",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy — What it is",
+   "summary": "A project declares both in `config.nuc`: `dragonfly(platform = \"backend\", dialect = \"fastapi\")`; the CLI creates it with `dragonfly new -p backend -d fastapi <name>`.",
+   "body": [
+    "A project declares both in `config.nuc`: `dragonfly(platform = \"backend\", dialect = \"fastapi\")`; the CLI creates it",
+    "with `dragonfly new -p backend -d fastapi <name>`. Folders: `dialects/<platform>/platform.toml` (the contract: kinds,",
+    "decorators, plugins, folders, editor docs) and `dialects/<platform>/<dialect>/` (the implementation, which names",
+    "its platform in `[dialect]`); the loader refuses a dialect that misses part of its platform. The language dialects",
+    "`typescript`, `dart`, `python` (`dialects/<name>/`) are the layer every dialect extends. Today's folders",
+    "(`dialects/mobile/flutter`, `dialects/backend/fastapi`, `dialects/backend/nestjs`) move in phase B1 (`STATUS.md`)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#what-it-is.784024",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy — What it is",
+   "summary": "Dragonfly is the framework of NuclearLang: in Nuclear only the business logic; constructors, overrides, injection, JSON, http, states, modules and imports are written by the transpiler (ADR-0041).",
+   "body": [
+    "Dragonfly is the framework of NuclearLang: in Nuclear only the business logic; constructors, overrides,",
+    "injection, JSON, http, states, modules and imports are written by the transpiler (ADR-0041). It has **three",
+    "platforms** (ADR-0093), each a specification written in Nuclear only, and **dialects** grouped under them:",
+    "",
+    "| Platform | What it is | Spec | Dialects (language + framework) |",
+    "|---|---|---|---|",
+    "| `mobile` | apps for Android, iOS, desktop and web through one UI toolkit | `spec/mobile.md` | `flutter` (Dart) · planned: `react-native`, `kotlin-multiplatform` |",
+    "| `backend` | HTTP APIs, data, events and AI agents | `spec/backend.md` | `fastapi` (Python) · `nestjs` (TypeScript) · planned: `express`, Dragonfly's own in Rust |",
+    "| `web` | web apps | — (to do) | planned: `react`, `vue`, `angular` |",
+    "",
+    "**The platform is what the user and the agent write.** Its kinds, decorators, folders, `config.nuc`, plugins,",
+    "tests and the standard library (`spec/library.md`, ADR-0094) are the same for every dialect of the platform; the",
+    "Nuclear code of a project never changes when its dialect changes. The one exception is a dialect's type",
+    "definitions (`numpy` only in Python): allowed, and it ties that code to that dialect. Kinds differ between",
+    "platforms (`stateless` is mobile, `controller` is backend), never between the dialects of one platform."
+   ],
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/dragonfly/CONTEXT.md#where-the-platforms-live",
+   "type": "context",
+   "title": "Dragonfly — platforms, dialects and the philosophy — Where the platforms live",
+   "summary": "dragonfly-mobile · dragonfly-backend · dragonfly-web (ADR-0097: the mobile platform in a browser, dialect `react`).",
+   "body": [
+    "[dragonfly-mobile](https://github.com/nuclearlang/dragonfly-mobile/blob/main/docs/context/dragonfly-mobile/CONTEXT.md) · [dragonfly-backend](https://github.com/nuclearlang/dragonfly-backend/blob/main/docs/context/dragonfly-backend/CONTEXT.md) ·",
+    "[dragonfly-web](https://github.com/nuclearlang/dragonfly-web/blob/main/docs/context/dragonfly-web/CONTEXT.md) (ADR-0097: the mobile platform in a browser, dialect `react`). The `[toolchain]` section and dialects installable from a repository:",
+    "`specs/002-dialects-with-agents/plan.md` D5–D6."
+   ],
+   "sources": [
+    "dragonfly/docs/context/dragonfly/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#contracts-one-backend-its-apps-generated",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform — Contracts: one backend, its apps generated",
+   "summary": "A backend's build publishes what it exposes (`.nuclear/contract.json`, plus OpenAPI); an app declares it (`contracts(tasks_api = \"../tasks_api\")` or a url) and its models and repositories are generated at build time, rules and keys included; a renamed field breaks the app's build instead of the…",
+   "body": [
+    "A backend's build publishes what it exposes (`.nuclear/contract.json`, plus OpenAPI); an app declares it",
+    "(`contracts(tasks_api = \"../tasks_api\")` or a url) and its models and repositories are generated at build time, rules",
+    "and keys included; a renamed field breaks the app's build instead of the phone (ADR-0098). Guide:",
+    "[Contracts](https://github.com/nuclearlang/dragonfly-backend/blob/main/docs/dragonfly/contracts.md)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#dragonfly-three-platforms-one-code-per-platform.267dfc",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform",
+   "summary": "The platforms share the same architecture, so moving from one to another means learning its kinds, not a new way to think:",
+   "body": [
+    "| `backend` | `nestjs` (TypeScript) | NestJS 12, Sequelize, class-validator, LangChain.js, LangGraph.js | [NestJS](https://github.com/nuclearlang/dragonfly-backend/blob/main/docs/dragonfly/nestjs.md) | [backend.md](https://github.com/nuclearlang/dragonfly-backend/blob/main/spec/backend.md), [nestjs.md](https://github.com/nuclearlang/dragonfly-backend/blob/main/spec/nestjs.md) |",
+    "| `web` | `react` (TypeScript) | React 19 (no JSX), React Router 7, Vite, Vitest | [React](https://github.com/nuclearlang/dragonfly-web/blob/main/docs/dragonfly/react.md) | [web.md](https://github.com/nuclearlang/dragonfly-web/blob/main/spec/web.md), [react.md](https://github.com/nuclearlang/dragonfly-web/blob/main/spec/react.md) |",
+    "",
+    "The platforms share the same architecture, so moving from one to another means learning its kinds, not a new",
+    "way to think:"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#dragonfly-three-platforms-one-code-per-platform.585d80",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform",
+   "summary": "Dragonfly is the framework of NuclearLang.",
+   "body": [
+    "Dragonfly is the framework of NuclearLang. You write a **platform** — `mobile`, `backend` or `web` — in Nuclear:",
+    "entities, use cases, screens, endpoints, agents. A **dialect** is the language and framework it comes out in, and",
+    "the Nuclear code of a project never changes when its dialect changes: a backend written once builds as a Python",
+    "service or as a TypeScript service from the same files. Only a use of a dialect's type definitions (`numpy` exists",
+    "in Python only) ties code to one dialect."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#dragonfly-three-platforms-one-code-per-platform.d2c856",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform",
+   "summary": "use cases) and its entry points (`presentation/` in Flutter, `api/` in the backends, `ai/` for agents).",
+   "body": [
+    "- **Components** by feature (`components/tasks/`), each with `data/` (entities, repositories), `domain/` (models,",
+    "  use cases) and its entry points (`presentation/` in Flutter, `api/` in the backends, `ai/` for agents).",
+    "- **Kinds** say what a declaration is: `usecase`, `repository`, `controller`, `stateless`, `agent`, `graph`...",
+    "  The dialect writes the class, its decorators, its registration in the injector and its imports.",
+    "- **`appcomponent`** is what the rest of the app sees of a component; one component never reaches inside another.",
+    "- **Errors are values:** a use case answers `Result<Error, T>`; a controller turns `Err(NotFound(...))` into a 404.",
+    "- **Connections** (a database, a chat model, Kafka, Redis, an AI provider) are listed in",
+    "  `config/project_config.nuc`, never opened by hand.",
+    "- **Tests in Nuclear:** `tests Name` with `@test(...)` methods, written for the target's test runner."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#dragonfly-three-platforms-one-code-per-platform.d91dd9",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform",
+   "summary": "Dragonfly: three platforms, one code per platform",
+   "body": [
+    "| Platform | Dialect | What comes out | Guide | Rules |",
+    "|---|---|---|---|---|",
+    "| `mobile` | `flutter` | Dart, Flutter, bloc, go_router, json_serializable | [Tutorial](tutorial.md) | [mobile.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/mobile.md), [flutter.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md) |",
+    "| `mobile` + plugin `genkit` | `flutter` | Genkit Dart: chats with tools, flows, RAG, remote flows | [Genkit](https://github.com/nuclearlang/dragonfly-mobile/blob/main/docs/dragonfly/genkit.md) | [flutter.md §6.20](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md) |",
+    "| `backend` | `fastapi` (Python) | FastAPI, SQLAlchemy 2 async, pydantic, LangChain, LangGraph | [Python](https://github.com/nuclearlang/dragonfly-backend/blob/main/docs/dragonfly/python.md) | [backend.md](https://github.com/nuclearlang/dragonfly-backend/blob/main/spec/backend.md), [fastapi.md](https://github.com/nuclearlang/dragonfly-backend/blob/main/spec/fastapi.md) |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#generators-the-finished-code-of-a-resource",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform — Generators: the finished code of a resource",
+   "summary": "`dragonfly gen resource <component> <Name>` writes, for any platform, the models, the repository (REST over an `Http` connection or a database), one use case per action, the component's facade, the controller (backend) or the screen with its state manager (mobile, web) and their tests; everything…",
+   "body": [
+    "`dragonfly gen resource <component> <Name>` writes, for any platform, the models, the repository (REST over an `Http`",
+    "connection or a database), one use case per action, the component's facade, the controller (backend) or the screen",
+    "with its state manager (mobile, web) and their tests; everything compiles as written. The fields come from",
+    "`--fields \"id:int name:string\"`, from an answer (`--from-json <url|file>`: nested models and pages included, `@key`",
+    "for snake_case keys) or from a spec (`--from-spec spec.md`: its example answer, its `Key | Type` table, its",
+    "`GET <url>` line). `dragonfly gen inspect` lists what the project has; nothing is ever overwritten.",
+    "",
+    "`dragonfly gen usecase <component> <Name>` wires a use case into its component: its alias in the facade and, on the",
+    "backend, `--route \"POST orders/{id}/cancel\"` adds its route to the controller of `orders` (made when missing). A use",
+    "case with rules of its own is written first and then wired, with the signature the project gives it; one that only",
+    "calls a repository method is written by the command too: `--calls OrderRepository.pending`.",
+    "",
+    "Every option, what each platform gets, the refusals and worked examples: [Generators](generators.md). The MCP server",
+    "gives the same tools to an agent, and the editor's Loop runs them before planning. Why: ADR-0103."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#mobile-the-backend-s-orm-on-the-device.5ffa26",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform — Mobile: the backend's ORM on the device",
+   "summary": "Rules and the generated Dart: flutter.md §6.3; the package API: dragonfly.md §3.2.",
+   "body": [
+    "Rules and the generated Dart: [flutter.md §6.3](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md); the package API: [dragonfly.md",
+    "§3.2](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/dragonfly.md)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#mobile-the-backend-s-orm-on-the-device.978161",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform — Mobile: the backend's ORM on the device",
+   "summary": "A mobile app keeps what it fetches with two words (ADR-0096).",
+   "body": [
+    "A mobile app keeps what it fetches with two words (ADR-0096). `@primary` on a field gives the model an encrypted",
+    "local table (`@entity(\"characters\")` names it; the same database on phones, desktops and web); `saveLocal = true` on the repository makes every GET that answers that model save its rows and get a",
+    "twin `<method>AsLocal()`, same signature, that answers the last rows from the device without a request. The",
+    "queries are the backend repository's: `where`, `orderBy`, `limit`, `offset`, `getOne`, `getMany`, `count`,",
+    "`exists`, `update`, `delete`, plus `find`, `findAll`, `save`, `remove`.",
+    "",
+    "```nuclear",
+    "@entity(\"characters\")",
+    "Character",
+    "  @primary",
+    "  id: int",
+    "  name: string",
+    "  status: string",
+    "",
+    "@repository(path = \"character\", saveLocal = true)",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<CharacterError, Character>     // + getOneAsLocal(id)",
+    "",
+    "  alive() Character[]",
+    "    ~local<Character>().where({ \"status\": \"Alive\" }).orderBy(\"name\").getMany()",
+    "```",
+    "",
+    "Encryption (AES-256, key in the device's secure storage) is on by default and is a line of the config files:",
+    "`local: LocalDatabase = LocalDatabase(encrypted = true)` in the project's `appConfig`, or in a component's `config`",
+    "for its own tables."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#plugins-only-what-the-project-uses",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform — Plugins: only what the project uses",
+   "summary": "The optional parts of each framework are plugins, enabled in the project's `config.nuc`.",
+   "body": [
+    "The optional parts of each framework are **plugins**, enabled in the project's `config.nuc`. A project without a",
+    "plugin does not carry its packages:",
+    "",
+    "```nuclear",
+    "// config.nuc",
+    "plugins(genkit = true, googleAI = true)",
+    "```",
+    "",
+    "| Dialect | Plugins |",
+    "|---|---|",
+    "| `flutter` | `genkit`, and its providers `firebaseAI`, `googleAI`, `vertexAI`, `openAI`, `anthropic` |",
+    "| `fastapi`, `nestjs` (the backend platform: the same list) | `sqlite`, `postgres`, `mysql`, `mariadb`, `redis`, `kafka`, `events`, `ai`, `openai`, `ollama`, `chroma` |",
+    "",
+    "- Only the enabled plugins reach `pubspec.yaml`, `pyproject.toml` or `package.json`. Turning one off removes its",
+    "  packages on the next build.",
+    "- A provider plugin enables the plugin it needs (`googleAI` enables `genkit`; `ollama` enables `ai`).",
+    "- Using a kind or a class of a plugin that is not enabled is diagnostic **N0304**, which says which line to add.",
+    "  The editor still completes those names, so you can discover them.",
+    "",
+    "How a dialect declares its plugins: [projects.md §3.3](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md). Why: ADR-0092.",
+    "",
+    "The native kinds of each platform, and how to write your own kind without touching the compiler: [Kinds](kinds.md)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/README.md#writing-with-an-ai-agent",
+   "type": "readme",
+   "title": "Dragonfly: three platforms, one code per platform — Writing with an AI agent",
+   "summary": "Each dialect has a short sheet for agents: `nuclear spec --brief --dialect fastapi` (also `nestjs`, `flutter`), and `nuclear help <word> --dialect <d>` explains a kind or decorator.",
+   "body": [
+    "Each dialect has a short sheet for agents: `nuclear spec --brief --dialect fastapi` (also `nestjs`, `flutter`),",
+    "and `nuclear help <word> --dialect <d>` explains a kind or decorator. `nuclear agent init --dialect <d>` writes",
+    "the `AGENTS.md` of a project."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/README.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#1-a-resource.28ac85",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 1. A resource",
+   "summary": "What a resource is made of on each platform:",
+   "body": [
+    "| Option | Meaning |",
+    "|---|---|",
+    "| `--source rest:<base url>` \\| `rest` \\| `db` | where the data lives: another API (an HTTP repository) or the database (backend only). Default: `db`, or `rest` when a url was given |",
+    "| `--actions list,get,search,create,update,delete` | one use case each. Default: `list,get` for an API, every one for a database |",
+    "| `--path <path>` | the API's path of the resource. Default: the url's last segment, or the name |",
+    "| `--screen <screen>` | mobile and web: a screen that lists the resource, with its state manager and state model |",
+    "| `--plural <Names>` | when the English plural is not the right one |",
+    "",
+    "What a resource is made of on each platform:",
+    "",
+    "| | Backend | Mobile and web |",
+    "|---|---|---|",
+    "| Data | `rest`: an HTTP repository over an `Http` connection. `db`: an entity, a `New<Name>` model and a paged query | an HTTP repository over the app's `Http` connection |",
+    "| Domain | one use case per action | one use case per action |",
+    "| Facade | an alias per use case | an alias per use case |",
+    "| Entry | the controller with a route per action | with `--screen`, the screen with its state manager |",
+    "| Tests | for a database resource | with the repository mocked |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#1-a-resource.c1166a",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 1. A resource",
+   "summary": "dragonfly gen resource characters Character --from-json https://rickandmortyapi.com/api/character dragonfly gen resource orders Order --fields \"id:int total:double status:string\" --source db dragonfly gen resource episodes Episode --from-spec specs/episodes/spec.md --screen episode_list The fields…",
+   "body": [
+    "```sh",
+    "dragonfly gen resource characters Character --from-json https://rickandmortyapi.com/api/character",
+    "dragonfly gen resource orders Order --fields \"id:int total:double status:string\" --source db",
+    "dragonfly gen resource episodes Episode --from-spec specs/episodes/spec.md --screen episode_list",
+    "```",
+    "",
+    "The fields come from one of three places:",
+    "",
+    "| Option | The fields are read from |",
+    "|---|---|",
+    "| `--from-json <file\\|url>` | an example answer of the API. A nested object becomes a model named `<Name><Key>`, a paged answer gives `<Name>Page`, a snake_case key gets `@key`. A url also gives the API to call |",
+    "| `--from-spec <spec.md>` | the spec's example answer, or else its `Key \\| Type \\| Description` table; a `GET https://...` line gives the API |",
+    "| `--fields \"id:int name:string origin:Origin?\"` | the command line. A type that is not a basic one must be declared in the project |",
+    "",
+    "The other options:"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#2-a-use-case.5caa75",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 2. A use case",
+   "summary": "A resource brings the standard use cases.",
+   "body": [
+    "A resource brings the standard use cases. `gen usecase` is for the next one, and it covers two different cases.",
+    "",
+    "**A use case that only calls a repository method** is written by the command, because there is nothing to decide:",
+    "",
+    "```sh",
+    "dragonfly gen usecase orders PageOrders --calls OrderRepository.page --route \"GET orders/pages/{page}\"",
+    "```",
+    "",
+    "```",
+    "    created  components/orders/domain/usecases/page_orders.nuc",
+    "   added to  components/orders/orders_appcomponent.nuc",
+    "   added to  components/orders/api/orders_controller.nuc",
+    "```",
+    "",
+    "```nuclear",
+    "// What OrderRepository.page answers, for the rest of orders.",
+    "usecase PageOrders(repository: OrderRepository)",
+    "  exec(page: int, size: int) Result<Error, Page<Order>>",
+    "    Ok(~repository.page(page, size))",
+    "```",
+    "",
+    "The parameters and the answer are the method's own, read from the project. An answer that is not a `Result` goes",
+    "inside an `Ok` (backend).",
+    "",
+    "**A use case with rules of its own** is written first, by hand or by an agent, because its rules are the part no",
+    "command can know. Then the command wires it:"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#2-a-use-case.852dec",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 2. A use case",
+   "summary": "// Cancels an order that is still pending; Conflict (409) when it is not.",
+   "body": [
+    "```nuclear",
+    "// Cancels an order that is still pending; Conflict (409) when it is not.",
+    "usecase CancelOrder(repository: OrderRepository)",
+    "  exec(id: int) Result<Error, Order>",
+    "    found = ~repository.find(id)",
+    "    if found.status != \"pending\"",
+    "      return Err(Conflict(\"only a pending order is cancelled\"))",
+    "    found.status = \"cancelled\"",
+    "    Ok(~repository.save(found))",
+    "```",
+    "",
+    "```sh",
+    "dragonfly gen usecase orders CancelOrder --route \"POST orders/{id}/cancel\"",
+    "```",
+    "",
+    "It adds the alias to the facade and the route to the controller, with the signature `exec` has in the project:",
+    "",
+    "```nuclear",
+    "appcomponent OrdersAppComponent",
+    "  cancelOrder() = CancelOrder.exec",
+    "```",
+    "",
+    "```nuclear",
+    "@controller(\"orders\")",
+    "controller OrdersController(app: OrdersAppComponent)",
+    "  @post(\"{id}/cancel\")",
+    "  cancelOrder(id: int) Result<Error, Order>",
+    "    ~app.cancelOrder(id)",
+    "```",
+    "",
+    "`--route \"<VERB> <prefix>[/<path>]\"` is backend only. The first segment is the controller's prefix: `orders` is",
+    "`OrdersController`, created when the component has none. A `{name}` of the path is a parameter of the use case; the",
+    "other parameters arrive as the verb sends them. The route calls the use case with `~` only when its `exec` awaits.",
+    "",
+    "On mobile and web the command adds the alias (and, with `--calls`, writes the use case). What a screen shows of it,",
+    "a method of its state manager and the state it emits, is written by hand."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#3-what-every-generator-keeps",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 3. What every generator keeps",
+   "summary": "members they lack, each one whole (a route with its decorator and its body).",
+   "body": [
+    "- **Nothing is overwritten.** A file that exists is kept. The facade, the repository and the controller get only the",
+    "  members they lack, each one whole (a route with its decorator and its body). So an action added to a resource that",
+    "  exists (`dragonfly gen resource orders Order ... --actions list,get,search` on one that had `list,get`) adds its use",
+    "  case, its alias, the repository's method and its route, and what is written still compiles. Running a command twice changes nothing: the second",
+    "  time every file says `kept`.",
+    "- **Nothing is declared twice.** A name another file of the project declares stops the command before it writes.",
+    "- **Nothing is left to fill in.** What a command writes compiles as written. When it cannot write something finished,",
+    "  it refuses and says what to do."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#4-when-a-generator-refuses",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 4. When a generator refuses",
+   "summary": "4. When a generator refuses",
+   "body": [
+    "| It says | What to do |",
+    "|---|---|",
+    "| `<Name> is not declared. A use case with rules of its own is written first ...` | write the use case in the file it names, then run the command again; or give `--calls` when it only calls a repository |",
+    "| the repository, or its method, is not declared | `--calls` names a method a repository of the project has: `dragonfly gen inspect` lists the repositories and their files |",
+    "| a `{name}` of the route is not a parameter of the use case | name the path's parameter like the one `exec` takes |",
+    "| the use case belongs to another component | give the component that declares it |",
+    "| the platform has no routes | `--route` is backend only: on mobile and web leave it out |",
+    "| a type of `--fields` is not declared | declare the model first, or take the fields from an answer (`--from-json`), which writes the nested models too |",
+    "| the name is declared in another file | pick another name, or remove the old declaration when it is a leftover |",
+    "| a database resource has no generated search | which column is searched is yours to say: write the query in the repository, then `dragonfly gen usecase <component> Search<Names> --calls <Name>Repository.<method>` |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#5-from-an-ai-agent-and-from-the-editor",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 5. From an AI agent and from the editor",
+   "summary": "The MCP server of NuclearLang gives the same commands to Claude Code, Codex or Cursor as tools, and tells every model to generate first and write only what is left: the MCP server.",
+   "body": [
+    "The MCP server of NuclearLang gives the same commands to Claude Code, Codex or Cursor as tools, and tells every model",
+    "to generate first and write only what is left:",
+    "[the MCP server](https://github.com/nuclearlang/nuclear/blob/main/docs/ai/mcp.md).",
+    "",
+    "| Command | MCP tool |",
+    "|---|---|",
+    "| `dragonfly gen inspect` | `project_inspect` |",
+    "| `dragonfly gen component` | `generate_component` |",
+    "| `dragonfly gen resource` | `generate_resource` (and `api_inspect`, which shows an API's shape first) |",
+    "| `dragonfly gen usecase` | `generate_usecase` |",
+    "",
+    "The editor's Loop has a *Generate* stage before any agent works: it runs `dragonfly gen resource` for every resource",
+    "the spec names, and the planner plans only what is left",
+    "([the AI loop](https://github.com/nuclearlang/nuclear/blob/main/docs/ai/loop.md))."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#6-what-is-not-generated-yet",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command — 6. What is not generated yet",
+   "summary": "How a platform declares its generators (`[[generators.<what>]]` in its `platform.toml`: templates, never code in the CLI) is in the dialects' spec.",
+   "body": [
+    "- A database resource has no relations to other entities, and no search: add them by hand.",
+    "- A backend resource over another API (`rest`) gets no tests.",
+    "- On mobile and web, what a screen shows of a use case added with `gen usecase`.",
+    "- The Loop's *Generate* stage writes resources only: it does not call `gen usecase`.",
+    "",
+    "How a platform declares its generators (`[[generators.<what>]]` in its `platform.toml`: templates, never code in the",
+    "CLI) is in [the dialects' spec](https://github.com/nuclearlang/nuclear/blob/main/spec/dialects.md). Why they exist:",
+    "[ADR-0103](https://github.com/nuclearlang/nuclear/blob/main/docs/adr/0103-generators.md)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/generators.md#generators-the-standard-code-written-by-a-command",
+   "type": "guide",
+   "title": "Generators: the standard code, written by a command",
+   "summary": "Most of a feature is the same every time: a model, a repository, a use case per action, the facade's aliases, the routes or the screen, the tests.",
+   "body": [
+    "Most of a feature is the same every time: a model, a repository, a use case per action, the facade's aliases, the",
+    "routes or the screen, the tests. `dragonfly gen` writes that part, finished and compiling, on the three platforms.",
+    "A person or an agent writes only what is particular to the app: a use case with rules of its own, the details of a",
+    "view.",
+    "",
+    "`dragonfly make` is the other command that creates files: one nearly empty declaration of a kind, to fill in.",
+    "`dragonfly gen` writes code that is already done.",
+    "",
+    "| Command | What it writes |",
+    "|---|---|",
+    "| `dragonfly gen inspect` | nothing: what the project has (platform, dialect, components, every declaration by kind), as JSON |",
+    "| `dragonfly gen component <component>` | a component: its facade and its config |",
+    "| `dragonfly gen resource <component> <Name>` | a resource: models, repository, a use case per action, the facade's aliases, the controller (backend) or the screen (mobile, web), the tests |",
+    "| `dragonfly gen usecase <component> <Name>` | a use case wired into its component: its alias in the facade and, on the backend, its route |",
+    "",
+    "Every command runs inside a project and takes `--dry-run`, which shows the files and writes nothing."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#1-native-kinds",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — 1. Native kinds",
+   "summary": "The native kinds are the platform's contract: the same words, with the same meaning, in every dialect of the platform.",
+   "body": [
+    "The native kinds are the platform's contract: the same words, with the same meaning, in every dialect of the",
+    "platform. Change the dialect and the kinds do not change. Kinds differ between platforms, because a backend and a",
+    "mobile app are different things."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#1-native-kinds-backend-spec-backend-md.075b2e",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — Backend (`spec/backend.md`)",
+   "summary": "Backend (`spec/backend.md`)",
+   "body": [
+    "| Kind | Where | What it is |",
+    "|---|---|---|",
+    "| `appConfig` | `config/` | The project's connections (databases, brokers, models) |",
+    "| `config` | component `config/` | The connections of one component |",
+    "| `entity` | `data/entities/` | A table: `@entity(\"name\")`, fields with `@primary(generated = true)`, `@column(...)`, relations `@manyToOne`, `@oneToMany`, `@manyToMany`, `@oneToOne` |",
+    "| `repository` | `data/repositories/` | Queries over an entity; `find`, `findAll`, `save`, `remove` come with the kind |",
+    "| `model` | `domain/models/` | What the API reads and answers, with validation decorators |",
+    "| `usecase` | `domain/usecases/` | One business operation: `exec(...)` returning a `Result` |",
+    "| `service` | `domain/` | Helpers of the use cases (mapping, transformations) |",
+    "| `aggregate` | `domain/` | Business rules several use cases share |",
+    "| `appcomponent` | component root | The facade: what the rest of the app sees of a component |",
+    "| `controller` | `api/` | HTTP routes: `@controller(\"tasks\")`, `@get(\"{id}\")`, `@post()` methods |",
+    "| `listener` | `events/` | Methods that receive every message of a topic: `@consumer(\"topic\")` |",
+    "| `tools` | `ai/` | Methods a model can call; the doc comment is what the model reads |",
+    "| `agent` | `ai/` | An agent with its tools and prompt: `~guide.ask(question)` |",
+    "| `state` | `ai/` | The state of a graph: fields read as `state.field` |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#1-native-kinds-backend-spec-backend-md.c70e0a",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — Backend (`spec/backend.md`)",
+   "summary": "Backend (`spec/backend.md`)",
+   "body": [
+    "| `graph` | `ai/` | A graph of nodes: `@start`, `@next(\"node\")` |",
+    "| `tests` | `test/` | Tests: `@test(\"what it checks\")` methods |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#1-native-kinds-mobile-spec-mobile-md.285b63",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — Mobile (`spec/mobile.md`)",
+   "summary": "Mobile (`spec/mobile.md`)",
+   "body": [
+    "| Kind | Where | What it is |",
+    "|---|---|---|",
+    "| `appConfig`, `config` | `config/` | Connections and globals of the project or of one component |",
+    "| `stateless`, `stateful` | `presentation/screens/`, `widgets/` | Widgets; `@screen(route = ...)` makes one a screen |",
+    "| `repository` | `data/repositories/` | HTTP calls: `@repository(path)` and `@get`/`@post` methods without body |",
+    "| `usecase`, `service`, `aggregate` | `domain/` | The same roles as in backend |",
+    "| `appcomponent` | component root | The facade of a component |",
+    "| `model` | `domain/models/` | Immutable data with JSON in and out |",
+    "| `converter` | `domain/` | How a value type reads and writes JSON |",
+    "| `statemanager`, `statemodel` | `presentation/` | The state of a screen and its possible states |",
+    "| `form`, `formmanager` | `presentation/*/forms/` | A form's fields and rules, and its validation state |",
+    "| `component` | `shared/components/` | A global component; `@on(Event)` methods run on every event |",
+    "| `guard` | `shared/guards/` | A custom access check: `canActivate()` |",
+    "| `event` | `shared/events/` | A global event with JSON, so another engine can publish it |",
+    "| `tests`, `integration` | `test/`, `integration_test/` | Unit and widget tests; tests on a device |",
+    "| `tools`, `flow`, `chat`, `remote`, `knowledge` | `ai/` (plugin `genkit`) | AI: tools, flows, chats with memory, remote flows, texts searched by meaning |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#1-native-kinds-mobile-spec-mobile-md.ff96b7",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — Mobile (`spec/mobile.md`)",
+   "summary": "A kind that needs an optional part of the framework belongs to a plugin and is available when `config.nuc` enables it (`plugins(genkit = true)`); using it without the plugin is diagnostic N0304, which tells you the line to add (README).",
+   "body": [
+    "A kind that needs an optional part of the framework belongs to a **plugin** and is available when `config.nuc`",
+    "enables it (`plugins(genkit = true)`); using it without the plugin is diagnostic N0304, which tells you the line to",
+    "add ([README](README.md))."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#2-extension-kinds-yours-and-the-community-s.9e99b1",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — 2. Extension kinds: yours and the community's",
+   "summary": "Status: the package format, `nuclear kind new`, `dragonfly add` and the missing-implementation diagnostic (N0306) exist (ADR-0095); the editor's view of a kind's source and `nuclear dialect test` are pending (`STATUS.md`).",
+   "body": [
+    "Status: the package format, `nuclear kind new`, `dragonfly add` and the missing-implementation diagnostic (N0306)",
+    "exist (ADR-0095); the editor's view of a kind's source and `nuclear dialect test` are pending (`STATUS.md`)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#2-extension-kinds-yours-and-the-community-s.c9a19e",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — 2. Extension kinds: yours and the community's",
+   "summary": "Anything a project repeats can become a kind: a scheduled job, a webhook handler, a report, a screen layout your app uses forty times.",
+   "body": [
+    "Anything a project repeats can become a kind: a scheduled job, a webhook handler, a report, a screen layout your",
+    "app uses forty times. An extension kind is a **package**: its TOML, templates, the runtime it needs in the target",
+    "language, its type definitions and its editor docs, with one implementation per dialect it supports. It is enabled",
+    "like a plugin, `plugins(jobs = true)`, and the project keeps `dragonfly(platform = \"backend\", dialect = \"fastapi\")`.",
+    "A package belongs to one platform: a backend package never shows up in a mobile project, even when the word exists",
+    "there with another meaning (`repository` is table queries in backend and HTTP calls in mobile).",
+    "",
+    "**The editor knows the difference.** Completion lists only the kinds of your platform: the native ones plus the",
+    "packages your `config.nuc` enables. Hover says where a kind comes from (the platform, or a package and the dialects",
+    "it implements) and shows its docs. A kind of a package made for another platform, or not implemented for your",
+    "dialect, is reported with the line to fix.",
+    "",
+    "The rule of portability (ADR-0093, ADR-0095): the Nuclear you write with a kind is the same in every dialect that",
+    "implements it. A package implemented for one dialect only ties your project to that dialect, exactly as using a",
+    "dialect's type definitions does; the compiler tells you which dialects you can still build with."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#3-write-a-kind-what-a-kind-can-declare.d9a559",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — What a kind can declare",
+   "summary": "What a kind can declare",
+   "body": [
+    "| Key | Use |",
+    "|---|---|",
+    "| `template` | The whole declaration, inline or in a `.tpl` file |",
+    "| `requires`, `methods`, `returns` | Methods the block must have; the only methods allowed; the type every method returns |",
+    "| `async_methods`, `void_methods` | Every method is asynchronous; methods return nothing |",
+    "| `inherits`, `overrides`, `members` | Bases from the type definitions (their members are known), methods that override, inherited names |",
+    "| `imports` | Symbols imported when the generated code writes them |",
+    "| `rename`, `named_params`, `param_access` | Output name, named constructor arguments, how constructor parameters are read |",
+    "| `alias_via`, `provide`, `declares` | Where an alias's instance comes from; how other declarations are read inside the kind; extra classes the template writes |",
+    "| `file_header`, `syntax` | Text once per file; `[syntax]` templates that change only inside this kind |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#3-write-a-kind-what-a-kind-can-declare.dc93cc",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — What a kind can declare",
+   "summary": "The template receives the declaration's data: `name`, `params_list` (each with `name`, `type`, `tinfo`, `decor`), `fields`, `methods`, `methods_code`, `members`, `decor` (each decorator with its arguments), `ret_info`, `extends`, `implements`, `generics`, `file`, `component`, `kind`, and more…",
+   "body": [
+    "The template receives the declaration's data: `name`, `params_list` (each with `name`, `type`, `tinfo`, `decor`),",
+    "`fields`, `methods`, `methods_code`, `members`, `decor` (each decorator with its arguments), `ret_info`, `extends`,",
+    "`implements`, `generics`, `file`, `component`, `kind`, and more ([projects.md §5](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md)). Templates",
+    "are a Mustache subset: sections, inverted sections, `@first`/`@last`, and filters such as `pascal`, `snake`, `kebab`,",
+    "`join` ([dialects.md §4](https://github.com/nuclearlang/nuclear/blob/main/spec/dialects.md)).",
+    "",
+    "A kind can also bring decorators (`[decorators] consumed`), modifiers and clauses, its own `[auto_imports]` and a",
+    "runtime package in the target language; the full format is [dialects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/dialects.md) §5 and §7."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#3-write-a-kind.5421aa",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — 3. Write a kind",
+   "summary": "// config.nuc dragonfly(platform = \"backend\", dialect = \"fastapi\") app(name = \"demo\") plugins(jobs = true) // components/cleanup/jobs/purge_job.nuc job PurgeJob run() int print(\"purging\") 0 nuclear build . Change `dialect` to `nestjs` and the build says what the rule of portability says: the…",
+   "body": [
+    "```nuclear",
+    "// config.nuc",
+    "dragonfly(platform = \"backend\", dialect = \"fastapi\")",
+    "app(name = \"demo\")",
+    "plugins(jobs = true)",
+    "```",
+    "",
+    "```nuclear",
+    "// components/cleanup/jobs/purge_job.nuc",
+    "job PurgeJob",
+    "  run() int",
+    "    print(\"purging\")",
+    "    0",
+    "```",
+    "",
+    "```sh",
+    "nuclear build .",
+    "```",
+    "",
+    "",
+    "Change `dialect` to `nestjs` and the build says what the rule of portability says: the package `jobs` has no",
+    "implementation for `nestjs` (it has `fastapi`), so either build with fastapi or add `kinds/jobs/nestjs/` (N0306).",
+    "To use the package in every project of your machine: `dragonfly add kinds/jobs`. The editor completes `job`,",
+    "shows its `description` and the text of `docs.toml`, and reports a job without `run()` while you type."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#3-write-a-kind.76bf48",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — 3. Write a kind",
+   "summary": "A backend project that needs scheduled jobs.",
+   "body": [
+    "A backend project that needs scheduled jobs. One command, two edits, no compiler change.",
+    "",
+    "**1. The package**, created in the project:",
+    "",
+    "```sh",
+    "nuclear kind new jobs -p backend -d fastapi",
+    "```",
+    "",
+    "```",
+    "kinds/jobs/",
+    "├── kind.toml                 [package] name, version, platform, description",
+    "├── docs.toml                 what the editor shows for each word",
+    "└── fastapi/",
+    "    ├── kind.toml             [plugin] (runtime packages) and [kinds.job]",
+    "    └── templates/job.tpl     the whole declaration in Python",
+    "```",
+    "",
+    "**2. The kind**, `kinds/jobs/fastapi/kind.toml`:",
+    "",
+    "",
+    "and its template, `kinds/jobs/fastapi/templates/job.tpl`, which writes the whole declaration (the variables come",
+    "from the header and the block; `nuclear spec --dialect fastapi` lists them all):",
+    "",
+    "```",
+    "class {{name}}:",
+    "    \"\"\"Scheduled job: {{source_name}}.\"\"\"",
+    "",
+    "    def __init__(self{{#params_list}}, {{name}}: {{type}}{{/params_list}}) -> None:",
+    "{{#params_list}}",
+    "        self.{{name}} = {{name}}",
+    "{{/params_list}}",
+    "{{^params_list}}",
+    "        pass",
+    "{{/params_list}}",
+    "",
+    "    {{methods_code}}",
+    "```",
+    "",
+    "**3. The Nuclear**, with the package enabled in `config.nuc`:"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#4-what-a-kind-cannot-do",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly — 4. What a kind cannot do",
+   "summary": "read.",
+   "body": [
+    "- **Add syntax.** Inside the block you write Nuclear; the kind chooses what the block becomes, never how Nuclear is",
+    "  read. If something needs new grammar, it is not a kind.",
+    "- **Touch the compiler.** If a template cannot express what you need, ask for a generic capability (a template",
+    "  variable or an `[options]` entry): it is added for every kind, never as a special case. Do not fake the output.",
+    "- **Offer a second way of writing the same thing.** A kind exists only if it removes repeated code of the target",
+    "  (golden rule, ADR-0038).",
+    "- **Generate code an expert would not write:** no reflection, no unused layers, no analyzer warnings.",
+    "- **Change with the dialect.** The Nuclear of a kind is the same in every dialect that implements it.",
+    "",
+    "Rules and format: [dialects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/dialects.md) §5.4, §7 and §8, [projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §5.",
+    "Why: ADR-0093, ADR-0095."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/kinds.md#kinds-the-libraries-of-dragonfly",
+   "type": "guide",
+   "title": "Kinds: the libraries of Dragonfly",
+   "summary": "A kind is the word before the name of a declaration: `usecase CreateTask`, `controller TasksController`, `stateless Home`.",
+   "body": [
+    "A **kind** is the word before the name of a declaration: `usecase CreateTask`, `controller TasksController`,",
+    "`stateless Home`. It tells Dragonfly what that block is, and the dialect writes the whole declaration in the target",
+    "(the class, its base, its imports, its boilerplate) so you only write the logic. Kinds are to Dragonfly what",
+    "libraries are to a language: a platform comes with its **native kinds**, and a project or the community can add",
+    "**extension kinds** on top of a dialect, without touching the compiler (ADR-0095).",
+    "",
+    "The parser never knows a kind. Every kind is \"a header and a block\" of the base grammar; the kind itself is data:",
+    "a TOML entry and a template. That is why adding one needs no lexer, no parser and no Rust."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/kinds.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#0-install-once",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 0. Install (once)",
+   "summary": "curl -fsSL https://nuclearlang.github.io/install.sh | sh # Windows: irm https://nuclearlang.github.io/install.ps1 | iex dragonfly doctor # checks everything: CLIs, dialect, dragonfly package, Flutter, VS Code dragonfly setup # only if doctor says Flutter is missing: installs it step by step…",
+   "body": [
+    "```sh",
+    "curl -fsSL https://nuclearlang.github.io/install.sh | sh   # Windows: irm https://nuclearlang.github.io/install.ps1 | iex",
+    "# or, from the source tree: ./install.sh (needs Rust)",
+    "dragonfly doctor             # checks everything: CLIs, dialect, dragonfly package, Flutter, VS Code",
+    "dragonfly setup              # only if doctor says Flutter is missing: installs it step by step",
+    "```",
+    "",
+    "`dragonfly` finds Flutter by itself (on the PATH, `~/development/flutter`, fvm...); `FLUTTER`",
+    "chooses another one.",
+    "",
+    "From the source tree the installation is a copy: after changing the transpiler, the dialects or the dragonfly",
+    "package, run `./install.sh` again."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#1-create-the-project.2149e7",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 1. Create the project",
+   "summary": "main() void ~startDragonfly() Hive.init(\"data\") // import 'package:hive/hive.dart' comes out by itself runApp(App()) The definitions are stored once in `~/.cache/nuclearlang/defs` and serve all your projects; removing the package does not delete them.",
+   "body": [
+    "```nuclear",
+    "main() void",
+    "  ~startDragonfly()",
+    "  Hive.init(\"data\")                     // import 'package:hive/hive.dart' comes out by itself",
+    "  runApp(App())",
+    "```",
+    "",
+    "The definitions are stored once in `~/.cache/nuclearlang/defs` and serve all your projects; removing the",
+    "package does not delete them. The editor uses them too: completion, hover and imports of `Hive`.",
+    "",
+    "Only third-party packages Dragonfly does not use are added. `dragonfly flutter add dio` (or `go_router`,",
+    "`fpdart`...) is rejected: those already come with the framework and are used directly. A project created before",
+    "`config.nuc` gets one on its first `dragonfly check`.",
+    "",
+    "Images, audio, fonts and shaders are not configured: they go in `assets/` and the build adds them to the app. A",
+    "font goes in its family's folder and its name says the weight and style:",
+    "",
+    "```",
+    "assets/images/logo.png                       Image.asset(\"assets/images/logo.png\")",
+    "assets/fonts/Roboto/Roboto-Regular.ttf       ThemeData(fontFamily = \"Roboto\")",
+    "assets/fonts/Roboto/Roboto-BoldItalic.ttf    700 italic",
+    "assets/shaders/wave.frag                     FragmentProgram.fromAsset(\"assets/shaders/wave.frag\")",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#1-create-the-project.de91fd",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 1. Create the project",
+   "summary": "cd ~/Documents/projects # wherever you want dragonfly new my_store cd my_store It creates only `.nuc` files: `main.nuc`, `config.nuc`, `config/project_config.nuc` and a `home` component with its screen at `/`.",
+   "body": [
+    "```sh",
+    "cd ~/Documents/projects      # wherever you want",
+    "dragonfly new my_store",
+    "cd my_store",
+    "```",
+    "",
+    "It creates only `.nuc` files: `main.nuc`, `config.nuc`, `config/project_config.nuc` and a `home` component with",
+    "its screen at `/`. The Flutter app goes to `build/app`, which is never edited by hand.",
+    "",
+    "`config.nuc` is the project's manifest, written in Nuclear: the platform it is written for and the dialect it is",
+    "built with (`dragonfly new -p mobile -d flutter` wrote them), then the pubspec: name, description, version and",
+    "its own packages. Those Dragonfly uses (bloc, go_router, json_serializable...) are added automatically and are",
+    "not written:",
+    "",
+    "```nuclear",
+    "dragonfly(platform = \"mobile\", dialect = \"flutter\")",
+    "",
+    "app(",
+    "  name = \"my_store\",",
+    "  description = \"A Dragonfly app.\",",
+    "  version = \"1.0.0+1\",",
+    "  usesMaterialDesign = true,",
+    ")",
+    "```",
+    "",
+    "To use a pub.dev package, add it with the CLI. It writes it in `config.nuc` and generates its type definitions,",
+    "so the transpiler writes its imports by itself. `dependencies` and `devDependencies` appear with their first",
+    "package and disappear when the last one is removed:",
+    "",
+    "```sh",
+    "dragonfly flutter add hive              # --dev for devDependencies; hive:^2.2.0 to pin the version",
+    "dragonfly flutter remove hive",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#2-generate-the-pieces.397314",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 2. Generate the pieces",
+   "summary": "dragonfly g c products # component: its facade (appcomponent) dragonfly g r products product # repository + Product model dragonfly g s products product_list # screen + manager + state model dragonfly g sm products product_list cart_manager # one more state manager + its state model dragonfly g sf…",
+   "body": [
+    "```sh",
+    "dragonfly g c products                  # component: its facade (appcomponent)",
+    "dragonfly g r products product          # repository + Product model",
+    "dragonfly g s products product_list     # screen + manager + state model",
+    "dragonfly g sm products product_list cart_manager  # one more state manager + its state model",
+    "dragonfly g sf rating_stars             # a stateful widget in shared/widgets",
+    "dragonfly g t products                  # tests file",
+    "rm components/products/domain/usecases/hello_products_usecase.nuc   # the sample use case",
+    "```",
+    "",
+    "`dragonfly help` lists every generator and its aliases.",
+    "",
+    "A resource that follows from its data is generated whole, already compiling: its models, the repository, a use case",
+    "per action, the facade's aliases and the screen (mobile, web) or the controller (backend). The fields come from an",
+    "example answer of the API, from the spec's table, or from `--fields`:",
+    "",
+    "```sh",
+    "dragonfly gen resource characters Character --from-json https://rickandmortyapi.com/api/character --screen characters",
+    "dragonfly gen resource catalog Book --fields \"title:string author:string year:int\" --source db   # backend",
+    "dragonfly gen inspect                   # what the project has, as JSON",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#2-generate-the-pieces.b32fec",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 2. Generate the pieces",
+   "summary": "Write by hand only what is yours: a use case with its own rules, the details of a view.",
+   "body": [
+    "Write by hand only what is yours: a use case with its own rules, the details of a view. A use case you wrote is wired",
+    "by its generator (its alias in the facade; on the backend, its route), and one that only calls a repository method",
+    "is written by it too:",
+    "",
+    "```sh",
+    "dragonfly gen usecase catalog LendBook --route \"POST books/{bookId}/lend\"   # backend: LendBook is in the project",
+    "dragonfly gen usecase characters CharacterEpisodes --calls CharacterRepository.episodes   # a method the repository declares",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#3-write-the-business-logic.038627",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 3. Write the business logic",
+   "summary": "You navigate with the screen, not with the address; only views navigate.",
+   "body": "You navigate with the screen, not with the address; only views navigate.",
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#3-write-the-business-logic.4d0737",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 3. Write the business logic",
+   "summary": "@screen(route = \"/products\", providers = [ProductListManager]) stateless ProductListScreen build(context: BuildContext) Widget Scaffold( appBar = AppBar(title = Text(\"My store\")), body = ProductListStateBuilder<ProductListManager>( loading = () => Center(child = CircularProgressIndicator()), items…",
+   "body": [
+    "```nuclear",
+    "@screen(route = \"/products\", providers = [ProductListManager])",
+    "stateless ProductListScreen",
+    "  build(context: BuildContext) Widget",
+    "    Scaffold(",
+    "      appBar = AppBar(title = Text(\"My store\")),",
+    "      body = ProductListStateBuilder<ProductListManager>(",
+    "        loading = () => Center(child = CircularProgressIndicator()),",
+    "        items = (items) => ListView.builder(",
+    "          itemCount = items.length,",
+    "          itemBuilder = (context, i) => ListTile(",
+    "            leading = SizedBox(width = 48, height = 48, child = Image.network(items[i].image)),",
+    "            title = Text(items[i].title),",
+    "            subtitle = Text(\"\\$${items[i].price}\"),",
+    "          ),",
+    "        ),",
+    "        error = (e) => Center(child = Text(e.message)),",
+    "      ),",
+    "      floatingActionButton = FloatingActionButton(",
+    "        onPressed = () => ProductListManager.load(),",
+    "        child = Icon(Icons.refresh),",
+    "      ),",
+    "    )",
+    "```",
+    "",
+    "- `dragonfly g s` gives it the route of its name (`/product-list`); two screens cannot have the same one.",
+    "- An image inside a `ListTile` needs a fixed size (`SizedBox`): if it fails to load, it takes the whole row.",
+    "",
+    "**Navigation**: in `components/home/presentation/home/home_screen.nuc`, inside the `Scaffold`:",
+    "",
+    "```nuclear",
+    "      floatingActionButton = FloatingActionButton(",
+    "        onPressed = () => context.goTo(ProductListScreen()),",
+    "        child = Icon(Icons.shopping_bag),",
+    "      ),",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#3-write-the-business-logic.9b9746",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 3. Write the business logic",
+   "summary": "baseUrl = \"https://fakestoreapi.com/\", Product id: int title: string price: double image: string ProductError message: string If the backend uses another name for a field, `@key` says so; if it sends data in its own format (a date in milliseconds), a `converter` reads and writes it.",
+   "body": [
+    "**The API**, in `config/project_config.nuc`:",
+    "",
+    "```nuclear",
+    "      baseUrl = \"https://fakestoreapi.com/\",",
+    "```",
+    "",
+    "**The models**, in `components/products/domain/models/product.nuc`:",
+    "",
+    "```nuclear",
+    "Product",
+    "  id: int",
+    "  title: string",
+    "  price: double",
+    "  image: string",
+    "",
+    "ProductError",
+    "  message: string",
+    "```",
+    "",
+    "If the backend uses another name for a field, `@key` says so; if it sends data in its own format (a date in",
+    "milliseconds), a `converter` reads and writes it. Its types come from the signature of `fromJson`:",
+    "",
+    "```nuclear",
+    "Order",
+    "  id: int",
+    "  @key(\"created_at\")",
+    "  @EpochConverter",
+    "  createdAt: DateTime",
+    "```",
+    "",
+    "```nuclear",
+    "// shared/converters/epoch_converter.nuc",
+    "converter EpochConverter",
+    "  fromJson(json: int) DateTime",
+    "    DateTime.fromMillisecondsSinceEpoch(json)",
+    "  toJson(value: DateTime) int",
+    "    value.millisecondsSinceEpoch",
+    "```",
+    "",
+    "**The repository** (each method without a body is an http request), in",
+    "`components/products/data/product_repository.nuc`:",
+    "",
+    "```nuclear",
+    "@repository(path = \"products\")",
+    "repository ProductRepository",
+    "  @get(cache = true)",
+    "  getAll() Result<ProductError, Product[]>",
+    "",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<ProductError, Product>",
+    "```",
+    "",
+    "**The use case**, a new file `components/products/domain/usecases/list_products_usecase.nuc`:",
+    "",
+    "```nuclear",
+    "usecase ListProductsUseCase",
+    "  (repository: ProductRepository)"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#3-write-the-business-logic.d257b0",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 3. Write the business logic",
+   "summary": "@requires(internet = true) exec() Result<ProductError, Product[]> products = ~repository.getAll() Ok(products.filter((p) => p.price < 100)) `~` waits for the response; if it fails, the error is returned by itself (no `try` nor `match`).",
+   "body": [
+    "@requires(internet = true)",
+    "  exec() Result<ProductError, Product[]>",
+    "    products = ~repository.getAll()",
+    "    Ok(products.filter((p) => p.price < 100))",
+    "```",
+    "",
+    "`~` waits for the response; if it fails, the error is returned by itself (no `try` nor `match`). Without",
+    "internet, it returns the error without calling the API.",
+    "",
+    "**The facade** (the only thing other components see), in `components/products/products_component.nuc`:",
+    "",
+    "```nuclear",
+    "appcomponent ProductsComponent",
+    "  list() = ListProductsUseCase.exec",
+    "```",
+    "",
+    "**The state model** (the screen's states), in",
+    "`components/products/presentation/product_list/state_models/product_list_state.nuc`:",
+    "",
+    "```nuclear",
+    "ProductListState",
+    "  (items: Product[], error: ProductError, loading: boolean)",
+    "```",
+    "",
+    "**The manager** (the screen's state), in",
+    "`components/products/presentation/product_list/managers/product_list_manager.nuc`:",
+    "",
+    "```nuclear",
+    "@stateModel(ProductListState)",
+    "statemanager ProductListManager",
+    "  (products: ProductsComponent)",
+    "    load()",
+    "",
+    "  @state(ProductListState.loading)",
+    "  loading()",
+    "",
+    "  @before(loading)",
+    "  @state(ProductListState.items)",
+    "  load() Result<ProductError, Product[]>",
+    "    ~products.list()",
+    "```",
+    "",
+    "`load()` below the constructor runs when the screen is created; `@before(loading)` shows the loading state, and",
+    "an error goes by itself to the `error` state.",
+    "",
+    "**The screen**, in `components/products/presentation/product_list/product_list_screen.nuc`:"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#4-tests",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 4. Tests",
+   "summary": "`test/products_test.nuc`: shirt() Product Product(id = 1, title = \"Shirt\", price = 20.5, image = \"\") @mock([ProductRepository]) ProductsTest setUp() when(() => ProductRepository.getAll()).thenReturnAsync(Ok([shirt(), Product(id = 2, title = \"TV\", price = 900, image = \"\")])) @test(\"the list has…",
+   "body": [
+    "`test/products_test.nuc`:",
+    "",
+    "```nuclear",
+    "shirt() Product",
+    "  Product(id = 1, title = \"Shirt\", price = 20.5, image = \"\")",
+    "",
+    "@mock([ProductRepository])",
+    "ProductsTest",
+    "  setUp()",
+    "    when(() => ProductRepository.getAll()).thenReturnAsync(Ok([shirt(), Product(id = 2, title = \"TV\", price = 900, image = \"\")]))",
+    "",
+    "  @test(\"the list has only the products under 100\")",
+    "  cheap()",
+    "    expect(~ProductsComponent.list(), isOkWith([shirt()]))",
+    "",
+    "  @widget(\"the screen shows the products\")",
+    "  screen(tester: WidgetTester)",
+    "    ~tester.pumpScreen(ProductListScreen())",
+    "    expect(find.text(\"Shirt\"), findsOneWidget)",
+    "```",
+    "",
+    "The repository is a mock; the component, the use case and the screen are the real ones. Each app also gets",
+    "generated tests (JSON of the models, requests of the repositories, screens)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#5-check-test-and-run.9d1bec",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 5. Check, test and run",
+   "summary": "dragonfly check # errors and architecture rules (does not need Flutter) dragonfly test # written + generated tests dragonfly code # VS Code: choose a device and press F5 dragonfly run -- -d linux # or from the terminal dragonfly device iphone14pro # a test phone in its own window (several at once)…",
+   "body": [
+    "```sh",
+    "dragonfly check              # errors and architecture rules (does not need Flutter)",
+    "dragonfly test               # written + generated tests",
+    "dragonfly code               # VS Code: choose a device and press F5",
+    "dragonfly run -- -d linux    # or from the terminal",
+    "dragonfly device iphone14pro # a test phone in its own window (several at once)",
+    "dragonfly terminal-device    # or inside the terminal",
+    "dragonfly build apk          # build to publish",
+    "```",
+    "",
+    "In VS Code (with `dragonfly code` or opening the folder with `code .`) you choose the device in the status bar",
+    "and run with ▷ or F5 from any `.nuc`, as in a Flutter project. Saving a `.nuc` transpiles and hot reloads the",
+    "running app; the errors of the `.nuc` files show in Problems while you type. In Android Studio you open the",
+    "project folder; the first time the Nuclear plugin asks for *Reopen Project* and then there is a device picker,",
+    "`main.dart` ▷ and hot reload when saving a `.nuc` (spec/flutter.md §11.2). In Zed, the task **Dragonfly: run**",
+    "(*task: spawn*) runs the app in a terminal, where `r` does a hot reload (spec/flutter.md §11.3).",
+    "",
+    "More things the editors do (spec/flutter.md §11.1 and §11.2):"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#5-check-test-and-run.9f9197",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 5. Check, test and run",
+   "summary": "highlights the `.nuc` line, and a Dart run-time error is marked on its `.nuc` line with a window beside it that explains it.",
+   "body": [
+    "- **Debugging in Nuclear:** a breakpoint in a `.nuc` stops the app on that line (with Debug), the pause",
+    "  highlights the `.nuc` line, and a Dart run-time error is marked on its `.nuc` line with a window beside it that",
+    "  explains it. From the terminal: `dragonfly explain < error.txt`. In VS Code, after a `.nuc` breakpoint, F10",
+    "  advances one Nuclear line (not a Dart one), the mouse over a name shows its value and the *Nuclear Call Stack*",
+    "  view gives the stack in Nuclear.",
+    "- **If something fails without errors in the `.nuc` files** (packages, stale generated code, a broken build),",
+    "  the extensions run `dragonfly repair` by themselves and relaunch the app; you can also run it by hand:",
+    "  `dragonfly repair`.",
+    "- **Dragonfly devices from the terminal:** `dragonfly device` opens the app in a phone-shaped window, like an",
+    "  emulator (with another device name, another one: device 2, 3...), and `dragonfly terminal-device` shows it",
+    "  inside the terminal, with mouse and keyboard (`?` shows the keys). See spec/flutter.md §11.",
+    "- **Dragonfly device (VS Code):** choose \"Dragonfly device\" in the device picker (it comes with the extension;",
+    "  the first time it asks for *Reload Window*) and the app runs inside VS Code, on an emulated iPhone, Pixel, iPad",
+    "  or desktop, with hot reload on save. It is Flutter web: native features (camera, files) are tested on a real",
+    "  device."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#6-next-steps.5c02e5",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 6. Next steps",
+   "summary": "The complete example project (login with a form and remote validation, dialogs, translations in English and Spanish, global events, ACL, tabs, an error page) is in `examples/examples-flutter-dialect/clean-flutter-project/`.",
+   "body": [
+    "| A short message | `Popups.toast(context, \"Copied\")`, `Popups.snackbar(context, \"No network\", type = PopupType.danger)` | §6.15 |",
+    "| Texts in several languages | `assets/i18n/<language>/<component>.json`, `Translations(locales = [\"en\", \"es\"])` in the config, `\"products.list.title\".tr()` | §6.16 |",
+    "",
+    "The complete example project (login with a form and remote validation, dialogs, translations in English and",
+    "Spanish, global events, ACL, tabs, an error page) is in `examples/examples-flutter-dialect/clean-flutter-project/`.",
+    "",
+    "`dragonfly new` does not create the translation dictionaries yet; the folders of `assets/i18n/` you add are",
+    "declared in the app's pubspec by the build (spec/flutter.md §3.2)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#6-next-steps.630b62",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly — 6. Next steps",
+   "summary": "6. Next steps",
+   "body": [
+    "| For | You write | Spec |",
+    "|---|---|---|",
+    "| A screen only with a session | `@screen(..., loggedIn = { forward: LoginScreen })` | flutter.md §6.9 |",
+    "| Roles and permissions | `acl = { roles: [\"admin\"], forward: DeniedScreen }`, `Acl(inherits = {...})` | §6.13 |",
+    "| Starting and ending the session | `~session.start(auth, token = auth.token, roles = auth.roles)`, `~session.destroy()` | §6.12 |",
+    "| Showing something by session | `GlobalEvents<Auth>(sessionStarted = (auth) => ..., sessionEnded = (e) => ...)` | §6.10 |",
+    "| Tabs | `shell = { widget: MainShell, tab: 0 }` | §6.9 |",
+    "| A global event | `event ForceLogout` + `Events.publish(ForceLogout())` | §6.10 |",
+    "| Something that runs with each event | a `component` in `shared/components/` with `@on(Event)` | §6.11 |",
+    "| A form with validations | a form model in `presentation/<p>/forms/` (`@required`, `@email`, `@minLength(6)`...), `@form(XForm) formmanager XFormManager`, `DragonflyForm(manager = XFormManager, onSubmit = (form) => ...)` + `FormTextField(\"field\")` + `FormSubmit` | §6.14 |",
+    "| Validating a field against the API | in the form manager, `@validate(\"field\")` on a method that calls the component and returns the message or `null` | §6.14 |",
+    "| A dialog | `DragonflyDialog.success(child = Text(\"Saved\")).show(context)`; with `onAccept = () => ...`, Close / Accept | §6.15 |"
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/dragonfly/tutorial.md#tutorial-a-flutter-app-from-scratch-with-dragonfly",
+   "type": "guide",
+   "title": "Tutorial: a Flutter app from scratch with Dragonfly",
+   "summary": "We are going to build my_store, an app that shows the products of a public API (fakestoreapi.com): a component with its repository, a use case, the screen's state, the screen, navigation and its tests.",
+   "body": [
+    "We are going to build **my_store**, an app that shows the products of a public API (fakestoreapi.com): a",
+    "component with its repository, a use case, the screen's state, the screen, navigation and its tests. Everything",
+    "is written in Nuclear; the Flutter app is generated by itself.",
+    "",
+    "The full rules are in [spec/flutter.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md) (or `nuclear help flutter`)."
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/tutorial.md"
+   ],
+   "meta": {
+    "section": "04-dragonfly",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  }
+ ]
+}

@@ -1,0 +1,3232 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "03-compiler",
+ "about": "The compiler inside: dialects as data, type definitions, the emitter",
+ "rows": [
+  {
+   "id": "doc:crates/nuclear-lsp/README.md#code-metrics.428c0c",
+   "type": "readme",
+   "title": "nuclear-lsp — the language server of NuclearLang — Code metrics",
+   "summary": "The server computes it (`lsp/src/metrics.rs`), so both editors show the same.",
+   "body": [
+    "The server computes it (`lsp/src/metrics.rs`), so both editors show the same. `nuclear-lsp --codemetrics-defaults`",
+    "prints every setting with its default value; `node scripts/codemetrics-settings.mjs` uses it to generate the",
+    "settings of `package.json` and `jetbrains/resources/codemetrics-defaults.json` (run by `npm run package` and",
+    "`build.sh`)."
+   ],
+   "agents": false,
+   "sources": [
+    "crates/nuclear-lsp/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:crates/nuclear-lsp/README.md#code-metrics.74ed10",
+   "type": "readme",
+   "title": "nuclear-lsp — the language server of NuclearLang — Code metrics",
+   "summary": "Settings: in VS Code, `nuclear.codemetrics.basics.*` (thresholds, messages, template, colors, which declarations get a *code lens*, `Exclude`, `IgnoredFunctionNames`, `DiagnosticsEnabled`...) and `nuclear.codemetrics.nodeconfiguration.*` (cost and description of each node).",
+   "body": [
+    "| Nuclear | Node | Cost |",
+    "|---|---|---|",
+    "| function, method, constructor, lambda | `FunctionDeclaration`, `MethodDeclaration`, `Constructor`, `ArrowFunction` | 1 |",
+    "| enum | `EnumDeclaration` | 1 |",
+    "| `if` / `else if` (with another branch after it) | `IfWithElseStatement` | 1 |",
+    "| `if` / `else if` (last branch), `if` inside a list | `IfStatement` | 1 |",
+    "| `match` / each branch / the `_` branch | `SwitchStatement` / `CaseClause` / `DefaultClause` | 1 / 1 / 1 |",
+    "| `for`, `while`, `try`, `catch`, `throw`, `return`, `break`, `continue` | `ForStatement`... | 1 |",
+    "| `and`, `or` | `BinaryExpression` | 1 |",
+    "| `cond ? a : b` | `ConditionalExpression` | 1 |",
+    "| module, getter, setter, fields, calls, literals... | `ClassDeclaration`... | 0 |",
+    "",
+    "Settings: in VS Code, `nuclear.codemetrics.basics.*` (thresholds, messages, template, colors, which declarations",
+    "get a *code lens*, `Exclude`, `IgnoredFunctionNames`, `DiagnosticsEnabled`...) and",
+    "`nuclear.codemetrics.nodeconfiguration.*` (cost and description of each node). In Android Studio: *Settings →",
+    "Tools → NuclearLang → Code Metrics*. Commands: **Toggle code metrics** and **Toggle code lenses for arrow",
+    "functions** (VS Code's palette; *Tools → NuclearLang* in JetBrains)."
+   ],
+   "agents": false,
+   "sources": [
+    "crates/nuclear-lsp/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:crates/nuclear-lsp/README.md#code-metrics.b01936",
+   "type": "readme",
+   "title": "nuclear-lsp — the language server of NuclearLang — Code metrics",
+   "summary": "A copy of the CodeMetrics extension (kisstkondoros, MIT), with the same settings, costs and messages.",
+   "body": [
+    "A copy of the **CodeMetrics** extension (kisstkondoros, MIT), with the same settings, costs and messages. Above",
+    "each function, method, constructor, lambda, getter/setter, enum and module a *code lens* appears:",
+    "",
+    "```",
+    "Complexity is 3 Everything is cool!",
+    "label(n: int) string",
+    "```",
+    "",
+    "| Complexity | Message (setting) |",
+    "|---|---|",
+    "| ≤ 5 (`ComplexityLevelNormal`) | `Everything is cool!` (`ComplexityLevelLowDescription`) |",
+    "| 6–10 (`ComplexityLevelHigh`) | `It's time to do something...` |",
+    "| 11–25 (`ComplexityLevelExtreme`) | `You must be kidding` |",
+    "| > 25 | `Bloody hell...` |",
+    "",
+    "It shows only from 3 (`CodeLensHiddenUnder`). A click opens the list of what adds up, in the format",
+    "`1 - Ln 2 Col 3 If with else statement` with the code on the right; walking it, the cursor jumps to each entry. A",
+    "square of the level's color is also drawn at the end of the line, with a mark in the right side bar.",
+    "",
+    "How it is computed (like `tsmetrics-core`): each node adds a configurable cost. A function, method, constructor or",
+    "lambda adds its own cost plus what is inside; a module shows the **maximum** of its members. Default costs (the",
+    "names are the original's TypeScript nodes):"
+   ],
+   "agents": false,
+   "sources": [
+    "crates/nuclear-lsp/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:crates/nuclear-lsp/README.md#supported-dialects",
+   "type": "readme",
+   "title": "nuclear-lsp — the language server of NuclearLang — Supported dialects",
+   "summary": "`flutter` (default) and `base` (only the base language, no dialect).",
+   "body": [
+    "`flutter` (default) and `base` (only the base language, no dialect). The server loads any dialect it finds, but the",
+    "packages only include `dart` and `flutter`."
+   ],
+   "agents": false,
+   "sources": [
+    "crates/nuclear-lsp/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:crates/nuclear-lsp/README.md#what-the-server-does.51938e",
+   "type": "readme",
+   "title": "nuclear-lsp — the language server of NuclearLang — What the server does",
+   "summary": "What the server does",
+   "body": [
+    "| Feature | Detail |",
+    "|---|---|",
+    "| Diagnostics | The same as `nuclear check` (codes N00xx/N01xx/N02xx) while you type. |",
+    "| Quick fixes | Each diagnostic with an exact fix (`&&` → `and`) offers a *quick fix*. |",
+    "| Semantic highlighting | Tells apart dialect kinds (`stateless`), modifiers (`get`), modules, enums, functions, fields, parameters, named arguments, Flutter widgets (`defaultLibrary`), deprecated names struck through (`deprecated`)... |",
+    "| Hover | Signature and comment of each declaration; for an external class, function, constructor or member (Flutter, Dart, bloc, dio...), its API in Nuclear notation, its documentation, the package (`flutter@3.47.7`) and the link to api.flutter.dev; for a kind, its description; for reserved words, their use. |",
+    "| Completion | Visible variables (block scope), members after `Enum.`/`Module.`, statics, named constructors and enum values of external classes (`Colors.`, `Text.rich`, `TextAlign.center`), members of a value of a known type (`dio: Dio`, `dio = Dio()`, `state` inherited from `Cubit<int>`), named arguments of the file's and external widgets (`Text('a', style = …)`, required ones first), methods of the external base to override (`initState`, `build`...), kinds and templates at the start of a line, and the public declarations of the type definitions filtered by prefix. |"
+   ],
+   "agents": false,
+   "sources": [
+    "crates/nuclear-lsp/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:crates/nuclear-lsp/README.md#what-the-server-does.82bbcb",
+   "type": "readme",
+   "title": "nuclear-lsp — the language server of NuclearLang — What the server does",
+   "summary": "Dialects reload without restarting when a `.toml` changes (VS Code watches `/dialects/`).",
+   "body": [
+    "Dialects reload without restarting when a `.toml` changes (VS Code watches `**/dialects/**`).",
+    "",
+    "Where it looks for dialects, in order: the `nuclear.dialectPaths` setting, `$NUCLEAR_DIALECT_PATH`,",
+    "`<workspace>/dialects`, `dialects/` next to the binary (so it finds them in the packages) and the repository's",
+    "`dialects/`. Type definitions (`../../spec/definitions.md`) are looked for in the `defs/` folder next to each dialects",
+    "folder; the full `api.json` is read once per loaded dialect."
+   ],
+   "agents": false,
+   "sources": [
+    "crates/nuclear-lsp/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:crates/nuclear-lsp/README.md#what-the-server-does.d7fe97",
+   "type": "readme",
+   "title": "nuclear-lsp — the language server of NuclearLang — What the server does",
+   "summary": "What the server does",
+   "body": [
+    "| Signature help | Parameters of the file's functions and widgets and of external constructors, functions and methods (`Scaffold({key?: Key, appBar?: ...})`, positional ones first); highlights the current argument. |",
+    "| Navigation | Go to definition, find references, highlight uses, rename (it does not allow switching PascalCase ↔ camelCase). |",
+    "| Structure | Outline (modules, kinds, fields, methods) and folding by indentation. |",
+    "| Projects | A file inside a folder with `nuclear.toml` or `main.nuc` (Dragonfly) sees the names of the other files (completion, hover, go to definition), takes the kind of its folder (`domain/models` → `model`) and, saved, the project's diagnostics (N0301/N0302/N0303). What is in `test/` is only seen by `test/`. |",
+    "| Decorators | Completion after `@` (the dialect's: `@screen`, `@on`, `@test`...) and, inside `@screen(...)`, its arguments (`route = `) and the fields of an object argument (`loggedIn = { forward: `) from `[decorators.args]`, required ones first; hover with the list of arguments. Guide: `nuclear help tutorial` and `spec/flutter.md` §6.9–6.13. |",
+    "| Generated code | The `nuclear/transpile` request: VS Code shows it with **Nuclear: Show Generated Code**. |",
+    "| Code metrics | Complexity (an approximation of the cyclomatic one) on each function, method, module...: see below. |"
+   ],
+   "agents": false,
+   "sources": [
+    "crates/nuclear-lsp/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#code-map.3603c1",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Code map",
+   "summary": "Code map",
+   "body": [
+    "| Path | What it does |",
+    "|---|---|",
+    "| `crates/nuclear-diag/src/lib.rs` | `Diagnostic`, `SourceFile`, codes N00xx (syntax), N01xx (resolver), N02xx (dialect), N03xx (project); text and JSON |",
+    "| `crates/nuclear-syntax/src/lexer.rs`, `token.rs` | tokens + INDENT/DEDENT (none inside `()[]{}`) → [syntax.md](syntax.md) |",
+    "| `crates/nuclear-syntax/src/fmt.rs` | `nuclear fmt`: rewrites only the gaps between tokens (indentation, spaces, blank lines, comments), copies every token as written and refuses a result that does not lex to the same tokens and comments; `tests/fmt.rs` keeps every `.nuc` of the repository formatted |",
+    "| `crates/nuclear-syntax/src/parser.rs`, `ast.rs` | `parse(src) -> Parsed`. \"Header + block\": words before the name are kinds or modifiers (`Decl.words`), words after it are clauses |",
+    "| `crates/nuclear-syntax/src/doc.rs` | `DocComment::parse`: doc comments with `@param/@return/@throws/@example/@see/@deprecated/@since`; `markdown()`, `param(name)` |",
+    "| `crates/nuclear-dialect/src/template.rs` | Mustache subset: `{{x}}`, `{{#x}}`, `{{^x}}`, `{{.}}`, `@first/@last/@index`, filters `pascal camel snake kebab lower upper join:\", \"` |",
+    "| `crates/nuclear-dialect/src/contract.rs` | SYNTAX/TYPES/OPERATORS templates, variables of each kind, OPTIONS; `markdown()` = `nuclear spec` |"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#code-map.448a04",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Code map",
+   "summary": "Code map",
+   "body": [
+    "| `crates/nuclear-dialect/src/library.rs` + `dialects/<lang>/library.toml` | Nuclear's standard library (ADR-0094, `spec/library.md`): the vocabulary in Rust (bases, members, result types, wrong target names), one template per member in each language dialect (`spec/dialects.md` §5.8; `helper` written once per file) |",
+    "| `crates/nuclear-transpile/src/project.rs` | multi-file projects → [projects.md](projects.md) |",
+    "| `crates/nuclear-transpile/src/contract.rs` | the contract of a project (`.nuclear/contract.json`: models, routes or calls, in Nuclear notation), its OpenAPI document, and the Nuclear a client generates from the contracts its manifest declares (`contracts/<name>/`; `sync` runs at the start of `project::build`, `write` with the card); `nuclear contracts list|update` in the CLI (ADR-0098, `spec/projects.md` §1.2) |",
+    "| `crates/nuclear-cli/src/main.rs` | the `nuclear` binary; `TOPICS` embeds the docs (`include_str!`; a new `.md` in `spec/` or `docs/language/` must be a topic, a test checks it) |",
+    "| `crates/nuclear-cli/src/agent.rs` | `nuclear agent init` (AGENTS.md section, CLAUDE.md, Cursor rule, Claude Code hook) and `nuclear agent hook` (checks the edited `.nuc`, one line per error, exit 2) (ADR-0087) |"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#code-map.921ed3",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Code map",
+   "summary": "Code map",
+   "body": [
+    "| `crates/nuclear-dialect/src/model.rs` | `Loader`, `Dialect`, `Report`: `extends`/`replaces`, several .toml merged, `{ file = \"templates/x.tpl\" }`, validations N0204/N0205/N0210/N0212; `Loader::load_defs`, `add_defs` → [dialect-format.md](dialect-format.md) |",
+    "| `crates/nuclear-dialect/src/defs.rs` | type definitions: `Package`, `Repository`, `TypeDefs`, `render*` → [type-definitions.md](type-definitions.md) |",
+    "| `crates/nuclear-transpile/src/lib.rs` | `transpile()` and `check()` (API also for the LSP) |",
+    "| `crates/nuclear-transpile/src/analysis.rs` | reassigned names per block (const/let), awaits → async, `yields_block`, `pattern_names` |",
+    "| `crates/nuclear-transpile/src/alias.rs` | `f() = Module.method` rewritten before emitting → [result.md](result.md) |",
+    "| `crates/nuclear-transpile/src/emit.rs` | the template-driven emitter (largest file) → [emitter.md](emitter.md); the standard library rewrite: `static_type` (the receiver's type), `library_access`, `library_render`, N0114/N0115 |",
+    "| `crates/nuclear-dialect/src/model.rs` (kind packages) | ADR-0095: `Loader.packages` (folders with `kinds/<name>/kind.toml`), `kind_packages`, `kind_package_at`, `apply_packages` (a package of the dialect's platform becomes a plugin; its `<dialect>/` folder is a layer named after the package), `Dialect.kind_sources`, `package_gaps` (→ N0306 in `project::check_config`), `extra_docs` |"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#code-map.b49228",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Code map",
+   "summary": "Code map",
+   "body": [
+    "| `agents/` | the `nuclear` skill (`skills/nuclear/SKILL.md`, installed by `install.sh` in `~/.claude/skills`, `~/.agents/skills`, `~/.codex/skills`) and the project templates of `agent init` |",
+    "| `spec/brief/` | the short sheets for agents: `nuclear spec --brief --dialect <d>` (base + chain, ≤ 4k tokens with flutter); `BRIEFS` in main.rs embeds them |",
+    "| `examples/stdlib/` | one program per area (math, physics, bits, strings, regex, collections, types, bytes, dates, async) per target, with the shared expected output `<area>.out` (ADR-0086) |",
+    "| `tools/stdlib-check.sh` | runs `examples/stdlib/` with `tsc --strict` + node and `dart run`; both must print `<area>.out` |",
+    "| `tools/agent-eval/` | agent evaluation: `run.py --mode baseline\\|agent` runs `tasks.toml` with `claude -p` (the user's account) and stores `results/<mode>.json` |",
+    "| `languages/nuclear.toml`, `languages/docs.toml` | base reserved words; base editor docs (`nuclear_dialect::base_doc`) |",
+    "| `dialects/{typescript,dart,python,nodejs}/` | language dialects; every Dragonfly dialect extends one (Node/Express postponed by the user: do not touch until asked). Each translates the standard library (`spec/library.md`, ADR-0094) |",
+    "| `defs/dart/<package>/<version>/` | GENERATED type definitions (do not edit) |",
+    "| `tools/defs/` | defs generator (Dart, `package:analyzer`); `flutter_project/` is also the host of `analyze-flutter.sh` |"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#code-map.b6f4c7",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Code map",
+   "summary": "Code map",
+   "body": [
+    "| `tools/spec-check/` | checks that spec equivalences are the real output |",
+    "| `tools/context/` | context hooks (`STATUS.md` freshness) |",
+    "| `crates/nuclear-lsp/` | the LSP server (moves into this repository, ADR-0083) → [../crates/nuclear-lsp.md](../crates/nuclear-lsp.md) |"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#dialect-chain",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Dialect chain",
+   "summary": "typescript ─► nodejs ─► nestjs (backend platform, see dragonfly-backend/) python ─────► fastapi (backend platform, see dragonfly-backend/) dart ───────► flutter (dart: kinds extension, mixin, data · flutter: mobile platform, see dragonfly-mobile/) Each dialect is `dialects/<name>/`:…",
+   "body": [
+    "```",
+    "typescript ─► nodejs ─► nestjs   (backend platform, see dragonfly-backend/)",
+    "python ─────► fastapi             (backend platform, see dragonfly-backend/)",
+    "dart ───────► flutter            (dart: kinds extension, mixin, data · flutter: mobile platform, see dragonfly-mobile/)",
+    "```",
+    "",
+    "Each dialect is `dialects/<name>/`: `dialect.toml`, optional `keywords.toml` (target keywords only),",
+    "`docs.toml` (editor docs) and `templates/*.tpl`. `dart` and `flutter` have no auto-import lists: they come",
+    "from type definitions (`[dialect] defs`)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#l3-files",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — L3 files",
+   "summary": "L3 files",
+   "body": [
+    "| File | read-when |",
+    "|---|---|",
+    "| [syntax.md](syntax.md) | lexer or parser work: indentation, comments, blocks inside parentheses |",
+    "| [emitter.md](emitter.md) | any change to generated code |",
+    "| [result.md](result.md) | `Result`, propagation, `.ok/.error`, aliases |",
+    "| [dialect-format.md](dialect-format.md) | kinds, options, templates, dialect validation |",
+    "| [type-definitions.md](type-definitions.md) | auto-imports, overrides, `defs/`, the generator |",
+    "| [projects.md](projects.md) | multi-file builds, `[project]`, `[architecture]`, project templates |",
+    "| [testing.md](testing.md) | which test to add or where a golden file lives |",
+    "| [limits.md](limits.md) | before promising a feature: what Nuclear cannot express yet, what is planned |"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#nuclear-language-compiler-cli-lsp",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP",
+   "summary": "Future repository `nuclear` (ADR-0083).",
+   "body": "Future repository `nuclear` (ADR-0083). The base language and everything that turns it into code.",
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#rules-of-this-area",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Rules of this area",
+   "summary": "Rules of this area",
+   "body": [
+    "- The parser does not change per dialect; framework words, shortcuts and imports live in `dialects/`.",
+    "- Rust decides *what* is emitted; the dialect decides *how* it is written.",
+    "- No inferred parameters, no hoisting, no `type` (removed by the user).",
+    "- If `ast.rs` gains or changes variants, `cd editors && cargo build` breaks: tell the editors owner which ones."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/CONTEXT.md#specs-user-facing-rules",
+   "type": "context",
+   "title": "nuclear — language, compiler, CLI, LSP — Specs (user-facing rules)",
+   "summary": "`spec/nuclear-base.md` (base, Nuclear only), `spec/library.md` (the standard library, Nuclear only), `spec/{typescript,nodejs,dart,python}.md`, `spec/grammar.ebnf`, `spec/dialects.md` (dialect format, agents), `spec/definitions.md`, `spec/projects.md`, `spec/diagnostics.md`,…",
+   "body": [
+    "`spec/nuclear-base.md` (base, Nuclear only), `spec/library.md` (the standard library, Nuclear only), `spec/{typescript,nodejs,dart,python}.md`, `spec/grammar.ebnf`,",
+    "`spec/dialects.md` (dialect format, agents), `spec/definitions.md`, `spec/projects.md`,",
+    "`spec/diagnostics.md`, `spec/reserved-words.md`, `docs/language/` (guide, `referencia.md` = reference)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/dialect-format.md#decorators-and-names",
+   "type": "context",
+   "title": "Dialect format (summary; full rules in `spec/dialects.md`) — Decorators and names",
+   "summary": "`[decorators] consumed/void`, `[decorators.args]` (argument schema, N0217), `[decorators.provide] \"deco.arg\"`, `[names] written/globals`, `public = [\"@screen\"]`.",
+   "body": [
+    "`[decorators] consumed/void`, `[decorators.args]` (argument schema, N0217), `[decorators.provide]",
+    "\"deco.arg\"`, `[names] written/globals`, `public = [\"@screen\"]`. The Dart `decorator` template writes",
+    "`@Name()` for a PascalCase decorator without arguments."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/dialect-format.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/dialect-format.md#dialects-with-agents-adr-0072-0073",
+   "type": "context",
+   "title": "Dialect format (summary; full rules in `spec/dialects.md`) — Dialects with agents (ADR-0072, 0073)",
+   "summary": "Rules, process and restrictions in `spec/dialects.md` §8; tutorial `docs/dialects/create-with-agent.md`; plan (not started) `specs/002-dialects-with-agents/plan.md`: `dialect new/test`, skill + AGENTS.md, neutral Dragonfly spec, `[toolchain]`, install from a repository.",
+   "body": [
+    "Rules, process and restrictions in `spec/dialects.md` §8; tutorial `docs/dialects/create-with-agent.md`;",
+    "plan (not started) `specs/002-dialects-with-agents/plan.md`: `dialect new/test`, skill + AGENTS.md, neutral",
+    "Dragonfly spec, `[toolchain]`, install from a repository. Per-project kinds: postponed."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/dialect-format.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/dialect-format.md#editor-docs-adr-0079-spec-dialects-md-5-7",
+   "type": "context",
+   "title": "Dialect format (summary; full rules in `spec/dialects.md`) — Editor docs (ADR-0079, `spec/dialects.md` §5.7)",
+   "summary": "`languages/docs.toml` = base `[keywords] [builtins] [types] [tags]`; `dialects/<d>/docs.toml` = `[kinds] [decorators] [words]` (`Dialect::doc`, read on demand).",
+   "body": [
+    "`languages/docs.toml` = base `[keywords] [builtins] [types] [tags]`; `dialects/<d>/docs.toml` =",
+    "`[kinds] [decorators] [words]` (`Dialect::doc`, read on demand). Markdown in English. Test",
+    "`every_dialect_word_has_editor_docs`: every kind/decorator/modifier/clause has one. The examples in the",
+    "`docs.toml` files parse (checked once with `nuclear check`; no test guards it)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/dialect-format.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/dialect-format.md#files",
+   "type": "context",
+   "title": "Dialect format (summary; full rules in `spec/dialects.md`) — Files",
+   "summary": "`dialects/<name>/dialect.toml` (several `.toml` are merged; `docs.toml` is skipped by the loader), `keywords.toml`, `docs.toml`, `templates/*.tpl` (referenced as `{ file = \"templates/x.tpl\" }`).",
+   "body": [
+    "`dialects/<name>/dialect.toml` (several `.toml` are merged; `docs.toml` is skipped by the loader),",
+    "`keywords.toml`, `docs.toml`, `templates/*.tpl` (referenced as `{ file = \"templates/x.tpl\" }`). Inheritance",
+    "with `extends`/`replaces`. `nuclear spec` prints the contract: which templates exist and the variables of each."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/dialect-format.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/dialect-format.md#kinds-kinds-name",
+   "type": "context",
+   "title": "Dialect format (summary; full rules in `spec/dialects.md`) — Kinds (`[kinds.<name>]`)",
+   "summary": "Fields: `description`, `template`, `overrides` (methods with `@override`), `requires` (required methods, N0209), `members` (names the kind brings, like `setState`), `param_access`, `imports`, `rename` (e.g.",
+   "body": [
+    "Fields: `description`, `template`, `overrides` (methods with `@override`), `requires` (required methods,",
+    "N0209), `members` (names the kind brings, like `setState`), `param_access`, `imports`, `rename` (e.g.",
+    "`{{name}}Controller`), `[kinds.X.syntax]` (templates overridden inside the kind), `named_params`, `inherits`.",
+    "Framework fields: `async_methods`, `methods`, `returns`, `file_header`, `alias_via`, `declares`, `provide`,",
+    "`results`, `void_methods`. Template variables: `name`, `members`, `body`, `methods_code`, `fields`,",
+    "`params_list`, `ctor`, `decorators`, `decor`, `deco_args`, `param_groups`, `ret_info`, `owner_decor`,",
+    "`call_args`, `generic_list`, `tinfo` (full table in `spec/projects.md` §5).",
+    "",
+    "- `fields` carry `decor` (decorators of the field), `decorators` (text of the non-consumed ones) and",
+    "  `class_decorator` (first `@PascalCase` without parentheses); `methods` carry `is.<name>`.",
+    "- `decor`: an argument that is a list or object also gives its parts (`decor.screen.loggedIn.forward`,",
+    "  `decor.screen.providers.items`).",
+    "- A kind that would not write generics or interfaces is N0218 (`check_kind_writes`)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/dialect-format.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/dialect-format.md#other-sections",
+   "type": "context",
+   "title": "Dialect format (summary; full rules in `spec/dialects.md`) — Other sections",
+   "summary": "`[docs]` (`Dialect::docs_url`: API reference links for the editor), `[project] marker`/`output` (`Manifest::find`, ADR-0077), `[call_site.<Module>]`, `[project.manifest]`, `[architecture]` (see projects.md).",
+   "body": [
+    "`[docs]` (`Dialect::docs_url`: API reference links for the editor), `[project] marker`/`output`",
+    "(`Manifest::find`, ADR-0077), `[call_site.<Module>]`, `[project.manifest]`, `[architecture]`",
+    "(see [projects.md](projects.md))."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/dialect-format.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#call-sites-logs",
+   "type": "context",
+   "title": "The emitter — Call sites (logs)",
+   "summary": "`[call_site.<Module>] arg, text` (`Dialect.call_site`, `Emitter::call_site`/`with_source`): every `Log.x(...)` gets `at: '<component> › <kind> › <Class.method> · <path>.nuc:<line>'` (ADR-0078).",
+   "body": [
+    "`[call_site.<Module>] arg, text` (`Dialect.call_site`, `Emitter::call_site`/`with_source`): every",
+    "`Log.x(...)` gets `at: '<component> › <kind> › <Class.method> · <path>.nuc:<line>'` (ADR-0078)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#checks-against-the-type-definitions-adr-0088",
+   "type": "context",
+   "title": "The emitter — Checks against the type definitions (ADR-0088)",
+   "summary": "`check_construct`: N0219 (named argument not in `ClassDef.params`, only when the auto-import of the name comes from the same package: `def_libraries`) and N0220 (PascalCase call unknown to the project, auto-imports, globals, types and defs; skipped without type definitions, with an open import or…",
+   "body": [
+    "`check_construct`: N0219 (named argument not in `ClassDef.params`, only when the auto-import of the name comes from",
+    "the same package: `def_libraries`) and N0220 (PascalCase call unknown to the project, auto-imports, globals, types and",
+    "defs; skipped without type definitions, with an open import or an open module)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#constructs.382119",
+   "type": "context",
+   "title": "The emitter — Constructs",
+   "summary": "`{{#mods.get}}`.",
+   "body": [
+    "- Generic calls `X<T>(...)` (`generics` template), spread (`spread_arg`), `x as T` (`cast`), `x!` (`non_null`).",
+    "- `method`/`method_signature` get `mods` (one flag per header word): Dart writes `Color get color` with",
+    "  `{{#mods.get}}`.",
+    "- Destructuring (`destructure`/`pattern`): `[a, ...r] = xs`, `{ a, \"k\": b } = m`, `_`; existing names →",
+    "  `pattern_assign`; a mix → N0107.",
+    "- Generators: `yields_block` → `generator` flag, `generator`/`async_generator` types, no implicit return;",
+    "  `yield` / `yield_all`.",
+    "- Operators (ADR-0086): `[operators]` templates get `left`/`right` (wrapped), `left_arg`/`right_arg` (bare, for",
+    "  calls like Dart's `pow(a, b)`), `int`/`double` (`num_kind`: literals, typed locals, module fields, function",
+    "  returns) and, for `in`, `map` (a `Map` object) / `object` (a map literal or `<K, V>`). A bitwise operand of a",
+    "  comparison gets parentheses (TS binds `==` tighter); `-(a ** b)` under unary minus. `is` gets `t` (the type's",
+    "  `tinfo`: TS writes `typeof`/`Number.isInteger`/`Array.isArray`). `for_entries` gets `map`. Constructed",
+    "  `Map/Set/List<...>()` locals record their type.",
+    "- `try` as the last line returns the last line of `try` and `catch` (`try_stmt` with the tail).",
+    "- Dart top level (`toplevel_main`): statements go in a generated `main`; a variable that a declaration uses",
+    "  stays top-level; other statements plus an own `main` → N0113."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#constructs.a3b11c",
+   "type": "context",
+   "title": "The emitter — Constructs",
+   "summary": "`options.cascade_statements` (TS) `x = T()..a = 1` becomes declaration + statements.",
+   "body": [
+    "- `if` in lists → `list_if`. Cascades → `cascade` + `cascade_self` (Dart \"\", TS \"$\"); with",
+    "  `options.cascade_statements` (TS) `x = T()..a = 1` becomes declaration + statements."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#imports",
+   "type": "context",
+   "title": "The emitter — Imports",
+   "summary": "`use` shortcuts, auto-imports by free name and a kind's `imports`.",
+   "body": [
+    "`use` shortcuts, auto-imports by free name and a kind's `imports`. Decided after emitting from the words of",
+    "the code (`emit::code_words`: no comments, no string text). A module is not imported if another needed",
+    "module re-exports it (`[reexports]`)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#inheritance",
+   "type": "context",
+   "title": "The emitter — Inheritance",
+   "summary": "`@override`) or `override_interface` (interfaces; Dart only).",
+   "body": [
+    "- A method named like a member of a base in the file → `override` (extended bases; TS `override`, Dart",
+    "  `@override`) or `override_interface` (interfaces; Dart only). `inherited_members(_known)` walks the bases in",
+    "  the file and the dialect's type definitions (`Dialect.defs`). A base found in neither leaves the module",
+    "  `open` (no N0106). `options.implicit_base` (Dart: `Object`) makes `toString()` an override. A base with",
+    "  `kind = \"interface\"` in the defs goes to `implements`. Kinds use `inherits = [\"State\"]`.",
+    "- Constructors of inheriting modules: `super(...)` first in the body; its arguments see the parameters as",
+    "  locals. TS: optional `super_call`. Dart: `options.super_in_initializer` moves it to the initializer list and",
+    "  `super_param` gives `Dog(super.name, this.breed)`. A parameter named like a base member is not a new field.",
+    "- Generic bounds: `generic_param` template."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#layout-and-comments",
+   "type": "context",
+   "title": "The emitter — Layout and comments",
+   "summary": "(`Emitter::doc_before`; TS JSDoc, Dart `///` + `@Deprecated(...)`).",
+   "body": [
+    "- `line_width` and `trailing_comma`; \"hug\" when the only argument is a lambda, object or list.",
+    "- Comments stay in place with their blank line. A doc comment goes to the optional `doc_comment` template",
+    "  (`Emitter::doc_before`; TS JSDoc, Dart `///` + `@Deprecated(...)`).",
+    "- Line map: the emitter writes `\\u{E000}offset\\u{E001}` markers on statements, members, declarations and",
+    "  split arguments (`join_items_at`); `Emitter::file` removes them and fills `Output::lines` /",
+    "  `BuiltFile::lines` (ADR-0068). The generated text does not change (golden tests prove it)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#options-options",
+   "type": "context",
+   "title": "The emitter — Options (`[options]`)",
+   "summary": "`implicit_self named_args declare_ctor_fields const_collection_defaults optional_params_nullable number_separators string_quote interp_quote interp_open interp_close dollar_escape reserved_escape max_bases catch_var toplevel_statements line_width trailing_comma omit_null_default interp_bare_names…",
+   "body": [
+    "`implicit_self named_args declare_ctor_fields const_collection_defaults optional_params_nullable",
+    "number_separators string_quote interp_quote interp_open interp_close dollar_escape reserved_escape max_bases",
+    "catch_var toplevel_statements line_width trailing_comma omit_null_default interp_bare_names binary_literals",
+    "int_member_parens` (`omit_null_default`, `interp_bare_names`: Dart without `= null` and with `$name`, to avoid",
+    "lint warnings; `binary_literals = false`: Dart writes `0b1010` as `0xa`; `int_member_parens`: TS `(5).toString()`)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#targets-without-braces-python-adr-0089.5a0c98",
+   "type": "context",
+   "title": "The emitter — Targets without braces (Python, ADR-0089)",
+   "summary": "Operator templates also get `left_infix`/`right_infix` (parenthesized only where the operator's precedence needs it) and, for `eq`/`not_eq`, `null` (a side is `null`: Python `is None`).",
+   "body": [
+    "Operator templates also get `left_infix`/`right_infix` (parenthesized only where the operator's precedence needs it)",
+    "and, for `eq`/`not_eq`, `null` (a side is `null`: Python `is None`). A file imports an auto-import name only if its",
+    "generated code writes it (`written_words`). Methods of a base from the type definitions that return a Result come",
+    "from `ClassDef.results` (index.json), so `x = ~repo.find(id)` unwraps; an error type that extends the function's",
+    "(`NotFound` of `AppError`, `is_subtype`) propagates without N0109. A kind's `inherits` count as bases.",
+    "",
+    "ADR-0091: `project_import` gets `relative` (from the output file to the import, `ProjectCtx::relative`);",
+    "`alias_via = \"constructor\"` (alias.rs adds the target modules as constructor parameters and calls `field.method`);",
+    "`params_list` entries get `route` (named in a decorator's route string, `route_params`); kinds get `field_decor`;",
+    "`field` gets `tinfo`; `methods` entries get `doc_text`/`doc_literal`; project templates get `components` and `uses`;",
+    "`type_args_as_args` takes a list of functions; N0219 only with native named arguments."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#targets-without-braces-python-adr-0089.6f48ca",
+   "type": "context",
+   "title": "The emitter — Targets without braces (Python, ADR-0089)",
+   "summary": "`hoist_block_lambdas` (`block_lambda` pushes a `local_function` to `pending`, the lambda is its name `_fnN`), `init_fields` (`field_inits` + constructor params → `field_init` lines after the super call; a deferred constructor when written before the fields; the `field` template gets `in_init`; not…",
+   "body": [
+    "`hoist_block_lambdas` (`block_lambda` pushes a `local_function` to `pending`, the lambda is its name `_fnN`),",
+    "`init_fields` (`field_inits` + constructor params → `field_init` lines after the super call; a deferred constructor",
+    "when written before the fields; the `field` template gets `in_init`; not for a kind with its own `field` nor a",
+    "subclass without its own constructor), `super_ctor`, `doc_inside` (`doc_into` stores the rendered doc in",
+    "`inner_doc`; `function`/`method`/`class`/kind templates read `doc`), `interp_prefix`/`interp_brace_escape`,",
+    "`module_separator` (`sep`), `toplevel_gap` (also the blank lines `tidy` keeps), `type_args_as_args`,",
+    "`builtin_result` (`Dialect::syntax` hides `result_runtime`), `file_prelude`, `snake_case_names` (`naming.rs`: renames",
+    "the camelCase names of the AST before emitting — the `.nuc` keeps Nuclear's camelCase; names that exist as they are in",
+    "the type definitions stay; string text and map keys are data). `code_words` reads f-string `{x}` and",
+    "`# ` comments. Decorator named arguments use `named_arg` when `named_args = \"native\"`. An empty constructor text is",
+    "not inserted."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#values-and-declarations.333f8b",
+   "type": "context",
+   "title": "The emitter — Values and declarations",
+   "summary": "later is N0105. A camelCase name nothing defines is N0106 (`check_defined`), unless there is a whole-module `use` or the module inherits from something declared outside (`ModCtx.open`).",
+   "body": [
+    "- `const` or `let` depending on whether the name is reassigned in its block (`analysis::reassigned_after`).",
+    "- Block scope (`scoped()`): after an if/for/while/match/try its variables go to `Frame.gone`; reading them",
+    "  later is N0105. A camelCase name nothing defines is N0106 (`check_defined`), unless there is a whole-module",
+    "  `use` or the module inherits from something declared outside (`ModCtx.open`). Known names: locals, members",
+    "  (also inherited from bases in the file and a kind's `members`), declarations, imports, `[names] globals`,",
+    "  auto-imports, `[functions]`, base types (`int.parse`).",
+    "- `if`/`match` are values: `x = if ...` with multi-line branches → declaration + if that assigns the last",
+    "  line of each branch (`Tail::Assign`); one expression per branch → ternary. The last if/match of a function",
+    "  with a return type → `return` in each branch (`Tail::Return`). `match` becomes if/else or chained ternaries.",
+    "- Implicit return of the last line in functions, methods and block lambdas, except with return type `void`",
+    "  and in setters. An assignment as last line returns the created variable. A modifier with `void = true`",
+    "  (`set`) never returns.",
+    "- Implicit `this` (`implicit_self`); in kinds, `param_access` (e.g. `widget.{{name}}`).",
+    "- async is automatic when there is a `~call()`.",
+    "- `PascalCase(...)` constructs with the `construct` template; `not_constructors` excludes names."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#values-and-declarations.4db6e3",
+   "type": "context",
+   "title": "The emitter — Values and declarations",
+   "summary": "Values and declarations",
+   "body": [
+    "- Named arguments: `named_args = \"native\"` uses `named_arg`; otherwise they are reordered by position.",
+    "- Reserved words escaped from `dialects/<target>/keywords.toml`.",
+    "- In a text enum an item without a value takes its own name."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/type-definitions.md#generator",
+   "type": "context",
+   "title": "Type definitions (ADR-0035, 0040; `spec/definitions.md`) — Generator",
+   "summary": "`tools/defs/bin/defs.dart` (one package) and `generate.sh` (all, ~45 s); `flutter_project/` resolves Flutter plus pub packages.",
+   "body": [
+    "`tools/defs/bin/defs.dart` (one package) and `generate.sh` (all, ~45 s); `flutter_project/` resolves Flutter",
+    "plus pub packages. Installed in `<install>/tools/defs` for the CLI. TypeScript has no generator yet (from",
+    "`.d.ts`; Node is postponed). Packages outside `defs/dart/` (provider, http) have no auto-imports until generated."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/type-definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/type-definitions.md#loading-and-priority",
+   "type": "context",
+   "title": "Type definitions (ADR-0035, 0040; `spec/definitions.md`) — Loading and priority",
+   "summary": "`[dialect] defs = [\"flutter@3.47.7\", ...]` (added to the parent's).",
+   "body": [
+    "`[dialect] defs = [\"flutter@3.47.7\", ...]` (added to the parent's). Priority: parent first, order of `defs`,",
+    "each package before its dependencies, inside a package the most basic library (widgets before material).",
+    "`implicit` libraries (dart:core) are never imported. Hand-written `[auto_imports]`/`[functions]` win. A name",
+    "two packages export with different declarations goes to the first: `Flow` → `dart:developer`, not the widget.",
+    "Validations N0213/N0214. When migrating (2026-10-25) dart and flutter gave exactly the same auto-imports,",
+    "re-exports and classes as the old lists (3131 names, 2509 classes)."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/type-definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/type-definitions.md#project-packages-adr-0066-0069",
+   "type": "context",
+   "title": "Type definitions (ADR-0035, 0040; `spec/definitions.md`) — Project packages (ADR-0066, 0069)",
+   "summary": "Third-party packages of a Dragonfly project get definitions generated once into `~/.cache/nuclearlang/defs` and listed in `build/defs.lock` (`project::defs_lock`, `Loader::add_defs`).",
+   "body": [
+    "Third-party packages of a Dragonfly project get definitions generated once into",
+    "`~/.cache/nuclearlang/defs` and listed in `build/defs.lock` (`project::defs_lock`, `Loader::add_defs`). `nuclear",
+    "defs show` does not see them (they belong to the project). `Package::from_project` is false for the dialect's."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/type-definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/type-definitions.md#type-definitions-adr-0035-0040-spec-definitions-md",
+   "type": "context",
+   "title": "Type definitions (ADR-0035, 0040; `spec/definitions.md`)",
+   "summary": "Like `.d.ts` / `@types`: packages `name@version` in `defs/<language>/<package>/<version>/`, each with `package.toml`, `index.json` (transpiler: classes, auto-imports, re-exports) and `api.json` (full API in Nuclear notation, read lazily: LSP, `nuclear defs`, agents).",
+   "body": [
+    "Like `.d.ts` / `@types`: packages `name@version` in `defs/<language>/<package>/<version>/`, each with",
+    "`package.toml`, `index.json` (transpiler: classes, auto-imports, re-exports) and `api.json` (full API in",
+    "Nuclear notation, read lazily: LSP, `nuclear defs`, agents). GENERATED: never edit.",
+    "",
+    "Packages today: `dart@3.13.5`, `flutter@3.47.7`, `dragonfly@0.1.0`, `flutter_bloc@9.1.1`, `bloc@9.2.1`,",
+    "`dio@5.11.1`, `get_it@9.3.0`, `go_router@18.1.1`, `connectivity_plus@7.3.2`, `flutter_secure_storage@11.2.0`,",
+    "`json_annotation@4.12.0`."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/type-definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#1-before-you-start",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — 1. Before you start",
+   "summary": "Crystal).",
+   "body": [
+    "- NuclearLang installed (`./install.sh`): `nuclear help` must answer.",
+    "- The target language's compiler or SDK, to test that the generated code compiles (for example `crystal` for",
+    "  Crystal).",
+    "- A working folder. The agent creates the dialect in `dialects/<name>/` inside it; the transpiler looks there by",
+    "  itself.",
+    "",
+    "```sh",
+    "mkdir crystal-dialect && cd crystal-dialect",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#2-what-to-ask-the-agent",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — 2. What to ask the agent",
+   "summary": "Tell it the *what for*, not the *how*: which language or framework, which version, and what you want Nuclear to save you.",
+   "body": [
+    "Tell it the *what for*, not the *how*: which language or framework, which version, and what you want Nuclear to",
+    "save you. The agent decides the rest following §8."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#2-what-to-ask-the-agent-a-dragonfly-framework",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — A Dragonfly framework",
+   "summary": "If you want it to be Dragonfly (components, layers, use cases, repositories...), say so: Create `amber` as a Dragonfly dialect: apply to Amber the Dragonfly rules of spec/flutter.md §1, §3, §4 and §6 (components, layers, architecture kinds), written as an Amber expert would write them.",
+   "body": [
+    "If you want it to be Dragonfly (components, layers, use cases, repositories...), say so:",
+    "",
+    "```",
+    "Create `amber` as a Dragonfly dialect: apply to Amber the Dragonfly rules of spec/flutter.md",
+    "§1, §3, §4 and §6 (components, layers, architecture kinds), written as an Amber expert would",
+    "write them. Do not copy anything from Flutter that makes no sense in a backend; ask me when in doubt.",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#2-what-to-ask-the-agent-a-framework-a-dialect-that-extends-another",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — A framework (a dialect that extends another)",
+   "summary": "Create the NuclearLang dialect `amber`, which extends `crystal`, for Amber 1.4. Follow spec/dialects.md §8. Read `nuclear spec --dialect crystal` and use dialects/backend/nestjs as the reference for backend kinds (controller, service).",
+   "body": [
+    "```",
+    "Create the NuclearLang dialect `amber`, which extends `crystal`, for Amber 1.4.",
+    "Follow spec/dialects.md §8. Read `nuclear spec --dialect crystal` and use dialects/backend/nestjs as the",
+    "reference for backend kinds (controller, service). Each kind must remove repeated Amber code,",
+    "with an example in dialects/amber/spec.md. Validate with `nuclear dialect check amber --json`.",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#2-what-to-ask-the-agent-a-language-target-dialect",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — A language (target dialect)",
+   "summary": "Create the NuclearLang dialect `crystal` for Crystal 1.14. Follow spec/dialects.md §8 to the letter: read the contract with `nuclear spec`, use dialects/typescript as the structure reference, write dialects/crystal/spec.md first with one example per rule, then dialect.toml, keywords.toml and the…",
+   "body": [
+    "```",
+    "Create the NuclearLang dialect `crystal` for Crystal 1.14.",
+    "Follow spec/dialects.md §8 to the letter: read the contract with `nuclear spec`, use",
+    "dialects/typescript as the structure reference, write dialects/crystal/spec.md first with one",
+    "example per rule, then dialect.toml, keywords.toml and the templates.",
+    "Validate with `nuclear dialect check crystal --json` until there are no errors, compile each example with",
+    "`nuclear build <file.nuc> --dialect crystal` and compile it with `crystal build --no-codegen`.",
+    "Respect the restrictions of §8.4: if something of the base language cannot be written with templates,",
+    "stop and tell me, do not fake it. At the end give me the list of covered constructs and the missing ones.",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#3-what-the-agent-does-so-you-know-how-to-review-it",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — 3. What the agent does (so you know how to review it)",
+   "summary": "1. Reads `nuclear spec` (the base language, the dialect format and the list of templates, variables and options).",
+   "body": [
+    "1. Reads `nuclear spec` (the base language, the dialect format and the list of templates, variables and",
+    "   options).",
+    "2. Writes `dialects/<name>/spec.md`: each rule with a `nuclear` block and the target code that must come out.",
+    "3. Writes `dialect.toml`, the templates and `keywords.toml` until `nuclear dialect check` gives `[]` (no errors).",
+    "4. Compiles each example with `nuclear build` and fixes the templates until the output is that of `spec.md`.",
+    "5. Compiles the output with the target's compiler.",
+    "6. Delivers the coverage and what it could not do.",
+    "",
+    "A real example of what a minimal kind produces (`handler`, on top of `typescript`):",
+    "",
+    "```toml",
+    "# dialects/minest/dialect.toml",
+    "[dialect]",
+    "name = \"minest\"",
+    "extends = \"typescript\"",
+    "",
+    "[kinds.handler]",
+    "description = \"handler Name + methods → exported class\"",
+    "template = \"export class {{name}}Handler {\\n  {{members}}\\n}\"",
+    "```",
+    "",
+    "```nuclear",
+    "handler Users",
+    "  list() int[]",
+    "    [1, 2]",
+    "```",
+    "",
+    "```typescript",
+    "export class UsersHandler {",
+    "  list(): number[] {",
+    "    return [1, 2];",
+    "  }",
+    "}",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#4-how-to-review-the-result",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — 4. How to review the result",
+   "summary": "And read `spec.md`: each rule must have its example, without questions nor pending items.",
+   "body": [
+    "| Check | Command | It must give |",
+    "|---|---|---|",
+    "| The dialect is valid | `nuclear dialect check <name> --json` | `[]` |",
+    "| A file compiles | `nuclear check file.nuc --dialect <name> --json` | `[]` |",
+    "| The output | `nuclear build file.nuc --dialect <name>` | the code of `spec.md` |",
+    "| The spec other agents will see | `nuclear spec --dialect <name>` | the base + the specs of the chain |",
+    "",
+    "And read `spec.md`: each rule must have its example, without questions nor pending items."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#5-what-the-agent-cannot-do",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — 5. What the agent cannot do",
+   "summary": "The full restrictions are in spec/dialects.md §8.4. The ones that matter most when reviewing: out of a template, the agent tells you; that change is made by the NuclearLang team.",
+   "body": [
+    "The full restrictions are in [spec/dialects.md §8.4](../../spec/dialects.md). The ones that matter most when",
+    "reviewing:",
+    "",
+    "- **It does not touch the transpiler nor Nuclear's syntax.** If the target needs something that does not come",
+    "  out of a template, the agent tells you; that change is made by the NuclearLang team.",
+    "- **It does not edit the shipped dialects** (`typescript`, `dart`, `nodejs`, `nestjs`, `flutter`): it extends",
+    "  them.",
+    "- **It does not invent a second way of writing the same thing**: each kind removes repeated code.",
+    "- **It leaves no rule without an example** nor examples that are not the real output.",
+    "- **It writes everything in English**: the TOML comments, the templates, the examples and `spec.md`.",
+    "- **It does not generate code an expert in the target would not write** (reflection, unused layers, compiler",
+    "  warnings).",
+    "",
+    "If you see any of this in what it delivered, ask it to fix it quoting the restriction."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#6-using-it",
+   "type": "doc",
+   "title": "Creating a dialect with an agent — 6. Using it",
+   "summary": "nuclear build app.nuc --dialect crystal -o app.cr To use it from another folder: `--dialect-path <folder>/dialects` or the `NUCLEAR_DIALECT_PATH` variable.",
+   "body": [
+    "```sh",
+    "nuclear build app.nuc --dialect crystal -o app.cr",
+    "```",
+    "",
+    "To use it from another folder: `--dialect-path <folder>/dialects` or the `NUCLEAR_DIALECT_PATH` variable.",
+    "",
+    "What comes next (`specs/002-dialects-with-agents/plan.md`): `nuclear dialect new` and `nuclear dialect test`, a",
+    "skill that loads these rules by itself in Claude Code and an `AGENTS.md` for Codex and OpenCode, and dialects",
+    "installable from a repository with `dragonfly <dialect> new`."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/dialects/create-with-agent.md#creating-a-dialect-with-an-agent",
+   "type": "doc",
+   "title": "Creating a dialect with an agent",
+   "summary": "This tutorial shows how to create a new NuclearLang dialect (a language like `crystal` or a framework like `amber`) using a coding agent: Claude Code, Codex or OpenCode.",
+   "body": [
+    "This tutorial shows how to create a new NuclearLang dialect (a language like `crystal` or a framework like",
+    "`amber`) **using a coding agent**: Claude Code, Codex or OpenCode. The dialect is not written by hand: you",
+    "describe what you want and review; the agent writes the files and checks them with the transpiler.",
+    "",
+    "The rules the agent follows are in [spec/dialects.md §8](../../spec/dialects.md) (purpose, what it can do,",
+    "process, **restrictions** and when it is done). The agent reads them with `nuclear spec`."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/dialects/create-with-agent.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#1-repository.2493b5",
+   "type": "spec",
+   "title": "Type definitions — 1. Repository",
+   "summary": "A package is a folder `<root>/<language>/<package>/<version>/` with three files: defs/ └── dart/ # language: the target dialect of the chain (dart, typescript...) ├── dart/3.13.5/ # Dart SDK ├── flutter/3.47.7/ # Flutter SDK ├── flutter_bloc/9.1.1/ ├── bloc/9.2.1/ ├── dio/5.11.1/ ├── get_it/9.3.0/…",
+   "body": [
+    "A package is a folder `<root>/<language>/<package>/<version>/` with three files:",
+    "",
+    "```",
+    "defs/",
+    "└── dart/                          # language: the target dialect of the chain (dart, typescript...)",
+    "    ├── dart/3.13.5/               # Dart SDK",
+    "    ├── flutter/3.47.7/            # Flutter SDK",
+    "    ├── flutter_bloc/9.1.1/",
+    "    ├── bloc/9.2.1/",
+    "    ├── dio/5.11.1/",
+    "    ├── get_it/9.3.0/",
+    "    └── json_annotation/4.12.0/",
+    "        ├── package.toml           # manifest",
+    "        ├── index.json             # what the transpiler reads on every build",
+    "        └── api.json               # the full API, for the tools",
+    "```",
+    "",
+    "The language of a dialect is the target dialect of its chain: `flutter` extends `dart`, so it uses the",
+    "packages of `defs/dart/`.",
+    "",
+    "Roots are searched in this order, and the first one that has the package wins:",
+    "",
+    "1. `--defs-path <dir>` (repeatable) and the `NUCLEAR_DEFS_PATH` variable (separated by `:`);",
+    "2. the `defs/` folder next to each dialects folder: `./defs` (next to `./dialects`), the one in the",
+    "   NuclearLang repository and the one shipped with the Language Server;",
+    "3. the cache of packages generated for projects: `$XDG_CACHE_HOME/nuclearlang/defs` or",
+    "   `~/.cache/nuclearlang/defs` (`nuclear_dialect::defs_cache_dir`), shared by every project."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#1-repository.5e5b4f",
+   "type": "spec",
+   "title": "Type definitions — 1. Repository",
+   "summary": "A project keeps its own packages (or a different version of an included one) in `<project>/defs/<language>/<name>/<version>/`; `nuclear build|check` and the LSP load every package found there.",
+   "body": [
+    "A project keeps its own packages (or a different version of an included one) in",
+    "`<project>/defs/<language>/<name>/<version>/`; `nuclear build|check` and the LSP load every package found there.",
+    "Packages a project adds are loaded on top of the dialect's: the project lists them in",
+    "`build/defs.lock` ([projects.md](projects.md) §3.2) and the tools add them with `Loader::add_defs`, which",
+    "marks them `from_project` (so they do not count as packages of the dialect)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#2-using-them-from-a-dialect.868150",
+   "type": "spec",
+   "title": "Type definitions — 2. Using them from a dialect",
+   "summary": "Example, with the `flutter` dialect: `Uint8List` → `dart:typed_data` (dart is loaded first), `Scaffold` → `package:flutter/material.dart`, `Cubit` → `package:flutter_bloc/flutter_bloc.dart` (flutter_bloc is loaded before bloc and re-exports it), `Dio` → `package:dio/dio.dart`.",
+   "body": [
+    "Example, with the `flutter` dialect: `Uint8List` → `dart:typed_data` (dart is loaded first),",
+    "`Scaffold` → `package:flutter/material.dart`, `Cubit` → `package:flutter_bloc/flutter_bloc.dart`",
+    "(flutter_bloc is loaded before bloc and re-exports it), `Dio` → `package:dio/dio.dart`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#2-using-them-from-a-dialect.8d48b0",
+   "type": "spec",
+   "title": "Type definitions — 2. Using them from a dialect",
+   "summary": "[dialect] name = \"flutter\" extends = \"dart\" defs = [\"flutter@3.47.7\", \"flutter_bloc@9.1.1\", \"get_it@9.3.0\", \"dio@5.11.1\", \"json_annotation@4.12.0\"] `flutter_bloc@9.1.1` brings `bloc@9.2.1`.",
+   "body": [
+    "```toml",
+    "[dialect]",
+    "name = \"flutter\"",
+    "extends = \"dart\"",
+    "defs = [\"flutter@3.47.7\", \"flutter_bloc@9.1.1\", \"get_it@9.3.0\", \"dio@5.11.1\", \"json_annotation@4.12.0\"]",
+    "```",
+    "",
+    "- `defs` is a list of `name@version`. A dialect adds its packages to its parent's.",
+    "- The dependencies of a package (`depends` in its `package.toml`) are loaded automatically, after it:",
+    "  `flutter_bloc@9.1.1` brings `bloc@9.2.1`.",
+    "- Each package is loaded with a single version. Two versions of the same package in the chain is error",
+    "  `N0214`; a package missing from the repository is error `N0213`, with the available versions.",
+    "",
+    "**Automatic imports.** Every public name of a package's libraries is imported when the code uses it. If",
+    "two packages export the same name, the first one loaded keeps it:",
+    "",
+    "1. the parent dialect's packages before the child's;",
+    "2. a dialect's packages in the order of `defs`, each before its dependencies;",
+    "3. inside a package, the first library of `libraries` that exports the name (the most basic one).",
+    "",
+    "`implicit` libraries (always visible in the target, like `dart:core`) are never imported, and their names",
+    "cannot be imported from another package. A name of `[auto_imports]` or `[functions]` written in a dialect",
+    "file has priority over the packages. `reexports` avoids importing a library that another imported library",
+    "already includes."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#3-format",
+   "type": "spec",
+   "title": "Type definitions — 3. Format",
+   "summary": "The files are written by a generator (§6); they are not edited by hand.",
+   "body": [
+    "The files are written by a generator (§6); they are not edited by hand. `index.json` and `api.json` carry",
+    "`\"format\": 1`. Types are written in NuclearLang notation, whatever the target language:",
+    "",
+    "| Target (Dart) | Definitions |",
+    "|---|---|",
+    "| `String`, `bool`, `num`, `int`, `double` | `string`, `boolean`, `number`, `int`, `double` |",
+    "| `List<Widget>`, `Map<String, dynamic>` | `Widget[]`, `<string, dynamic>` |",
+    "| `TextStyle?` | `TextStyle?` |",
+    "| `void Function(int value)` | `(value: int) => void` |",
+    "| `Future<Response<T>>`, `VoidCallback` | `Future<Response<T>>`, `VoidCallback` (aliases are kept) |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#3-format-3-1-package-toml",
+   "type": "spec",
+   "title": "Type definitions — 3.1 `package.toml`",
+   "summary": "[package] name = \"flutter\" version = \"3.47.7\" language = \"dart\" description = \"Flutter SDK 3.47.7: widgets, material, cupertino...\" depends = [\"dart@3.13.5\"] libraries = [\"package:flutter/widgets.dart\", \"package:flutter/material.dart\", ...] # priority order implicit = [] # dart: [\"dart:core\"]",
+   "body": [
+    "```toml",
+    "[package]",
+    "name = \"flutter\"",
+    "version = \"3.47.7\"",
+    "language = \"dart\"",
+    "description = \"Flutter SDK 3.47.7: widgets, material, cupertino...\"",
+    "depends = [\"dart@3.13.5\"]",
+    "libraries = [\"package:flutter/widgets.dart\", \"package:flutter/material.dart\", ...]   # priority order",
+    "implicit = []                                                                         # dart: [\"dart:core\"]",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#3-format-3-2-index-json",
+   "type": "spec",
+   "title": "Type definitions — 3.2 `index.json`",
+   "summary": "The minimum the transpiler needs, so that loading it on every build is fast: { \"format\": 1, \"libraries\": [\"package:flutter/widgets.dart\", \"package:flutter/material.dart\"], \"reexports\": {\"package:flutter/material.dart\": [\"package:flutter/widgets.dart\"]}, \"symbols\": { \"Scaffold\": 1, \"Text\": 0 },…",
+   "body": [
+    "The minimum the transpiler needs, so that loading it on every build is fast:",
+    "",
+    "```json",
+    "{",
+    "\"format\": 1,",
+    "\"libraries\": [\"package:flutter/widgets.dart\", \"package:flutter/material.dart\"],",
+    "\"reexports\": {\"package:flutter/material.dart\": [\"package:flutter/widgets.dart\"]},",
+    "\"symbols\": {",
+    "  \"Scaffold\": 1,",
+    "  \"Text\": 0",
+    "},",
+    "\"classes\": {",
+    "  \"State\": {\"supers\": [\"Object\", \"Diagnosticable\"], \"members\": [\"build\", \"context\", \"initState\", \"setState\"]},",
+    "  \"Comparable\": {\"kind\": \"interface\", \"supers\": [\"Object\"], \"members\": [\"compareTo\"]}",
+    "}",
+    "}",
+    "```",
+    "",
+    "- `symbols`: each public name → index of the library that provides it.",
+    "- `classes`: each class (also the private bases inheritance goes through) with its direct supertypes and",
+    "  the names of its own instance members. `kind` appears only on classes that cannot be extended:",
+    "  `\"interface\"` (goes to `implements`) or `\"mixin\"` (goes to `with`).",
+    "",
+    "Each entry of `classes` may also have `params` (the parameter names of the unnamed constructor; a named argument that",
+    "is not one is N0219) and `results` (method → its `Result<E, T>` return type, so the transpiler unwraps",
+    "`x = ~repo.find(id)` without reading `api.json`)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#3-format-3-3-api-json.1c60e6",
+   "type": "spec",
+   "title": "Type definitions — 3.3 `api.json`",
+   "summary": "3.3 `api.json`",
+   "body": [
+    "| Field | Content |",
+    "|---|---|",
+    "| `name`, `library` | Name and the library that provides it (no `library`: a private base) |",
+    "| `kind` | `class`, `mixin`, `enum`, `extension_type`, `extension`, `function`, `variable`, `typedef` |",
+    "| `modifiers` | Class modifiers of the target: `abstract`, `sealed`, `interface`, `base`, `final`, `mixin` |",
+    "| `type_params` | `[\"T\"]`, `[\"T: Comparable<T>\"]` |",
+    "| `extends`, `with`, `implements`, `on` | Supertypes; `on` is a mixin's constraint or an extension's type |",
+    "| `constructors` | `name` (`\"\"` = unnamed, `\"rich\"` = `Text.rich`), `const`, `factory`, `params` |",
+    "| `members` | `name`, `kind` (`property`, `method`, `operator`), `static`, `type` (property), `readonly`, `type_params`, `params`, `returns` |",
+    "| `params` | `name`, `type`, `named` (goes between `{ }`), `optional`, `default` (written in the target) |",
+    "| `values` | Values of an enum |",
+    "| `type` | Type of a variable or the aliased type (`typedef`) |",
+    "| `returns`, `params` | Signature of a function; `returns` types the value of a call (`env(\"PORT\")` is a `string`, so `env(\"PORT\").toInt()` is the library's `toInt`) |",
+    "| `doc`, `deprecated` | First paragraph of the documentation; the declaration is deprecated |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#3-format-3-3-api-json.385bb2",
+   "type": "spec",
+   "title": "Type definitions — 3.3 `api.json`",
+   "summary": "One declaration per line: {\"format\": 1, \"declarations\": [ {\"name\":\"Text\",\"library\":\"package:flutter/widgets.dart\",\"kind\":\"class\",\"extends\":\"StatelessWidget\",\"doc\":\"A run of text with a single…",
+   "body": [
+    "One declaration per line:",
+    "",
+    "```json",
+    "{\"format\": 1, \"declarations\": [",
+    "{\"name\":\"Text\",\"library\":\"package:flutter/widgets.dart\",\"kind\":\"class\",\"extends\":\"StatelessWidget\",\"doc\":\"A run of text with a single style.\",\"constructors\":[{\"name\":\"\",\"const\":true,\"params\":[{\"name\":\"data\",\"type\":\"string\"},{\"name\":\"style\",\"type\":\"TextStyle?\",\"named\":true,\"optional\":true}]},{\"name\":\"rich\",\"const\":true,\"params\":[...]}],\"members\":[{\"name\":\"data\",\"kind\":\"property\",\"type\":\"string?\",\"readonly\":true},{\"name\":\"build\",\"kind\":\"method\",\"params\":[{\"name\":\"context\",\"type\":\"BuildContext\"}],\"returns\":\"Widget\"}]}",
+    "]}",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#4-what-the-transpiler-does-with-them",
+   "type": "spec",
+   "title": "Type definitions — 4. What the transpiler does with them",
+   "summary": "It reads only each package's `index.json`: named like an inherited member overrides it (`override` / `override_interface`) and inherited members are used without declaring them; the definitions leaves the module open (no `N0106` nor `override`); the kind generates.",
+   "body": [
+    "It reads only each package's `index.json`:",
+    "",
+    "- automatic imports and `reexports` (§2);",
+    "- when a module extends or implements a class that is not in the file, it walks its `supers`: a method",
+    "  named like an inherited member overrides it (`override` / `override_interface`) and inherited members are",
+    "  used without declaring them;",
+    "- a name that is not in the file, the class chain or the imports is error `N0106`; a base that is not in",
+    "  the definitions leaves the module open (no `N0106` nor `override`);",
+    "- a base with `kind = \"interface\"` goes to `implements`;",
+    "- `[kinds.<k>] inherits = [\"State\"]` takes from the definitions the members and overrides of the class",
+    "  the kind generates.",
+    "",
+    "`api.json` is read only when a tool asks for the full API, once per process."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#5-tools.8114eb",
+   "type": "spec",
+   "title": "Type definitions — 5. Tools",
+   "summary": "nuclear defs list # packages of the repository nuclear defs list --dialect flutter # packages a dialect uses, in priority order nuclear defs show Text --dialect flutter # declaration in NuclearLang notation nuclear defs show Text --dialect flutter --inherited # + inherited and extension members…",
+   "body": [
+    "```sh",
+    "nuclear defs list                              # packages of the repository",
+    "nuclear defs list --dialect flutter            # packages a dialect uses, in priority order",
+    "nuclear defs show Text --dialect flutter       # declaration in NuclearLang notation",
+    "nuclear defs show Text --dialect flutter --inherited   # + inherited and extension members",
+    "nuclear defs show Dio.get --dialect flutter    # a member or a named constructor (Text.rich)",
+    "nuclear defs show Dio --dialect flutter --json # the declaration as it is in api.json",
+    "nuclear defs search snackbar --dialect flutter # declarations whose name contains the text",
+    "```",
+    "",
+    "```",
+    "$ nuclear defs show Dio.get --dialect flutter",
+    "// Dio.get",
+    "// Convenience method to make an HTTP GET request.",
+    "get<T>(",
+    "  path: string,",
+    "  {",
+    "    data?: Object,",
+    "    queryParameters?: <string, dynamic>,",
+    "    options?: Options,",
+    "    cancelToken?: CancelToken,",
+    "    onReceiveProgress?: ProgressCallback,",
+    "  },",
+    ") Future<Response<T>>",
+    "```",
+    "",
+    "Parameters are shown as in a NuclearLang signature: the ones between `{ }` are passed by name",
+    "(`dio.get(url, options = opts)`), `name?: T` is optional and `name: T = value` has a default."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#5-tools.a5233d",
+   "type": "spec",
+   "title": "Type definitions — 5. Tools",
+   "summary": "The Language Server and any tool written in Rust use the same API: `Dialect.typedefs` (`get(name)`, `members(class)` with the inherited ones, `declarations()`, `extensions_on(type)`) and the functions `render`, `render_member`, `render_constructor` and `render_param` of `nuclear_dialect::defs`.",
+   "body": [
+    "The Language Server and any tool written in Rust use the same API: `Dialect.typedefs` (`get(name)`,",
+    "`members(class)` with the inherited ones, `declarations()`, `extensions_on(type)`) and the functions",
+    "`render`, `render_member`, `render_constructor` and `render_param` of `nuclear_dialect::defs`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#6-generating-packages",
+   "type": "spec",
+   "title": "Type definitions — 6. Generating packages",
+   "summary": "Each language has a generator that writes the three files from the official source of the API: A new version of a library is a new folder; the dialect changes its reference in `defs`.",
+   "body": [
+    "Each language has a generator that writes the three files from the official source of the API:",
+    "",
+    "| Language | Generator | Source |",
+    "|---|---|---|",
+    "| `dart` | `tools/defs` (`bin/defs.dart`, `generate.sh`) | the official Dart analyzer (`package:analyzer`) over the installed SDK and the packages of `tools/defs/flutter_project/pubspec.yaml` |",
+    "",
+    "A new version of a library is a new folder; the dialect changes its reference in `defs`. Previous versions",
+    "are kept for the projects that use them.",
+    "",
+    "For a dialect to include a pub.dev package (`go_router`...): add it to",
+    "`tools/defs/flutter_project/pubspec.yaml`, add its line in `tools/defs/generate.sh`, generate it and name it",
+    "in the dialect's `defs`.",
+    "",
+    "For a package of a single project, the framework's CLI generates it: `dragonfly flutter add hive` runs",
+    "`bin/defs.dart` over the app (`--project build/app`) with the resolved version, excludes the packages the",
+    "dialect already loads (`--exclude`) and describes `package:<n>/<n>.dart` (or each file of `lib/` if it does",
+    "not exist). The result goes to the cache (§1) and is reused by every project; removing the package does not",
+    "delete it. `install.sh` installs the generator in `<install>/tools/defs`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/definitions.md#type-definitions",
+   "type": "spec",
+   "title": "Type definitions",
+   "summary": "constructors, parameters, types, members, enums, extensions, functions and documentation.",
+   "body": [
+    "**Type definitions** describe the public API of the libraries of a target language: classes,",
+    "constructors, parameters, types, members, enums, extensions, functions and documentation. They are the",
+    "equivalent of TypeScript's `.d.ts` files and `@types/*` packages: one package per library and version,",
+    "stored in a repository shared by every dialect of the same language.",
+    "",
+    "They are used by:",
+    "",
+    "- the **transpiler**: automatic imports, overrides (`override`), members inherited from external classes,",
+    "  `implements` of external interfaces and error `N0106`;",
+    "- the **tools**: the Language Server (completion, hover, parameter signatures), `nuclear defs` and agents,",
+    "  which look up an API without reading the library's source code.",
+    "",
+    "The system is the same for every language. The only language-specific part is the generator that",
+    "produces the files (§6)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/definitions.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#1-kinds-of-dialect-and-inheritance.065e19",
+   "type": "spec",
+   "title": "NuclearLang dialects — 1. Kinds of dialect and inheritance",
+   "summary": "[[generators.resource]] kind = \"usecase\" each = \"each_action\" # one file per item of the list when = \"rest\" # a value that must be true (rest, db, screen, paged, actions.<action>) name = \"{{UseCase}}\" # the declaration; the file is it in snake_case merge = false # true: a file that exists gets…",
+   "body": [
+    "[[generators.resource]]",
+    "kind = \"usecase\"",
+    "each = \"each_action\"          # one file per item of the list",
+    "when = \"rest\"                 # a value that must be true (rest, db, screen, paged, actions.<action>)",
+    "name = \"{{UseCase}}\"          # the declaration; the file is it in snake_case",
+    "merge = false                 # true: a file that exists gets only the members it lacks, each one whole (a facade's",
+    "                              # alias; a controller's route with its decorator and its body), told by its head line",
+    "template = \"\"\"...\"\"\"",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#1-kinds-of-dialect-and-inheritance.4dd5bb",
+   "type": "spec",
+   "title": "NuclearLang dialects — 1. Kinds of dialect and inheritance",
+   "summary": "typescript ──► nodejs ──► backend/nestjs python ─────► backend/fastapi dart ───────► mobile/flutter ──► myapp",
+   "body": [
+    "| Kind | What it defines | Examples |",
+    "|---|---|---|",
+    "| **Language** | How each construct of the base language and each member of the standard library ([library.md](library.md)) is written in a language: all the templates of `[syntax]`, `[types]`, `[operators]` and `[library]`. It has no `extends`. | `typescript`, `dart`, `python` |",
+    "| **Dragonfly dialect** | Implements a **platform** of Dragonfly (`web`, `mobile`, `backend`; ADR-0093) in a language and framework: extends a language dialect with the platform's kinds, shortcuts, automatic imports and its own templates. `[dialect] platform` names the platform; the folder is `dialects/<platform>/<dialect>/`. | `backend/fastapi`, `backend/nestjs`, `mobile/flutter` |",
+    "| **Project** | Extends a dialect with the shortcuts and kinds of a concrete project. Its kinds are extension kinds (ADR-0095): they exist in the dialect it extends only, so they tie the project to that dialect; they are not part of the platform contract. | `dialects/myapp/` with `extends = \"flutter\"` |",
+    "",
+    "```",
+    "typescript ──► nodejs ──► backend/nestjs",
+    "python ─────► backend/fastapi",
+    "dart ───────► mobile/flutter ──► myapp",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#1-kinds-of-dialect-and-inheritance.801219",
+   "type": "spec",
+   "title": "NuclearLang dialects — 1. Kinds of dialect and inheritance",
+   "summary": "[platform] default_dialect = \"fastapi\" # what `dragonfly new -p backend` uses without `-d` name = \"backend\" kinds = [\"entity\", \"repository\", \"model\", \"usecase\", \"appcomponent\", \"service\", \"aggregate\", \"controller\", \"listener\", \"tools\", \"agent\", \"state\", \"graph\", \"appConfig\", \"config\", \"tests\"]…",
+   "body": [
+    "```toml",
+    "# dialects/backend/platform.toml",
+    "[platform]",
+    "default_dialect = \"fastapi\"     # what `dragonfly new -p backend` uses without `-d`",
+    "name = \"backend\"",
+    "kinds = [\"entity\", \"repository\", \"model\", \"usecase\", \"appcomponent\", \"service\", \"aggregate\", \"controller\",",
+    "  \"listener\", \"tools\", \"agent\", \"state\", \"graph\", \"appConfig\", \"config\", \"tests\"]",
+    "decorators = [\"entity\", \"primary\", \"column\", \"created\", \"updated\", \"repository\", \"manyToOne\", \"oneToMany\",",
+    "  \"manyToMany\", \"oneToOne\", \"joinTable\", \"joinColumn\", \"transactional\", \"controller\",",
+    "  \"get\", \"post\", \"put\", \"patch\", \"delete\", \"status\", \"consumer\", \"start\", \"next\", \"state\", \"test\",",
+    "  \"required\", \"email\", \"url\", \"minLength\", \"maxLength\", \"min\", \"max\", \"pattern\"]",
+    "plugins = [\"sqlite\", \"postgres\", \"mysql\", \"mariadb\", \"redis\", \"kafka\", \"events\", \"ai\", \"openai\", \"ollama\", \"chroma\"]",
+    "",
+    "# the arguments and the rules of decorators, the same for every dialect of the platform (a dialect's own win)",
+    "[decorators.args]",
+    "oneToMany = [\"inverse!\"]",
+    "",
+    "# N0308: rules a field with this decorator must meet (ADR-0100)",
+    "[decorators.fields]",
+    "manyToOne = { optional = true, list = false, target = \"entity\", sibling = \"{name}Id\", inverse = \"inverse\" }",
+    "manyToMany = { optional = true, list = true, target = \"entity\", inverse = \"inverse\", with = \"joinTable\" }"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#1-kinds-of-dialect-and-inheritance.8095a8",
+   "type": "spec",
+   "title": "NuclearLang dialects — 1. Kinds of dialect and inheritance",
+   "summary": "A platform is a contract, `dialects/<platform>/platform.toml`: the kinds (name and header syntax), the consumed decorators, the plugins, the folders of a project and the editor docs that every dialect of the platform must implement, identically.",
+   "body": [
+    "A platform is a contract, `dialects/<platform>/platform.toml`: the kinds (name and header syntax), the consumed",
+    "decorators, the plugins, the folders of a project and the editor docs that every dialect of the platform must",
+    "implement, identically. The loader refuses a dialect that misses one of them, and a dialect may not add a kind,",
+    "decorator or plugin the platform does not declare: the Nuclear of a project never changes with its dialect. Only",
+    "type definitions (§5.6) and the kinds of a project dialect (§7) are a dialect's own: code that uses them is tied",
+    "to that dialect (ADR-0095)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#1-kinds-of-dialect-and-inheritance.a01aa3",
+   "type": "spec",
+   "title": "NuclearLang dialects — 1. Kinds of dialect and inheritance",
+   "summary": "The values: `Name`/`name`, `Names`/`names` (the plural), `component`/`Component`, `fields` (`name`, `type`, `optional`, `id`, `last`, `sample`), `data` (the fields without the key), `models` (`Model`, `fields`, `main`), `rest`, `db`, `path`, `baseUrl`, `connection`, `paged`, `Page`, `items` (the…",
+   "body": [
+    "The values: `Name`/`name`, `Names`/`names` (the plural), `component`/`Component`, `fields` (`name`, `type`,",
+    "`optional`, `id`, `last`, `sample`), `data` (the fields without the key), `models` (`Model`, `fields`, `main`), `rest`,",
+    "`db`, `path`, `baseUrl`, `connection`, `paged`, `Page`, `items` (the page's field with the list), `idType`, `label` (what",
+    "a list shows of an item), `listParam`/`listArg`, `sample`/`pageSample` (values for the tests), `actions.<action>`,",
+    "`each_action` (`action`, `UseCase`, `alias`, `is.<action>`), `screen`/`Screen`. The values of `usecase`: `UseCase`,",
+    "`alias`, `component`/`Component`, `params` (`id: int, input: Order`, as the project writes them), `args` (`id, input`),",
+    "`error` and `value` (the two types of its `Result`), `async` (its `exec` awaits: what calls it writes `~`); with",
+    "`--calls`, `Repository`, `method` and either `result` (the method answers a `Result`) or `plain` (its answer goes inside",
+    "an `Ok`); with `--route`, `route`, `verb`, `prefix`, `path`, `Controller` and `app` (the controller's name for the",
+    "facade). A platform without a piece for a case refuses it (`--route` where no piece has `when = \"route\"`). The Nuclear",
+    "a generator writes is the same for every dialect of the platform (rule 11); a test builds a generated resource and",
+    "its use cases with every dialect (`a_generated_resource_compiles_with_every_dialect`, dragonfly)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#1-kinds-of-dialect-and-inheritance.a72413",
+   "type": "spec",
+   "title": "NuclearLang dialects — 1. Kinds of dialect and inheritance",
+   "summary": "A field rule: `optional` (the field is `x?: T`), `list` (its type is a list, or not), `target` (its type, or its items, is a declaration with that decorator), `sibling` (a field of the same declaration must exist; `{name}` is the decorated field's name), `inverse` (the argument whose value names a…",
+   "body": [
+    "A field rule: `optional` (the field is `x?: T`), `list` (its type is a list, or not), `target` (its type, or its",
+    "items, is a declaration with that decorator), `sibling` (a field of the same declaration must exist; `{name}` is the",
+    "decorated field's name), `inverse` (the argument whose value names a field of the field's type), `with` (this field,",
+    "or the one `inverse` names, has that decorator). Names are compared as Nuclear writes them, also when the dialect",
+    "writes them in snake_case.",
+    "",
+    "A dialect inherits everything from its parent. The child's templates, types, operators and options replace",
+    "the parent's. Shortcuts (`imports`, `auto_imports`, `functions`, `kinds`, `modifiers`, `clauses`) **cannot**",
+    "be redefined: to replace one of the parent's, the child lists it in `[dialect] replaces`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#1-kinds-of-dialect-and-inheritance.d02619",
+   "type": "spec",
+   "title": "NuclearLang dialects — 1. Kinds of dialect and inheritance",
+   "summary": "[layout] usecase = \"components/{component}/domain/usecases/{file}.nuc\" appcomponent = \"components/{component}/{component}_appcomponent.nuc\" `[layout]` gives every kind of the platform its place (a kind it does not declare is an error): `nuclear help layout guessing a folder.",
+   "body": [
+    "# where each kind's file goes: {component}, {screen} (folders) and {file} (the name in snake_case)",
+    "[layout]",
+    "usecase = \"components/{component}/domain/usecases/{file}.nuc\"",
+    "appcomponent = \"components/{component}/{component}_appcomponent.nuc\"",
+    "```",
+    "",
+    "`[layout]` gives every kind of the platform its place (a kind it does not declare is an error): `nuclear help layout",
+    "--dialect <d>` prints it, and agents (the Nuclear Developer's planner) build a piece's path from it instead of",
+    "guessing a folder.",
+    "",
+    "`[[generators.<what>]]` (ADR-0103) is what `dragonfly gen <what>` writes: `component` (a component's facade),",
+    "`resource` (models, repository, a use case per action, the facade's aliases, the platform's entry: a controller, or a",
+    "screen with its state manager and state model, the tests) and `usecase` (a use case that only calls a repository",
+    "method, the alias of a use case in the facade, its route). Each entry is one file at its kind's `[layout]` place:",
+    "",
+    "```toml",
+    "[gen]",
+    "http = 'Http(baseUrl = \"{{baseUrl}}\")'                                   # the connection a REST resource adds",
+    "http_named = 'Http(connectionName = \"{{name}}\", baseUrl = \"{{baseUrl}}\")'  # when the app already has one"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#2-files-and-lookup",
+   "type": "spec",
+   "title": "NuclearLang dialects — 2. Files and lookup",
+   "summary": "A dialect is a folder `dialects/<name>/` with one or more `.toml` files, or a single file `dialects/<name>.toml`.",
+   "body": [
+    "A dialect is a folder `dialects/<name>/` with one or more `.toml` files, or a single file",
+    "`dialects/<name>.toml`. All the files of a folder are merged; only one has the `[dialect]` section. The folder",
+    "can be split by topic:",
+    "",
+    "```",
+    "dialects/mobile/flutter/",
+    "├── dialect.toml            # [dialect] (with defs, §5.6), [kinds.*], [imports]",
+    "├── docs.toml               # documentation for the editor (§5.7); not part of the dialect",
+    "└── templates/",
+    "    ├── stateless.tpl       # template of the stateless kind",
+    "    └── stateful.tpl",
+    "```",
+    "",
+    "The transpiler looks for dialects, in order, in: the directories of `--dialect-path`, those of the",
+    "`NUCLEAR_DIALECT_PATH` variable (separated by `:`), `./dialects` and the dialects shipped with NuclearLang. In each",
+    "directory it looks at `<name>/` and `<platform>/<name>/`. `--dialect` accepts a name or a path to the folder or",
+    "file; a Dragonfly project names its dialect in `config.nuc` ([projects.md](projects.md) §1)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#3-sections.001843",
+   "type": "spec",
+   "title": "NuclearLang dialects — 3. Sections",
+   "summary": "3. Sections",
+   "body": [
+    "| Section | Content |",
+    "|---|---|",
+    "| `[dialect]` | `name` (equal to the folder or file name), `extends`, `description`, `file_extension`, `indent`, `replaces`, `defs` (type definitions packages, §5.6) |",
+    "| `[options]` | Behaviour of the target (see `nuclear spec`): implicit `this`, named arguments, quotes, `const` in default values... |",
+    "| `[syntax]` | One template per construct of the base language: classes, functions, statements, expressions, imports |",
+    "| `[types]` | Base types (`string = \"String\"`), type constructors (`list = \"List<{{item}}>\"`) and a runtime class written with another name (`Page = \"PageOf\"` in flutter: Flutter has its own `Page`; it is imported by that name). A declaration of the project keeps its own name over this mapping |",
+    "| `[operators]` | A symbol (`and = \"&&\"`) or a template (`in = \"{{right}}.includes({{left}})\"`) |",
+    "| `[keywords]` | Reserved words of the target: `word = { level, via, note, nuclear }` (see reserved-words.md). Those of level `reserved` or `strict` are renamed if a Nuclear name matches |",
+    "| `[imports]` | `use` shortcuts |",
+    "| `[auto_imports]` | Symbols imported automatically when used |",
+    "| `[reexports]` | Modules that fully include others (`material.dart` includes `widgets.dart`) |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#3-sections.0791f9",
+   "type": "spec",
+   "title": "NuclearLang dialects — 3. Sections",
+   "summary": "An unknown section or key is an error (`N0206`), with a suggestion of the right name.",
+   "body": [
+    "| `[clauses]` | Words after the name followed by a type: `with Flyer` |",
+    "| `[use]` | `clauses`: words allowed after a `use` path (`show`, `hide`, `deferred`) |",
+    "",
+    "An unknown section or key is an error (`N0206`), with a suggestion of the right name."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#3-sections.1a2dcb",
+   "type": "spec",
+   "title": "NuclearLang dialects — 3. Sections",
+   "summary": "3. Sections",
+   "body": [
+    "| `[call_site]` | `Module.method(...)` calls that receive where they are written (§5.3.1) |",
+    "| `[names]` | `globals` (names of the environment), `not_constructors` (PascalCase names called without `new`) and `written` (names templates write, like `Right`/`Left`: imported if the generated code contains them) |",
+    "| `[kinds.<word>]` | Header words that generate whole declarations: `stateless`, `controller`... |",
+    "| `[decorators]` | Decorators the templates read (`consumed`), that provide objects (`provide`), that do not return (`void`) and the arguments of each one (`args`, N0217) ([projects.md](projects.md) §5) |",
+    "| `[project]` | Multi-file projects: output folder, kind by folder, files generated once per project, the file that marks a project without `nuclear.toml` (`marker`, `output`) and the manifest written in Nuclear (`[project.manifest]`, `config.nuc`) ([projects.md](projects.md)) |",
+    "| `[docs]` | Module prefix → URL of a name's API reference, for the editor's hover. Variables: `name`, `library` (the rest of the module without its extension) and `class` (the name is PascalCase). The longest prefix wins; added to the parent's |",
+    "| `[architecture]` | Rules between the declarations of a project: components and who uses whom ([projects.md](projects.md) §4) |",
+    "| `[modifiers]` | Header words that add a prefix: `static`, `abstract`... |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#3-sections.9233ec",
+   "type": "spec",
+   "title": "NuclearLang dialects — 3. Sections",
+   "summary": "3. Sections",
+   "body": [
+    "| `[exports]` | Names a module exports besides the auto-imported ones (`Task` of fpdart): a declaration of the project with that name hides it from the import (`hide` clause of `import_default`); the type definitions give the rest |",
+    "| `[functions]` | Function shortcuts |",
+    "| `[toolchain]` | What the `dragonfly` CLI and the editors run in the generated project (`build/` or the dialect's output): shell commands `install`, `compile`, `run`, `test`, `serve` (the editor's own server), and `url` (where the app answers), `ready` (the line of `run` that means it is up), `installed` (the folder that means `install` ran), `install_local` (run by `install` once per dependency of `config.nuc` that is a folder, `{{path}}`: a package manager keeps the old copy of a folder whose version did not change); placeholders `{{packages}}` (the installation's runtimes), `{{url}}`, `{{port}}`, `{{host}}`; `migrate_make`, `migrate`, `migrate_down` for `dragonfly migrate` with `{{message}}` and `{{migrations}}` (the project's `migrations/` folder), quoted for the shell (ADR-0100 §5). `[toolchain.linux|macos|windows]` override a key on that system. `[[toolchain.launch]]` are the editor's debug configurations, `[toolchain.settings]` its settings and `extensions` the editor extensions it recommends, with `{{name}}`, `{{app}}`, `{{url}}`, `{{port}}` (ADR-0072, ADR-0101) |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#4-templates-4-1-templates-in-files",
+   "type": "spec",
+   "title": "NuclearLang dialects — 4.1 Templates in files",
+   "summary": "Any template can be written inline (`\"...\"`) or in its own file with `{ file = \"path\" }`.",
+   "body": [
+    "Any template can be written inline (`\"...\"`) or in its own file with `{ file = \"path\" }`. The path is",
+    "relative to the TOML file that references it, and the file's final newline is not part of the template.",
+    "Long templates (the kinds) go in `.tpl` files:",
+    "",
+    "```toml",
+    "[kinds.stateless]",
+    "template = { file = \"templates/stateless.tpl\" }",
+    "",
+    "[syntax]",
+    "while = { file = \"templates/while.tpl\" }",
+    "```",
+    "",
+    "An error inside the file is reported on the exact line of the `.tpl`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#4-templates-4-2-variables.14ffc9",
+   "type": "spec",
+   "title": "NuclearLang dialects — 4.2 Variables",
+   "summary": "The templates of `Result<E, T>` (nuclear-base.md §3.2) are optional: `result_runtime` (the `Result` type with `Ok` and `Err`, written once after the imports of the file that uses it), `result_ok`, `result_err`, `result_is_ok`, `result_is_err`, `result_value`, `result_error`, `result_propagate`…",
+   "body": [
+    "The templates of `Result<E, T>` (nuclear-base.md §3.2) are optional: `result_runtime` (the `Result` type with",
+    "`Ok` and `Err`, written once after the imports of the file that uses it), `result_ok`, `result_err`,",
+    "`result_is_ok`, `result_is_err`, `result_value`, `result_error`, `result_propagate` (returns the error of",
+    "`{{result}}` if it is `Err`) and `result_then`, `result_tap`, `result_recover`, `result_tap_error` (`.ok()` /",
+    "`.error()` that transform or observe). A dialect without them cannot transpile code that uses `Result`",
+    "(`N0203`). `result_runtime` is optional: a target that uses a library does not define it (Dart: fpdart's",
+    "`Either`, with `[types] Result = \"Either\"` and `[names] written`). Example of an own runtime:",
+    "`dialects/typescript/templates/result.tpl`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#4-templates-4-2-variables.9ca7a2",
+   "type": "spec",
+   "title": "NuclearLang dialects — 4.2 Variables",
+   "summary": "Each template receives fixed variables (for example `function` receives `name`, `params`, `ret`, `async`, `body`...).",
+   "body": [
+    "Each template receives fixed variables (for example `function` receives `name`, `params`, `ret`, `async`,",
+    "`body`...). The full list is in `nuclear spec`. `method` and `method_signature` also receive `mods`, with one",
+    "variable per header word, so the template can place a modifier somewhere else: in Dart, `get` goes between the",
+    "type and the name.",
+    "",
+    "```toml",
+    "[modifiers]",
+    "get = \"\"          # not written in {{modifiers}}",
+    "",
+    "[syntax]",
+    "method = \"{{ret}} {{#mods.get}}get {{name}}{{/mods.get}}{{^mods.get}}{{name}}({{params}}){{/mods.get}} { ... }\"",
+    "```",
+    "",
+    "Using a variable that does not exist gives a warning `N0210`. A target dialect must define every required",
+    "template; `nuclear dialect check` lists the missing ones (`N0203`)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#4-templates.085efe",
+   "type": "spec",
+   "title": "NuclearLang dialects — 4. Templates",
+   "summary": "while = \"\"\" while ({{cond}}) { {{body}} }\"\"\" 4. In a run of braces, the tag starts at the last two: `{{{#members}}` is a literal `{` followed by the `members` section.",
+   "body": [
+    "```toml",
+    "   while = \"\"\"",
+    "   while ({{cond}}) {",
+    "     {{body}}",
+    "   }\"\"\"",
+    "   ```",
+    "4. In a run of braces, the tag starts at the last two: `{{{#members}}` is a literal `{` followed by the",
+    "   `members` section. So an empty class is written `{}`:",
+    "",
+    "   ```toml",
+    "   class = \"\"\"",
+    "   class {{name}} {{{#members}}",
+    "     {{members}}",
+    "   {{/members}}}\"\"\"",
+    "   ```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#4-templates.ffaac5",
+   "type": "spec",
+   "title": "NuclearLang dialects — 4. Templates",
+   "summary": "Templates use a subset of Mustache: Formatting rules: 1. A line that contains only a section tag (`{{#x}}`, `{{^x}}`, `{{/x}}`) does not appear in the output.",
+   "body": [
+    "Templates use a subset of Mustache:",
+    "",
+    "| Form | Meaning |",
+    "|---|---|",
+    "| `{{name}}` | Inserts a variable. `{{clause.on}}` reads a field |",
+    "| `{{#name}}...{{/name}}` | If the variable is true (non-empty text, `true`, a list with elements), writes the inside. If it is a list, writes it once per element |",
+    "| `{{^name}}...{{/name}}` | Writes the inside if the variable is false or empty |",
+    "| `{{#a or b}}...{{/a or b}}` | The first of the alternatives that is true (also in `{{a or b}}`): a section that opens for either of two variables |",
+    "| `{{.}}` | The current element of a list of texts |",
+    "| `{{@first}}` `{{@last}}` `{{@index}}` | Position inside a list: `{{^@last}}, {{/@last}}` |",
+    "| `{{name\\|filter}}` | Filters: `pascal`, `camel`, `snake`, `kebab`, `lower`, `upper`, `join:\", \"`, `unquote` (a string argument as a bare name: `{{decor.oneToMany.inverse\\|unquote}}Id` → `projectId`); they chain (`\\|unquote\\|snake`) |",
+    "",
+    "Formatting rules:",
+    "",
+    "1. A line that contains only a section tag (`{{#x}}`, `{{^x}}`, `{{/x}}`) does not appear in the output.",
+    "2. A line that contains only `{{value}}` disappears if the value is empty.",
+    "3. A multi-line value keeps the indentation of the line where it is inserted. That is why bodies are written",
+    "   like this and come out correctly indented:"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5. Shortcuts: code compression",
+   "summary": "A shortcut replaces a repeated text with a shorter one, as in a compression algorithm.",
+   "body": [
+    "A shortcut replaces a repeated text with a shorter one, as in a compression algorithm. The developer writes",
+    "the short form and the dialect expands it."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-1-imports-use-shortcuts",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.1 `[imports]`: `use` shortcuts",
+   "summary": "[imports] material = \"package:flutter/material.dart\" # module materialui = \"import 'package:material_ui/material_ui.dart';\" # whole line, copied as it is \"fs/promises\" = \"node:fs/promises\" use material // import 'package:flutter/material.dart'; use fs/promises{ readFile } // import { readFile }…",
+   "body": [
+    "```toml",
+    "[imports]",
+    "material = \"package:flutter/material.dart\"                        # module",
+    "materialui = \"import 'package:material_ui/material_ui.dart';\"     # whole line, copied as it is",
+    "\"fs/promises\" = \"node:fs/promises\"",
+    "```",
+    "",
+    "```nuclear",
+    "use material                    // import 'package:flutter/material.dart';",
+    "use fs/promises{ readFile }     // import { readFile } from 'node:fs/promises';",
+    "```",
+    "",
+    "A path that is not a shortcut goes through the `[syntax] module_path` template (Dart: `package:{{path}}.dart`)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-2-auto-imports-automatic-imports.3e7f35",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.2 `[auto_imports]`: automatic imports",
+   "summary": "type definitions package (§5.6) brings the public names of its libraries and the library that provides each one, generated with the official Dart analyzer.",
+   "body": [
+    "**Imports generated from type definitions.** In `dart` and `flutter` there are no hand-written lists: each",
+    "type definitions package (§5.6) brings the public names of its libraries and the library that provides each",
+    "one, generated with the official Dart analyzer. A name written in `[auto_imports]` has priority over the",
+    "packages. `tools/analyze-flutter.sh` transpiles the Flutter examples and checks them with `flutter analyze`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-2-auto-imports-automatic-imports.6a219e",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.2 `[auto_imports]`: automatic imports",
+   "summary": "[auto_imports] \"node:fs/promises\" = [\"readFile\", \"writeFile\", \"mkdir\"] \"package:flutter/material.dart\" = [\"MaterialApp\", \"Scaffold\", \"Text\"] If the code uses `readFile` and the file neither declares nor imports it, the transpiler adds the import.",
+   "body": [
+    "```toml",
+    "[auto_imports]",
+    "\"node:fs/promises\" = [\"readFile\", \"writeFile\", \"mkdir\"]",
+    "\"package:flutter/material.dart\" = [\"MaterialApp\", \"Scaffold\", \"Text\"]",
+    "```",
+    "",
+    "If the code uses `readFile` and the file neither declares nor imports it, the transpiler adds the import. The",
+    "names of the same module are grouped in a single line (`import { readFile, writeFile } from ...`) when the",
+    "target defines `import_names`; otherwise the whole module is imported (Dart). A symbol can come from only one",
+    "module.",
+    "",
+    "`[reexports]` says which modules fully include others. A module is not imported if another module the file",
+    "already imports includes it:",
+    "",
+    "```toml",
+    "[reexports]",
+    "\"package:flutter/material.dart\" = [\"package:flutter/widgets.dart\"]",
+    "```",
+    "",
+    "With `Scaffold` (material) and `Text` (widgets) only `material.dart` is imported; with `Text` alone,",
+    "`widgets.dart`.",
+    "",
+    "A project may declare a name a library also exports (`Task` next to fpdart's `Task`): the import of that library",
+    "gets a `hide` clause with the project's names when the dialect's `import_default` writes `clauses.hide`. The names",
+    "come from the type definitions, and from `[exports]` for a library without them:",
+    "",
+    "```toml",
+    "[exports]",
+    "\"package:fpdart/fpdart.dart\" = [\"Task\", \"Option\", \"State\", \"Unit\"]",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-3-functions-function-shortcuts",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.3 `[functions]`: function shortcuts",
+   "summary": "[functions] print = \"console.log\" # renames the function now = { template = \"new Date()\" } # replaces the whole call sleep = { template = \"await new Promise((r) => setTimeout(r, {{arg0}}))\" } The template receives `args` (all the arguments) and `arg0`, `arg1`... [call_site.Log] arg = \"at\" text =…",
+   "body": [
+    "```toml",
+    "[functions]",
+    "print = \"console.log\"                         # renames the function",
+    "now = { template = \"new Date()\" }             # replaces the whole call",
+    "sleep = { template = \"await new Promise((r) => setTimeout(r, {{arg0}}))\" }",
+    "```",
+    "",
+    "The template receives `args` (all the arguments) and `arg0`, `arg1`...",
+    "",
+    "#### 5.3.1 `[call_site]`: where a call was written",
+    "",
+    "```toml",
+    "[call_site.Log]",
+    "arg = \"at\"",
+    "text = \"{{component}} › {{kind}} › {{module}}.{{method}} · {{path}}.nuc:{{line}}\"",
+    "```",
+    "",
+    "Each `Log.<method>(...)` call also receives the named argument `arg`, a constant text with `text` rendered",
+    "where the call is. Variables: `path` (the file in the project, without extension; empty outside a project),",
+    "`line` (its line in the `.nuc`), `component` (the folder under `[architecture] scope`), `kind`, `module` (the",
+    "declaration) and `method` (the function or method; a lambda takes its method's). It is not added if the call",
+    "already writes it or if `Log` is a name of the file. It is a literal: it costs nothing at run time.",
+    "",
+    "```nuclear",
+    "usecase GetPageUseCase",
+    "  exec(page: int)",
+    "    Log.d(\"page loaded\")",
+    "```",
+    "",
+    "```dart",
+    "Log.d('page loaded', at: 'characters › usecase › GetPageUseCase.exec · components/characters/domain/usecases/get_page_usecase.nuc:3');",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-4-kinds-word-generated-declarations.1d10d4",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.4 `[kinds.<word>]`: generated declarations",
+   "summary": "A kind also serves to generate repetitive code.",
+   "body": [
+    "| `async_methods`, `methods`, `returns`, `file_header`, `alias_via`, `declares`, `method_members`, `provide`, `results`, `void_methods` | For frameworks: asynchronous methods, allowed methods (N0215), required return type (N0216), text once per file, where an alias's instance comes from, extra classes the template writes, members the method template writes beside each method (`purge{{name\\|pascal}}`, so N0116 knows them), how program declarations are read, `Result` without propagation and methods without a return ([projects.md](projects.md) §5) |",
+    "",
+    "A kind also serves to **generate repetitive code**. `data` (dart dialect) walks the fields and generates the",
+    "constructor, `copyWith` and `toJson`:",
+    "",
+    "```toml",
+    "[kinds.data]",
+    "template = { file = \"templates/data.tpl\" }",
+    "```",
+    "",
+    "```",
+    "// templates/data.tpl (shortened)",
+    "class {{name}} {",
+    "  const {{class_name}}({{{#fields}}required this.{{name}}{{^@last}}, {{/@last}}{{/fields}}});",
+    "{{#fields}}",
+    "  final {{type}} {{name}};",
+    "{{/fields}}",
+    "  Map<String, dynamic> toJson() => {{{#fields}}'{{name}}': {{name}}{{^@last}}, {{/@last}}{{/fields}}};",
+    "}",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-4-kinds-word-generated-declarations.63d47b",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.4 `[kinds.<word>]`: generated declarations",
+   "summary": "5.4 `[kinds.<word>]`: generated declarations",
+   "body": [
+    "| Key | Use |",
+    "|---|---|",
+    "| `template` | Required, inline or `{ file = \"templates/x.tpl\" }`. Variables: `name`, `source_name`, `class_name`, `members` (fields and methods), `body` (constructor, fields and methods), `methods_code`, `fields` (list: `name`, `type`, `type_nullable`, `default`, `optional`, `tinfo`, `decor`, `decorators`: the decorators the dialect does not consume, already written), `fields_required` (true when a field has neither `?` nor a default), `methods` (list: `name`, `is.<name>`, `params_list`, `ret_info`, `decor`), `params`, `params_list` (list: `name`, `type`, `tinfo`, `decor`, `default`, `optional`, `named`, `required`), `ctor`, `extends`, `implements`, `clauses`, `clause.<word>`, `decorators`, `decor`, `deco_args`, `export`, `modifiers`, `generics` (text: `<T>`), `generic_list` (list: `name`), `file`, `project`, `component`, `kind` ([projects.md](projects.md) §5). A template that does not use `generics`/`generic_list` (or `implements`/`clauses`) rejects declarations with generics (or with `> Interface`): `N0218` |",
+    "| `rename` | Output name: `\"{{name}}Controller\"` |",
+    "| `imports` | Symbols of `[auto_imports]` the kind may need: imported if the generated code writes them |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-4-kinds-word-generated-declarations.7eb886",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.4 `[kinds.<word>]`: generated declarations",
+   "summary": "A kind is a word before the name of a declaration (\"header + block\" rule).",
+   "body": [
+    "A kind is a word before the name of a declaration (\"header + block\" rule). The parser does not know it: the",
+    "dialect validates and emits it. The template generates the whole declaration in the target, so the developer",
+    "writes only the logic:",
+    "",
+    "```nuclear",
+    "stateless MyApp",
+    "  build(context: BuildContext) Widget",
+    "    MaterialApp(title = \"Demo\")",
+    "```",
+    "",
+    "```toml",
+    "[kinds.stateless]",
+    "description = \"StatelessWidget\"",
+    "imports = [\"StatelessWidget\"]       # symbols imported when the kind is used",
+    "overrides = [\"build\"]               # methods that carry the target's override mark",
+    "requires = [\"build\"]                # required methods (N0209 if missing)",
+    "named_params = true                 # constructor parameters are passed by name",
+    "template = { file = \"templates/stateless.tpl\" }",
+    "```",
+    "",
+    "```",
+    "// templates/stateless.tpl",
+    "class {{name}} extends StatelessWidget {",
+    "  const {{name}}({super.key});",
+    "",
+    "  {{members}}",
+    "}",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-4-kinds-word-generated-declarations.c12d07",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.4 `[kinds.<word>]`: generated declarations",
+   "summary": "5.4 `[kinds.<word>]`: generated declarations",
+   "body": [
+    "| `inherits` | Classes of the type definitions (§5.6) the generated class extends (`[\"State\"]`): their members are used as members and a method with one of those names gets `override = true` |",
+    "| `overrides` | Methods that get `override = true` in the `method` template, besides those of `inherits` |",
+    "| `requires` | Methods the block must have |",
+    "| `members` | Inherited names that are not in `inherits`: used as members, without an explicit `this.` |",
+    "| `param_access` | How constructor parameters are read inside members: `\"widget.{{name}}\"` |",
+    "| `named_params` | Calls to the constructor pass the arguments by name; in a dialect whose named arguments are one object (`named_args = \"object\"`) they stay that object instead of being reordered by position |",
+    "| `syntax` | `[syntax]` templates that change only inside this kind: `[kinds.controller.syntax] ctor_param = \"private readonly {{name}}: {{type}}\"`; `construct` is how a call to a declaration of this kind is written (`\"{{callee}}({{args}})\"` when the kind is a function, not a class) |",
+    "| `type_imports` | The declarations of this kind refer to each other only in types (two related entities): their imports of each other go in the dialect's `[syntax] type_imports` block (Python: `if TYPE_CHECKING:`), never a circular import |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-5-modifiers-and-clauses",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.5 `[modifiers]` and `[clauses]`",
+   "summary": "[modifiers] static = \"static \" # prefix added to the declaration abstract = { prefix = \"abstract \", applies_to = [\"module\"] } set = { prefix = \"set \", void = true } # void: the declaration never returns (no implicit return) [clauses] with = \" with {{types}}\" # Bird: Animal with Flyer → class Bird…",
+   "body": [
+    "```toml",
+    "[modifiers]",
+    "static = \"static \"                       # prefix added to the declaration",
+    "abstract = { prefix = \"abstract \", applies_to = [\"module\"] }",
+    "set = { prefix = \"set \", void = true }   # void: the declaration never returns (no implicit return)",
+    "",
+    "[clauses]",
+    "with = \" with {{types}}\"                 # Bird: Animal with Flyer → class Bird extends Animal with Flyer",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-6-type-definitions-defs",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.6 Type definitions (`defs`)",
+   "summary": "Like TypeScript's `.d.ts` files and `@types/*` packages: the public API of the target's libraries, one package per library and version, in a repository shared by every dialect of the same language (`defs/<language>/<package>/<version>/`).",
+   "body": [
+    "Like TypeScript's `.d.ts` files and `@types/*` packages: the public API of the target's libraries, one package",
+    "per library and version, in a repository shared by every dialect of the same language",
+    "(`defs/<language>/<package>/<version>/`). The format, the priority order and the tools are in",
+    "[definitions.md](definitions.md).",
+    "",
+    "```toml",
+    "[dialect]",
+    "name = \"flutter\"",
+    "extends = \"dart\"",
+    "defs = [\"flutter@3.47.7\", \"flutter_bloc@9.1.1\", \"get_it@9.3.0\", \"dio@5.11.1\", \"json_annotation@4.12.0\"]",
+    "```",
+    "",
+    "A dialect adds its packages to its parent's and the dependencies of each package are loaded automatically.",
+    "With them the transpiler:",
+    "",
+    "- imports each public name of their libraries by itself (§5.2);",
+    "- marks as an override (`override` / `override_interface`) a method named like a member of an external class",
+    "  the module extends or implements, and lets inherited members be used without declaring them;",
+    "- gives error `N0106` for a name that is not in the file nor in the class chain;",
+    "- sends a base with `kind = \"interface\"` to `implements` (in Dart, an `interface class` like `Comparable`).",
+    "",
+    "`[options] implicit_base` names the class every class extends in the target (Dart: `Object`), so `toString()`",
+    "is also marked as an override."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-7-editor-documentation-docs-toml.4d3fae",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.7 Editor documentation (`docs.toml`)",
+   "summary": "`docs.toml`, next to `dialect.toml`, is what the editor shows when hovering a word of the dialect and when completing it.",
+   "body": [
+    "`docs.toml`, next to `dialect.toml`, is what the editor shows when hovering a word of the dialect and when",
+    "completing it. It is not a rule of the dialect: the loader does not read it as a dialect file and a `build`",
+    "never opens it; the editor reads it the first time it needs it. Each entry is markdown in English with what",
+    "the word does, an example in Nuclear, what it generates, its rules (with the error codes) and, when it helps,",
+    "a text diagram.",
+    "",
+    "````toml",
+    "[kinds]",
+    "usecase = '''",
+    "**One business operation**: a single method `exec` that returns a `Result`.",
+    "",
+    "```nuclear",
+    "usecase GetPageUseCase",
+    "  (repository: CharacterRepository)",
+    "",
+    "  exec(page: int) Result<CharacterError, Character[]>",
+    "    Ok(~repository.getPage(page))",
+    "```",
+    "'''",
+    "",
+    "[decorators]   # without @: screen, get, state...",
+    "[words]        # modifiers and clauses: static, get, with...",
+    "````"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-7-editor-documentation-docs-toml.a8a54c",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.7 Editor documentation (`docs.toml`)",
+   "summary": "\"a SQLAlchemy table\", \"a Cubit\", \"pytest\"), because the local agents read these texts and write only Nuclear.",
+   "body": [
+    "- **An entry is Nuclear only**: what the word means in the platform, never the framework underneath (no",
+    "  \"a SQLAlchemy table\", \"a Cubit\", \"pytest\"), because the local agents read these texts and write only Nuclear.",
+    "  What the dialect writes under a word goes to `[underneath.<section>]` of the same file (`entity = \"a SQLAlchemy 2",
+    "  mapped class\"`): `nuclear help` and the editor show it after the entry as **Underneath (dialect):**, the",
+    "  Smart Graph's agent collection leaves it out.",
+    "- A dialect inherits its parent's entries and can replace them.",
+    "- Every kind, decorator (`[decorators]`, `[decorators.args]`, `[decorators.provide]`), modifier and clause of",
+    "  the dialect has its entry; the test `every_dialect_word_has_editor_docs` checks it for the shipped dialects.",
+    "- The editor adds what comes from the dialect itself: the kind's required methods, the names it brings and the",
+    "  arguments of each decorator.",
+    "- The words of the base language (reserved words, `Result`/`Ok`/`Err`, base types and comment tags) are in",
+    "  `languages/docs.toml`, with the same format, built into the transpiler.",
+    "",
+    "The documentation of the user's declarations is their doc comments (base §2.3). The optional `doc_comment`",
+    "template writes them in the target (JSDoc in TypeScript, `///` in Dart); without it they are written with",
+    "`comment`, as one more comment."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-8-library-base-the-standard-library.0db309",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.8 `[library.<base>]`: the standard library",
+   "summary": "Nuclear's standard library (library.md, ADR-0094) is a fixed vocabulary: Rust holds the members of each base type (`crates/nuclear-dialect/src/library.rs`: name, property or method, what it gives); a language dialect writes how each one comes out, one template per member, in `library.toml`:…",
+   "body": [
+    "Nuclear's standard library ([library.md](library.md), ADR-0094) is a fixed vocabulary: Rust holds the members of",
+    "each base type (`crates/nuclear-dialect/src/library.rs`: name, property or method, what it gives); a language",
+    "dialect writes how each one comes out, one template per member, in `library.toml`:",
+    "",
+    "```toml",
+    "[library.string]",
+    "upper = \"{{recv}}.toUpperCase()\"",
+    "toInt = { template = \"_toInt({{recv}})\", helper = \"function _toInt(s: string): number | null { ... }\" }",
+    "",
+    "[library.list]",
+    "map = \"{{recv}}.map({{arg0}})\"                                    # TypeScript",
+    "map = \"{{#fn}}[{{fn.body}} for {{fn.param}} in {{recv}}]{{/fn}}{{^fn}}list(map({{arg0}}, {{recv}})){{/fn}}\"   # Python",
+    "",
+    "[library.Math]",
+    "sqrt = \"Math.sqrt({{arg0}})\"",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-8-library-base-the-standard-library.132f9c",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.8 `[library.<base>]`: the standard library",
+   "summary": "5.8 `[library.<base>]`: the standard library",
+   "body": [
+    "| Key | Use |",
+    "|---|---|",
+    "| bases | `string`, `list`, `map`, `set`, `int`, `double`, `number` (what `int` and `double` share), `boolean`, `bytes`, `datetime`, `duration`, `regex`, `match`, `error`, `any` (`toString`); objects `Math`, `Json`, `String`, `DateTime`, `Duration`, `Regex`, `Set`, `Bytes`, `Error` (`new` is the constructor) |",
+    "| variables | `recv` (the value before the dot), `args`, `arg0`..., `has_args`, `n`, `named.<name>` (a named argument; a literal `true`/`false` is a flag), `call_args` (every argument as the target writes a call), `argN_is.<base>` (the static type of an argument: `split` takes a string or a Regex), `elem` (the element type), `type_args`, and for the first expression lambda among the arguments `fn.param`, `fn.params`, `fn.p0`, `fn.p1`, `fn.body` |",
+    "| `helper` | A function the template calls, written once per file after the imports. `[functions]`, `[syntax]` and `[operators]` entries take `helper` too (`print` in Python, `non_null`, `coalesce_once`) |",
+    "| extensions | A member Nuclear does not define (`[library.string] tr` in the mobile platform) is the dialect's own: rendered the same way, its result type unknown |"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#5-shortcuts-code-compression-5-8-library-base-the-standard-library.b57b1e",
+   "type": "spec",
+   "title": "NuclearLang dialects — 5.8 `[library.<base>]`: the standard library",
+   "summary": "The emitter rewrites a member when the receiver's type is known (`nuclear-base.md`'s types, a literal, a library result, a declared or alias signature, `inject<T>()`, a `Result`'s `value`/`error`, the parameters of a callback from the receiver's element type).",
+   "body": [
+    "The emitter rewrites a member when the receiver's type is known (`nuclear-base.md`'s types, a literal, a library",
+    "result, a declared or alias signature, `inject<T>()`, a `Result`'s `value`/`error`, the parameters of a callback",
+    "from the receiver's element type). A target's name on a base type is N0114 (`library::WRONG`); a method of a value",
+    "without a type whose templates differ between bases is N0115; a property of a value without a type is the value's",
+    "own and is written as it is. The platform contract does not list library members: every language dialect renders",
+    "the whole vocabulary (`nuclear spec` prints it)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#6-validation",
+   "type": "spec",
+   "title": "NuclearLang dialects — 6. Validation",
+   "summary": "`nuclear dialect check <name>` validates a dialect and every dialect it extends.",
+   "body": [
+    "`nuclear dialect check <name>` validates a dialect and every dialect it extends. The transpiler applies the",
+    "same rules every time it loads a dialect:",
+    "",
+    "| Rule | Code |",
+    "|---|---|",
+    "| Valid TOML, known sections and keys, values of the right type, well-formed templates | N0206 |",
+    "| A shortcut is defined only once across the dialect's files | N0204 |",
+    "| A child dialect does not redefine a parent's shortcut, unless it lists it in `[dialect] replaces` | N0204 |",
+    "| Kinds, modifiers and clauses share a namespace | N0204 |",
+    "| `[functions]` and `[auto_imports]` share a namespace | N0204 |",
+    "| A symbol of `[auto_imports]` comes from a single module | N0204 |",
+    "| No shortcut is named like a reserved word of the base language | N0212 |",
+    "| Two shortcuts that differ only in case or in one character (names of 6+ letters) | N0205 (warning) |",
+    "| A template uses a variable that does not exist | N0210 (warning) |",
+    "| A target dialect defines every required template | N0203 |",
+    "| The dialect exists and inheritance has no cycles | N0207 |",
+    "",
+    "Example: `nestjs` inherits from `nodejs`, which imports `Transform` from `node:stream`. In Nest, `Transform` is",
+    "the decorator of `class-transformer`; so `nestjs` declares `replaces = [\"auto_imports.Transform\"]`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#7-extension-kinds-kind-packages.44c6d3",
+   "type": "spec",
+   "title": "NuclearLang dialects — 7. Extension kinds: kind packages",
+   "summary": "one for every project).",
+   "body": [
+    "- `nuclear kind new <name> -p <platform> -d <dialect>` writes the skeleton in `kinds/<name>/` of the project.",
+    "- The loader reads the packages of `<project>/kinds/` and of the install folder (`dragonfly add <folder>` installs",
+    "  one for every project). A package of the project's platform is a **plugin** of the dialect: `config.nuc` enables",
+    "  it with `plugins(jobs = true)`, its kinds and names need it (N0304), its runtime packages reach the generated",
+    "  manifest, and the project keeps `dragonfly(platform = \"backend\", dialect = \"fastapi\")`.",
+    "- The implementation is the folder named after the dialect, or after a dialect it extends. A package without one",
+    "  for the project's dialect is N0306 when enabled: enabling a package implemented for some dialects ties the project",
+    "  to them, exactly as a dialect's type definitions do. The Nuclear of the kind is the same in every dialect that",
+    "  implements it.",
+    "- The platform contract does not list extension kinds; the loader records where each kind comes from",
+    "  (`Dialect.kind_sources`: the language's, native of the platform, or a package with its version and dialects) so",
+    "  the editor can show it."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#7-extension-kinds-kind-packages.b8049f",
+   "type": "spec",
+   "title": "NuclearLang dialects — 7. Extension kinds: kind packages",
+   "summary": "Kinds are Nuclear's libraries (ADR-0095): the native kinds of a platform live in its contract (§1), and platform, with TOML and templates only.",
+   "body": [
+    "Kinds are Nuclear's libraries (ADR-0095): the **native** kinds of a platform live in its contract (§1), and",
+    "**extension** kinds come in packages, written by a project or by the community on top of the dialects of one",
+    "platform, with TOML and templates only. A package is a folder:",
+    "",
+    "```",
+    "kinds/jobs/",
+    "├── kind.toml                 [package] name, version, platform, description",
+    "├── docs.toml                 editor documentation of its words (§5.7)",
+    "├── fastapi/kind.toml         how the fastapi dialect writes its kinds: [plugin] (runtime packages, defs, names)",
+    "│   └── templates/job.tpl     and the same sections as a dialect: [kinds.*], [decorators], [functions],",
+    "└── nestjs/kind.toml          [auto_imports], [library.*]... never [dialect], [project] or [syntax]",
+    "```",
+    "",
+    "```toml",
+    "# kinds/jobs/kind.toml",
+    "[package]",
+    "name = \"jobs\"",
+    "version = \"0.1.0\"",
+    "platform = \"backend\"",
+    "description = \"Scheduled jobs of the app.\"",
+    "",
+    "# kinds/jobs/fastapi/kind.toml",
+    "[plugin]",
+    "packages = { apscheduler = \">=3\" }",
+    "",
+    "[kinds.job]",
+    "description = \"job Name(deps) + run() → a scheduled task\"",
+    "requires = [\"run\"]",
+    "async_methods = true",
+    "template = { file = \"templates/job.tpl\" }",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#7-extension-kinds-kind-packages.fd29f8",
+   "type": "spec",
+   "title": "NuclearLang dialects — 7. Extension kinds: kind packages",
+   "summary": "A project dialect (`dialects/myapp/` with `extends = \"flutter\"`) is still read for a project's own shortcuts (`imports`, `auto_imports`, `functions`); its kinds are extension kinds of that project with the same rule (tied to the dialect it extends, source \"package\" without a version), and a…",
+   "body": [
+    "A **project dialect** (`dialects/myapp/` with `extends = \"flutter\"`) is still read for a project's own shortcuts",
+    "(`imports`, `auto_imports`, `functions`); its kinds are extension kinds of that project with the same rule (tied to",
+    "the dialect it extends, source \"package\" without a version), and a Dragonfly project names it in `config.nuc`",
+    "(`dragonfly(platform = \"mobile\", dialect = \"myapp\")`). A kind package is the portable form."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#8-creating-a-new-dialect-with-an-agent",
+   "type": "spec",
+   "title": "NuclearLang dialects — 8. Creating a new dialect with an agent",
+   "summary": "A new dialect (a language like `crystal` or a framework like `amber`) is created by a coding agent (Claude, Codex, OpenCode...) following this section.",
+   "body": [
+    "A new dialect (a language like `crystal` or a framework like `amber`) is created by a **coding agent**",
+    "(Claude, Codex, OpenCode...) following this section. Whoever asks for it describes the *what for* and reviews",
+    "the result; the agent writes the files and checks them with the transpiler. The user tutorial is",
+    "[docs/dialects/create-with-agent.md](../docs/dialects/create-with-agent.md)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#8-creating-a-new-dialect-with-an-agent-8-1-purpose-and-philosophy",
+   "type": "spec",
+   "title": "NuclearLang dialects — 8.1 Purpose and philosophy",
+   "summary": "every target.",
+   "body": [
+    "- Nuclear is a cross-cutting transpiler: the parser, the AST, the analysis and the emitter are the same for",
+    "  every target. A dialect **only teaches how** each construct is written in its target.",
+    "- Golden rule (above): the generated code is an expert's in the target, transpiling is immediate and what is",
+    "  written in Nuclear is the minimum.",
+    "- Rust decides *what* is emitted; the dialect decides *how* it is written."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#8-creating-a-new-dialect-with-an-agent-8-2-what-a-dialect-can-do",
+   "type": "spec",
+   "title": "NuclearLang dialects — 8.2 What a dialect can do",
+   "summary": "Only what sections 1–6 describe, with files in `dialects/<name>/`: A target dialect defines every required template (`nuclear spec` lists them).",
+   "body": [
+    "Only what sections 1–6 describe, with files in `dialects/<name>/`:",
+    "",
+    "| File | Content |",
+    "|---|---|",
+    "| `dialect.toml` | `[dialect]` (`name`, `extends`, `replaces`, `defs`), `[syntax]`, `[types]`, `[operators]`, `[options]`, `[imports]`, `[auto_imports]`, `[functions]`, `[call_site]`, `[kinds.*]`, `[modifiers]`, `[clauses]`, `[decorators]`, `[names]`, `[project]`, `[architecture]` |",
+    "| `templates/*.tpl` | long templates, with the Mustache subset of §4 |",
+    "| `keywords.toml` | reserved words of the target (escaped automatically) |",
+    "| `spec.md` | the rules the dialect adds to the base, its translation table and the equivalences of the base examples |",
+    "",
+    "A target dialect defines every required template (`nuclear spec` lists them). A framework dialect extends a",
+    "target (or another framework) and adds kinds, decorators and shortcuts."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#8-creating-a-new-dialect-with-an-agent-8-3-process",
+   "type": "spec",
+   "title": "NuclearLang dialects — 8.3 Process",
+   "summary": "1. Read the contract: `nuclear spec` (base language, this document and the list of templates, variables and options).",
+   "body": [
+    "1. **Read the contract:** `nuclear spec` (base language, this document and the list of templates, variables",
+    "   and options). For a framework, `nuclear spec --dialect <parent>`.",
+    "2. **Take a reference:** a target dialect starts from the structure of `dialects/typescript/` or",
+    "   `dialects/dart/`; a framework one, from `dialects/backend/nestjs/` or `dialects/mobile/flutter/`.",
+    "3. **Write `spec.md` first**, with each rule and its example: a ` ```nuclear ` block followed by the block of",
+    "   the target that must come out. Each rule has at least one example.",
+    "4. **Write `dialect.toml` and the templates** until `nuclear dialect check <path> --json` has no errors, and",
+    "   `docs.toml` with the editor documentation of each word (§5.7).",
+    "5. **Compile each example** with `nuclear build <file.nuc> --dialect <path>` and compare with `spec.md`. If",
+    "   it differs, fix the template, not the example (unless the example is badly written in the target).",
+    "6. **Validate in the target:** the output compiles and passes the target's analyzer or linter without",
+    "   warnings.",
+    "7. **Deliver** the list of base constructs covered, the ones that could not be expressed and why."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#8-creating-a-new-dialect-with-an-agent-8-4-restrictions.22c12f",
+   "type": "spec",
+   "title": "NuclearLang dialects — 8.4 Restrictions",
+   "summary": "`[architecture]` rules are those of flutter.md §1, §3, §4 and §6, applied to its technology.",
+   "body": [
+    "`[architecture]` rules are those of [flutter.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md) §1, §3, §4 and §6, applied to its technology.",
+    "10. **Write in a language other than English**: the dialect's files (comments and `note` of the `.toml`,",
+    "    templates, the `.nuc` test examples) and its documentation (`.md`)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#8-creating-a-new-dialect-with-an-agent-8-4-restrictions.4c1e25",
+   "type": "spec",
+   "title": "NuclearLang dialects — 8.4 Restrictions",
+   "summary": "1. Touch the transpiler (`crates/`, the parser, the AST, the emitter) nor Nuclear's grammar.",
+   "body": [
+    "1. **Touch the transpiler** (`crates/`, the parser, the AST, the emitter) nor Nuclear's grammar. If a",
+    "   construct cannot be written with templates and options, it stops and reports it; it does not fake it.",
+    "2. **Change Nuclear's syntax**: no new words outside kinds, modifiers, clauses and decorators, nor another",
+    "   meaning for a base construct.",
+    "3. **Edit the shipped dialects** (`typescript`, `dart`, `nodejs`, `nestjs`, `flutter`). They are extended.",
+    "4. **Redefine a parent's shortcut** without `[dialect] replaces` (N0204), nor name a shortcut like a reserved",
+    "   word of the base (N0212).",
+    "5. **Offer a second way of writing the same thing.** A kind, decorator or shortcut exists only if it removes",
+    "   repeated code of the target.",
+    "6. **Generate code an expert in the target would not write**: no reflection, no unused layers or indirections,",
+    "   no warnings from the target's analyzer.",
+    "7. **Leave a rule without an example**, nor an example whose output is not the transpiler's real one.",
+    "8. **Write in `spec.md` anything that is not a final rule**: no questions, assumptions, pending items nor",
+    "   history. Doubts are asked to whoever requested the dialect.",
+    "9. **Leave Dragonfly's rules** in a Dragonfly dialect: components, layers, architecture kinds and"
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#8-creating-a-new-dialect-with-an-agent-8-5-done",
+   "type": "spec",
+   "title": "NuclearLang dialects — 8.5 Done",
+   "summary": "8.5 Done",
+   "body": [
+    "- `nuclear dialect check <path> --json` without errors.",
+    "- Each example of `spec.md` gives exactly its output.",
+    "- The output passes the target's compiler and analyzer without warnings.",
+    "- `nuclear spec --dialect <name>` prints the base followed by the specs of the chain.",
+    "- Each kind, decorator, modifier and clause has its entry in `docs.toml` (§5.7)."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#9-tools",
+   "type": "spec",
+   "title": "NuclearLang dialects — 9. Tools",
+   "summary": "The transpiler loads dialects at run time and exposes a single diagnostics function (`nuclear_transpile::check`), the same one `nuclear check --dialect <name> --json` and the Language Server use.",
+   "body": [
+    "The transpiler loads dialects at run time and exposes a single diagnostics function",
+    "(`nuclear_transpile::check`), the same one `nuclear check --dialect <name> --json` and the Language Server use.",
+    "So the editor marks, while the developer or the agent writes, the errors of the base language and those of the",
+    "active dialect: unknown kinds with a suggestion (`N0201`), kinds without their required methods (`N0209`),",
+    "invalid `use` clauses (`N0211`) and missing templates (`N0203`).",
+    "",
+    "Editors have a base extension for every dialect (Language Server, highlighting, theme, metrics, line map) and",
+    "one extension per framework to run and debug with its tools (Dragonfly for Flutter). The base knows no",
+    "language: a file's dialect comes from its project (`nuclear.toml` or the dialect's `[project] marker`) and the",
+    "links to the API reference from `[docs]`:",
+    "",
+    "```toml",
+    "[docs]",
+    "\"dart:\" = \"https://api.flutter.dev/flutter/dart-{{library}}/{{name}}{{#class}}-class{{/class}}.html\"",
+    "```",
+    "",
+    "`dart:convert` + `jsonDecode` → `https://api.flutter.dev/flutter/dart-convert/jsonDecode.html`. A new dialect",
+    "works in the editor without changing the base extension."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#golden-rule",
+   "type": "spec",
+   "title": "NuclearLang dialects — Golden rule",
+   "summary": "Every dialect (target, framework or project) follows NuclearLang's golden rule (nuclear-base.md §1): performance, speed and readability of the syntax.",
+   "body": [
+    "Every dialect (target, framework or project) follows NuclearLang's golden rule",
+    "([nuclear-base.md §1](nuclear-base.md)): **performance, speed and readability of the syntax**.",
+    "",
+    "- **Performance:** the generated code is what an expert in the target would write so it runs as fast as",
+    "  possible (`const` constructors, no layers nor indirections that add nothing at run time, no reflection).",
+    "  The architecture a kind generates exists in the output only if the application uses it.",
+    "- **Speed:** transpiling is immediate (the transpiler reads only the index of each definitions package) and",
+    "  the generated code compiles without extra steps the developer has to remember.",
+    "- **Readability:** what is written in Nuclear is the minimum. A kind or shortcut exists to remove repeated",
+    "  code, never to add a second way of writing the same thing."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/dialects.md#nuclearlang-dialects",
+   "type": "spec",
+   "title": "NuclearLang dialects",
+   "summary": "A dialect is a set of TOML files that teaches the transpiler a target language or a framework.",
+   "body": [
+    "A **dialect** is a set of TOML files that teaches the transpiler a target language or a framework. The base",
+    "transpiler (lexer, parser, resolver and emitter) knows no target language: everything it writes comes from",
+    "the templates and tables of the active dialect. Dialects are read at run time, so they can be created or",
+    "changed without recompiling the transpiler.",
+    "",
+    "Every dialect uses the same format, described in this document. The full tables of templates, variables and",
+    "options are generated by the transpiler: `nuclear spec`."
+   ],
+   "agents": false,
+   "sources": [
+    "spec/dialects.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:tools/context/README.md#tools-context",
+   "type": "readme",
+   "title": "tools/context",
+   "summary": "`check.sh` keeps `STATUS.md` (the project's state) current across sessions and restarts.",
+   "body": [
+    "`check.sh` keeps `STATUS.md` (the project's state) current across sessions and restarts. The hooks of",
+    "`.claude/settings.json` call it:",
+    "",
+    "| Mode | Hook | What it does |",
+    "|---|---|---|",
+    "| `session` | `SessionStart` | lists the work files (code, dialects, specs, tools) newer than `STATUS.md`: work of another session that was not recorded |",
+    "| `stop` | `Stop` | if the session changed work files after the last edit of `STATUS.md`, it does not let the turn end (once per turn) and asks to update it |",
+    "| `stop` | `Stop` | if the session changed anything the knowledge base is made from (sources, docs, dialects, the agents), it runs `nuclear-graph knowledge check` (ADR-0104) and does not let the turn end while the base is behind the tree: build, review the rows it names, ingest |",
+    "",
+    "The session is marked with a file in `$XDG_RUNTIME_DIR` (`nuclear-context-<session_id>`), so the `stop` mode only",
+    "looks at what changed since it started. It does not look at `docs/` nor the context `.md` files: changing only",
+    "documentation does not require a Log line.",
+    "",
+    "Testing it by hand:",
+    "",
+    "```sh",
+    "echo '{\"session_id\":\"t\"}' | tools/context/check.sh session",
+    "echo '{\"session_id\":\"t\"}' | tools/context/check.sh stop; echo $?   # 2 = STATUS.md needs an update, or the knowledge base is behind",
+    "```"
+   ],
+   "agents": false,
+   "sources": [
+    "tools/context/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:tools/defs/README.md#a-new-pub-dev-package",
+   "type": "readme",
+   "title": "tools/defs — A new pub.dev package",
+   "summary": "1. Add it to `flutter_project`: `(cd tools/defs/flutter_project && $FLUTTER_ROOT/bin/flutter pub add go_router)`.",
+   "body": [
+    "1. Add it to `flutter_project`: `(cd tools/defs/flutter_project && $FLUTTER_ROOT/bin/flutter pub add go_router)`.",
+    "2. Add its line at the end of `generate.sh` (with `--depends`/`--exclude` of the packages it depends on, like",
+    "   `flutter_bloc`).",
+    "3. Generate it and name it in the `defs` of the dialect that uses it."
+   ],
+   "agents": false,
+   "sources": [
+    "tools/defs/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:tools/defs/README.md#a-project-s-packages",
+   "type": "readme",
+   "title": "tools/defs — A project's packages",
+   "summary": "`dragonfly flutter add <package>` uses this same generator (installed by `install.sh` in `~/.local/share/nuclearlang/tools/defs`) on the project's app: `--project build/app`, the version of its `pubspec.lock` and `--exclude` of the dialect's packages.",
+   "body": [
+    "`dragonfly flutter add <package>` uses this same generator (installed by `install.sh` in",
+    "`~/.local/share/nuclearlang/tools/defs`) on the project's app: `--project build/app`, the version of its",
+    "`pubspec.lock` and `--exclude` of the dialect's packages. It writes into the cache",
+    "`~/.cache/nuclearlang/defs/dart/` ([spec/definitions.md](../../spec/definitions.md) §6). There is no need to touch",
+    "`generate.sh` nor the dialect."
+   ],
+   "agents": false,
+   "sources": [
+    "tools/defs/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:tools/defs/README.md#bin-defs-dart",
+   "type": "readme",
+   "title": "tools/defs — `bin/defs.dart`",
+   "summary": "dart run bin/defs.dart --project <dir> --out <package folder> --name <n> --version <v> [--description <text>] [--depends <n@v>]... [--implicit <library>]... [--exclude <folder>]... `package:flutter/...` and the pub packages).",
+   "body": [
+    "```sh",
+    "dart run bin/defs.dart --project <dir> --out <package folder> --name <n> --version <v>",
+    "    [--description <text>] [--depends <n@v>]... [--implicit <library>]... [--exclude <folder>]...",
+    "    <library>...",
+    "```",
+    "",
+    "- `--project`: the folder whose `package_config` resolves the libraries (`.` for Dart's, `flutter_project` for",
+    "  `package:flutter/...` and the pub packages).",
+    "- `--exclude`: packages already generated (the dependencies): their declarations are not repeated and their",
+    "  libraries count for `reexports`.",
+    "- `--implicit`: libraries that are always visible (`dart:core`).",
+    "",
+    "`flutter_project/` is an empty project that only resolves the packages; it is also where",
+    "`tools/analyze-flutter.sh` writes the generated code (`lib/generated/`)."
+   ],
+   "agents": false,
+   "sources": [
+    "tools/defs/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:tools/defs/README.md#other-languages",
+   "type": "readme",
+   "title": "tools/defs — Other languages",
+   "summary": "The same format for every language; only the generator changes: Both write `params` (the unnamed constructor) and `results` (methods that return a `Result`) in `index.json`.",
+   "body": [
+    "The same format for every language; only the generator changes:",
+    "",
+    "| Language | Generator | Regenerate |",
+    "|---|---|---|",
+    "| Python | `tools/defs/python/gen.py` (`inspect` over the installed modules of `tools/python/.venv`) | `tools/defs/python/generate.sh` |",
+    "| TypeScript | `tools/defs/typescript/gen.js` (the TypeScript compiler over the `.d.ts` in `tools/node/node_modules`; `--lib es2022` for the standard library) | `tools/defs/typescript/generate.sh` |",
+    "",
+    "Both write `params` (the unnamed constructor) and `results` (methods that return a `Result`) in `index.json`."
+   ],
+   "agents": false,
+   "sources": [
+    "tools/defs/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:tools/defs/README.md#regenerate-everything",
+   "type": "readme",
+   "title": "tools/defs — Regenerate everything",
+   "summary": "FLUTTER_ROOT=~/develop/flutter tools/defs/generate.sh It writes, with the installed versions: Then: 1. if a version changed, update `defs` in `dialects/dart/dialect.toml` or `dialects/mobile/flutter/dialect.toml`; 2. `cargo test` (validates the dialects; the golden files show whether an import…",
+   "body": [
+    "```sh",
+    "FLUTTER_ROOT=~/develop/flutter tools/defs/generate.sh",
+    "```",
+    "",
+    "It writes, with the installed versions:",
+    "",
+    "| Package | Libraries |",
+    "|---|---|",
+    "| `dart@<Dart version>` | `dart:core` (implicit), `dart:async`, `dart:math`, `dart:convert`, `dart:collection`, `dart:io`, `dart:typed_data`, `dart:isolate`, `dart:developer` |",
+    "| `flutter@<Flutter version>` | `package:flutter/{widgets,material,cupertino,services,foundation,painting,rendering,gestures,animation,scheduler,semantics,physics}.dart` (in that order: each name goes to the most basic library) |",
+    "| `dio`, `get_it`, `json_annotation`, `bloc`, `flutter_bloc`, `go_router`, `connectivity_plus`, `flutter_secure_storage` | the main library of each package, with the version of `flutter_project/pubspec.lock` |",
+    "| `dragonfly` | `package:dragonfly/dragonfly.dart` and `testing.dart` (the runtime of `packages/dragonfly`, a path dependency) |",
+    "",
+    "Then:",
+    "",
+    "1. if a version changed, update `defs` in `dialects/dart/dialect.toml` or `dialects/mobile/flutter/dialect.toml`;",
+    "2. `cargo test` (validates the dialects; the golden files show whether an import changed);",
+    "3. `FLUTTER=$FLUTTER_ROOT/bin/flutter tools/analyze-flutter.sh` (transpiles the examples and checks them with",
+    "   `flutter analyze`)."
+   ],
+   "agents": false,
+   "sources": [
+    "tools/defs/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:tools/defs/README.md#tools-defs",
+   "type": "readme",
+   "title": "tools/defs",
+   "summary": "Generates the type definitions packages of the `dart` language (`defs/dart/<package>/<version>/`), used by the `dart` and `flutter` dialects.",
+   "body": [
+    "Generates the type definitions packages of the `dart` language (`defs/dart/<package>/<version>/`), used by the",
+    "`dart` and `flutter` dialects. Format and rules: [spec/definitions.md](../../spec/definitions.md).",
+    "",
+    "It uses the official Dart analyzer (`package:analyzer`), so the API is exact for the installed versions: the",
+    "Dart/Flutter SDK's and those of the packages of `flutter_project/pubspec.yaml`."
+   ],
+   "agents": false,
+   "sources": [
+    "tools/defs/README.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  }
+ ]
+}

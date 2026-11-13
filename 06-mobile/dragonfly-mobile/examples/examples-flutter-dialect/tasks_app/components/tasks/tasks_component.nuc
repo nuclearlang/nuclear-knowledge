@@ -1,3 +1,0 @@
-appcomponent TasksComponent
-  pending() = PendingTasksUseCase.exec
-  add() = AddTaskUseCase.exec

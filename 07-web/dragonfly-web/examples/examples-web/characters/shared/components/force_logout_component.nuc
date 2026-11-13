@@ -1,7 +1,0 @@
-// Global component: runs with every ForceLogout, wherever the user is.
-component ForceLogoutComponent
-  (session: SessionManager)
-
-  @on(ForceLogout)
-  exec(event: ForceLogout) void
-    ~session.destroy()

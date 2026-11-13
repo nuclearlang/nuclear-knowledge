@@ -1,4 +1,0 @@
-@screen(notFound = true)
-stateless NotFoundScreen
-  build() Element
-    p(children = "There is nothing here.")

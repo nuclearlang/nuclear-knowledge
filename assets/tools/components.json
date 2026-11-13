@@ -1,0 +1,250 @@
+{
+ "shelf": "tools",
+ "origin": "generated",
+ "generator": "components",
+ "about": "Each component of the ecosystem and its version.",
+ "rows": [
+  {
+   "id": "component:dragonfly",
+   "type": "component",
+   "title": "`dragonfly` 0.1.0 — the CLI of Dragonfly projects",
+   "summary": "`dragonfly` is the CLI of Dragonfly projects; its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `dragonfly/Cargo.toml`. Repository: `nuclearlang/dragonfly`.",
+   "keys": [
+    "dragonfly version"
+   ],
+   "asks": [
+    "what version is dragonfly",
+    "which version of dragonfly is this"
+   ],
+   "sources": [
+    "dragonfly/Cargo.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:dragonfly-dart",
+   "type": "component",
+   "title": "`dragonfly-dart` 0.1.0 — the runtime of the flutter dialect (the `dragonfly` Dart package)",
+   "summary": "`dragonfly-dart` is the runtime of the flutter dialect (the `dragonfly` Dart package); its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `dragonfly-mobile/packages/dragonfly/pubspec.yaml`. Repository: `nuclearlang/dragonfly`.",
+   "keys": [
+    "dragonfly-dart version"
+   ],
+   "asks": [
+    "what version is dragonfly-dart",
+    "which version of dragonfly-dart is this"
+   ],
+   "sources": [
+    "dragonfly-mobile/packages/dragonfly/pubspec.yaml"
+   ],
+   "meta": {
+    "tool": "dragonfly-dart",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:dragonfly-nest",
+   "type": "component",
+   "title": "`dragonfly-nest` 0.1.0 — the runtime of the nestjs dialect (TypeScript)",
+   "summary": "`dragonfly-nest` is the runtime of the nestjs dialect (TypeScript); its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `dragonfly-backend/packages/dragonfly-nest/package.json`. Repository: `nuclearlang/dragonfly`.",
+   "keys": [
+    "dragonfly-nest version"
+   ],
+   "asks": [
+    "what version is dragonfly-nest",
+    "which version of dragonfly-nest is this"
+   ],
+   "sources": [
+    "dragonfly-backend/packages/dragonfly-nest/package.json"
+   ],
+   "meta": {
+    "tool": "dragonfly-nest",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:dragonfly-py",
+   "type": "component",
+   "title": "`dragonfly-py` 0.1.0 — the runtime of the fastapi dialect (Python)",
+   "summary": "`dragonfly-py` is the runtime of the fastapi dialect (Python); its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `dragonfly-backend/packages/dragonfly-py/pyproject.toml`. Repository: `nuclearlang/dragonfly`.",
+   "keys": [
+    "dragonfly-py version"
+   ],
+   "asks": [
+    "what version is dragonfly-py",
+    "which version of dragonfly-py is this"
+   ],
+   "sources": [
+    "dragonfly-backend/packages/dragonfly-py/pyproject.toml"
+   ],
+   "meta": {
+    "tool": "dragonfly-py",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:dragonfly-web",
+   "type": "component",
+   "title": "`dragonfly-web` 0.1.0 — the runtime of the react dialect (TypeScript)",
+   "summary": "`dragonfly-web` is the runtime of the react dialect (TypeScript); its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `dragonfly-web/packages/dragonfly-web/package.json`. Repository: `nuclearlang/dragonfly-web`.",
+   "keys": [
+    "dragonfly-web version"
+   ],
+   "asks": [
+    "what version is dragonfly-web",
+    "which version of dragonfly-web is this"
+   ],
+   "sources": [
+    "dragonfly-web/packages/dragonfly-web/package.json"
+   ],
+   "meta": {
+    "tool": "dragonfly-web",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:nuclear",
+   "type": "component",
+   "title": "`nuclear` 0.1.0 — the compiler, its CLI and the language server",
+   "summary": "`nuclear` is the compiler, its CLI and the language server; its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `Cargo.toml`. Repository: `nuclearlang/nuclear`.",
+   "keys": [
+    "nuclear version"
+   ],
+   "asks": [
+    "what version is nuclear",
+    "which version of nuclear is this"
+   ],
+   "sources": [
+    "Cargo.toml"
+   ],
+   "meta": {
+    "tool": "nuclear",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:nuclear-developer",
+   "type": "component",
+   "title": "`nuclear-developer` 0.1.0 — the local agents",
+   "summary": "`nuclear-developer` is the local agents; its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `nuclear-developer/config.nuc`. Repository: `nuclearlang/nuclear-developer`.",
+   "keys": [
+    "nuclear-developer version"
+   ],
+   "asks": [
+    "what version is nuclear-developer",
+    "which version of nuclear-developer is this"
+   ],
+   "sources": [
+    "nuclear-developer/config.nuc"
+   ],
+   "meta": {
+    "tool": "nuclear-developer",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:nuclear-graph",
+   "type": "component",
+   "title": "`nuclear-graph` 0.1.0 — the Smart Graph: the knowledge base and the MCP server",
+   "summary": "`nuclear-graph` is the Smart Graph: the knowledge base and the MCP server; its version is 0.1.0.",
+   "body": "Version 0.1.0, read from `nuclear-graph/pyproject.toml`. Repository: `nuclearlang/nuclear-graph`.",
+   "keys": [
+    "nuclear-graph version"
+   ],
+   "asks": [
+    "what version is nuclear-graph",
+    "which version of nuclear-graph is this"
+   ],
+   "sources": [
+    "nuclear-graph/pyproject.toml"
+   ],
+   "meta": {
+    "tool": "nuclear-graph",
+    "name": "version",
+    "version": "0.1.0"
+   }
+  },
+  {
+   "id": "component:nuclear-jetbrains",
+   "type": "component",
+   "title": "`nuclear-jetbrains` 0.48.0 — the JetBrains plugin (Android Studio, IntelliJ)",
+   "summary": "`nuclear-jetbrains` is the JetBrains plugin (Android Studio, IntelliJ); its version is 0.48.0.",
+   "body": "Version 0.48.0, read from `nuclear-jetbrains/resources/META-INF/plugin.xml`. Repository: `nuclearlang/nuclear-jetbrains`.",
+   "keys": [
+    "nuclear-jetbrains version"
+   ],
+   "asks": [
+    "what version is nuclear-jetbrains",
+    "which version of nuclear-jetbrains is this"
+   ],
+   "sources": [
+    "nuclear-jetbrains/resources/META-INF/plugin.xml"
+   ],
+   "meta": {
+    "tool": "nuclear-jetbrains",
+    "name": "version",
+    "version": "0.48.0"
+   }
+  },
+  {
+   "id": "component:nuclear-vscode",
+   "type": "component",
+   "title": "`nuclear-vscode` 0.48.0 — the VS Code extension, with the Loop and `nuclear-loop`",
+   "summary": "`nuclear-vscode` is the VS Code extension, with the Loop and `nuclear-loop`; its version is 0.48.0.",
+   "body": "Version 0.48.0, read from `nuclear-vscode/package.json`. Repository: `nuclearlang/nuclear-vscode`.",
+   "keys": [
+    "nuclear-vscode version"
+   ],
+   "asks": [
+    "what version is nuclear-vscode",
+    "which version of nuclear-vscode is this"
+   ],
+   "sources": [
+    "nuclear-vscode/package.json"
+   ],
+   "meta": {
+    "tool": "nuclear-vscode",
+    "name": "version",
+    "version": "0.48.0"
+   }
+  },
+  {
+   "id": "component:nuclear-zed",
+   "type": "component",
+   "title": "`nuclear-zed` 0.48.0 — the Zed extension",
+   "summary": "`nuclear-zed` is the Zed extension; its version is 0.48.0.",
+   "body": "Version 0.48.0, read from `nuclear-zed/extension.toml`. Repository: `nuclearlang/nuclear-zed`.",
+   "keys": [
+    "nuclear-zed version"
+   ],
+   "asks": [
+    "what version is nuclear-zed",
+    "which version of nuclear-zed is this"
+   ],
+   "sources": [
+    "nuclear-zed/extension.toml"
+   ],
+   "meta": {
+    "tool": "nuclear-zed",
+    "name": "version",
+    "version": "0.48.0"
+   }
+  }
+ ]
+}

@@ -1,0 +1,426 @@
+{
+ "shelf": "concepts",
+ "origin": "curated",
+ "about": "What NuclearLang and Dragonfly are for: the problem, the idea, the advantages and how it works. What a person asks first.",
+ "rows": [
+  {
+   "id": "concept:nuclearlang",
+   "type": "purpose",
+   "title": "What NuclearLang is",
+   "summary": "NuclearLang (Nuclear, `.nuc` files) is a minimal language made for AI agents and the people who work with them: you write only the logic of a program, with the fewest tokens, and a transpiler turns it into the code of another technology (TypeScript, Dart, Python) through dialects.",
+   "body": [
+    "NuclearLang is a small base language. A file ends in `.nuc`. It is not compiled to machine code: a transpiler written in Rust turns `.nuc` into the code of another technology. It goes one way only: `.nuc` → `.ts`, `.dart` or `.py`. It never reads target code.",
+    "",
+    "The idea in one line: write the logic of the product, and leave everything else to the transpiler. Imports, the wiring of a framework, JSON code, routes, dependency injection and boilerplate are not logic, so you do not write them.",
+    "",
+    "It has three parts that work together:",
+    "",
+    "- **The base language**: indentation instead of braces, types after the name, `~` to await, `Result<E, T>` for errors, one standard library of its own. One way to write each thing.",
+    "- **Dialects**: data files (TOML and templates) that say how Nuclear is written in a target. A dialect is added without changing the compiler.",
+    "- **Dragonfly**: the framework. Three platforms (`backend`, `mobile`, `web`), each written once in Nuclear and built by its dialects (`fastapi`, `nestjs`, `flutter`, `react`).",
+    "",
+    "Around it there is a full toolchain: the `nuclear` and `dragonfly` command lines, a language server, extensions for VS Code, Android Studio and Zed, a private knowledge base with an MCP server (the Nuclear Smart Graph), local AI agents (the Nuclear Developer) and a pipeline from a spec to deployed code (the Loop).",
+    "",
+    "It is open source (Apache-2.0), in the spirit of Rust, Deno, Gleam and Bun."
+   ],
+   "keys": [
+    "nuclear",
+    "nuclearlang",
+    "nuclear lang",
+    "nuclear language",
+    "nuc",
+    ".nuc"
+   ],
+   "asks": [
+    "what is nuclear",
+    "what is nuclearlang",
+    "que es nuclear",
+    "explain nuclear to me",
+    "what is a .nuc file"
+   ],
+   "links": [
+    {
+     "rel": "why",
+     "to": "concept:why-nuclear"
+    },
+    {
+     "rel": "how",
+     "to": "concept:how-it-works"
+    },
+    {
+     "rel": "advantages",
+     "to": "concept:advantages"
+    },
+    {
+     "rel": "framework",
+     "to": "concept:dragonfly"
+    },
+    {
+     "rel": "parts",
+     "to": "concept:ecosystem"
+    }
+   ],
+   "sources": [
+    "README.md#Vision",
+    "docs/context/product/prd.md#1. Vision"
+   ],
+   "meta": {
+    "topic": "purpose"
+   }
+  },
+  {
+   "id": "concept:why-nuclear",
+   "type": "purpose",
+   "title": "Why NuclearLang exists: the problem it solves",
+   "summary": "Most of the code of an app is not its logic: it is imports, wiring, JSON, routes and framework ceremony. Agents spend tokens and make mistakes on it, and people repeat it in every stack. Nuclear keeps only the logic and generates the rest.",
+   "body": [
+    "The problem has three faces.",
+    "",
+    "**1. Agents pay for text that is not logic.** An AI agent that writes a Flutter screen or a NestJS endpoint writes many lines the framework demands: imports, annotations, registration, serializers, state classes. Every line costs tokens to write and to read again, and every line is a place to make a mistake or to invent an API that does not exist.",
+    "",
+    "**2. An app is N packages wired by hand.** State, JSON, dependency injection, HTTP, routing, translations, tests: each project chooses and connects them again. The result is different in every project, so neither a person nor an agent can move from one to another without learning it.",
+    "",
+    "**3. The same product is written once per technology.** The business rules of a backend are the same in Python and in TypeScript, but they are written twice.",
+    "",
+    "What NuclearLang does about it:",
+    "",
+    "- You write **only the logic**, in a language with one way to write each thing. The transpiler writes the rest as an expert would in the target.",
+    "- The **framework is inside the dialect** (Dragonfly): the architecture, the wiring and the tests are the same in every project, so there is nothing to choose and nothing to wire.",
+    "- The **compiler answers with exact fixes**: every error has a code, a position and usually the corrected text, so an agent repairs its own code without reading documentation.",
+    "- The **same Nuclear builds with every dialect of a platform**: a backend written once comes out as a Python service or as a TypeScript one.",
+    "",
+    "The consequence that matters most: because the language is small and regular, a small local model (3B parameters) with the right knowledge base writes it as well as a frontier model writes one file. Development with AI stops depending on the largest model for every line."
+   ],
+   "keys": [
+    "why nuclear",
+    "purpose",
+    "problem"
+   ],
+   "asks": [
+    "why does nuclear exist",
+    "what problem does nuclear solve",
+    "para que sirve nuclear",
+    "que problema resuelve nuclear",
+    "why another language",
+    "what is nuclear for"
+   ],
+   "links": [
+    {
+     "rel": "what",
+     "to": "concept:nuclearlang"
+    },
+    {
+     "rel": "advantages",
+     "to": "concept:advantages"
+    },
+    {
+     "rel": "rule",
+     "to": "concept:golden-rule"
+    },
+    {
+     "rel": "local-agents",
+     "to": "concept:nuclear-developer"
+    }
+   ],
+   "sources": [
+    "README.md#Vision",
+    "docs/context/product/prd.md#1. Vision",
+    "docs/context/product/prd.md#2. Users"
+   ],
+   "meta": {
+    "topic": "purpose"
+   }
+  },
+  {
+   "id": "concept:advantages",
+   "type": "purpose",
+   "title": "The advantages of NuclearLang and Dragonfly",
+   "summary": "Fewer tokens and less text, one way to write each thing, errors that come with their fix, the framework generated for you, one code for several target technologies, local AI agents that work on your machine, and generated code as fast as an expert's.",
+   "body": [
+    "**For an AI agent**",
+    "",
+    "- Few tokens: only the logic is written. No imports, no wiring, no boilerplate.",
+    "- One way to write each thing, so there is less to guess and less to get wrong.",
+    "- Diagnostics with a code, a position and usually the exact `fix` (`nuclear check --json`, `nuclear fix`): the agent repairs its code by itself.",
+    "- Type definitions of the target's libraries: an invented class or argument is an error with \"did you mean\", not a bug found at run time.",
+    "- Generators write the standard code of a feature, finished and compiling (`dragonfly gen resource`), so the agent writes only what is special.",
+    "",
+    "**For a developer**",
+    "",
+    "- You write business logic; Dragonfly writes dependency injection, routing, JSON, validation, state classes and tests.",
+    "- The same architecture in every project and on every platform: components, use cases, repositories, one facade per component. The compiler enforces it.",
+    "- One CLI builds, runs, tests, migrates and repairs the project (`dragonfly`).",
+    "- Editor support like a native language: completion, hover, rename, debugging of `.nuc` lines, devices, an HTTP client.",
+    "- A backend publishes its contract and its apps get their models and repositories generated: a renamed field breaks the build, not the phone.",
+    "",
+    "**For a team**",
+    "",
+    "- One code, several technologies: the Nuclear of a platform never changes when its dialect changes (a backend builds as FastAPI or as NestJS).",
+    "- The generated code is the code an expert would write in the target, and it passes the target's strict analyzer (`tsc --strict`, `flutter analyze`, `pyright --strict`).",
+    "- Transpiling is instant: a project builds in about 20 ms; a build with no changes takes about 40 ms.",
+    "- AI that runs on your machine: local agents of at most 3B parameters, a private knowledge base and no code sent anywhere unless you choose a frontier model to lead.",
+    "- Open source, Apache-2.0.",
+    "",
+    "**What is measured.** On the evaluation the local 3B coder passes every task of one file (42 of 42; Claude Sonnet passes 36). In the benchmark of generated code against hand-written code the output is identical and the slowest generated program takes 1.11 times the hand-written one."
+   ],
+   "keys": [
+    "advantages",
+    "benefits",
+    "ventajas",
+    "beneficios"
+   ],
+   "asks": [
+    "what are the advantages of nuclear",
+    "ventajas de nuclear",
+    "why should I use nuclear",
+    "what do I gain with dragonfly",
+    "is nuclear better than writing flutter by hand",
+    "benefits of nuclearlang"
+   ],
+   "links": [
+    {
+     "rel": "why",
+     "to": "concept:why-nuclear"
+    },
+    {
+     "rel": "compared-with",
+     "to": "concept:comparison"
+    },
+    {
+     "rel": "measured-by",
+     "to": "concept:distillation"
+    },
+    {
+     "rel": "limits",
+     "to": "limit:agent-features"
+    }
+   ],
+   "sources": [
+    "docs/context/product/prd.md#2. Users",
+    "docs/context/product/prd.md#5. Non-functional requirements",
+    "nuclear-developer/README.md#Evaluation: how it was trained"
+   ],
+   "meta": {
+    "topic": "purpose"
+   }
+  },
+  {
+   "id": "concept:how-it-works",
+   "type": "concept",
+   "title": "How NuclearLang works: from a .nuc file to the target's code",
+   "summary": "The compiler reads `.nuc`, checks it and writes the target's code with a dialect: Rust decides what is emitted, the dialect (TOML and templates) decides how. A project is built as a whole, with its architecture rules.",
+   "body": [
+    "1. **Lexer and parser** read the `.nuc` file. The parser is the same for every dialect and never stops at the first error: it reports all of them at once.",
+    "2. **The resolver** checks names, scopes, `Result` handling and the standard library. Every problem is a diagnostic with a code (`N0106`), a position and often the exact fix.",
+    "3. **The dialect** is loaded at run time: a folder of data (`dialect.toml`, templates, `docs.toml`). It says how each construct, kind and decorator is written in the target, which imports a name needs and which packages the project carries.",
+    "4. **The emitter** writes the target's code. Rust decides *what* is emitted; the dialect decides *how*. The output is what an expert would write in that target.",
+    "5. **A project** (a folder with `config.nuc`) is built as a whole: one build, imports between files written for you, the architecture rules of its platform checked, and its manifest, tests and wiring generated in `build/`.",
+    "",
+    "Things that follow from this design:",
+    "",
+    "- It is one way only: `.nuc` → target. Nuclear never reads TypeScript, Dart or Python.",
+    "- Dialects inherit: `nestjs` extends `nodejs`, which extends `typescript`. A platform dialect (`fastapi`) adds a framework to a language dialect (`python`).",
+    "- A new target or framework is a new dialect: data files, never a change in the compiler.",
+    "- The generated code is never edited: change the `.nuc` and build again.",
+    "",
+    "The commands: `nuclear check` (errors), `nuclear build` (transpile), `nuclear fix` (apply the exact fixes), `nuclear fmt` (canonical layout); for a Dragonfly project, `dragonfly build | run | test`."
+   ],
+   "keys": [
+    "transpile",
+    "transpiler",
+    "compiler",
+    "how it works"
+   ],
+   "asks": [
+    "how does nuclear work",
+    "como funciona nuclear",
+    "how is a nuc file compiled",
+    "what does the compiler do",
+    "how does nuclear generate code"
+   ],
+   "links": [
+    {
+     "rel": "theory",
+     "to": "concept:transpiler"
+    },
+    {
+     "rel": "uses",
+     "to": "concept:dialect"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear.build"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear.check"
+    },
+    {
+     "rel": "errors",
+     "to": "concept:diagnostics"
+    }
+   ],
+   "sources": [
+    "docs/context/architecture.md",
+    "docs/context/product/prd.md#1. Vision"
+   ],
+   "meta": {
+    "topic": "compiler"
+   }
+  },
+  {
+   "id": "concept:golden-rule",
+   "type": "concept",
+   "title": "The golden rule: performance, speed and readability of the syntax",
+   "summary": "Every decision of the base language and of every dialect must keep three things: generated code as fast as an expert's, instant transpilation, and minimal, readable Nuclear. A rule, kind or shortcut that breaks one of the three is rejected.",
+   "body": [
+    "The golden rule governs the language and every dialect (ADR-0038):",
+    "",
+    "- **Performance**: the generated code is as fast as what an expert writes in the target. No runtime layer between Nuclear and the target: a property is a property, a method is the target's method or a one-line helper.",
+    "- **Speed**: transpiling is instant, because the compiler reads only what it needs.",
+    "- **Readability**: Nuclear stays minimal. One way to write each thing; explicit beats implicit when in doubt; errors over magic.",
+    "",
+    "Two more rules come with it. Quality first: the right solution, even when it costs more, never a shortcut that bends a rule. And the parser never changes for a dialect: framework words live in the dialects."
+   ],
+   "keys": [
+    "golden rule"
+   ],
+   "asks": [
+    "what is the golden rule of nuclear",
+    "what are the design principles of nuclear"
+   ],
+   "links": [
+    {
+     "rel": "of",
+     "to": "concept:nuclearlang"
+    }
+   ],
+   "sources": [
+    "docs/context/product/prd.md#3. Golden rule (governs every requirement)"
+   ],
+   "meta": {
+    "topic": "purpose"
+   }
+  },
+  {
+   "id": "concept:who-is-it-for",
+   "type": "purpose",
+   "title": "Who NuclearLang is for",
+   "summary": "For AI coding agents (few tokens, one way to write, fixes in the errors), for developers of apps and backends (only business logic, one CLI, native editor support) and for dialect authors (a new target without touching the compiler).",
+   "body": [
+    "- **AI coding agents** (Claude, Codex, OpenCode, a local model): few tokens, one way to write each thing, diagnostics with fixes, a short sheet to follow (`nuclear spec --brief`), type definitions so they do not invent APIs, an MCP server with every tool.",
+    "- **Developers of apps and backends**: they write business logic only; one CLI builds, tests and runs the project; the editor works like a native one.",
+    "- **Dialect authors**: they add a target language or a framework with data files, templates and tests, never with Rust.",
+    "",
+    "It is a good fit when the product is a mobile app, a web app or an HTTP backend with data, events or AI agents, and when part of the work is done by AI agents. It is not a fit when the goal is to convert existing TypeScript, Dart or Python into Nuclear: it does not read target code."
+   ],
+   "keys": [
+    "users",
+    "audience"
+   ],
+   "asks": [
+    "who is nuclear for",
+    "who should use nuclear",
+    "para quien es nuclear",
+    "is nuclear for me"
+   ],
+   "links": [
+    {
+     "rel": "not-for",
+     "to": "concept:non-goals"
+    },
+    {
+     "rel": "what",
+     "to": "concept:nuclearlang"
+    }
+   ],
+   "sources": [
+    "docs/context/product/prd.md#2. Users"
+   ],
+   "meta": {
+    "topic": "purpose"
+   }
+  },
+  {
+   "id": "concept:non-goals",
+   "type": "purpose",
+   "title": "What NuclearLang does not try to do",
+   "summary": "It does not read or convert target code into Nuclear, it does not replace the platform's own tools (Flutter still builds and runs the app), and it leaves out features that cannot be written the same in every target.",
+   "body": [
+    "- **No reverse direction.** Nuclear never reads or converts TypeScript, Dart or Python into `.nuc`.",
+    "- **No replacement of the platform's tools.** Flutter's CLI still builds and runs a mobile app, `uvicorn` or `npm` still serve a backend; Dragonfly drives them.",
+    "- **No feature that only one target has.** Records, operator overloading and Dart 3 pattern `switch` are not part of the language.",
+    "- **No magic.** No inferred parameters, no hoisting: when in doubt, explicit wins and the compiler says what is missing."
+   ],
+   "keys": [
+    "non-goals"
+   ],
+   "asks": [
+    "what does nuclear not do",
+    "can nuclear convert my existing code",
+    "can nuclear read typescript"
+   ],
+   "links": [
+    {
+     "rel": "limits",
+     "to": "cannot:read-target-code"
+    },
+    {
+     "rel": "limits",
+     "to": "cannot:language-features"
+    }
+   ],
+   "sources": [
+    "docs/context/product/prd.md#6. Non-goals"
+   ],
+   "meta": {
+    "topic": "purpose"
+   }
+  },
+  {
+   "id": "concept:comparison",
+   "type": "comparison",
+   "title": "NuclearLang compared with writing the framework by hand, with generators and with low-code",
+   "summary": "By hand you write and maintain the framework's ceremony; a framework's generator writes it once and then it is yours to maintain; low-code hides the code. Nuclear keeps the logic as code you own and regenerates the rest on every build.",
+   "body": [
+    "**Against writing Flutter, NestJS or FastAPI by hand.** By hand, each feature is its logic plus imports, annotations, registration, serializers, state classes and tests wired to the framework. In Nuclear the same feature is its logic; the rest is generated on every build, the same way in every project. The generated code is what an expert writes, so nothing is lost at run time.",
+    "",
+    "**Against a framework's generators** (Rails scaffolds, `phx.gen`, `artisan make`, `nest g`). Those write files once; from then on the boilerplate is yours to read and keep in step. In Nuclear the boilerplate is never in your sources: it lives in `build/` and is written again each time. `dragonfly gen` also writes finished Nuclear from a resource's data, but what it writes is logic-level code, short enough to read.",
+    "",
+    "**Against a cross-platform language** (Kotlin Multiplatform, Dart everywhere). Those run one runtime everywhere. Nuclear has no runtime of its own: each platform gets the native stack of its target (Flutter for mobile, React for web, FastAPI or NestJS for a backend).",
+    "",
+    "**Against low-code.** Low-code hides the program. Nuclear is code: text files, version control, tests, a compiler, and generated sources you can read.",
+    "",
+    "**The honest part.** For plain algorithms the base language is about as long as the target (the benchmark's two CPU programs: 1.03 and 0.84 times the hand-written lines). The saving is in the framework kinds, where a few lines of Nuclear become several files of the target."
+   ],
+   "keys": [
+    "comparison",
+    "vs",
+    "alternatives"
+   ],
+   "asks": [
+    "how is nuclear different from flutter",
+    "nuclear vs typescript",
+    "why not just use nestjs",
+    "how does nuclear compare with low-code",
+    "is nuclear like kotlin multiplatform"
+   ],
+   "links": [
+    {
+     "rel": "advantages",
+     "to": "concept:advantages"
+    },
+    {
+     "rel": "generators",
+     "to": "concept:generators"
+    }
+   ],
+   "sources": [
+    "docs/context/product/prd.md#1. Vision"
+   ],
+   "meta": {
+    "topic": "purpose"
+   }
+  }
+ ]
+}

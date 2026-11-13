@@ -1,7 +1,0 @@
-main() void
-  ~startDragonfly()
-  runApp(App())
-
-stateless App
-  build(context: BuildContext) Widget
-    MaterialApp.router(title = "Tasks", routerConfig = appRouter)

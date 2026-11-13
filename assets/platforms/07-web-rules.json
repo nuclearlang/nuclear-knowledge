@@ -1,0 +1,568 @@
+{
+ "shelf": "platforms",
+ "origin": "generated",
+ "generator": "07-web-rules",
+ "about": "The web platform: its rules",
+ "rows": [
+  {
+   "id": "spec:dragonfly-web/spec/brief/web.md#layout-and-kinds-the-folder-gives-the-kind-of-a-declaration-without-a-header-wor",
+   "type": "spec",
+   "title": "Platform `web` brief: Dragonfly web apps — Layout and kinds (the folder gives the kind of a declaration without a header word)",
+   "summary": "main.nuc (the App view: the router) config.nuc config/ (appConfig) public/ (styles.css, favicon.svg) shared/ models/ events/ components/ guards/ screens/ components/<c>/<c>_component.nuc appcomponent: the facade, the only thing other components see components/<c>/data/ repository…",
+   "body": [
+    "```",
+    "main.nuc (the App view: the router)  config.nuc  config/ (appConfig)  public/ (styles.css, favicon.svg)",
+    "shared/ models/ events/ components/ guards/ screens/",
+    "components/<c>/<c>_component.nuc        appcomponent: the facade, the only thing other components see",
+    "components/<c>/data/                    repository",
+    "components/<c>/domain/models/           model (no word)",
+    "components/<c>/domain/usecases/         usecase          components/<c>/domain/services/   service",
+    "components/<c>/presentation/<screen>/   <screen>_screen.nuc, managers/, state_models/ (no word), widgets/",
+    "test/                                   tests (no word)",
+    "```",
+    "",
+    "Calls allowed (N0301/N0302): screen → statemanager → appcomponent → usecase → repository/service."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/brief/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/brief/web.md#pieces.1a8725",
+   "type": "spec",
+   "title": "Platform `web` brief: Dragonfly web apps — Pieces",
+   "summary": "text, an element or a list.",
+   "body": [
+    "- Attributes are the DOM's names: `className`, `onClick`, `onChange = (e) => ...`, `src`, `alt`; `children` is a",
+    "  text, an element or a list. A list of views passes `key`. No JSX, no `class =`, no positional text.",
+    "- A view never omits `build() Element`; a `stateful` has fields, `initState()` and `setState(() => ...)`.",
+    "- Navigation by screen, never by address: `goTo(Screen, id = 7)`, `goBack()`. Inside a screen,",
+    "  `Manager.method()` calls its provider; elsewhere `inject<CharactersComponent>()`.",
+    "- A statemanager has no generics (`statemanager M<S>` is N0218): the state model goes in `@stateModel(S)`.",
+    "- Events: `event Name` + fields; `Events.publish(Name(...))`; `useEvent(Name)` in `build`. Access: `guard` with",
+    "  `canActivate()`, `@screen(acl = {...})`, `@acl(...)` on a use case. Not in this version: forms, translations,",
+    "  the local database, plugins.",
+    "- Tests (`test/`, no word): `@mock([Repo])`, `when(Repo.method).thenReturn(Ok(x))`, `@test`, `@states(\"...\",",
+    "  expect = [...])`, `@widget` with `renderScreen(Screen())` and `~screen.findByText(\"...\")`."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/brief/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/brief/web.md#pieces.329531",
+   "type": "spec",
+   "title": "Platform `web` brief: Dragonfly web apps — Pieces",
+   "summary": "@before(loading) @state(CharactersState.full) loadPage(page: int) Result<CharacterError, Character[]> ~characters.getPage(page) // a view: its parameters are its props; build() Element; HTML functions with named attributes and `children` stateless CharacterTile(character: Character) build()…",
+   "body": [
+    "@before(loading)",
+    "  @state(CharactersState.full)",
+    "  loadPage(page: int) Result<CharacterError, Character[]>",
+    "    ~characters.getPage(page)",
+    "",
+    "// a view: its parameters are its props; build() Element; HTML functions with named attributes and `children`",
+    "stateless CharacterTile(character: Character)",
+    "  build() Element",
+    "    li(",
+    "      className = \"tile\",",
+    "      onClick = () => goTo(CharacterListScreen),",
+    "      children = [span(className = \"name\", children = character.name), small(children = character.species)],",
+    "    )",
+    "",
+    "// a screen: @screen(route, providers, loggedIn, acl, notFound); <State>Builder has one callback per state",
+    "@screen(route = \"/\", providers = [CharactersManager])",
+    "stateless CharacterListScreen",
+    "  build() Element",
+    "    main(",
+    "      children = [",
+    "        CharactersStateBuilder(",
+    "          loading = () => p(children = \"Loading...\"),",
+    "          full = (list) => ul(children = list.map((c) => CharacterTile(key = c.id, character = c))),",
+    "          error = (e) => p(className = \"error\", children = e.message),",
+    "        ),",
+    "        button(onClick = () => CharactersManager.loadPage(2), children = \"Next page\"),",
+    "      ],",
+    "    )",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/brief/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/brief/web.md#pieces.4400d6",
+   "type": "spec",
+   "title": "Platform `web` brief: Dragonfly web apps — Pieces",
+   "summary": "// repository (data/): each method is an http call; :id goes to the path, other params to the query/body @repository(path = \"character\") repository CharacterRepository @get(path = \":id\") getOne(id: int) Result<CharacterError, Character> @get(cache = true, ttl = 600000) getPage(page: int)…",
+   "body": [
+    "```nuclear",
+    "// repository (data/): each method is an http call; :id goes to the path, other params to the query/body",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<CharacterError, Character>",
+    "",
+    "  @get(cache = true, ttl = 600000)",
+    "  getPage(page: int) Result<CharacterError, Character[]>",
+    "",
+    "  @post(retry = 1)",
+    "  save(character: Character) Result<CharacterError, Character>",
+    "",
+    "// usecase (domain/usecases/): one method exec that returns Result; dependencies in the constructor line",
+    "usecase GetPageUseCase",
+    "  (repository: CharacterRepository)",
+    "",
+    "  exec(page: int) Result<CharacterError, Character[]>",
+    "    ~repository.getPage(page)",
+    "",
+    "// appcomponent (<c>_component.nuc): aliases to the use cases, never constructor parameters",
+    "appcomponent CharactersComponent",
+    "  getPage() = GetPageUseCase.exec",
+    "",
+    "// state model (state_models/): each field is a state of the screen; a boolean is a state without data",
+    "CharactersState",
+    "  (full: Character[], error: CharacterError, loading: boolean)",
+    "",
+    "// statemanager (managers/): @state(M.x) emits that state with the method's value; an Err emits `error`",
+    "@stateModel(CharactersState)",
+    "statemanager CharactersManager",
+    "  (characters: CharactersComponent)",
+    "    loadPage(1)",
+    "",
+    "  @state(CharactersState.loading)",
+    "  loading()"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/brief/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/brief/web.md#platform-web-brief-dragonfly-web-apps",
+   "type": "spec",
+   "title": "Platform `web` brief: Dragonfly web apps",
+   "summary": "A Dragonfly web app has only `.nuc` files and `public/`; the app is generated in `build/app` (never edit it).",
+   "body": [
+    "A Dragonfly web app has only `.nuc` files and `public/`; the app is generated in `build/app` (never edit it).",
+    "You write the business logic; the framework writes the rest (components, DI, routing, JSON, states, http). The",
+    "platform's words are the mobile platform's (`repository`, `usecase`, `appcomponent`, `statemanager`, `@screen`); the",
+    "views are HTML functions. Full rules: `nuclear help web`; where each file goes: `nuclear help layout --platform web`."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/brief/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/brief/web.md#work-cycle",
+   "type": "spec",
+   "title": "Platform `web` brief: Dragonfly web apps — Work cycle",
+   "summary": "1. `dragonfly new <name> -p web` makes the project; put each file in its folder (the folder gives the kind).",
+   "body": [
+    "1. `dragonfly new <name> -p web` makes the project; put each file in its folder (the folder gives the kind).",
+    "2. Write following this sheet. A kind or decorator: `nuclear help <word> --platform web`; never guess one.",
+    "3. `dragonfly check` (or `nuclear check . --json`) until no errors, then `dragonfly test`."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/brief/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#1-project.3f68c4",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 1. Project",
+   "summary": "`title` is the browser tab's title and `description` the page's description.",
+   "body": [
+    "`title` is the browser tab's title and `description` the page's description. `public/` is served as it is: a",
+    "`public/styles.css` is the app's stylesheet and a `public/favicon.svg` its icon (the page links them when they exist)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#1-project.da71e2",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 1. Project",
+   "summary": "my_store/ ├── config.nuc dragonfly(platform = \"web\", dialect = \"react\"), app(...) ├── main.nuc the App view: the router with every screen ├── config/project_config.nuc appConfig: the connections and global services of the app ├── components/<name>/ appcomponent, config/, data/, domain/,…",
+   "body": [
+    "```",
+    "my_store/",
+    "├── config.nuc                         dragonfly(platform = \"web\", dialect = \"react\"), app(...)",
+    "├── main.nuc                           the App view: the router with every screen",
+    "├── config/project_config.nuc          appConfig: the connections and global services of the app",
+    "├── components/<name>/                 appcomponent, config/, data/, domain/, presentation/",
+    "├── shared/                            models, events, guards, components, screens shared by the app",
+    "├── public/                            static files, copied as they are",
+    "└── test/*_test.nuc                    tests",
+    "```",
+    "",
+    "`config.nuc` is the only manifest ([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §1): the platform and dialect, the app (name,",
+    "description, version) and the backends it talks to (`contracts(tasks_api = \"../tasks_api\")`: their models and",
+    "repositories are generated into `contracts/`, [projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §1.2). `build/app` is the dialect's app,",
+    "never edited.",
+    "",
+    "```nuclear",
+    "dragonfly(platform = \"web\", dialect = \"react\")",
+    "app(name = \"my_store\", title = \"My Store\", description = \"A Dragonfly web app.\", version = \"1.0.0\")",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#2-kinds",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 2. Kinds",
+   "summary": "Not in this version (STATUS.md, \"Next\" step 5): forms and `formmanager`, converters, translations, the local database (`@primary`, `saveLocal`), plugins and AI kinds.",
+   "body": [
+    "| Area | Kinds and decorators | Rules |",
+    "|---|---|---|",
+    "| Views | `stateless`, `stateful` (params = props; `build() Element`; HTML functions `div`, `ul`, `button`...) | §3.1 |",
+    "| Configuration | `appConfig`, `config`; connection `Http(baseUrl, headers, timeout, interceptors)`; globals `SessionManager`, `Acl`, `NetworkManager` | §3.2 |",
+    "| Data | models (`@key`), `repository` with `@get`/`@post`/`@put`/`@patch`/`@delete` (`path`, `cache`, `ttl`, `retry`; `@path`, `@query`, `@body`) | §3.3 |",
+    "| Domain | `usecase` (`@requires`, `@acl`), `appcomponent`, `service`, `aggregate` | §3.4 |",
+    "| State | state models, `statemanager` (`@stateModel`, `@state`, `@before`, `@after`), `<Model>Builder` | §3.5 |",
+    "| Screens | `@screen(route, providers, loggedIn, acl, notFound)`, `goTo`, `goBack` | §3.6 |",
+    "| Events | `event`, `Events.publish`, `component` with `@on(Event)`, `useEvent` | §3.7 |",
+    "| Session and access | `SessionManager`, `Acl`, `guard` with `canActivate` | §3.8 |",
+    "| Tests | `tests` with `@test`, `@widget`, `@states`, `@mock` | §4 |",
+    "",
+    "Not in this version (STATUS.md, \"Next\" step 5): forms and `formmanager`, converters, translations, the local",
+    "database (`@primary`, `saveLocal`), plugins and AI kinds. They come with the same words as the mobile platform."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3. Rules",
+   "summary": "1. Golden rule: performance, speed and readability of the syntax.",
+   "body": [
+    "1. **Golden rule:** performance, speed and readability of the syntax.",
+    "2. **Only the business logic in Nuclear.** Components, props, registration in the injector, JSON, http calls,",
+    "   state handling, routes and imports are written by the transpiler.",
+    "3. **Light clean architecture:** `data`, `domain` and `presentation` layers plus what is shared; the same",
+    "   `N0301`/`N0302` rules as the mobile platform (§5).",
+    "4. **Closed components:** another component is used only through its `appcomponent`.",
+    "5. **The platform's runtime and the official ecosystem of the dialect:** http with cache and retries, state",
+    "   managers, events, session, ACL, the router and the test helpers come from the dialect's runtime package; the UI",
+    "   library, the bundler and the test runner are the dialect's."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-1-views",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.1 Views",
+   "summary": "A view's parameters are its props; `build()` returns an `Element`.",
+   "body": [
+    "A view's parameters are its props; `build()` returns an `Element`. Elements are HTML functions with the",
+    "attributes as named arguments and `children` (a text, an element or a list), and other views called like",
+    "functions. A `stateful` keeps its fields while it is shown; `setState(() => ...)` changes them.",
+    "",
+    "```nuclear",
+    "stateless CharacterTile(character: Character)",
+    "  build() Element",
+    "    li(className = \"tile\", onClick = () => goTo(CharacterDetailScreen, id = character.id), children = [",
+    "      img(src = character.image, alt = character.name),",
+    "      span(children = character.name),",
+    "    ])",
+    "",
+    "stateful Counter(start: int = 0)",
+    "  count: int = 0",
+    "",
+    "  initState() void",
+    "    count = start",
+    "",
+    "  build() Element",
+    "    button(onClick = () => setState(() => count = count + 1), children = \"Clicked ${count}\")",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-2-configuration",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.2 Configuration",
+   "summary": "`appConfig` (one per project) and `config` (per component) list `connections` and `globals`, as in the mobile platform.",
+   "body": [
+    "`appConfig` (one per project) and `config` (per component) list `connections` and `globals`, as in the mobile",
+    "platform. `Http` is the http connection; `SessionManager(timeout)`, `Acl(inherits)` and `NetworkManager()` the",
+    "global services."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-3-data",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.3 Data",
+   "summary": "A `repository` is a class of http calls: the same decorators, parameters and return rules as the mobile platform (flutter.md §6.3): the path under the connection's `baseUrl`, `:name` from a parameter, the rest to the query (GET, DELETE) or the JSON body; a `Result` method answers `Err(E(message =…",
+   "body": [
+    "A `repository` is a class of http calls: the same decorators, parameters and return rules as the mobile platform",
+    "([flutter.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md) §6.3): the path under the connection's `baseUrl`, `:name` from a parameter, the rest to",
+    "the query (GET, DELETE) or the JSON body; a `Result` method answers `Err(E(message = ...))`; `cache`/`ttl`/`retry`.",
+    "A model is its fields; it gets `fromJson`, `toJson` and `copyWith`; `@key` names a field in the JSON."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-4-domain",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.4 Domain",
+   "summary": "`usecase` (one `exec` that returns `Result`; `@requires(internet, session)`, `@acl(roles, permissions, guards)`), `appcomponent` (aliases to the use cases), `service`, `aggregate`: identical to the mobile platform.",
+   "body": [
+    "`usecase` (one `exec` that returns `Result`; `@requires(internet, session)`, `@acl(roles, permissions, guards)`),",
+    "`appcomponent` (aliases to the use cases), `service`, `aggregate`: identical to the mobile platform."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-5-state",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.5 State",
+   "summary": "A state model lists the states of a screen; a `statemanager` emits them (`@stateModel`, `@state`, `@before`, `@after`).",
+   "body": [
+    "A state model lists the states of a screen; a `statemanager` emits them (`@stateModel`, `@state`, `@before`,",
+    "`@after`). The screen reads them with the model's builder: `CharactersStateBuilder(full = (list) => ..., error =",
+    "(e) => ..., loading = () => ..., orElse = () => ...)`, which re-renders on every state."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-6-screens-and-navigation",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.6 Screens and navigation",
+   "summary": "`@screen(route = \"/characters/:id\", providers = [Manager], loggedIn = { forward: \"/login\" }, acl = { roles, permissions, forward: \"/denied\" }, notFound = true)` on a view: a route of the router; `:id` becomes the screen's parameter of that type, the other parameters come from the query.",
+   "body": [
+    "`@screen(route = \"/characters/:id\", providers = [Manager], loggedIn = { forward: \"/login\" }, acl = { roles,",
+    "permissions, forward: \"/denied\" }, notFound = true)` on a view: a route of the router; `:id` becomes the screen's",
+    "parameter of that type, the other parameters come from the query. Every address is a new instance of its screen:",
+    "going from `/docs/a` to `/docs/b` builds the screen and its managers again. `providers` creates the managers for the screen",
+    "and its views, where `Manager.method()` uses them. `goTo(Screen, id = 7)` and `goBack()` navigate by screen, never",
+    "by address. The `App` view of `main.nuc` is the router."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-7-events",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.7 Events",
+   "summary": "`event Name` + fields; `Events.publish(Name(...))`; a global `component` method with `@on(Name)` runs with every one; a view calls `useEvent(Name)` in `build` to re-render on it.",
+   "body": [
+    "`event Name` + fields; `Events.publish(Name(...))`; a global `component` method with `@on(Name)` runs with every",
+    "one; a view calls `useEvent(Name)` in `build` to re-render on it."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-3-8-session-and-access",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 3.8 Session and access",
+   "summary": "`SessionManager` keeps the session (token, user, roles, permissions, values) in the browser's storage and ends it after `timeout`; `Acl` gives role inheritance; a `guard` is a custom check for `@acl(guards = [...])`.",
+   "body": [
+    "`SessionManager` keeps the session (token, user, roles, permissions, values) in the browser's storage and ends it",
+    "after `timeout`; `Acl` gives role inheritance; a `guard` is a custom check for `@acl(guards = [...])`."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-generators.31cf44",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — Generators",
+   "summary": "`dragonfly gen resource <component> <Name>` writes the finished, compiling code of a resource (ADR-0103): its models (nested objects become models named `<Name><Key>`; a paged answer gives `<Name>Page`), the repository (an HTTP repository over the app's `Http` connection, a named one added when…",
+   "body": [
+    "`dragonfly gen resource <component> <Name>` writes the finished, compiling code of a resource (ADR-0103): its models",
+    "(nested objects become models named `<Name><Key>`; a paged answer gives `<Name>Page`), the repository (an HTTP repository over the app's `Http` connection, a named one added when the app has another), one use",
+    "case per action (`--actions list,get,search,create,update,delete`), their aliases in the facade, with `--screen <screen>` a screen that lists it with its state manager and state model, and a test with the repository mocked. The fields",
+    "come from an example answer (`--from-json <file|url>`), a spec (`--from-spec <spec.md>`: its example answer, else its",
+    "`Key | Type` table; a `GET https://...` line gives the API) or `--fields \"id:int name:string\"`. A file that exists is",
+    "never overwritten (the facade and the repository get only the members they lack, so an action added to a resource that exists is finished); a name another file declares stops it before it writes.",
+    "`dragonfly gen inspect` answers what the project has. The agent writes only what is not standard: a use case with",
+    "its own rules, a view's details."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#3-rules-generators.4bd3c4",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — Generators",
+   "summary": "`dragonfly gen usecase <component> <Name>` adds the alias of a use case the project declares to its component's facade; with `--calls <Repository>.<method>` it writes the use case too, when all it does is call that method of a repository.",
+   "body": [
+    "`dragonfly gen usecase <component> <Name>` adds the alias of a use case the project declares to its component's",
+    "facade; with `--calls <Repository>.<method>` it writes the use case too, when all it does is call that method of a",
+    "repository. What a screen shows of it (a state manager's method and its state) is written by hand.",
+    "",
+    "```sh",
+    "dragonfly gen resource characters Character --from-json https://rickandmortyapi.com/api/character",
+    "dragonfly gen usecase characters CharacterEpisodes --calls CharacterRepository.episodes   # a method the repository declares",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#4-tests",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 4. Tests",
+   "summary": "`tests` in `test/`: the app starts with its real config and every request answers what the test prepares (`DragonflyTest.respondWith`, `respond`); `@mock([Class])` makes a class a mock (`when(Class.method).thenReturn`, `verify`); `@test`, `@states` (the states a manager emits) and `@widget` (a…",
+   "body": [
+    "`tests` in `test/`: the app starts with its real config and every request answers what the test prepares",
+    "(`DragonflyTest.respondWith`, `respond`); `@mock([Class])` makes a class a mock (`when(Class.method).thenReturn`,",
+    "`verify`); `@test`, `@states` (the states a manager emits) and `@widget` (a screen rendered in a memory router,",
+    "read with Testing Library's `screen`) as in the mobile platform; `beforeEach()`/`afterEach()` methods are the hooks."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#5-architecture",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 5. Architecture",
+   "summary": "5. Architecture",
+   "body": [
+    "| Rule | Code |",
+    "|---|---|",
+    "| A `usecase` is only used from an `appcomponent` | `N0301` |",
+    "| A `service` is only used from a `usecase` or an `aggregate` | `N0301` |",
+    "| An `aggregate` is only used from a `usecase` | `N0301` |",
+    "| A `repository` is only used from a `usecase` or an `aggregate` | `N0301` |",
+    "| From another component (or from `shared/`, `config/` and `main.nuc`) only the `appcomponent`, the models, the events, the global components, the guards and the screens (`@screen`) are visible | `N0302` |",
+    "| Tests may use any declaration | — |"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#6-what-the-dialect-decides",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly — 6. What the dialect decides",
+   "summary": "Only how it is written: the language, the UI library, the bundler, the test runner, the generated app and how to run it (react.md).",
+   "body": [
+    "Only how it is written: the language, the UI library, the bundler, the test runner, the generated app and how to",
+    "run it ([react.md](react.md))."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-web/spec/web.md#the-web-platform-of-dragonfly",
+   "type": "spec",
+   "title": "The `web` platform of Dragonfly",
+   "summary": "The web platform is the mobile platform in a browser (ADR-0097): the same words for the same things (`appConfig`, `repository` with `@get`, `usecase`, `appcomponent`, state models and `statemanager`, `@screen`, events, guards, tests), so an app's domain and state read the same on a phone and on…",
+   "body": [
+    "> Inherits every rule of [nuclear-base.md](https://github.com/nuclearlang/nuclear/blob/main/spec/nuclear-base.md) and the standard library ([library.md](https://github.com/nuclearlang/nuclear/blob/main/spec/library.md)).",
+    "> This document defines the web platform (ADR-0093, ADR-0097): apps that run in the browser, written in Nuclear",
+    "> only. Today its only dialect is `react` ([react.md](react.md)); this document holds the platform's rules and",
+    "> kinds, `react.md` how React writes them. A project's Nuclear never changes between the dialects of the platform;",
+    "> only a use of a dialect's type definitions (a React hook, an npm package) ties code to that dialect.",
+    "",
+    "The web platform is the **mobile platform in a browser** (ADR-0097): the same words for the same things",
+    "(`appConfig`, `repository` with `@get`, `usecase`, `appcomponent`, state models and `statemanager`, `@screen`,",
+    "events, guards, tests), so an app's domain and state read the same on a phone and on the web, and an agent that",
+    "knows one writes the other. What a browser has no use for (a native splash, workmanager, a secure keystore) is not",
+    "here; what it needs and a phone does not (HTML elements, a url bar) is."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/spec/web.md"
+   ]
+  }
+ ]
+}

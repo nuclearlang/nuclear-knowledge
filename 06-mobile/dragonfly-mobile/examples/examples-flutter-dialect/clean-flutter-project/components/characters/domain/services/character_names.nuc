@@ -1,4 +1,0 @@
-// Service: transformations used by the use cases.
-service CharacterNames
-  alive(characters: Character[]) Character[]
-    characters.filter(c => c.status == "Alive")

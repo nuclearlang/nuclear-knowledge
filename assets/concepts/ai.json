@@ -1,0 +1,704 @@
+{
+ "shelf": "concepts",
+ "origin": "curated",
+ "about": "The AI pieces of the ecosystem: the Smart Graph, its MCP server, the Nuclear Developer, the Loop, how they work together and how the knowledge base is kept in step with the code.",
+ "rows": [
+  {
+   "id": "concept:ai-loop",
+   "type": "architecture",
+   "title": "AI in NuclearLang: the Smart Graph, the Nuclear Developer and the Loop",
+   "summary": "Three pieces take a spec to tested, reviewed code on your machine: the Smart Graph (a private knowledge base and the MCP server), the Nuclear Developer (local agents on models of at most 3B parameters) and the Loop (the pipeline). A frontier model can lead; the local agents write.",
+   "body": [
+    "| Piece | What it is | Where it runs |",
+    "|---|---|---|",
+    "| Nuclear Smart Graph | the knowledge base of the whole ecosystem, searched instead of guessing; and the MCP server | `127.0.0.1:7878` |",
+    "| Nuclear Developer | the local agents: coder, tester, security reviewer, planner, documenter, diagnoser, assistant | `127.0.0.1:7879` |",
+    "| The Loop | the pipeline from a spec to deployed code: generate, plan, tests first, code, verification, security, artifacts, deploy | the editor, or `nuclear-loop` |",
+    "",
+    "The idea: a small model cannot hold much in its head, so what it needs comes from the graph, and what it writes is checked by the compiler before it answers. Standard code is written by generators, not by a model. A frontier model (Claude, or any other over MCP) is the lead: it plans, validates and corrects only what is wrong, and what it corrects becomes an example the local agents learn from.",
+    "",
+    "Everything runs on your machine: the models on Ollama, the graph and the Developer on `127.0.0.1`. It goes to the internet only when you choose a frontier model to lead, import a spec from Jira or GitHub, read an API's answer or documentation, or deploy.",
+    "",
+    "Set up once: `nuclear-loop setup` (the installer runs it at its end; VS Code has it as a wizard). It suggests the models that fit the machine, installs everything and starts the services at every login."
+   ],
+   "keys": [
+    "ai",
+    "ai loop",
+    "inteligencia artificial"
+   ],
+   "asks": [
+    "how does nuclear use ai",
+    "what ai tools does nuclear have",
+    "does the ai run locally",
+    "esto corre local",
+    "how do I set up the ai loop"
+   ],
+   "links": [
+    {
+     "rel": "piece",
+     "to": "concept:smart-graph"
+    },
+    {
+     "rel": "piece",
+     "to": "concept:nuclear-developer"
+    },
+    {
+     "rel": "piece",
+     "to": "concept:loop"
+    },
+    {
+     "rel": "piece",
+     "to": "concept:mcp"
+    },
+    {
+     "rel": "way-of-working",
+     "to": "concept:local-first"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:set-up-the-ai-services"
+    }
+   ],
+   "sources": [
+    "docs/ai/loop.md",
+    "docs/adr/0102-ai-loop.md#Context",
+    "docs/ai/setup.md"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:smart-graph",
+   "type": "concept",
+   "title": "The Nuclear Smart Graph: the knowledge base of the ecosystem",
+   "summary": "The Smart Graph is the local, private library of everything NuclearLang is: typed cards on shelves (concepts, language, platforms, tools, errors, capabilities, playbooks, examples, docs), linked to each other, searched by meaning and by exact name. Agents ask it instead of guessing.",
+   "body": [
+    "- **Shelves.** Each shelf answers one kind of question: *concepts* (what, why, how), *language* (how it is written), *platforms* (kinds, decorators, layout), *tools* (every command, MCP tool, route, generator, agent), *errors* (what went wrong and its fix), *capabilities* (what can and cannot be done), *playbooks* (how a task is done, step by step), *examples* (validated code) and *docs* (the long documents).",
+    "- **Cards.** A row is one card with a stable id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`), a title, a summary, a body and links to other cards. A card can be fetched by its id, with no search.",
+    "- **A graph.** Cards link to each other with typed edges: an error to the errors it comes with and to its fix, a kind to its decorators, a playbook to the tools of its steps.",
+    "- **Hybrid search.** A query is matched by meaning (a local embeddings model) and by the exact names it writes (`N0114`, `gen resource`, `usecase`), and a card is also found by the questions it answers.",
+    "- **Two readers.** A local agent reads only Nuclear (`agents`); a frontier model also reads the dialects underneath, the decisions and the state.",
+    "- **Private.** It listens on `127.0.0.1` only, refuses web pages, gives nothing without a token the user allowed, and stores its texts encrypted.",
+    "- **Versioned.** The base has a schema and a revision; a check fails when it is behind the code.",
+    "",
+    "Use it: `nuclear-graph search \"<question>\"`, `nuclear-graph card <id>`, `nuclear-graph stats`; from an AI client, the MCP tools `graph_search` and `graph_card`."
+   ],
+   "keys": [
+    "smart graph",
+    "nuclear smart graph",
+    "nuclear-graph",
+    "rag",
+    "knowledge base",
+    "graph",
+    "base de conocimiento"
+   ],
+   "asks": [
+    "what is the smart graph",
+    "que es el smart graph",
+    "how does the rag work",
+    "where does the agent get its knowledge",
+    "what does the knowledge base contain",
+    "is the knowledge base private"
+   ],
+   "links": [
+    {
+     "rel": "theory",
+     "to": "concept:rag"
+    },
+    {
+     "rel": "kept-current-by",
+     "to": "concept:knowledge-versions"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear-graph"
+    },
+    {
+     "rel": "mcp",
+     "to": "mcp:graph_search"
+    },
+    {
+     "rel": "serves",
+     "to": "concept:mcp"
+    }
+   ],
+   "sources": [
+    "docs/adr/0104-smart-graph-shelves.md",
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:mcp",
+   "type": "concept",
+   "title": "The MCP of NuclearLang: what it is and how it works",
+   "summary": "MCP is the Model Context Protocol: the open protocol through which an AI client (Claude Code, Codex, Cursor) starts a program and calls its tools. `nuclear-graph mcp` is that program for NuclearLang: it gives the client the Smart Graph, the compiler, the dragonfly commands, the generators, the internet and the local developer as tools.",
+   "body": [
+    "**How it works.** The AI client starts `nuclear-graph mcp` and talks to it over stdio. The server offers tools and a set of instructions; the model calls a tool, the server runs it on your machine (a search in the graph, `nuclear check`, `dragonfly gen`, a request to the local agents) and answers text the model reads.",
+    "",
+    "**Connect it.**",
+    "",
+    "```sh",
+    "nuclear-loop setup                                 # once: the services, and the MCP server's access to the graph",
+    "claude mcp add nuclear -- nuclear-graph mcp        # Claude Code",
+    "codex mcp add nuclear -- nuclear-graph mcp         # Codex",
+    "```",
+    "",
+    "Cursor and others: an MCP server whose command is `nuclear-graph` with the argument `mcp`. VS Code's settings page (`Ctrl+Alt+S`) adds it with a button.",
+    "",
+    "**Its tools, by group.**",
+    "",
+    "- The graph: `graph_strategy` (which kind of request it is and the plan of that kind: the first call), `graph_search`, `graph_card`, `graph_prompt`, `graph_remember`.",
+    "- The compiler: `nuclear_check`, `nuclear_build`, `nuclear_fmt`, `nuclear_help`, `nuclear_brief`, `nuclear_defs`.",
+    "- The project: `dragonfly` (new, build, install, test, check, make, migrate, explain), `project_inspect`.",
+    "- The generators: `generate_component`, `generate_resource`, `generate_usecase`, `generate_screen`, `api_inspect`.",
+    "- The internet: `web_search`, `web_read`.",
+    "- The local developer: `developer_task`, `developer_retry`, `developer_review`, `developer_code`, `developer_test`, `developer_security`.",
+    "",
+    "**The way of working it asks for.** The generators write the standard code; the local developer does the task first (`developer_task`); the frontier model reads the journal, validates (`nuclear_check`, `dragonfly test`), corrects only what is wrong and records its review (`developer_review`), so the local agents learn from the correction.",
+    "",
+    "Each tool has its row: `mcp:generate_resource`, `mcp:developer_task`... and the whole server is `mcp:server`.",
+    "",
+    "A machine set up for remote agents only (`limit:remote-agents-only`) has no Smart Graph and no local developer: the server then offers no `graph_*` nor `developer_*` tool and tells the model to write what the generators do not."
+   ],
+   "keys": [
+    "mcp",
+    "model context protocol",
+    "mcp server",
+    "nuclear mcp"
+   ],
+   "asks": [
+    "how does the mcp work",
+    "como funciona el mcp",
+    "what is the mcp of nuclear",
+    "how do I connect claude code to nuclear",
+    "which mcp tools does nuclear have",
+    "how do I use nuclear with cursor"
+   ],
+   "links": [
+    {
+     "rel": "is",
+     "to": "mcp:server"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear-graph.mcp"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear-graph.connect"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:developer_task"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:generate_resource"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:graph_search"
+    },
+    {
+     "rel": "way-of-working",
+     "to": "concept:local-first"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:connect-an-mcp-client"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:remote-agents-only"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:set-up-the-ai-services"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/README.md#Use it from an AI agent (MCP)",
+    "nuclear-graph/src/nuclear_graph/mcp_server.py",
+    "docs/ai/mcp.md"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:nuclear-developer",
+   "type": "concept",
+   "title": "The Nuclear Developer: the local AI agents",
+   "summary": "The Nuclear Developer is a team of local agents on models of at most 3B parameters (on Ollama, no GPU needed): a coder, a tester, a security reviewer, a planner, an analyst, a documenter, a diagnoser and a chat assistant. Each follows fixed steps: recall from the Smart Graph, write, check with the compiler, repair.",
+   "body": [
+    "It is the junior developer of the team: it writes one small piece well when the task is precise, and it does not make architecture decisions. It is itself a Dragonfly backend written in Nuclear.",
+    "",
+    "**Why it works with a small model.**",
+    "",
+    "- A small model follows fixed steps better than it chooses tools, so each agent is a graph of fixed steps.",
+    "- What the model cannot remember comes from the Smart Graph: the card of the kind it writes, validated examples, the mistakes to avoid.",
+    "- What it writes is checked by the compiler before it answers; an error goes back to it with its fix, at most three times.",
+    "- Standard code is not written by the model at all: the generators write it.",
+    "- It reads the project by itself: the files that declare the names its order writes are its context.",
+    "- Its answer is held to the order's own words: a name, a path or a value the order writes and the answer lacks is asked for again.",
+    "- It reads and writes only Nuclear, never the target language.",
+    "",
+    "**The agents** (each has its row: `agent:coder`, `agent:tester`...): the coder writes one `.nuc` file; the tester writes the tests; the security reviewer reports findings; the planner splits a spec into pieces of one file; the documenter writes what a run did; the diagnoser says why a step failed and what to do; the assistant answers the editor's chat.",
+    "",
+    "**Roles.** Developer is one of its faces. It also works as tester, security reviewer, planner, documenter and support (`role:developer`, `role:tester`, `role:security`, `role:devops`...).",
+    "",
+    "**It knows its limits.** One file per call, an 8192-token window, no decisions. Its plan says what of a spec the platform cannot do yet or is beyond a local model; a task beyond it is split smaller, handed to a frontier model that leads, or asked back to the user (`limit:agent-reasoning`, `playbook:escalate`).",
+    "",
+    "Run it: `nuclear-developer` (it listens on `127.0.0.1:7879`); its models: `qwen2.5-coder:3b` writes code, `gemma4:e2b` plans, reviews and answers."
+   ],
+   "keys": [
+    "nuclear developer",
+    "local agents",
+    "local agent",
+    "developer",
+    "agente local",
+    "agentes locales"
+   ],
+   "asks": [
+    "what is the nuclear developer",
+    "que es nuclear developer",
+    "which models do the local agents use",
+    "can a small model write nuclear",
+    "what can the local agent do",
+    "who are you",
+    "what can you do"
+   ],
+   "links": [
+    {
+     "rel": "agent",
+     "to": "agent:coder"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:tester"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:planner"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:security"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:diagnoser"
+    },
+    {
+     "rel": "limits",
+     "to": "limit:agent-reasoning"
+    },
+    {
+     "rel": "limits",
+     "to": "limit:agent-context"
+    },
+    {
+     "rel": "trained-by",
+     "to": "concept:distillation"
+    },
+    {
+     "rel": "role",
+     "to": "role:developer"
+    },
+    {
+     "rel": "tools",
+     "to": "service:agent-toolbox"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:ai-setup"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/README.md",
+    "docs/adr/0102-ai-loop.md#Decision"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:ai-setup",
+   "type": "concept",
+   "title": "The set-up of the AI services: a profile of models for the machine",
+   "summary": "One set-up installs the Smart Graph, the Nuclear Developer and the models: `nuclear-loop setup` in a terminal, a wizard in VS Code, the last step of the installer. It reads the machine, suggests a profile (`lite`, `medium`, `hard`, or `remote`: remote agents only), says how far each works, and starts both services at every login. The user chooses what is downloaded.",
+   "body": [
+    "**The profiles.** The suggested one is the heaviest that runs well with the machine's memory and disk; a tight one and one that does not fit are marked with the reason, and may still be chosen.",
+    "",
+    "| Profile | Models | Downloads | Memory | Measured |",
+    "|---|---|---|---|---|",
+    "| `lite` | `qwen2.5-coder:1.5b` | 1.6 GB | 8 GB (4 GB at least) | not measured yet |",
+    "| `medium` | `qwen2.5-coder:3b` | 2.5 GB | 12 GB (8 GB at least) | as coder, the model of hard: 43 of 45 single-file tasks, 16 of 18 never seen; as assistant, 6 of the first 8 chat questions (hard: 10 of 10) |",
+    "| `hard` | `qwen2.5-coder:3b` + `gemma4:e2b` | 9.7 GB | 24 GB (16 GB at least) | 43 of 45 single-file tasks (Claude Sonnet: 39), 16 of 18 never seen, 2 of 3 whole features, 10 of 10 chat questions, 10 of 11 analyses |",
+    "| `remote` | none | 0 | any | nothing runs on the machine: the MCP server alone |",
+    "",
+    "Every local profile also downloads `embeddinggemma` (0.6 GB, in the figures above), which makes the graph's vectors.",
+    "",
+    "**What the set-up needs**, found by itself once installed or installed in a terminal the user sees: NuclearLang, `uv` (the Python environments; it brings its own Python) and Ollama (it runs the models; only the local profiles need it).",
+    "",
+    "**Where things are.** The choice: `~/.config/nuclearlang/ai.env` (`%APPDATA%\\nuclearlang\\ai.env`): the mode, the profile, its models; the services start with it, and the Loop and the editor take their default models from it. The code of the services: `~/.local/share/nuclearlang/ai/`. The graph's data: `~/.local/share/nuclear-graph/`. The models: Ollama's own folder.",
+    "",
+    "**The services at login.** Linux: the systemd user units `nuclear-graph` and `nuclear-developer` (`systemctl --user status|restart ...`, `journalctl --user -u nuclear-graph`). macOS: two launch agents (`io.github.nuclearlang.graph`, `.developer`). Windows: a script of the Startup folder. In idle both take about 150 MB of memory; Ollama loads a model when an agent asks and frees it a few minutes later.",
+    "",
+    "**Update and remove.** Running the installer again sets the services up again with the same profile, without questions. `nuclear-loop setup --remove` takes the services away; Ollama, its models and the graph's data stay."
+   ],
+   "keys": [
+    "nuclear-loop setup",
+    "lite",
+    "medium",
+    "hard",
+    "remote agents only",
+    "ai.env",
+    "profile",
+    "set-up",
+    "wizard"
+   ],
+   "asks": [
+    "which models should I install for my machine",
+    "what is the difference between lite medium and hard",
+    "how much memory do the local agents need",
+    "is there a lighter model than gemma4",
+    "que perfil de modelos elijo",
+    "do the ai services start by themselves after a reboot",
+    "where is the configuration of the ai services"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:set-up-the-ai-services"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:nuclear-developer"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:smart-graph"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:remote-agents-only"
+    },
+    {
+     "rel": "faq",
+     "to": "faq:local-models"
+    }
+   ],
+   "sources": [
+    "docs/ai/setup.md",
+    "docs/adr/0106-ai-setup.md#Decision",
+    "nuclear-vscode/src/aiSetup.json"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:loop",
+   "type": "concept",
+   "title": "The Nuclear Loop: the pipeline from a spec to deployed code",
+   "summary": "The Loop takes a spec through nine stages on your machine: specification, generate, plan, tests first, code, verification, security, artifacts and deploy. Each step shows who did it, every run is documented in a journal, and a failed run goes on from the step that failed.",
+   "body": [
+    "1. **Specification**: what you want, with at least one acceptance criterion. Written to `specs/<id>/spec.md`. It ends with the **analysis**: which kind of request the spec is (its strategy, `concept:strategies`), which decides the stages that run, what the generators write and what is asked of you first.",
+    "2. **Generate**: `dragonfly gen` writes every resource the spec names, also in plain words, finished and compiling.",
+    "3. **Plan**: what is left is split into pieces of one file, in the order they can be written.",
+    "4. **Tests first**: one test per acceptance criterion, before any code.",
+    "5. **Code**: each piece is written at its place and repaired with the compiler; each use case is wired by `dragonfly gen usecase`; then the whole project is checked.",
+    "6. **Verification**: the project is built and every test runs; a failing test goes back to the coder explained in Nuclear, up to three rounds.",
+    "7. **Security**: each new file is reviewed against the platform's security rules.",
+    "8. **Artifacts**: the build's output is kept with the run.",
+    "9. **Deploy**: the seed, integration and deploy commands of `.nuclear/loop.json`.",
+    "",
+    "- **Who leads**: the local agents only (`--lead local`), or Claude leading while the local developer writes (`--lead claude`).",
+    "- **Where**: VS Code (`Ctrl+Alt+P`), Android Studio (`Alt+Shift+P`), a terminal (`nuclear-loop run specs/<id>/spec.md`), or over MCP (`developer_task`).",
+    "- **The journal**: `.nuclear/loop/runs/<id>.md` says what was built, how it was checked and what is left.",
+    "- **When it fails**: the diagnoser says why; `nuclear-loop retry <run>` goes on from the failed step. A run interrupted by a crash is recovered.",
+    "- **On a server**: `nuclear-loop export github|gitlab|bitbucket` writes the CI file that runs the same commands.",
+    "",
+    "Each stage has its row: `stage:spec`, `stage:generate`, `stage:plan`, `stage:test`, `stage:code`, `stage:verify`, `stage:security`, `stage:artifacts`, `stage:deploy`."
+   ],
+   "keys": [
+    "loop",
+    "nuclear loop",
+    "nuclear-loop",
+    "pipeline",
+    "sdd",
+    "spec driven"
+   ],
+   "asks": [
+    "what is the loop",
+    "how does a feature get built",
+    "what are the stages of the pipeline",
+    "how do I run a spec",
+    "cuales son los pasos para completar un feature",
+    "how do I retry a failed run"
+   ],
+   "links": [
+    {
+     "rel": "first-stage",
+     "to": "stage:spec"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:generate"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:plan"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:test"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:code"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:verify"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear-loop.run"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear-loop.retry"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:feature-from-a-spec"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:strategies"
+    }
+   ],
+   "sources": [
+    "docs/ai/loop.md",
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:local-first",
+   "type": "concept",
+   "title": "Local first: the generators and the local developer work, a frontier model leads",
+   "summary": "The order of work is fixed: the generators write the standard code, the local developer writes what is left, and a frontier model (Claude Sonnet, Opus, Haiku or any other) acts as the manager: it plans, validates and corrects only what failed. Its corrections become examples for the local agents.",
+   "body": [
+    "A lead hands work to a junior the same way:",
+    "",
+    "1. **The lead understands the whole** (the spec, the project, the architecture) and splits the work into small orders: one file, one declaration, every name given.",
+    "2. **The tools write what is standard**: `generate_resource` for every resource the spec names; `generate_usecase` wires each use case the local developer wrote (its alias in the facade, its route).",
+    "3. **The local developer writes each small piece** without needing the whole picture: its order names the path, the kind, the names it must use and the files it depends on.",
+    "4. **The lead validates**: `nuclear_check` of the project and `dragonfly test`.",
+    "5. **The lead corrects only what is wrong**, never what passed, and records it (`developer_review`): the corrected files become examples in the graph.",
+    "",
+    "Without a frontier model the local agents do every step themselves (`--lead local`). That works for specs written with the platform's words and for standard features; for a spec in plain words or a feature of several files with its own design, a lead is needed.",
+    "",
+    "Why this order: the cheapest worker that can do a step does it. A generator costs nothing and never fails; a local model costs seconds of your CPU; a frontier model costs money, so it is used for what only it can do: understanding and judgment."
+   ],
+   "keys": [
+    "local first",
+    "lead",
+    "manager",
+    "frontier model",
+    "claude leads"
+   ],
+   "asks": [
+    "how do the local agents work with claude",
+    "when should claude lead",
+    "what does the lead do",
+    "can I use sonnet with the local agent",
+    "how do I save tokens with nuclear"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:work-under-a-lead"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:escalate"
+    },
+    {
+     "rel": "mcp",
+     "to": "mcp:developer_task"
+    },
+    {
+     "rel": "mcp",
+     "to": "mcp:developer_review"
+    },
+    {
+     "rel": "limits",
+     "to": "limit:agent-features"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/mcp_server.py",
+    "nuclear-graph/src/nuclear_graph/prompts/plan.md",
+    "docs/adr/0103-generators.md#Context"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:knowledge-versions",
+   "type": "concept",
+   "title": "How the knowledge base stays in step with the code: assets, revisions and the check",
+   "summary": "The knowledge base is asset files in `nuclear-developer/data`: most rows are generated from the working tree, the rest are written by hand and name their sources. It has a schema and a revision; `nuclear-graph knowledge check` fails when a row is behind the code, and every finished feature ends with build, check and ingest.",
+   "body": [
+    "- **Generated rows** are read from a structured source and never edited: the compiler's diagnostics, the standard library, each platform's kinds, decorators and layout, the help of the four CLIs, the MCP tools, the HTTP routes, the Loop's stages, the agents, the editor's commands, each component's version, the example projects and every document section. They cannot drift: building again rewrites them.",
+    "- **Curated rows** are written by hand (the purpose, the concepts, the playbooks, the capabilities, the failures). Each names the `sources` it was written from. When a source changes, the check asks for a review of that row.",
+    "- **Overlays** add hand-written fields (links, examples, questions) to generated rows.",
+    "- **Versions.** `manifest.json` holds the schema (the row format), the revision (it rises by one whenever any row changes) and, per row, its hash and the revision that last changed it. `revisions.json` is the log. The graph remembers the revision it ingested.",
+    "",
+    "The commands:",
+    "",
+    "```sh",
+    "nuclear-graph knowledge build     # write the generated assets, validate everything, raise the revision",
+    "nuclear-graph knowledge check     # fail when the assets, a curated row or the graph are behind the tree",
+    "nuclear-graph knowledge review    # record that a curated row still holds after its source changed",
+    "nuclear-graph ingest              # the graph learns the new revision (only what changed is embedded)",
+    "```",
+    "",
+    "A build refuses an invalid base: a link to a row that does not exist, a duplicated id, or target-language code in a row the local agents read.",
+    "",
+    "The rule for whoever changes the ecosystem (a person or an agent): a feature is not done until `knowledge check` is clean and the graph holds the new revision."
+   ],
+   "keys": [
+    "knowledge base version",
+    "revision",
+    "assets",
+    "knowledge check",
+    "knowledge build"
+   ],
+   "asks": [
+    "how is the knowledge base updated",
+    "how do I add knowledge to the graph",
+    "what version is the knowledge base",
+    "how does the rag stay in sync with the code",
+    "como se actualiza el rag"
+   ],
+   "links": [
+    {
+     "rel": "command",
+     "to": "tool:nuclear-graph.knowledge"
+    },
+    {
+     "rel": "command",
+     "to": "tool:nuclear-graph.ingest"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:update-the-knowledge-base"
+    },
+    {
+     "rel": "of",
+     "to": "concept:smart-graph"
+    }
+   ],
+   "sources": [
+    "docs/adr/0104-smart-graph-shelves.md",
+    "nuclear-graph/src/nuclear_graph/knowledge.py"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  },
+  {
+   "id": "concept:strategies",
+   "type": "concept",
+   "title": "Strategies: how the agent decides what to do with a request",
+   "summary": "Each kind of request a user makes has a strategy: a row that says how the kind is recognised, its plan with the tool of every step and what it asks of a run. No model chooses it: the request's exact signs decide, then its meaning. 31 kinds, from a whole system to a failing test.",
+   "body": [
+    "A whole system, one screen, a rename and a failing test are not done the same way. So before anything is generated or planned, the **analyst** says which kind of request it is, and the run follows the strategy of that kind (ADR-0105).",
+    "",
+    "| Family | Strategies |",
+    "|---|---|",
+    "| create | `strategy:system`, `strategy:project`, `strategy:component`, `strategy:resource-api`, `strategy:resource-db`, `strategy:client-of-backend`, `strategy:interface`, `strategy:repository`, `strategy:usecase`, `strategy:endpoint`, `strategy:declaration` |",
+    "| change | `strategy:member`, `strategy:refactor-rename`, `strategy:refactor-move-extract`, `strategy:refactor-architecture`, `strategy:data-migration`, `strategy:configuration`, `strategy:remove` |",
+    "| fix | `strategy:bug-compile`, `strategy:bug-failing-test`, `strategy:bug-behaviour`, `strategy:bug-runtime`, `strategy:bug-data-contract`, `strategy:bug-interface`, `strategy:bug-environment` |",
+    "| verify and explain | `strategy:tests`, `strategy:security-review`, `strategy:document`, `strategy:question`, `strategy:operate` |",
+    "| beyond | `strategy:beyond` |",
+    "",
+    "**How a kind is recognised.** By the request's exact signs first (a diagnostic code, a test's output, `rename A to B`, a `GET <url>` line, a `VERB /path` line), then by its words and its meaning, and by whether the project already has the names it writes. The answer says which signs chose it.",
+    "",
+    "**What a strategy decides.** The stages of the Loop that run (a compile error needs no Generate, a rename no tests first); where the pieces come from (the planner, the files that declare what changes, or a tool that already rewrote them); the generators it calls; the facts it cannot start without, asked to the user instead of guessed; whether it needs a frontier model to lead.",
+    "",
+    "**Tools before models.** In every strategy a generator writes what is standard, the compiler's exact fixes come before any repair, a rename is done by a tool, and a model writes only a piece of one file that no tool can write.",
+    "",
+    "**Ask it.** `nuclear-graph strategy \"<request>\"` in a terminal; `graph_strategy` over MCP; the Analysis step of a Loop run. A spec may name its strategy itself: `- Strategy: usecase`."
+   ],
+   "keys": [
+    "strategy",
+    "strategies",
+    "kinds of request",
+    "analysis",
+    "analyst"
+   ],
+   "asks": [
+    "how does the agent decide what to do",
+    "which kinds of request does the agent understand",
+    "como decide el agente que hacer con un pedido",
+    "que tipos de pedidos entiende el agente",
+    "what is a strategy",
+    "why did my run skip a stage",
+    "what does the analysis step do"
+   ],
+   "links": [
+    {
+     "rel": "decision",
+     "to": "agent:analyst"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:graph_strategy"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.strategy"
+    },
+    {
+     "rel": "example",
+     "to": "strategy:resource-db"
+    },
+    {
+     "rel": "example",
+     "to": "strategy:refactor-rename"
+    },
+    {
+     "rel": "example",
+     "to": "strategy:bug-compile"
+    },
+    {
+     "rel": "loop",
+     "to": "concept:loop"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:the-request-lacks-a-fact"
+    }
+   ],
+   "sources": [
+    "docs/adr/0105-strategies.md"
+   ],
+   "meta": {
+    "topic": "ai"
+   }
+  }
+ ]
+}

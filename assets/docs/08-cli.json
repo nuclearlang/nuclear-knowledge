@@ -1,0 +1,557 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "08-cli",
+ "about": "The command line: how the dragonfly CLI is made",
+ "rows": [
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#backend-projects.b5b52f",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Backend projects",
+   "summary": "with `createElement(RouterProvider, router = appRouter())`) and an `Http` connection (`scaffold::web_project`); add screens with `dragonfly make screen`.",
+   "body": [
+    "with `createElement(RouterProvider, router = appRouter())`) and an `Http` connection (`scaffold::web_project`); add",
+    "screens with `dragonfly make screen`. `dragonfly check` on a backend or web project delegates to `nuclear check .`",
+    "(the Flutter check resolves a pubspec and fonts they do not have)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#backend-projects.b7e68c",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Backend projects",
+   "summary": "`non_mobile_manifest(root)` tells a backend or web project (`dragonfly(platform = \"backend\"|\"web\", ...)`) from a mobile app; for it, `build` is `nuclear build .` and `install`, `run`, `test` run the dialect's `[toolchain]` command (`Dialect.toolchain`, `{{packages}}` = `<install>/packages`) with…",
+   "body": [
+    "`non_mobile_manifest(root)` tells a backend or web project (`dragonfly(platform = \"backend\"|\"web\", ...)`) from a mobile",
+    "app; for it,",
+    "`build` is `nuclear build .` and `install`, `run`, `test` run the dialect's `[toolchain]` command (`Dialect.toolchain`,",
+    "`{{packages}}` = `<install>/packages`) with `sh -c` (`cmd /C` on Windows) in the output folder (`backend_command`;",
+    "more placeholders through `vars`, quoted by `shell_quote`). `dragonfly migrate [make \"<message>\" | up | down]` runs",
+    "`migrate_make` / `migrate` / `migrate_down` with `{{message}}` and `{{migrations}}` = `<project>/migrations`",
+    "(`migrate_command`, ADR-0100 §5). `install` also runs `[toolchain] install_local` once per folder dependency of",
+    "`config.nuc` (`{{path}}`; a package manager keeps the old copy of a folder whose version did not change).",
+    "`dragonfly make <kind> <component> <Name> [--screen <s>]` in a backend or web project (`make_from_layout`) writes the",
+    "platform's `[skeletons]` entry of the kind at its `[layout]` path (platform.toml; test",
+    "`make_writes_every_kind_where_the_platform_says`); the mobile generators of `scaffold.rs` are unchanged.",
+    "`dragonfly new -p backend`",
+    "writes `SQLite(file = env(\"DATABASE\", \"app.sqlite\"), createTables = true)`, `plugins(sqlite = true)` and a first",
+    "test in `test/app_test.nuc` (`scaffold::backend_project`). `dragonfly new -p web -d react` writes `main.nuc` (the App"
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#code-map.23b073",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Code map",
+   "summary": "Code map",
+   "body": [
+    "| `dragonfly/src/doctor.rs`, `setup.rs` | `doctor` (only NuclearLang/Dragonfly checks), `setup [--dir]` (installs Flutter step by step, asking first) | — |",
+    "| `dragonfly/src/watch.rs` | `watch`: polls `.nuc` dates every 250 ms; `dragonfly: transpiling/ready/errors`; exits when its parent dies (Unix) | [build.md](build.md) |",
+    "| `dragonfly/src/device/` | Dragonfly devices (ADR-0081) | [devices.md](devices.md) |",
+    "| `dragonfly/src/landing.rs` | landing page, animation, header, colors, help | [landing.md](landing.md) |"
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#code-map.4b2c4d",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Code map",
+   "summary": "Code map",
+   "body": [
+    "| File | What it does | L3 |",
+    "|---|---|---|",
+    "| `dragonfly/src/main.rs` | commands: `new` (n), `make` (g) with aliases, `code`, `watch`, `build`, `run`, `test [--integration]`, `analyze`, `check`, `pub`, `doctor`, `setup`, `repair`, `explain`, `credits`/`author`, gateway to flutter; `find_flutter`/`NO_FLUTTER`; root = folder with `main.nuc` | [build.md](build.md) |",
+    "| `dragonfly/src/explain.rs` | `dragonfly explain [--json]`: a run-time error or a test's output on stdin (Dart, Python, Node stacks) → `title`, `hint` (`HINTS`), `frames` in `.nuc` (mobile: the app's line map; backend/web: `<output>/.nuclear/lines.json`); what the Loop's local agents read instead of the raw log | [build.md](build.md) |",
+    "| `dragonfly/src/packages.rs` | `config.nuc` sync, third-party definitions, `flutter add/remove` | [packages.md](packages.md) |",
+    "| `dragonfly/src/assets.rs` | assets by convention (ADR-0071) | [packages.md](packages.md) |"
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#code-map.94ab87",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Code map",
+   "summary": "Code map",
+   "body": [
+    "| `dragonfly/src/generate.rs` | `dragonfly gen inspect\\|component\\|resource` (ADR-0103): fields from `--fields`, `--from-json <file\\|url>` (nested models `<Name><Key>`, a paged answer `<Name>Page`), `--from-spec` (its example answer, else its `Key \\| Type` table; `GET <url>`); `context` (the values of `[[generators.*]]`), `plan` (each piece at its `[layout]` place), `write` (never overwrites; `merge` adds the members a file lacks, each one whole: a facade's alias, a controller's route); `gen usecase` (`UseCase`, `Route`, `parse_route`, `usecase_context`: the signature read from the project with `nuclear_transpile::map::shape`, `--calls <Repository>.<method>`, `--route \"<VERB> <prefix>/<path>\"`); `gen_command`/`ensure_http` in `main.rs` (undeclared field types, a name declared elsewhere and a source the platform lacks are refused before anything is written; the `Http` connection from the platform's `[gen]`); test `a_generated_resource_compiles_with_every_dialect` | — |",
+    "| `dragonfly/src/scaffold.rs` | generator templates (project, component, screen `--manager`/`--state`, statemanager/statemodel (`presentation`), stateful, usecase, repository, model, service, aggregate, config, test, event, widget, guard, global, page, integration), `snake`/`pascal`; test: every skeleton parses | — |",
+    "| `dragonfly/src/vscode.rs` | `build/<name>.code-workspace` | [build.md](build.md) |"
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#commands",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Commands",
+   "summary": "cargo test && cargo clippy --all-targets (cd .. && ./install.sh --no-vscode) dragonfly doctor dragonfly new shop_app && cd shop_app && dragonfly code",
+   "body": [
+    "```sh",
+    "cargo test && cargo clippy --all-targets",
+    "(cd .. && ./install.sh --no-vscode)",
+    "dragonfly doctor",
+    "dragonfly new shop_app && cd shop_app && dragonfly code",
+    "```"
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#kind-packages-adr-0095",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Kind packages (ADR-0095)",
+   "summary": "`dragonfly add <folder>` installs a kind package (`kinds/<name>/` with `kind.toml` `[package]`) in `<install>/kinds/` after loading it with every dialect it implements (`add_package`, `copy_dir` in `main.rs`); `loader()` adds `kinds/` of the current folder and `<install>/kinds` to `Loader.packages`.",
+   "body": [
+    "`dragonfly add <folder>` installs a kind package (`kinds/<name>/` with `kind.toml` `[package]`) in `<install>/kinds/`",
+    "after loading it with every dialect it implements (`add_package`, `copy_dir` in `main.rs`); `loader()` adds",
+    "`kinds/` of the current folder and `<install>/kinds` to `Loader.packages`. The skeleton comes from `nuclear kind",
+    "new <name> -p <platform> -d <dialect>` (crates/nuclear-cli). Pending: installing from a repository with a pinned",
+    "version (plan 002 D6)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#known-limits",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Known limits",
+   "summary": "the repository where it was built.",
+   "body": [
+    "- Generators normalize with `snake()` but do not validate identifiers (leading digit, reserved words).",
+    "- `--org` only in `new`; when `build` creates a missing app it uses `com.example`.",
+    "- Dialects and `packages/dragonfly` are found in the installation (`nuclear_dialect::install_dir()`), else in",
+    "  the repository where it was built. The `dragonfly` dependency is a local path until it is on pub.dev.",
+    "- Flutter apps are built here with the Flutter commands; backend and web projects are built with `nuclear build .` and",
+    "  run/install/test/check through the dialect's `[toolchain]` (`manifest()` still refuses non-flutter for the Flutter-only",
+    "  paths). A fresh web project builds and type-checks (`tsc`), but `vite build`/`dragonfly run` need the react runtime's",
+    "  bundling fix (Pending: Dragonfly web): rollup cannot resolve `react` from the `--install-links`ed `dragonfly-web`."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#platforms-and-the-manifest-adr-0093",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Platforms and the manifest (ADR-0093)",
+   "summary": "`dragonfly new [-p mobile] [-d flutter] <name>`: a dialect alone gives its platform (`-d nestjs` is backend), a platform alone its default dialect; the name must be letters, digits and `_` and an option glued to it (`shop-p`) or a stray word (`backend` without `-p`) is refused with a hint…",
+   "body": [
+    "`dragonfly new [-p mobile] [-d flutter] <name>`: a dialect alone gives its platform (`-d nestjs` is backend), a platform alone its default dialect; the name must be letters, digits and `_` and an option glued to it (`shop-p`) or a stray word (`backend` without `-p`) is refused with a hint (`platform_and_dialect`, `new_name`, `hint_for`); the dialect is loaded and must belong to the platform; mobile/flutter",
+    "is scaffolded, created and built as before; a backend dialect (`fastapi`, `nestjs`) gets `scaffold::backend_project`",
+    "(`config.nuc` + `config/project_config.nuc`) and a web/react project gets `scaffold::web_project` (`config.nuc` + `main.nuc`",
+    "with the router + `config/project_config.nuc`); both are built with `nuclear build .` and run through the dialect's",
+    "`[toolchain]`.",
+    "`build` also writes the project card `.nuclear/project.json` (`project::write_metadata`, spec/projects.md §1.1).",
+    "`manifest()` reads `config.nuc` through `Manifest::read` (`dragonfly(platform, dialect)`, `app(name)`); an app without",
+    "the line is still flutter (its `dragonfly check` reports N0303 with the line to add); a non-flutter project is",
+    "refused with the `nuclear build .` hint. `packages::template` writes the `dragonfly(...)` line first. Dialects live in",
+    "`dialects/<platform>/<dialect>/`; the loader finds them by name as before. Added by the platform session."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#plugins",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Plugins",
+   "summary": "`build` adds the packages of the plugins `config.nuc` enables (`plugin_packages`, `project::enabled_plugins`) and removes those of plugins turned off (`sync_plugin_packages`, `build/app/.dragonfly_plugins`); a `local` package is found with `runtime_package` (installed `packages/`, else the…",
+   "body": [
+    "`build` adds the packages of the plugins `config.nuc` enables (`plugin_packages`, `project::enabled_plugins`) and",
+    "removes those of plugins turned off (`sync_plugin_packages`, `build/app/.dragonfly_plugins`); a `local` package is",
+    "found with `runtime_package` (installed `packages/`, else the repository). Added by the platform session (ADR-0092)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#rules",
+   "type": "context",
+   "title": "The `dragonfly` CLI — Rules",
+   "summary": "1. The `nuclear` repository's `../crates/*` are used as a library by path (`nuclear-transpile::project`, `nuclear-dialect::Loader`, `nuclear-diag`); a missing transpiler feature is requested by message.",
+   "body": [
+    "1. The `nuclear` repository's `../crates/*` are used as a library by path",
+    "   (`nuclear-transpile::project`, `nuclear-dialect::Loader`, `nuclear-diag`); a missing transpiler feature is",
+    "   requested by message.",
+    "2. A Dragonfly project has only `.nuc` files; the CLI writes only into `build/` (the app and",
+    "   `build/<name>.code-workspace`). Generators never overwrite a file.",
+    "3. Done = `cargo test` + `cargo clippy --all-targets` green and `./install.sh --no-vscode` at the root (the user",
+    "   runs `~/.local/bin/dragonfly`; the VS Code workspace points to it).",
+    "4. A new command or behaviour updates `spec/flutter.md` §11 (and §3.1 for `config.nuc`), an ADR if it is a",
+    "   decision, this tree, `docs/dragonfly/tutorial.md`, the `USAGE` of `main.rs` and the skeletons of `scaffold.rs`.",
+    "5. Colors, logos and animation only in a terminal; `NO_COLOR` respected; `check --json` through a pipe stays clean.",
+    "6. When the dialect changes (`@screen`, kinds, events), update the skeletons and test `new` + `g` + `check` +",
+    "   `analyze` + `test`."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/CONTEXT.md#the-dragonfly-cli",
+   "type": "context",
+   "title": "The `dragonfly` CLI",
+   "summary": "The `dragonfly` repository (its own Cargo workspace, inside the `nuclear` working tree as `dragonfly/`; plan 006).",
+   "body": [
+    "The `dragonfly` repository (its own Cargo workspace, inside the `nuclear` working tree as `dragonfly/`; plan 006).",
+    "Flutter apps written in NuclearLang: it calls `flutter` inside `build/app` and takes from",
+    "Flutter only create, run, build, publish and packages."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/build.md#build-pipeline.38e1bb",
+   "type": "context",
+   "title": "Build pipeline",
+   "summary": "previous left `flutter analyze` with errors.",
+   "body": [
+    "- Errors in `.nuc` → exit code 2 (`CODE_ERRORS`; editors do not repair). `run`, `test` and devices use `--no-pub`.",
+    "- `repair`: build+analyze → markers deleted + pub get + build → flutter clean + build, each step only if the",
+    "  previous left `flutter analyze` with errors. Editors run it only when something fails.",
+    "- `explain`: maps a Dart error to its `.nuc` line; `--json` for editors.",
+    "- `watch` rebuilds the whole project and does not see dialect or defs changes (restart it).",
+    "- Flutter is found in `FLUTTER`, `FLUTTER_ROOT`, `.fvm/flutter_sdk` (project or above), the PATH, `~/fvm/default`",
+    "  and typical folders (`find_flutter`); `NO_FLUTTER` explains where it looked."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/build.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/build.md#build-pipeline.45dd01",
+   "type": "context",
+   "title": "Build pipeline",
+   "summary": "`dragonfly build` leaves the app ready to compile and repeats nothing without changes (~40 ms): 1. Creates the app if missing; syncs `config.nuc` → pubspec and loads definitions BEFORE transpiling (packages.md).",
+   "body": [
+    "`dragonfly build` leaves the app ready to compile and repeats nothing without changes (~40 ms):",
+    "",
+    "1. Creates the app if missing; syncs `config.nuc` → pubspec and loads definitions BEFORE transpiling",
+    "   ([packages.md](packages.md)).",
+    "2. Transpiles the project; writes only what changed and deletes orphans (`.dart_tool/nuclear_files`).",
+    "3. `ensure_packages` (Dragonfly's own; with `@splash` also `flutter_native_splash`, detected by line prefix",
+    "   `name:`), copies `out.copies`, `assets::write`.",
+    "4. `pub get` when `.dart_tool/package_config.json` is missing (after `flutter clean`) or the pubspec is newer",
+    "   than the lock AND than `.dart_tool/nuclear_pub_get` (`pub get` does not touch an unchanged lock).",
+    "5. `build_runner --delete-conflicting-outputs` only if a file with `part` changed since",
+    "   `.dart_tool/nuclear_build_runner` (`.g.dart` dates are useless: unchanged ones are not rewritten).",
+    "6. `flutter_native_splash:create` when the yaml or an image changed (`.dart_tool/nuclear_splash`). Removing",
+    "   `@splash` deletes the yaml but leaves the native splash (`flutter_native_splash:remove` needs the yaml: run",
+    "   it by hand first).",
+    "7. `write_line_map` → `build/app/.dart_tool/nuclear_lines.json` (`BuiltFile::lines`, for debuggers, ADR-0068)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/build.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/build.md#vs-code-workspace-vscode-rs",
+   "type": "context",
+   "title": "Build pipeline — VS Code workspace (`vscode.rs`)",
+   "summary": "`build/<name>.code-workspace`: Nuclear folder + Flutter app (the Flutter extension treats it as a normal project: devices, F5, hot reload, DevTools), tasks `dragonfly: watch/build/test/analyze` (no problem patterns: the LSP gives the errors; errors of closed `.nuc` files only show in the task…",
+   "body": [
+    "`build/<name>.code-workspace`: Nuclear folder + Flutter app (the Flutter extension treats it as a normal",
+    "project: devices, F5, hot reload, DevTools), tasks `dragonfly: watch/build/test/analyze` (no problem patterns:",
+    "the LSP gives the errors; errors of closed `.nuc` files only show in the task terminal), launch",
+    "debug/profile/release with `preLaunchTask`, `dart.flutterSdkPath`. **Do not rename `\"<name> (debug)\"` nor its",
+    "`type: \"dart\"`**: the VS Code extension shows ▷ Run/Debug only if it exists and launches it by name. The tasks'",
+    "`command` is `current_exe()` (with `cargo run` it points to `target/debug`). Reload on save relies on",
+    "`dart.previewHotReloadOnSaveWatcher` (may cause a double reload with the extension's own; can be removed)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/build.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/devices.md#dragonfly-devices-adr-0081-spec-flutter-md-11.0ee3fc",
+   "type": "context",
+   "title": "Dragonfly devices (ADR-0081, `spec/flutter.md` §11)",
+   "summary": "the mark, else classic dispatchers; Sway `[app_id=...]`; i3 `--class`), corrects once, emulates and opens the app; screen size from Hyprland/Sway (`wm_screen`: Chrome does not know it on Wayland); `offset`: device 2 to the right, 3 to the left.",
+   "body": [
+    "the mark, else classic dispatchers; Sway `[app_id=...]`; i3 `--class`), corrects once, emulates and opens the",
+    "  app; screen size from Hyprland/Sway (`wm_screen`: Chrome does not know it on Wayland); `offset`: device 2 to",
+    "  the right, 3 to the left.",
+    "- `terminal/`: `caps.rs` (render and colors from env vars, cell size), `render.rs` (pure, tested: `fit`, blocks",
+    "  with text, palettes, cell `diff`, kitty, sixel), `mod.rs` (startup with progress, loop, status bar, `?` help,",
+    "  `l` log, keys and mouse, raw mode restored also on panic).",
+    "",
+    "Tested on Linux/Hyprland: two windows at once, real kitty, blocks+text in a pty (pyte), touch → detail → back",
+    "→ rotate; closing the window, `q` or SIGHUP leaves no process. Windows and macOS: only `cargo check --target`.",
+    "Untested: GNOME/KDE (floating window through CDP), real sixel (foot, Konsole, Windows Terminal ≥ 1.22; older",
+    "Windows Terminal: `--render text`). An own engine without a browser (flutter-pi as a guide) is not started.",
+    "User feedback (2026-10-28): a run called `flutter pub get` three times, closed with an exception and used",
+    "1.5–2 GB."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/devices.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/devices.md#dragonfly-devices-adr-0081-spec-flutter-md-11.ad952f",
+   "type": "context",
+   "title": "Dragonfly devices (ADR-0081, `spec/flutter.md` §11)",
+   "summary": "`dragonfly_device_<n>_<pid>` (the window is named so on Wayland and the mark names the processes); CDP of that page; `emulate` (size, density, touch, orientation, user agent of `presets.rs`, the same as VS Code); `open_app`; input (`touch`/`wheel`/`insert_text`/`key`/`back`); `text_layer`…",
+   "body": [
+    "- `backend.rs`: `flutter run -d chrome` with `--web-launch-url` to an empty 404 page marked",
+    "  `__dragonfly_device_<n>_<pid>__` (the window is named so on Wayland and the mark names the processes); CDP of",
+    "  that page; `emulate` (size, density, touch, orientation, user agent of `presets.rs`, the same as VS Code);",
+    "  `open_app`; input (`touch`/`wheel`/`insert_text`/`key`/`back`); `text_layer` (`__dragonflyTextLayer` of the",
+    "  package); `typing`, `screenshot`, `start_frames` (PNG screencast), `reload` (terminal: `flutter run",
+    "  --machine`, `app.restart`), `close` (`Browser.close` + `kill_tree`).",
+    "- `cdp.rs`: minimal client (tungstenite in a thread; `http_get` with Content-Length: Chrome keeps the connection).",
+    "- `system.rs`: `device_tmp` (Linux: Flutter's `TMPDIR` = `~/.cache/dfly/<n>`, ~500 MB off the RAM /tmp; short",
+    "  path because the browser profile socket allows ≤ 108 bytes), browser per OS (`CHROME_EXECUTABLE`, PATH,",
+    "  flatpak, /Applications, Program Files), ports, `Slot` (numbers in `temp/dragonfly-devices/<n>` with the pid;",
+    "  a dead one is reused), `alive`, `kill_tree`.",
+    "- `window.rs`: waits 1.2 s for the browser bars (`--enable-automation`), measures page and window WITHOUT",
+    "  emulation, `fit_scale` (85 % of the height), places it (CDP; Hyprland 0.55+ `hl.dsp.window.*` by class with"
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/devices.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/devices.md#dragonfly-devices-adr-0081-spec-flutter-md-11.eb1ae1",
+   "type": "context",
+   "title": "Dragonfly devices (ADR-0081, `spec/flutter.md` §11)",
+   "summary": "`dragonfly device` (dv, `window.rs`) and `terminal-device` (td, `terminal/`) on the same backend.",
+   "body": [
+    "`dragonfly device` (dv, `window.rs`) and `terminal-device` (td, `terminal/`) on the same backend. Dependencies:",
+    "crossterm, tungstenite, png, base64 (binary 4.1 → 5.3 MB)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/devices.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/landing.md#landing-header-help-and-colors-landing-rs.5d16d2",
+   "type": "context",
+   "title": "Landing, header, help and colors (`landing.rs`)",
+   "summary": "removed by `./install.sh --uninstall`), then the page alone.",
+   "body": [
+    "- `dragonfly` without arguments: the animation ONLY the first time (marker `$XDG_STATE_HOME/dragonfly/intro_seen`,",
+    "  removed by `./install.sh --uninstall`), then the page alone. `dragonfly credits` (alias `author`): always the",
+    "  full animation and the page with credits (Julian Molina, github.com/nodelorien, github.com/nuclearlang).",
+    "- ~11 s animation as a CONCEPT, not realistic: radioactive mushroom in ASCII, a wave of characters that fills the",
+    "  screen and dissolves into `█▓▒░`, grass grows back and a dragonfly lands on a flower; then the page with the",
+    "  NuclearLang and Dragonfly logos. After the wave, \"WELCOME\" (5-row letters) appears in negative, turns green",
+    "  with \"to NuclearLang · Dragonfly\" and dissolves. In the grass scene the motto is written (`motto`): Spanish",
+    "  if `LC_ALL`/`LC_MESSAGES`/`LANG` starts with `es` (localization data, allowed by ADR-0075/0082), else English.",
+    "- Only characters over the terminal background: no background colors (a test checks it), the theme's text color",
+    "  in normal/bold/dim and few accents; fades are dissolves. The dragonfly is metallic purple (`metal`) with",
+    "  radioactive green eyes; the NuclearLang symbol is drawn `ASPECT` (1.35) times wider to look round.",
+    "- The page stays alive until Enter (a thread reads stdin; Enter during the animation jumps to the page, except"
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/landing.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/landing.md#landing-header-help-and-colors-landing-rs.9ea17a",
+   "type": "context",
+   "title": "Landing, header, help and colors (`landing.rs`)",
+   "summary": "in `credits`; EOF only closes a complete page); a shine crosses the dragonfly every `SHINE_EVERY` (5 s); without a terminal stdin it ends by itself.",
+   "body": [
+    "in `credits`; EOF only closes a complete page); a shine crosses the dragonfly every `SHINE_EVERY` (5 s);",
+    "  without a terminal stdin it ends by itself.",
+    "- `header()`: before any command (also `-h`/`help`; not on the bare page nor `credits`), a 6-row header with",
+    "  both small logos (`MINI`, `sign` radius 6), on stderr and only in a terminal.",
+    "- Output colors: `ok` green = done, `bad` red = error, `warn` yellow = warning/note, `cmd` blue = commands,",
+    "  `name` purple = project/step names, `dim` = paths and details; `diagnostics()` colors transpiler errors; only if",
+    "  stdout and stderr are terminals and no `NO_COLOR`. In `watch`, `dragonfly: transpiling|ready|errors` has no",
+    "  color (the VS Code task looks for it).",
+    "- `usage()`: help with a width-1 symbol per section and command (⚙ build, ✿ new, ⚗ test...; only symbols in",
+    "  common monospace fonts, checked with `fc-list :charset=`). Without a terminal, with `NO_COLOR` or below 80×23,",
+    "  only the page.",
+    "- Review the animation without a terminal: `script -qc \"stty cols 100 rows 30; dragonfly\" /dev/null` captures",
+    "  frames (split by `ESC[?2026h`); a PIL script turns them into images. The user has not yet checked the new",
+    "  animation in a real terminal (`STATUS.md`)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/landing.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/packages.md#assets-rs-adr-0071",
+   "type": "context",
+   "title": "Packages, definitions and assets — `assets.rs` (ADR-0071)",
+   "summary": "`write` rewrites `assets:`/`fonts:`/`shaders:` under `flutter:` of the app's pubspec on every build (the rest is kept; keys recognized by 2-space indentation); `fonts` groups `assets/fonts/<Family>/` by the last word of the name and errors when two files match (`build` and `check` call it before…",
+   "body": [
+    "`write` rewrites `assets:`/`fonts:`/`shaders:` under `flutter:` of the app's pubspec on every build (the rest is",
+    "kept; keys recognized by 2-space indentation); `fonts` groups `assets/fonts/<Family>/` by the last word of the",
+    "name and errors when two files match (`build` and `check` call it before writing). Tested with `flutter build",
+    "bundle` (FontManifest and shader)."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/packages.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/packages.md#packages-rs-adr-0065-0070.6e2dab",
+   "type": "context",
+   "title": "Packages, definitions and assets — `packages.rs` (ADR-0065–0070)",
+   "summary": "`build/app/pubspec.yaml` by editing lines; `flutter pub add/remove`; `build/app/.dragonfly_deps` = packages that come from config.nuc, so only those are removed; never removes Dragonfly's own, `OWN` + `PACKAGES`).",
+   "body": [
+    "- `read` (sections from the dialect's `[project.manifest]`), `sync` (`app`/`environment` fields and packages →",
+    "  `build/app/pubspec.yaml` by editing lines; `flutter pub add/remove`; `build/app/.dragonfly_deps` = packages",
+    "  that come from config.nuc, so only those are removed; never removes Dragonfly's own, `OWN` + `PACKAGES`).",
+    "- `load_defs`: version from `pubspec.lock` → `~/.cache/nuclearlang/defs/dart/<p>/<v>`; if missing,",
+    "  `generate_defs` runs `dart run bin/defs.dart` of `tools/defs` with `--exclude` of the dialect's packages;",
+    "  `Loader::add_defs`; writes `build/defs.lock`; skips packages the dialect knows.",
+    "- `add`/`remove` (`dragonfly flutter add|remove`, also `pub add|remove`): edit config.nuc with",
+    "  `set_entry`/`remove_entry`, one entry per line; `add` rejects reserved packages",
+    "  (`project::reserved_package`) before running flutter; `sync` never adds a reserved one.",
+    "- `ensure_config`: `check` and `build` create config.nuc if missing (name, description/version, third-party",
+    "  packages of the app; those with a map, `path:`/`git:`, are left out). `template`: config.nuc of `new`.",
+    "  `manifest()` takes the name from `app(name)`. `check` only uses cached definitions."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/packages.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly/docs/context/cli/packages.md#packages-rs-adr-0065-0070.d7b535",
+   "type": "context",
+   "title": "Packages, definitions and assets — `packages.rs` (ADR-0065–0070)",
+   "summary": "Limits: only sections written one entry per line can be edited (a one-line section with entries errors, `block`); the pubspec is edited by lines (`set_yaml`/`yaml_get`), not with a YAML parser; versions are text (`\"^2.2.3\"`), no `path:`/`git:` yet.",
+   "body": [
+    "Limits: only sections written one entry per line can be edited (a one-line section with entries errors,",
+    "`block`); the pubspec is edited by lines (`set_yaml`/`yaml_get`), not with a YAML parser; versions are text",
+    "(`\"^2.2.3\"`), no `path:`/`git:` yet. A package without `lib/<name>.dart` is described with every file of",
+    "`lib/`; types re-exported from another project package repeat (first wins). `devDependencies` have no",
+    "definitions. `generate_defs` prints a long command. `flutter add` runs two builds."
+   ],
+   "sources": [
+    "dragonfly/docs/context/cli/packages.md"
+   ],
+   "meta": {
+    "section": "08-cli",
+    "repo": "dragonfly",
+    "dialect": ""
+   }
+  }
+ ]
+}

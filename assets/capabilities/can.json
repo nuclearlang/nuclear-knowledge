@@ -1,0 +1,246 @@
+{
+ "shelf": "capabilities",
+ "origin": "curated",
+ "about": "What NuclearLang, Dragonfly and their tools can do today, by area. Each row names the kinds and commands that do it.",
+ "rows": [
+  {
+   "id": "can:backend-api",
+   "type": "can",
+   "title": "Can: an HTTP API with validation (backend)",
+   "summary": "A backend exposes REST routes with controllers (`@get`, `@post`, `@put`, `@patch`, `@delete`), reads and answers validated models, turns a `Result` error into its HTTP status and publishes its contract and OpenAPI document.",
+   "body": [
+    "- `@controller(\"books\") controller BooksController(books: BooksAppComponent)` with one method per route; `{id}` in a route is a path parameter, a model parameter is the JSON body.",
+    "- Models validate the input with rule decorators (`@required`, `@minLength`, `@maxLength`, `@min`, `@max`, `@pattern`, `@email`, `@url`); an invalid body is a 422.",
+    "- An `Err(NotFound(...))` answers 404; `Invalid` 400, `Unauthorized` 401, `Forbidden` 403, `Conflict` 409. A `@post` answers 201; `status = 200` in the decorator changes it.",
+    "- The build serves `/.nuclear/contract.json` and `/.nuclear/openapi.json`.",
+    "- The same Nuclear builds as a Python service (`fastapi`) or a TypeScript one (`nestjs`)."
+   ],
+   "keys": ["rest api", "http api", "endpoint", "endpoints", "routes"],
+   "asks": ["can nuclear build a rest api", "how do I make an endpoint", "does nuclear validate the request body"],
+   "platforms": ["backend"],
+   "links": [{"rel": "kind", "to": "kind:backend.controller"}, {"rel": "kind", "to": "kind:backend.model"}, {"rel": "playbook", "to": "playbook:add-an-endpoint"}],
+   "sources": ["dragonfly-backend/spec/brief/backend.md"],
+   "meta": {"area": "backend", "status": "done"}
+  },
+  {
+   "id": "can:backend-data",
+   "type": "can",
+   "title": "Can: a database with entities, relations, queries, transactions and migrations (backend)",
+   "summary": "A backend stores data with entities (tables), repositories (CRUD and queries built line by line), relations between entities, pages, transactions and migrations, on SQLite, PostgreSQL, MySQL or MariaDB.",
+   "body": [
+    "- `entity` with `@primary(generated = true)`, `@column(length, unique, index, nullable, default, name)`, `@created`, `@updated`.",
+    "- Relations: `@manyToOne` (with its column `<name>Id`), `@oneToMany`, `@manyToMany` + `@joinTable`, `@oneToOne` + `@joinColumn`; loaded with `relations(\"tasks\")`.",
+    "- `repository`: `find`, `findAll`, `save`, `remove` come with it; a method's lines build one query: `where({...})` with `gt`, `gte`, `lt`, `lte`, `ne`, `like`, `ilike`, `oneOf`, `isNull`, `between`; `orderBy`, `limit`, `offset`; then `getOne()`, `getMany()`, `paginate(page, size)`, `count()`, `exists()`, `update({...})`, `delete()`.",
+    "- `@transactional` on a use case's `exec`: one transaction; an `Err` rolls it back.",
+    "- Migrations: `dragonfly migrate make \"<message>\"`, `dragonfly migrate`, `dragonfly migrate down`.",
+    "- Plugins: `sqlite`, `postgres`, `mysql`, `mariadb`. Tests run on an in-memory database.",
+    "",
+    "Checked on SQLite; the other databases were not run against a real server yet."
+   ],
+   "keys": ["database", "orm", "sql", "migrations", "relations", "transactions", "base de datos"],
+   "asks": ["can nuclear use a database", "how do I query the database", "does nuclear have migrations", "how do I relate two entities"],
+   "platforms": ["backend"],
+   "links": [{"rel": "kind", "to": "kind:backend.entity"}, {"rel": "kind", "to": "kind:backend.repository"}, {"rel": "command", "to": "tool:dragonfly.migrate"}, {"rel": "playbook", "to": "playbook:database-resource"}, {"rel": "untested", "to": "limit:untested"}],
+   "sources": ["dragonfly-backend/spec/brief/backend.md", "docs/adr/0100-backend-data.md"],
+   "meta": {"area": "backend", "status": "done"}
+  },
+  {
+   "id": "can:call-an-api",
+   "type": "can",
+   "title": "Can: call another HTTP API (every platform)",
+   "summary": "A repository whose methods carry `@get`, `@post`, `@put`, `@patch` or `@delete` and no body calls the `Http(baseUrl)` connection: path parameters, the query or the body are filled from the method's parameters, and an error status is the `Err` of its `Result`.",
+   "body": [
+    "```nuclear",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  one(id: int) Result<Error, Character>",
+    "```",
+    "",
+    "- `:id` takes the parameter `id`; the other parameters go to the query (GET) or the body.",
+    "- The connection is `Http(baseUrl = \"https://...\")` in `appConfig`.",
+    "- A JSON key that is not the field's name gets `@key(\"air_date\")` on the model's field.",
+    "- On mobile and web, `cache`, `ttl` and `retry` are options of the request; on mobile, `saveLocal = true` keeps the answers in the device's database.",
+    "- `dragonfly gen resource ... --from-json <url>` writes the whole resource from the API's own answer."
+   ],
+   "keys": ["http client", "external api", "call an api", "consume api", "rest client"],
+   "asks": ["how do I call an external api", "can the backend call another api", "how do I consume a rest api in nuclear"],
+   "links": [{"rel": "kind", "to": "kind:backend.repository"}, {"rel": "kind", "to": "kind:mobile.repository"}, {"rel": "playbook", "to": "playbook:resource-from-an-api"}],
+   "sources": ["docs/adr/0103-generators.md#Decision"],
+   "meta": {"area": "data", "status": "done"}
+  },
+  {
+   "id": "can:backend-events-and-ai",
+   "type": "can",
+   "title": "Can: events, a cache and AI agents (backend)",
+   "summary": "A backend publishes and consumes events (in the process or through Kafka), caches with Redis, and declares AI agents: tools, agents with memory per thread and graphs of steps, on Ollama or OpenAI models, with a vector store.",
+   "body": [
+    "- Events: `~publish(\"topic\", value)`; `listener Name` with `@consumer(\"topic\")` methods. Plugins `events` and `kafka`.",
+    "- Cache: the `redis` plugin.",
+    "- AI (plugin `ai`, with `ollama` or `openai`): `tools Name` (each method with a doc comment is a tool), `agent Name(tools: T)` with a `prompt`, `@state(S) graph Name` whose methods are nodes (`@start`, `@next(\"node\")`), a `state` for the graph, `Chroma` vectors (plugin `chroma`).",
+    "- A test replaces the model with `FakeModel([\"answer\"])`.",
+    "",
+    "The Nuclear Developer itself is written with these kinds."
+   ],
+   "keys": ["events", "kafka", "redis", "agents", "llm", "langgraph", "ollama", "openai"],
+   "asks": ["can I write an ai agent in nuclear", "does nuclear support kafka", "how do I make a graph of steps"],
+   "platforms": ["backend"],
+   "links": [{"rel": "kind", "to": "kind:backend.agent"}, {"rel": "kind", "to": "kind:backend.graph"}, {"rel": "kind", "to": "kind:backend.tools"}, {"rel": "kind", "to": "kind:backend.listener"}, {"rel": "theory", "to": "concept:agents-and-graphs"}, {"rel": "untested", "to": "limit:untested"}],
+   "sources": ["dragonfly-backend/spec/brief/backend.md"],
+   "meta": {"area": "backend", "status": "done"}
+  },
+  {
+   "id": "can:mobile-app",
+   "type": "can",
+   "title": "Can: a mobile app (mobile)",
+   "summary": "A mobile app with screens and navigation, state managers, forms with validation, translations, a session with roles and guards, events, HTTP repositories with cache, an encrypted local database, and AI chats and flows; it runs on Android, iOS, desktop and web.",
+   "body": [
+    "- Views: `stateless` and `stateful` with the UI toolkit's classes; `@screen(route, providers, acl, transition)`; navigation by screen (`context.goTo`, `pushTo`, `goBack`).",
+    "- State: `statemanager` + state model, `<State>Builder` in the view.",
+    "- Forms: a form model with rules, a `formmanager`, `DragonflyForm` in the view.",
+    "- Texts: `\"component.screen.key\".tr()` from `assets/i18n/<locale>/<component>.json`.",
+    "- Session and access: `SessionManager`, `guard`, `@acl(roles = [...])`, `@screen(acl = {...})`.",
+    "- Events: `event`, `Events.publish`, `@on(Event)`.",
+    "- Data: HTTP repositories (`cache`, `ttl`, `retry`), and a local database: `@primary` on a model gives it an encrypted table, `saveLocal = true` keeps what a GET answers.",
+    "- AI (plugin `genkit`): `tools`, `chat`, `flow`, `remote`, `knowledge`.",
+    "- Tests: `@mock`, `@test`, `@states`, `@widget`, integration tests.",
+    "- Run and debug: `dragonfly run`, `dragonfly device` (a test device in its own window), breakpoints on `.nuc` lines in VS Code."
+   ],
+   "keys": ["mobile app", "android", "ios", "flutter app", "app movil"],
+   "asks": ["can nuclear build a mobile app", "does nuclear support forms", "can I store data on the device", "how do I run the app on a device"],
+   "platforms": ["mobile"],
+   "links": [{"rel": "platform", "to": "platform:mobile"}, {"rel": "kind", "to": "kind:mobile.stateless"}, {"rel": "kind", "to": "kind:mobile.statemanager"}, {"rel": "command", "to": "tool:dragonfly.device"}, {"rel": "playbook", "to": "playbook:add-a-screen"}, {"rel": "limits", "to": "limit:mobile-not-yet"}],
+   "sources": ["dragonfly-mobile/spec/brief/mobile.md"],
+   "meta": {"area": "mobile", "status": "done"}
+  },
+  {
+   "id": "can:web-app",
+   "type": "can",
+   "title": "Can: a web app (web)",
+   "summary": "A web app with screens and routing, views as HTML functions, state managers, HTTP repositories, use cases, events, guards and tests. The words are the mobile platform's; it is the first version of the platform.",
+   "body": [
+    "- Views: `stateless` and `stateful` with `build() Element` and HTML functions (`main`, `ul`, `li`, `button`) with named attributes and `children`. No JSX.",
+    "- `@screen(route, providers, acl, notFound)`; navigation by screen: `goTo(Screen, id = 7)`, `goBack()`.",
+    "- `statemanager` + state model, `<State>Builder` with one callback per state.",
+    "- `repository` over HTTP (`cache`, `ttl`, `retry`), `usecase`, `appcomponent`, `service`, `event`, `guard`.",
+    "- Tests: `@mock`, `@test`, `@states`, `@widget` with `renderScreen`.",
+    "- `dragonfly new <name> -p web`, `dragonfly build | install | run | test`.",
+    "",
+    "The NuclearLang website is written with it."
+   ],
+   "keys": ["web app", "website", "react app", "frontend", "spa"],
+   "asks": ["can nuclear build a web app", "does nuclear support react", "how do I make a web page with nuclear"],
+   "platforms": ["web"],
+   "links": [{"rel": "platform", "to": "platform:web"}, {"rel": "kind", "to": "kind:web.stateless"}, {"rel": "limits", "to": "limit:web-first-version"}, {"rel": "playbook", "to": "playbook:add-a-screen"}],
+   "sources": ["dragonfly-web/spec/brief/web.md"],
+   "meta": {"area": "web", "status": "done"}
+  },
+  {
+   "id": "can:generate-code",
+   "type": "can",
+   "title": "Can: generate the finished code of a resource from its data",
+   "summary": "`dragonfly gen resource` writes, on any platform, the models, the repository, a use case per action, the facade, the controller or the screen and the tests of a resource, all compiling; the fields come from a list, from an example answer of an API (a file or a URL) or from a spec.",
+   "body": [
+    "- `--fields \"id:int name:string origin:Origin?\"`, `--from-json <file|url>` (nested objects become models, a list under `results` a page, `null` an optional field) or `--from-spec <spec.md>` (its example answer, its `Key | Type` table, its `GET <url>` line).",
+    "- `--source rest[:<base url>]` (an API) or `--source db` (an entity and its queries, backend only).",
+    "- `--actions list,get,search,create,update,delete`; `--screen <screen>` on mobile and web; `--dry-run` shows the files.",
+    "- It refuses, before writing, a field type nobody declared, a name another file declares and a source the platform has no pieces for. Nothing is overwritten.",
+    "- `dragonfly gen usecase <component> <Name>` wires a use case the project declares: its alias in the facade and, on the backend, `--route \"POST orders/{id}/cancel\"` adds its route to the controller of `orders` (made when missing). With `--calls <Repository>.<method>` it also writes the use case, when all it does is call that method.",
+    "- `dragonfly make <kind> <component> <Name>` writes the smallest file of any kind of the platform.",
+    "- The same generators are MCP tools and the first stage of the Loop."
+   ],
+   "keys": ["generate code", "scaffold", "crud", "code generation"],
+   "asks": ["can nuclear generate a crud", "can it create code from a json", "what can dragonfly gen write"],
+   "links": [{"rel": "concept", "to": "concept:generators"}, {"rel": "command", "to": "tool:dragonfly.gen.resource"}, {"rel": "mcp", "to": "mcp:generate_resource"}, {"rel": "limit", "to": "limit:generators"}],
+   "sources": ["docs/adr/0103-generators.md#Decision"],
+   "meta": {"area": "tools", "status": "done"}
+  },
+  {
+   "id": "can:switch-dialect",
+   "type": "can",
+   "title": "Can: build the same project with another dialect of its platform",
+   "summary": "A backend written once builds as FastAPI (Python) or as NestJS (TypeScript): change `dialect` in `config.nuc` and build. No other file changes, because kinds, decorators, the library and the tests belong to the platform.",
+   "body": [
+    "```nuclear",
+    "dragonfly(platform = \"backend\", dialect = \"nestjs\")   // was \"fastapi\"",
+    "```",
+    "",
+    "Then `dragonfly build && dragonfly install && dragonfly test`. The example `tasks_api` is built and tested with both.",
+    "",
+    "The exception: code that uses a library of one target through its type definitions is tied to that target's dialect. Mobile and web have one dialect each today."
+   ],
+   "keys": ["switch dialect", "change dialect", "portable"],
+   "asks": ["can I change from python to typescript", "can the same code build to nestjs and fastapi"],
+   "links": [{"rel": "concept", "to": "concept:platforms-and-dialects"}],
+   "sources": ["AGENTS.md#Hard rules"],
+   "meta": {"area": "compiler", "status": "done"}
+  },
+  {
+   "id": "can:contracts",
+   "type": "can",
+   "title": "Can: generate an app's models and repositories from its backend",
+   "summary": "An app that declares a backend's contract in `config.nuc` gets its models and one typed repository per controller generated at build time; a change in the backend that breaks the app is a compile error in the app.",
+   "body": [
+    "`contracts(tasks_api = \"../tasks_api\")` or a URL; `nuclear contracts update`, `nuclear contracts list`. The generated files are in `contracts/<name>/`. Works for mobile and web apps over a backend of any dialect."
+   ],
+   "keys": ["shared models", "typed client", "api client"],
+   "asks": ["can the app share models with the backend", "does nuclear generate an api client"],
+   "links": [{"rel": "concept", "to": "concept:contracts"}, {"rel": "command", "to": "tool:nuclear.contracts"}],
+   "sources": ["dragonfly-backend/docs/dragonfly/contracts.md"],
+   "meta": {"area": "compiler", "status": "done"}
+  },
+  {
+   "id": "can:check-fix-format",
+   "type": "can",
+   "title": "Can: check a project, apply the exact fixes and format it",
+   "summary": "`nuclear check` reports every error of a file or a project with its code, place and fix (JSON for agents); `nuclear fix` applies the exact fixes; `nuclear fmt` rewrites the layout; `dragonfly explain` tells a run-time error or a failing test at its `.nuc` lines.",
+   "body": [
+    "- `nuclear check . --json`: syntax, names, results, the library, the kinds' rules and the project's architecture, all at once. It also writes the project map (`.nuclear/map.md`).",
+    "- `nuclear fix <folder|file>`: applies every exact fix, then reports what is left.",
+    "- `nuclear fmt <file|folder> [--check]`: spacing, indentation and blank lines; it never reorders.",
+    "- `dragonfly explain`: reads a stack or a test's output and answers the message, a hint and the `.nuc` lines.",
+    "- `dragonfly repair` (mobile): rebuilds from scratch until the target's analyzer finds no errors.",
+    "- `dragonfly doctor`: what the machine lacks."
+   ],
+   "keys": ["lint", "format", "formatter", "check", "fix"],
+   "asks": ["how do I check my code", "does nuclear have a formatter", "can nuclear fix errors automatically"],
+   "links": [{"rel": "command", "to": "tool:nuclear.check"}, {"rel": "command", "to": "tool:nuclear.fix"}, {"rel": "command", "to": "tool:nuclear.fmt"}, {"rel": "command", "to": "tool:dragonfly.explain"}, {"rel": "playbook", "to": "playbook:fix-compiler-errors"}],
+   "meta": {"area": "tools", "status": "done"}
+  },
+  {
+   "id": "can:ai-workflow",
+   "type": "can",
+   "title": "Can: take a spec to tested code with AI agents, on your machine or under a frontier model",
+   "summary": "The Loop runs a spec through generate, plan, tests first, code, verification, security, artifacts and deploy with the local agents; any MCP client (Claude Code, Codex, Cursor) can lead it; every run is documented, retried from where it failed and exportable as CI.",
+   "body": [
+    "- Local only: `nuclear-loop run specs/<id>/spec.md --lead local`, or `/task` in the chat.",
+    "- Under a lead: `--lead claude`, or the MCP tools `developer_task`, `developer_retry`, `developer_review`.",
+    "- Specs imported from Jira or a GitHub issue (VS Code).",
+    "- The internet for facts: `web_search`, `web_read`, `api_inspect` (MCP tools).",
+    "- CI: `nuclear-loop export github|gitlab|bitbucket`; `nuclear-loop ci` runs the same commands locally.",
+    "- A chat about the project with the local assistant (VS Code)."
+   ],
+   "keys": ["ai workflow", "spec to code", "automation"],
+   "asks": ["can the agent build a whole feature", "can I use claude with the local agents", "can nuclear run in ci"],
+   "links": [{"rel": "concept", "to": "concept:loop"}, {"rel": "concept", "to": "concept:local-first"}, {"rel": "limit", "to": "limit:agent-features"}],
+   "sources": ["docs/ai/loop.md"],
+   "meta": {"area": "ai", "status": "done"}
+  },
+  {
+   "id": "can:extend",
+   "type": "can",
+   "title": "Can: add your own kinds, definitions and dialects without touching the compiler",
+   "summary": "A project or the community adds a kind as a package (`kinds/<name>/` with TOML, templates and a runtime), brings type definitions of a library in `<project>/defs/`, and a new target is a new dialect: all data, never Rust.",
+   "body": [
+    "- `nuclear kind new <name> -p <platform> -d <dialect>` writes a kind package's skeleton; `dragonfly add <folder>` installs it. A package implemented for some dialects ties the project to them (`N0306`).",
+    "- `dragonfly flutter add <package>` adds a package to a mobile app and generates its type definitions.",
+    "- `nuclear dialect check <name|path>` validates a dialect's files."
+   ],
+   "keys": ["extension", "custom kind", "kind package", "new dialect"],
+   "asks": ["can I create my own kind", "how do I add a library to nuclear", "can I write a dialect"],
+   "links": [{"rel": "concept", "to": "concept:kinds"}, {"rel": "command", "to": "tool:nuclear.kind"}, {"rel": "missing-is", "to": "error:N0306"}],
+   "sources": ["dragonfly/docs/dragonfly/kinds.md"],
+   "meta": {"area": "compiler", "status": "done"}
+  }
+ ]
+}

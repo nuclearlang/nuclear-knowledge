@@ -1,3 +1,0 @@
-// Business error of the component: dragonfly builds it with the failure message.
-CharacterError
-  message: string

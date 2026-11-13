@@ -1,0 +1,3050 @@
+{
+ "shelf": "playbooks",
+ "origin": "curated",
+ "about": "The strategy of each kind of request a user makes (ADR-0105): how the kind is recognised (`data.signals`, `meta.triggers`, `data.target`, the questions it answers), its plan with the tool of every step, the stages of the Loop it runs (`data.stages`, `data.mode`), where its pieces come from (`data.pieces`), the generators it calls and the facts it cannot start without (`data.needs`).",
+ "rows": [
+  {
+   "id": "strategy:system",
+   "type": "strategy",
+   "title": "Strategy: a whole system or app (several components)",
+   "summary": "Never one run: split it into components, one per resource or capability, and run each part with its own strategy, the backend first. The generators write every standard resource; a model writes only the rules and the view details of each part.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect` (MCP `project_inspect`). No `config.nuc` yet: `strategy:project` first. Several platforms: one project per platform, the backend first.",
+    "2. Limits: every `cannot` and `limit` row whose words the request writes (authentication, payments, push notifications...) is told to the user now, before any code.",
+    "3. Decompose (`playbook:decompose-a-spec`): the big parts, one component per resource (a thing it stores or reads) or capability (a thing it does). Write the list: the component, what it holds, what it depends on.",
+    "4. Order the parts: a component nobody depends on first; a relation between two entities after both exist.",
+    "5. Each part is a run of its own, with its strategy: a stored resource `strategy:resource-db`, a resource of another API `strategy:resource-api`, a rule `strategy:usecase`, a view `strategy:interface`. At most 12 pieces for a model in one run.",
+    "6. Between components only the facades: a use case of another component is called through that component's `appcomponent`.",
+    "7. The app of the backend comes after it: `strategy:client-of-backend`.",
+    "8. At the end, the whole project: `dragonfly build`, `nuclear check .`, `dragonfly test`.",
+    "",
+    "**A model writes:** only each part's own rules and view details; never a standard resource.",
+    "",
+    "**Done when:** every part's run passed, the whole project builds and its tests pass.",
+    "",
+    "**Stop and say it when:** the request does not say which things it stores or what is done with them (ask); which components there are and how they relate is a decision (the user's or the lead's, never a guess); a part needs more than 12 pieces from a model (split it again)."
+   ],
+   "keys": [
+    "system"
+   ],
+   "asks": [
+    "build a whole system",
+    "an app for orders with customers, products and payments",
+    "quiero todo un sistema de inventario",
+    "haz una aplicación completa de reservas",
+    "a complete backend for a library",
+    "implementa todo el sistema"
+   ],
+   "links": [
+    {
+     "rel": "step",
+     "to": "playbook:decompose-a-spec"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:resource-db"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:resource-api"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:usecase"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:interface"
+    },
+    {
+     "rel": "first",
+     "to": "strategy:project"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-features"
+    },
+    {
+     "rel": "when-beyond",
+     "to": "playbook:escalate"
+    }
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "analyst",
+    "family": "create",
+    "scope": "system",
+    "triggers": [
+     "system",
+     "sistema",
+     "app",
+     "application",
+     "aplicación",
+     "platform",
+     "plataforma",
+     "from scratch",
+     "desde cero",
+     "end to end",
+     "completo",
+     "completa"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(whole|entire|complete|full)\\s+(system|app|application|platform|backend|product)\\b",
+     "\\b(todo|toda|completo|completa|entero|entera)\\b.{0,24}\\b(sistema|app|aplicaci[oó]n|plataforma|backend|producto)\\b",
+     "\\b(sistema|aplicaci[oó]n|plataforma)\\s+(completo|completa|entero|entera)\\b",
+     "\\b(un|una|a|an)\\s+(sistema|system|aplicaci[oó]n|plataforma|platform)\\s+(de|para|for|of|to|that|que)\\b"
+    ],
+    "generators": [
+     "resource",
+     "usecase"
+    ],
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:project",
+   "type": "strategy",
+   "title": "Strategy: a new project",
+   "summary": "A project is made by a command, not written: `dragonfly new <name> -p <platform>`, then its connections and plugins in the two config files, then build, install and test. No model writes anything.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. `dragonfly new <name> -p backend|mobile|web [-d <dialect>]` (a dialect alone gives its platform).",
+    "2. `config.nuc`: the app's name and version, `plugins(...)` for what it uses (the cards `plugin:<platform>.<name>`).",
+    "3. `config/project_config.nuc`: the connections (a database, an `Http(baseUrl)`, a model).",
+    "4. `dragonfly build`, `dragonfly install`, `dragonfly test`; `dragonfly run` to see it.",
+    "5. `dragonfly agent init`, so an AI agent finds the project's rules.",
+    "6. The first feature is a request of its own: usually `strategy:resource-db` or `strategy:resource-api`.",
+    "",
+    "**A model writes:** nothing.",
+    "",
+    "**Done when:** `dragonfly test` passes in the new project.",
+    "",
+    "**Stop and say it when:** the machine lacks a tool (`dragonfly doctor` names it); the request names no platform (ask: backend, mobile or web)."
+   ],
+   "keys": [
+    "project"
+   ],
+   "asks": [
+    "create a new backend project",
+    "crea un proyecto nuevo",
+    "start a mobile app project",
+    "inicia un proyecto web",
+    "how do I scaffold a project"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:new-project"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.new"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.doctor"
+    }
+   ],
+   "meta": {
+    "use_case": "project",
+    "role": "devops",
+    "family": "create",
+    "scope": "project",
+    "triggers": [
+     "new project",
+     "proyecto nuevo",
+     "nuevo proyecto",
+     "scaffold",
+     "dragonfly new",
+     "empty project",
+     "proyecto vacío"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(new|create|start|scaffold|init(ialize)?)\\b.{0,30}\\bproject\\b",
+     "\\b(nuevo|crea(r)?|inicia(r)?|empieza|empezar)\\b.{0,30}\\bproyecto\\b",
+     "\\bproyecto\\s+(nuevo|vac[ií]o)\\b",
+     "\\bdragonfly new\\b"
+    ],
+    "mode": "commands",
+    "stages": [],
+    "pieces": "none",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:component",
+   "type": "strategy",
+   "title": "Strategy: a whole component (one feature module)",
+   "summary": "A component is a folder with its facade and whatever it holds: generate it, generate each of its resources, write each rule of its own as a use case and wire it. Other components see only its `appcomponent`.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`; a component of that name that exists makes this `strategy:member` or one of the layer strategies.",
+    "2. `dragonfly gen component <component>` (MCP `generate_component`): its facade and its config.",
+    "3. Each thing it stores or reads is a resource: `strategy:resource-db` or `strategy:resource-api`, one generator call each.",
+    "4. Each rule of its own is `strategy:usecase`: its test first, the use case by a model, `dragonfly gen usecase` to wire it.",
+    "5. Mobile and web: each view is `strategy:interface`.",
+    "6. What it needs from another component it calls through that component's `appcomponent`, never its use cases or repositories.",
+    "7. `nuclear check .` and `dragonfly test`.",
+    "",
+    "**A model writes:** the use cases with rules of their own and the details of the views; never the facade's aliases or a standard resource.",
+    "",
+    "**Done when:** the component's tests pass and `nuclear check .` reports nothing (the architecture rules included).",
+    "",
+    "**Stop and say it when:** the request does not say what the component holds (ask for its resources and its rules)."
+   ],
+   "keys": [
+    "component"
+   ],
+   "asks": [
+    "add a billing component",
+    "todo el componente de facturación",
+    "a new module for notifications",
+    "crea el módulo de inventario",
+    "implement the orders component"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.component"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:resource-db"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:resource-api"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:usecase"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:decompose-a-spec"
+    }
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "component",
+    "triggers": [
+     "component",
+     "componente",
+     "module",
+     "módulo",
+     "modulo",
+     "feature module",
+     "bounded context"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(add|create|build|implement|make|write)\\b.{0,40}\\b(component|module)\\b",
+     "\\b(whole|entire|new)\\s+(\\w+\\s+)?(component|module)\\b",
+     "\\b(agrega|agregar|crea|crear|implementa|implementar|haz|falta|hace falta)\\b.{0,40}\\b(componente|m[oó]dulo)\\b",
+     "\\b(todo el|nuevo)\\s+(componente|m[oó]dulo)\\b|\\b(componente|m[oó]dulo)\\b.{0,30}\\b(completo|entero)\\b",
+     "\\bgen component\\b"
+    ],
+    "generators": [
+     "component",
+     "resource",
+     "usecase"
+    ],
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:resource-api",
+   "type": "strategy",
+   "title": "Strategy: a resource that reads another API",
+   "summary": "One generator call writes all of it from the API's real answer: models (nested ones too), the HTTP repository, a use case per action, the facade, the controller or the list screen. A model writes nothing unless the request adds a rule.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`; the name must not be declared already.",
+    "2. The shape: `api_inspect <url>` shows the real answer (keys, types, nested objects, a page). `--from-json <url>` reads it by itself.",
+    "3. Dry run first: `dragonfly gen resource <component> <Name> --from-json <url> --actions list,get[,search] --dry-run`; on mobile and web add `--screen <screen>` for its list.",
+    "4. Run it without `--dry-run`. A snake_case key gets `@key`; a nested object becomes `<Name><Key>`; a paged answer `<Name>Page`.",
+    "5. Neither the request nor the API gives the fields: look up the API's documentation (`web_search`, `web_read`); still unclear: ask, never guess.",
+    "6. A rule on top of it (a filter, a transformation) is `strategy:usecase`.",
+    "7. `nuclear check .`, `dragonfly test` (mobile and web: the generated test mocks the repository; backend: the tester writes one, the generator has none yet).",
+    "",
+    "**A model writes:** nothing; only a use case when the request states a rule of its own.",
+    "",
+    "**Done when:** the generated files compile, the generated tests pass and the route or the screen answers the API's data.",
+    "",
+    "**Stop and say it when:** the url does not answer JSON or needs a key the request does not give (ask); the API is not public (`web_read` refuses local addresses)."
+   ],
+   "keys": [
+    "resource api"
+   ],
+   "asks": [
+    "list the characters of this API",
+    "consume the Rick and Morty API",
+    "lista los personajes de esta API",
+    "trae los datos de una API externa",
+    "show the posts from https://example.com/api/posts",
+    "un recurso que lee otra API"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:resource-from-an-api"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.resource"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:api_inspect"
+    },
+    {
+     "rel": "when-unclear",
+     "to": "playbook:research-an-api"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:generators"
+    }
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "resource",
+    "triggers": [
+     "api",
+     "rest",
+     "external api",
+     "api externa",
+     "consume",
+     "consumir",
+     "fetch",
+     "from the api",
+     "de la api",
+     "third party",
+     "endpoint of",
+     "http"
+    ]
+   },
+   "data": {
+    "signals": [
+     "^\\s*GET\\s+https?://\\S+",
+     "https?://[^\\s)]+",
+     "--from-json\\b",
+     "\\b(external|public|third.party|another|other)\\s+api\\b",
+     "\\bapi\\s+(externa|p[uú]blica|de terceros)\\b|\\botra api\\b"
+    ],
+    "generators": [
+     "resource"
+    ],
+    "needs": {
+     "url": "Which url answers it? Give a `GET <url>` line, or an example of its answer."
+    },
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:resource-db",
+   "type": "strategy",
+   "title": "Strategy: a resource stored in the database (backend CRUD)",
+   "summary": "One generator call writes the entity, the `New<Name>` model, the paged repository, a use case per action, the facade, the controller and the tests. A model writes only a relation to another entity or a rule of its own.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`; the name must not be declared already (it is: `strategy:member`).",
+    "2. The fields: the request's `Key | Type` table or example (`--from-spec <spec.md>`), or `--fields \"id:int total:double status:string\"`. No fields: ask.",
+    "3. Dry run: `dragonfly gen resource <component> <Name> --source db [--actions list,get,create,update,delete] --dry-run`, then for real.",
+    "4. A relation to another entity is one piece for a model: the entity's file with the relation's decorator (the card of `kind:backend.entity`); the generator writes none yet.",
+    "5. The database already has tables: `strategy:data-migration` (`dragonfly migrate make \"<message>\"`).",
+    "6. A rule (an order is cancelled only when pending) is `strategy:usecase`.",
+    "7. `nuclear check .`, `dragonfly test`: the generated tests add a row and find it, and ask for a missing one.",
+    "",
+    "**A model writes:** nothing; a relation between entities and each rule of its own.",
+    "",
+    "**Done when:** the generated tests pass and every route answers.",
+    "",
+    "**Stop and say it when:** the request gives no fields (ask); a field's type is a model nobody declares (declare it first, or it stops); the project has no database connection (`strategy:configuration`)."
+   ],
+   "keys": [
+    "resource db"
+   ],
+   "asks": [
+    "a CRUD of orders",
+    "guarda los pedidos en la base de datos",
+    "un CRUD de productos",
+    "store the readers with name and email",
+    "a table of invoices with create, update and delete",
+    "persistir los clientes"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:database-resource"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.resource"
+    },
+    {
+     "rel": "next",
+     "to": "strategy:data-migration"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:generators"
+    }
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "resource",
+    "triggers": [
+     "crud",
+     "database",
+     "base de datos",
+     "table",
+     "tabla",
+     "store",
+     "guardar",
+     "persist",
+     "persistir",
+     "save",
+     "almacenar",
+     "entity",
+     "entidad"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\bCRUD\\b",
+     "\\b(stor(e|ed|es)|sav(e|ed|es)|persist(s|ed)?)\\b.{0,40}\\b(in|into|to)\\s+(the|a)\\s+(database|db|table)\\b",
+     "\\b(guarda|guardar|almacena|almacenar|persiste|persistir)\\b",
+     "\\b(create|read|update|delete),?\\s+(read|update|delete|list)\\b",
+     "--source\\s+db\\b",
+     "\\b(add|list|change|edit|update|remove|delete|create)\\s+(them|it|one)\\b",
+     "\\b(crear|consultar|listar|borrar|editar|modificar|eliminar|registrar|agregar)(los|las|lo|la)\\b|\\b(registrar|llevar)\\s+(los|las|el registro)\\b"
+    ],
+    "generators": [
+     "resource"
+    ],
+    "needs": {
+     "fields": "Which fields does it have, and of which type? Give a `Key | Type` table, an example answer, the API's url or `name:type` pairs."
+    },
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:client-of-backend",
+   "type": "strategy",
+   "title": "Strategy: the app of a Dragonfly backend (its contract)",
+   "summary": "The backend's contract writes the app's models and repositories; a use case per action is one generator call each; only the screens are left, each with `strategy:interface`.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. `contracts(<name> = \"<path or url of the backend>\")` in `config.nuc` (one piece: that file).",
+    "2. `nuclear contracts update`: `contracts/<name>/` gets a model per backend model and a repository per controller, already compiling.",
+    "3. A use case per action: `dragonfly gen usecase <component> <Name> --calls <Contract>Repository.<method>`.",
+    "4. Each screen: `strategy:interface` (a list of a resource is `dragonfly gen resource ... --screen`).",
+    "5. `nuclear check .`: N0116 on a contract member means the backend changed (`nuclear contracts update` again).",
+    "",
+    "**A model writes:** only the details of the views.",
+    "",
+    "**Done when:** the app builds against the contract and its tests pass.",
+    "",
+    "**Stop and say it when:** the backend is not a Dragonfly project (it has no contract: `strategy:resource-api` from its answers instead)."
+   ],
+   "keys": [
+    "client of backend"
+   ],
+   "asks": [
+    "build the mobile app for this backend",
+    "la app de nuestro backend",
+    "consume our backend from the web app",
+    "genera el cliente del backend",
+    "use the backend's contract"
+   ],
+   "platforms": [
+    "mobile",
+    "web"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.contracts"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.usecase"
+    },
+    {
+     "rel": "part",
+     "to": "strategy:interface"
+    },
+    {
+     "rel": "can",
+     "to": "can:contracts"
+    }
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "component",
+    "triggers": [
+     "contract",
+     "contrato",
+     "contracts",
+     "our backend",
+     "nuestro backend",
+     "del backend",
+     "the backend's",
+     "client of"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\bcontracts?\\b",
+     "\\bcontratos?\\b",
+     "\\b(our|this|the project's|my)\\s+backend\\b",
+     "\\b(nuestro|este|mi)\\s+backend\\b|\\bdel backend\\b"
+    ],
+    "generators": [
+     "usecase"
+    ],
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:interface",
+   "type": "strategy",
+   "title": "Strategy: only an interface: a screen or a view (mobile, web)",
+   "summary": "A resource's list is one generator call. Any other screen is three small files written in order: the state model, the state manager, the view. The view calls only its manager, the manager only the facade.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`; the use case the screen needs must exist in the component's facade (it does not: `strategy:usecase` first).",
+    "2. A list of a resource: `dragonfly gen resource <component> <Name> ... --screen <screen>` and it is done.",
+    "3. Another view: `dragonfly make screen <component> <screen> --route /<path>` leaves the three files in `presentation/<screen>/`.",
+    "4. Piece 1, the state model: one line with its states (`loaded`, `error`, `loading`), with the card of its kind and the pitfall `pitfall:state-model-shape`.",
+    "5. Piece 2, the state manager: `@stateModel(State)`, each method marked with the state it emits, calling the facade (`pitfall:state-manager-shape`).",
+    "6. Piece 3, the view: `@screen(route, providers)` over a `stateless`; it draws with `<State>Builder`, one callback per state.",
+    "7. Tests first: `@states(...)` for the manager, `@widget(...)` for the view.",
+    "8. `nuclear check .` (N0301: a view that calls a repository or a use case) and `dragonfly test`.",
+    "",
+    "**A model writes:** the three pieces, one file each, in that order; examples of the same kind only.",
+    "",
+    "**Done when:** the screen's tests pass and the architecture check is clean.",
+    "",
+    "**Stop and say it when:** the project is a backend (it has no screens: say so); the request does not say what the screen shows or which states it has (ask); a form or a translation on web (`limit:web-first-version`)."
+   ],
+   "keys": [
+    "interface"
+   ],
+   "asks": [
+    "only the detail screen",
+    "solo la pantalla de detalle",
+    "add a settings view",
+    "agrega una vista de perfil",
+    "just the UI for the cart",
+    "una pantalla que muestre el pedido",
+    "solo la interfaz"
+   ],
+   "platforms": [
+    "mobile",
+    "web"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:add-a-screen"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.make"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.resource"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:state-model-shape"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:state-manager-shape"
+    },
+    {
+     "rel": "needs",
+     "to": "strategy:usecase"
+    }
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "layer",
+    "triggers": [
+     "screen",
+     "pantalla",
+     "view",
+     "vista",
+     "widget",
+     "ui",
+     "interfaz",
+     "interface",
+     "layout",
+     "button",
+     "botón",
+     "form",
+     "formulario"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(only|just)\\s+(the|a|an)?\\s*(screen|view|ui|interface|widget)\\b",
+     "\\b(solo|s[oó]lo|solamente|[uú]nicamente)\\s+(la|una|el|un)?\\s*(pantalla|vista|interfaz|ui|widget)\\b",
+     "\\b(a|an|the|new)\\s+(screen|view|widget)\\b",
+     "\\b(una|la|nueva)\\s+(pantalla|vista|interfaz)\\b",
+     "\\bmake screen\\b|--screen\\b"
+    ],
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:repository",
+   "type": "strategy",
+   "title": "Strategy: only a repository, or a query in one",
+   "summary": "A repository of a new model is a resource (the generator writes both). A new method in a repository the project has is one piece: that file. To let the rest of the app call it, `dragonfly gen usecase --calls` writes its use case and wires it.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`; read the repository and its model (the project's files).",
+    "2. The model does not exist: this is a resource, `strategy:resource-api` or `strategy:resource-db`.",
+    "3. A new method or query: one piece, the repository's own file, with the card of `kind:<platform>.repository` and its pitfalls (backend: `pitfall:query-operators-are-functions`; mobile: `pitfall:mobile-repository-request`).",
+    "4. `nuclear check .`.",
+    "5. Expose it: `dragonfly gen usecase <component> <Name> --calls <Repository>.<method>` and, on the backend, `--route \"GET <prefix>/<path>\"`.",
+    "6. `dragonfly test`: a test for the new query (backend: rows created before they are read).",
+    "",
+    "**A model writes:** the one method, in the file that already exists.",
+    "",
+    "**Done when:** the project compiles, the new use case is in the facade and its test passes.",
+    "",
+    "**Stop and say it when:** the request does not say what the query filters or returns (ask)."
+   ],
+   "keys": [
+    "repository"
+   ],
+   "asks": [
+    "a repository for authors",
+    "un repositorio de autores",
+    "add a query for pending orders",
+    "agrega una consulta de pedidos pendientes",
+    "a method in BookRepository that finds by author",
+    "solo el repo"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.usecase"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:query-operators-are-functions"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:mobile-repository-request"
+    },
+    {
+     "rel": "or",
+     "to": "strategy:resource-db"
+    },
+    {
+     "rel": "or",
+     "to": "strategy:resource-api"
+    }
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "layer",
+    "triggers": [
+     "repository",
+     "repositorio",
+     "repo",
+     "query",
+     "consulta",
+     "find by",
+     "buscar por"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(a|an|new|only the|just the)\\s+(repository|repo)\\b",
+     "\\b(un|nuevo|solo el|s[oó]lo el|falta el)\\s+(repositorio|repo)\\b",
+     "\\b(a|an|the|new)\\s+query\\b",
+     "\\b(una|la|nueva)\\s+consulta\\b",
+     "\\b(to|in|into|a|al|en)\\s+(the\\s+|el\\s+)?(?-i:[A-Z])\\w*Repository\\b",
+     "\\b(?-i:[A-Z])\\w*Repository\\s+(needs|should|necesita|debe)\\b"
+    ],
+    "generators": [
+     "usecase"
+    ],
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:usecase",
+   "type": "strategy",
+   "title": "Strategy: a use case: one rule of the business",
+   "summary": "A use case that only calls a repository is one generator call. One with a rule of its own is a test first, then one file by a model, then `dragonfly gen usecase` wires it: its alias in the facade and, on the backend, its route.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`; the repository and the models it uses must exist (they do not: a resource strategy first).",
+    "2. It only calls a repository method: `dragonfly gen usecase <component> <Name> --calls <Repository>.<method> [--route \"<VERB> <prefix>/<path>\"]` and it is done.",
+    "3. It has a rule: the test first, one `@test` per acceptance criterion (the normal case, each error).",
+    "4. One piece for a model: `components/<component>/domain/usecases/<name>.nuc`, one `exec(...) Result<Error, T>`, with the card of `kind:<platform>.usecase` and `pitfall:one-exec-per-use-case`.",
+    "5. Wire it: `dragonfly gen usecase <component> <Name> [--route \"POST orders/{id}/cancel\"]`. The signature is read from the project; a `{name}` of the path is a parameter of `exec`.",
+    "6. Mobile and web: what a screen shows of it is `strategy:interface`.",
+    "7. `nuclear check .`, `dragonfly test`.",
+    "",
+    "**A model writes:** the use case with its rule, one file; never its alias or its route.",
+    "",
+    "**Done when:** its tests pass, its alias is in the facade and (backend) its route answers.",
+    "",
+    "**Stop and say it when:** the rule is not stated (ask for it: what is allowed, what is refused and with which error); the generator refuses (`failure:the-generator-refuses` says what is missing)."
+   ],
+   "keys": [
+    "usecase"
+   ],
+   "asks": [
+    "cancel an order only when it is pending",
+    "un caso de uso que cancele el pedido",
+    "add a use case that lists the books of an author",
+    "agrega una regla: no se puede pagar dos veces",
+    "a business rule for discounts",
+    "valida que el stock alcance"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:add-a-use-case"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.usecase"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:one-exec-per-use-case"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:the-generator-refuses"
+    },
+    {
+     "rel": "next",
+     "to": "strategy:interface"
+    }
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "layer",
+    "triggers": [
+     "use case",
+     "usecase",
+     "caso de uso",
+     "rule",
+     "regla",
+     "business",
+     "negocio",
+     "validate",
+     "validar",
+     "only when",
+     "solo si",
+     "sólo si",
+     "unless"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(use ?case|caso de uso)\\b",
+     "\\b(business\\s+rule|regla\\s+de\\s+negocio)\\b",
+     "\\b(only (if|when)|unless|solo (si|cuando)|s[oó]lo (si|cuando)|a menos que)\\b",
+     "\\bgen usecase\\b"
+    ],
+    "generators": [
+     "usecase"
+    ],
+    "target": "new",
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:endpoint",
+   "type": "strategy",
+   "title": "Strategy: a route of the API (backend)",
+   "summary": "A route is never written by hand: `dragonfly gen usecase <component> <Name> --route \"<VERB> <prefix>/<path>\"` adds it to the controller of its prefix, calling the use case. No use case yet: that one first.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`: which use case answers the route.",
+    "2. The use case exists: `dragonfly gen usecase <component> <Name> --route \"<VERB> <prefix>/<path>\" --dry-run`, then for real. The controller of the prefix is made when missing.",
+    "3. It does not: `strategy:usecase` first (`--calls` when it only calls a repository).",
+    "4. A `{name}` of the path must be a parameter of the use case; the other parameters arrive as the verb sends them.",
+    "5. A fixed segment wins over a parameter (`orders/pending` before `orders/{id}`): nothing to order by hand.",
+    "6. `nuclear check .`, `dragonfly test`, and the route over HTTP when the app runs.",
+    "",
+    "**A model writes:** nothing; a controller never holds logic.",
+    "",
+    "**Done when:** the route answers what the use case answers, with its status.",
+    "",
+    "**Stop and say it when:** the route's verb or path is not given (ask); the project is not a backend (mobile and web have no routes)."
+   ],
+   "keys": [
+    "endpoint"
+   ],
+   "asks": [
+    "add POST /orders/{id}/cancel",
+    "agrega la ruta GET /books/pending",
+    "expose this use case over HTTP",
+    "un endpoint para cancelar pedidos",
+    "a new route for the report"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:add-an-endpoint"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.usecase"
+    },
+    {
+     "rel": "needs",
+     "to": "strategy:usecase"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:status-of-a-route"
+    }
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "layer",
+    "triggers": [
+     "route",
+     "ruta",
+     "endpoint",
+     "controller",
+     "controlador",
+     "http",
+     "expose",
+     "exponer"
+    ]
+   },
+   "data": {
+    "signals": [
+     "^\\s*(GET|POST|PUT|PATCH|DELETE)\\s+/?[a-z][\\w/{}:-]*\\s*$",
+     "\\b(GET|POST|PUT|PATCH|DELETE)\\s+/[a-z][\\w/{}:-]*",
+     "\\b(a|an|the|new)\\s+(route|endpoint)\\b",
+     "\\b(una|la|nueva|un|el|nuevo)\\s+(ruta|endpoint)\\b",
+     "--route\\b"
+    ],
+    "generators": [
+     "usecase"
+    ],
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:declaration",
+   "type": "strategy",
+   "title": "Strategy: one declaration: a model, an entity, a service, a listener...",
+   "summary": "`dragonfly make <kind> <component> <Name>` puts the file in its folder with its shape; a model fills it in, with the card of its kind and the mistakes small models repeat with it; the compiler checks it.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Inspect: `dragonfly gen inspect`; the name must be new (it exists: `strategy:member`).",
+    "2. The kind: the word the request writes (how people say each kind comes from the kinds' cards: \"application component\" is `appcomponent`).",
+    "3. A model with its repository and actions is a resource: a resource strategy, not this one.",
+    "4. `dragonfly make <kind> <component> <Name>`: the file where the platform's layout puts it.",
+    "5. One piece for a model: that file, with `kind:<platform>.<kind>`, every pitfall of the kind and examples of the same kind only.",
+    "6. `nuclear check`; the compiler's errors come with their cards, three repairs at most.",
+    "7. It has logic (a service, a converter, a guard): one test.",
+    "",
+    "**A model writes:** the one file.",
+    "",
+    "**Done when:** the file compiles in the project and, when it has logic, its test passes.",
+    "",
+    "**Stop and say it when:** the request does not give its fields or signatures (ask); the kind is not of the project's platform (`nuclear help words --platform <platform>` lists them)."
+   ],
+   "keys": [
+    "declaration"
+   ],
+   "asks": [
+    "a model Reader with name and email",
+    "un modelo Lector con nombre y correo",
+    "add a service that computes the total",
+    "agrega un servicio de precios",
+    "a listener for the order created event",
+    "crea una clase Address",
+    "una entidad Coupon"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.make"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:missing-kind-word"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:several-declarations-one-file"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-one-file"
+    }
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "create",
+    "scope": "declaration",
+    "triggers": [
+     "model",
+     "modelo",
+     "service",
+     "servicio",
+     "class",
+     "clase",
+     "listener",
+     "converter",
+     "conversor",
+     "guard",
+     "event",
+     "evento",
+     "aggregate",
+     "agent",
+     "tools"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(a|an|the|new)\\s+(model|entity|service|listener|converter|guard|event|aggregate|agent|graph|class|state model|state manager)\\s+(?-i:[A-Z])\\w+",
+     "\\b(un|una|el|la|nuevo|nueva)\\s+(modelo|entidad|servicio|listener|conversor|guard|evento|agregado|agente|clase)\\s+(?-i:[A-Z])\\w+",
+     "\\bdragonfly make\\b",
+     "\\b(crea|crear|create|add|agrega)\\s+(una?\\s+)?(clase|class)\\b"
+    ],
+    "target": "new",
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "plan",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:member",
+   "type": "strategy",
+   "title": "Strategy: one more thing in what exists: a field, a method, an action",
+   "summary": "Read the declaration and who uses it, change the file that declares it, and let the compiler name every other file that must follow. A new action of a resource is a generator call; a field of an entity ends with a migration.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Read: the outline of the declaring file and who writes the name (the project's files: `outline`, `grep`).",
+    "2. A new action of a resource (search, delete...): `dragonfly gen resource <component> <Name> --actions <new> --dry-run`, then for real: it adds the use case, the facade's alias, the repository's method and the route, and keeps the rest.",
+    "3. A field: one piece per file that declares it. The entity or the model; on the backend also `New<Name>`, which the create and update use cases copy from.",
+    "4. A method: one piece, the declaring file; a use case gets no second method (`pitfall:one-exec-per-use-case`): that is a new use case, `strategy:usecase`.",
+    "5. `nuclear check .` names each file that must follow (a test that builds the model, a use case that copies its fields): one repair per file.",
+    "6. An entity changed and the database exists: `strategy:data-migration`. The backend's contract changed: `nuclear contracts update` in its apps.",
+    "7. `dragonfly test`; a test for what was added.",
+    "",
+    "**A model writes:** the changed file, whole, with the file as it is in front of it.",
+    "",
+    "**Done when:** the project compiles, the old tests pass and a new test covers what was added.",
+    "",
+    "**Stop and say it when:** the request does not give the field's type or the method's signature (ask); the name is not in the project (it is new: `strategy:declaration`)."
+   ],
+   "keys": [
+    "member"
+   ],
+   "asks": [
+    "add a note field to Order",
+    "agrega el campo nota a Order",
+    "a new method in PriceService",
+    "agrega la acción de buscar a los libros",
+    "Book needs a publishedAt date",
+    "añade un parámetro a CancelOrder"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.resource"
+    },
+    {
+     "rel": "next",
+     "to": "strategy:data-migration"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:one-exec-per-use-case"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-compiler-errors"
+    }
+   ],
+   "sources": [
+    "dragonfly/docs/dragonfly/generators.md"
+   ],
+   "meta": {
+    "use_case": "feature",
+    "role": "developer",
+    "family": "change",
+    "scope": "member",
+    "triggers": [
+     "field",
+     "campo",
+     "method",
+     "método",
+     "column",
+     "columna",
+     "attribute",
+     "atributo",
+     "property",
+     "propiedad",
+     "action",
+     "acción",
+     "parameter",
+     "parámetro"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(add|adds|adding|give)\\b.{0,40}\\b(field|method|column|attribute|property|action|parameter|argument)\\b",
+     "\\b(agr[eé]ga(r|le|les)?|a[nñ][aá]d(e|ir|ele)|suma(r|le)?|pon(er|le|les|ga)?)\\b.{0,40}\\b(campo|m[eé]todo|columna|atributo|propiedad|acci[oó]n|par[aá]metro)\\b",
+     "\\b(?-i:[A-Z])\\w+\\s+(needs|should have|necesita|debe tener)\\b"
+    ],
+    "target": "existing",
+    "pieces": "declaring",
+    "generators": [
+     "resource"
+    ],
+    "needs": {
+     "declaration": "Which declaration is it? Write its name as the project declares it (`Order`, `CancelOrder`): `dragonfly gen inspect` lists them."
+    },
+    "mode": "write",
+    "stages": [
+     "spec",
+     "generate",
+     "plan",
+     "test",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:refactor-rename",
+   "type": "strategy",
+   "title": "Strategy: a rename",
+   "summary": "A tool does it, no model: every file that writes the old name as a word is written again with the new one, the compiler checks them together and the tests pass before and after. No test is deleted.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. `dragonfly test`: what passes now must pass at the end. Red before starting: fix that first (`strategy:bug-failing-test`).",
+    "2. The name must be a declaration of the project (`Book`, `CancelOrder`): a field or a method is renamed by hand, and the compiler then names every use.",
+    "3. The names: the old one and every declaration of the project built from it by a word before or after (`NewBook`, `BookRepository`, `CreateBook` for `Book`). They follow it because the platform binds some of them to it by name: a repository `BookRepository` is the repository of `Book`. A plural (`ListBooks`) and an alias of the facade (`createBook()`) are other names and stay. The analysis lists every name it changes.",
+    "4. The files: the project's files tool (`renamed`) answers every `.nuc` that writes one of those names as a word, each whole with the new names; the facade and the tests are among them. They are the run's pieces, written as they are.",
+    "5. No security review: a rename writes no new logic.",
+    "6. `nuclear check .`: a use the tool could not see (a name built from another, a text) is an error with its line, repaired like any compiler error.",
+    "7. The declaring file keeps its path: move it by hand when its name should follow (no tool moves a file yet).",
+    "8. `dragonfly test`.",
+    "",
+    "**A model writes:** nothing; only the repair of an error the compiler finds afterwards.",
+    "",
+    "**Done when:** `nuclear check .` reports nothing, every test that passed still passes and the old name is written nowhere.",
+    "",
+    "**Stop and say it when:** the old name is not in the project; the new name is declared already; the name is of the platform or a library (it cannot change)."
+   ],
+   "keys": [
+    "refactor rename"
+   ],
+   "asks": [
+    "rename Book to Title",
+    "renombra Book a Title",
+    "change the name of CancelOrder to RevokeOrder",
+    "cámbiale el nombre al componente",
+    "rename the field total to amount"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:refactor"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.check"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.test"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-one-file"
+    }
+   ],
+   "meta": {
+    "use_case": "refactor",
+    "role": "developer",
+    "family": "change",
+    "scope": "declaration",
+    "triggers": [
+     "rename",
+     "renombra",
+     "renombrar",
+     "renombrar a",
+     "change the name",
+     "cambia el nombre",
+     "cambiar el nombre"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(rename|renames|renaming)\\b",
+     "\\b(renombra|renombrar|ren[oó]mbra(lo|la)?)\\b",
+     "\\b(change|cambia|cambiar|c[aá]mbiale)\\s+(the\\s+|el\\s+)?(name|nombre)\\b",
+     "\\b(llamar(se)?|ll[aá]ma(lo|la|rlo|rla)|called|named)\\s+(?-i:[A-Z])\\w+",
+     "\\b(should|must|se debe|debe|ahora se)\\b.{0,12}\\b(be called|be named|llamar|llama)\\b"
+    ],
+    "target": "existing",
+    "pieces": "naming",
+    "stages": [
+     "spec",
+     "plan",
+     "code",
+     "verify",
+     "artifacts",
+     "deploy"
+    ],
+    "needs": {
+     "names": "Which name changes, and to what? Write `rename <Old> to <New>`."
+    },
+    "mode": "write",
+    "generators": [],
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:refactor-move-extract",
+   "type": "strategy",
+   "title": "Strategy: a refactor that moves, extracts, splits or merges",
+   "summary": "Where to cut needs several files understood at once: a frontier model or the user decides it and writes the pieces; the local agents do each mechanical step, one file at a time, the compiler after each and the tests before and after.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. `dragonfly test`: green before anything moves.",
+    "2. The lead reads the files (`project_inspect`, the project map `.nuclear/map.md`) and decides the cut: what moves where, what the new declaration is called and declares.",
+    "3. The new declaration first: `dragonfly make <kind> <component> <Name>` and one piece (`strategy:declaration`).",
+    "4. Each file that uses what moved: one piece, with the file as it is and the exact change.",
+    "5. A use case that moves to another component: `dragonfly gen usecase` adds its alias there; the old alias is removed by hand.",
+    "6. `nuclear check .` after every piece (the architecture rules N03xx say what a move broke), `nuclear fix .` for the exact fixes.",
+    "7. `dragonfly test`: no test deleted, none weakened.",
+    "",
+    "**A model writes:** each mechanical step the lead wrote; never the decision of where to cut.",
+    "",
+    "**Done when:** the same tests pass and the architecture check is clean.",
+    "",
+    "**Stop and say it when:** no frontier model leads and the request does not list the exact steps (`limit:agent-reasoning`: say it and ask for the steps or for a lead)."
+   ],
+   "keys": [
+    "refactor move extract"
+   ],
+   "asks": [
+    "extract this rule into a service",
+    "extrae esa regla a un servicio",
+    "move the use case to the orders component",
+    "divide este caso de uso en dos",
+    "refactor the checkout without changing behaviour",
+    "limpia este componente"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:refactor"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-reasoning"
+    },
+    {
+     "rel": "when-beyond",
+     "to": "playbook:escalate"
+    },
+    {
+     "rel": "lead",
+     "to": "playbook:work-under-a-lead"
+    }
+   ],
+   "meta": {
+    "use_case": "refactor",
+    "role": "developer",
+    "family": "change",
+    "scope": "component",
+    "triggers": [
+     "refactor",
+     "refactorizar",
+     "refactoriza",
+     "extract",
+     "extraer",
+     "move",
+     "mover",
+     "split",
+     "dividir",
+     "merge",
+     "unir",
+     "clean up",
+     "limpiar",
+     "simplify",
+     "simplificar",
+     "duplicated",
+     "duplicado",
+     "without changing behaviour",
+     "sin cambiar el comportamiento"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(refactor|refactors|refactoring|refactoriza|refactorizar)\\b",
+     "\\b(extract|extracts|extrae|extraer)\\b",
+     "\\b(move|moves|mueve|mover)\\b.{0,40}\\b(to|into|a|al|hacia)\\b",
+     "\\b(split|divide|dividir|separa|separar|merge|une|unir|fusiona|fusionar)\\b",
+     "\\b(clean ?up|limpia|limpiar|simplify|simplifica|simplificar|reorgani[sz]e|reorganiza|reorganizar)\\b",
+     "\\b(saca|sacar|pasa|pasar|lleva|llevar|take|pull)\\b.{0,60}\\b(ponl[ao]|poner(l[ao])?|put (it|them)?|into|hacia)\\b.{0,20}\\b(a|an|another|un|una|otro|otra|its own|aparte)\\b"
+    ],
+    "target": "existing",
+    "stages": [
+     "spec",
+     "plan",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "lead": "frontier",
+    "mode": "write",
+    "pieces": "plan",
+    "generators": [],
+    "needs": {}
+   }
+  },
+  {
+   "id": "strategy:refactor-architecture",
+   "type": "strategy",
+   "title": "Strategy: a break of the architecture's rules",
+   "summary": "The compiler names every break (N03xx) with the rule and the line. Almost every one is fixed the same way: the alias goes into the facade with `dragonfly gen usecase`, and the caller calls the facade.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. `nuclear check .`: each N03xx with its file, line and rule.",
+    "2. The card of each code (`error:N0301`...): what the rule protects and how it is fixed.",
+    "3. A use case called from outside its component: `dragonfly gen usecase <component> <Name>` puts its alias in the facade; the caller's file is one piece: call the `appcomponent`.",
+    "4. A view that calls a repository or a use case: the call moves into its state manager, which calls the facade (two pieces).",
+    "5. A file in the wrong folder: `nuclear help layout --platform <platform>` gives the folder of its kind; moved by hand.",
+    "6. `nuclear check .` again, then `dragonfly test`.",
+    "",
+    "**A model writes:** each file that breaks a rule, with the exact call to make.",
+    "",
+    "**Done when:** `nuclear check .` reports no N03xx and the tests pass.",
+    "",
+    "**Stop and say it when:** fixing a break needs a new boundary between components (a decision: the lead or the user)."
+   ],
+   "keys": [
+    "refactor architecture"
+   ],
+   "asks": [
+    "the view calls the repository directly",
+    "la vista llama al repositorio",
+    "fix the architecture errors",
+    "arregla los errores de arquitectura",
+    "N0301 in my screen",
+    "a use case is used from another component"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.check"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.usecase"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-compiler-errors"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:appcomponent-only-aliases"
+    }
+   ],
+   "meta": {
+    "use_case": "refactor",
+    "role": "developer",
+    "family": "change",
+    "scope": "project",
+    "triggers": [
+     "architecture",
+     "arquitectura",
+     "layer",
+     "capa",
+     "layers",
+     "capas",
+     "linter",
+     "facade",
+     "fachada",
+     "boundary"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\bN03\\d{2}\\b",
+     "\\b(architecture|arquitectura)\\b",
+     "\\b(calls?|llama)\\b.{0,30}\\b(repository|repositorio|use case|caso de uso)\\b.{0,20}\\b(directly|directamente)\\b",
+     "\\b(view|screen|vista|pantalla|controller|controlador|widget)\\b.{0,30}\\b(uses?|calls?|usa|llama)\\b.{0,30}\\b(repository|repositorio|use case|caso de uso)\\b",
+     "\\b(sin pasar por|without going through|bypass(es|ing)?|se salta|skips)\\b.{0,24}\\b(fachada|facade|appcomponent|manager|manejador)\\b"
+    ],
+    "mode": "repair",
+    "stages": [
+     "spec",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "none",
+    "generators": [
+     "usecase"
+    ],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:data-migration",
+   "type": "strategy",
+   "title": "Strategy: a change of the database's schema (backend)",
+   "summary": "Change the entity, let the tool write the migration from the difference, read what it drops, apply it. The migration is generated, never written by hand.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. The entity: `strategy:member` (the field, its type, its `@column` options) or a relation's decorator.",
+    "2. `nuclear check .`.",
+    "3. `dragonfly migrate make \"<message>\"`: the migration comes from the difference between the entities and the last one.",
+    "4. Read it: it warns about a column or a table it drops. Data would be lost: stop and ask.",
+    "5. A column that is not null on a table with rows needs a default (`@column(default = ...)`).",
+    "6. `dragonfly migrate` applies it; `dragonfly migrate down` takes it back.",
+    "7. `dragonfly test`.",
+    "",
+    "**A model writes:** the entity's file.",
+    "",
+    "**Done when:** the migration applies on a database with data, the tests pass, and `dragonfly migrate make` again says there is nothing to change.",
+    "",
+    "**Stop and say it when:** the migration drops data; the database is not SQLite and was never tried (`limit:untested`: say it)."
+   ],
+   "keys": [
+    "data migration"
+   ],
+   "asks": [
+    "make the total column required",
+    "el total ahora es obligatorio",
+    "add an index to the email",
+    "cambia el tipo de la columna",
+    "relate orders to customers",
+    "migra la base de datos"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:migrate-the-database"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.migrate"
+    },
+    {
+     "rel": "first",
+     "to": "strategy:member"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untested"
+    }
+   ],
+   "meta": {
+    "use_case": "devops",
+    "role": "devops",
+    "family": "change",
+    "scope": "member",
+    "triggers": [
+     "migration",
+     "migración",
+     "migracion",
+     "schema",
+     "esquema",
+     "column",
+     "columna",
+     "index",
+     "índice",
+     "nullable",
+     "unique",
+     "relation",
+     "relación",
+     "foreign key"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(migration|migrations|migraci[oó]n|migraciones)\\b",
+     "\\b(schema|esquema)\\b",
+     "\\b(not null|nullable|unique|foreign key|clave for[aá]nea)\\b",
+     "\\b(one|many).to.(one|many)\\b|\\b(uno|muchos) a (uno|muchos)\\b",
+     "\\bmigrate make\\b"
+    ],
+    "target": "existing",
+    "pieces": "declaring",
+    "stages": [
+     "spec",
+     "plan",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "needs": {
+     "declaration": "Which declaration is it? Write its name as the project declares it (`Order`, `CancelOrder`): `dragonfly gen inspect` lists them."
+    },
+    "mode": "write",
+    "generators": [],
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:configuration",
+   "type": "strategy",
+   "title": "Strategy: the project's configuration: a connection, a plugin, the app's data",
+   "summary": "Two files hold it: `config.nuc` (the app, its plugins, its contracts, its dependencies) and `config/project_config.nuc` (the connections). One piece each, then build and install, because the packages change.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Which file: a plugin, the app's name or version, a contract or a dependency is `config.nuc`; a database, an `Http(baseUrl)`, a broker or a model is `config/project_config.nuc`.",
+    "2. The cards: `plugin:<platform>.<name>` for what a plugin brings and needs, `platform:<platform>` for the connections it has.",
+    "3. One piece: that file, with the file as it is.",
+    "4. `nuclear check .`: N0303 for a wrong manifest, N0304 for a kind of a plugin that is off, N0305 for one the platform lacks.",
+    "5. `dragonfly build` and `dragonfly install`: the target's packages follow the plugins.",
+    "6. `dragonfly test`.",
+    "",
+    "**A model writes:** the one config file.",
+    "",
+    "**Done when:** the project builds, installs and its tests pass.",
+    "",
+    "**Stop and say it when:** a secret is asked to be written in the file (never: it goes in the environment); the service was never run for real (`limit:untested`)."
+   ],
+   "keys": [
+    "configuration"
+   ],
+   "asks": [
+    "connect the project to Postgres",
+    "conecta Postgres",
+    "enable the redis plugin",
+    "activa el plugin de sqlite",
+    "change the app's base url",
+    "configura la conexión a la API"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.build"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.install"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untested"
+    },
+    {
+     "rel": "skill",
+     "to": "skill:devops"
+    }
+   ],
+   "meta": {
+    "use_case": "devops",
+    "role": "devops",
+    "family": "change",
+    "scope": "project",
+    "triggers": [
+     "config",
+     "configuration",
+     "configuración",
+     "connection",
+     "conexión",
+     "plugin",
+     "environment",
+     "entorno",
+     "postgres",
+     "mysql",
+     "redis",
+     "kafka",
+     "sqlite",
+     "base url"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\bconfig\\.nuc\\b|\\bproject_config\\b",
+     "\\b(plugin|plugins)\\b",
+     "\\b(connection|conexi[oó]n|connect to|con[eé]cta(r|lo)?)\\b",
+     "\\b(postgres(ql)?|mysql|mariadb|redis|kafka|sqlite|chroma|openai|ollama)\\b",
+     "\\b(config(ure|uration)?|configura(r|ci[oó]n)?)\\b"
+    ],
+    "stages": [
+     "spec",
+     "plan",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "mode": "write",
+    "pieces": "plan",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:remove",
+   "type": "strategy",
+   "title": "Strategy: taking something out",
+   "summary": "Find who uses it, take the uses out first and the declaration last, the compiler after each step. The Loop writes files and never deletes one: the deletion itself is done by the lead or by hand.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Who uses it: every file that writes the name (the project's files: `grep`), its alias in the facade, its route, its tests.",
+    "2. The uses first: one piece per file that calls it (the call and what depended on it taken out).",
+    "3. The alias and the route: the lines of the facade and the controller, by hand or by the lead.",
+    "4. The declaration's file and its tests: deleted by hand (`git rm`).",
+    "5. `nuclear check .` after each step; `dragonfly test`.",
+    "6. An entity removed: `strategy:data-migration`, and it drops a table: ask first.",
+    "",
+    "**A model writes:** the files that used it, each without the use.",
+    "",
+    "**Done when:** the name is written nowhere, the project compiles and the remaining tests pass.",
+    "",
+    "**Stop and say it when:** data would be dropped; something outside the project uses it (a client of the contract)."
+   ],
+   "keys": [
+    "remove"
+   ],
+   "asks": [
+    "remove the coupons module",
+    "quita el módulo de cupones",
+    "delete the legacy use case",
+    "elimina este endpoint",
+    "drop the unused model",
+    "borra la pantalla de ayuda"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:refactor"
+    },
+    {
+     "rel": "when-beyond",
+     "to": "playbook:escalate"
+    },
+    {
+     "rel": "next",
+     "to": "strategy:data-migration"
+    }
+   ],
+   "meta": {
+    "use_case": "refactor",
+    "role": "developer",
+    "family": "change",
+    "scope": "declaration",
+    "triggers": [
+     "remove",
+     "delete",
+     "drop",
+     "quita",
+     "quitar",
+     "elimina",
+     "eliminar",
+     "borra",
+     "borrar",
+     "unused",
+     "sin usar",
+     "deprecated",
+     "legacy"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(remove|removes|delete|deletes|drop|get rid of)\\b",
+     "\\b(quita|quitar|qu[ií]ta(lo|la)|elimina|eliminar|elim[ií]na(lo|la)|borra|borrar|b[oó]rra(lo|la))\\b",
+     "\\bs[aá]ca(lo|la|los|las)\\b.{0,20}\\b(del proyecto|de aqu[ií])\\b|\\b(out of|from) the project\\b",
+     "\\b(ya no (usamos|se usa|hace falta)|no longer (used|needed)|we no longer use)\\b"
+    ],
+    "target": "existing",
+    "mode": "lead",
+    "stages": [],
+    "pieces": "none",
+    "lead": "frontier",
+    "generators": [],
+    "needs": {}
+   }
+  },
+  {
+   "id": "strategy:bug-compile",
+   "type": "strategy",
+   "title": "Strategy: the project does not compile",
+   "summary": "No planning and no new tests: the compiler's exact fixes first (`nuclear fix .`), then each file that still has errors is repaired with the card of each error (three attempts, each checked by the compiler); what is left goes to the lead.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. `nuclear check . --json`: every error with its code, file, line and, for most, its fix.",
+    "2. `nuclear fix .` applies every exact fix: a tool does what needs no thinking.",
+    "3. What is left, by file: the card of each code (`error:N0xxx`, with the errors it comes with) and the mistakes small models repeat (the pitfalls of the file's kind).",
+    "4. One repair per file: the file as it is, its errors and their cards. Never a change in `build/`.",
+    "5. `nuclear check .` again. What is still wrong after its file was repaired goes to the lead, with the errors and what was tried.",
+    "6. `dragonfly test`: a fix must not turn a test red.",
+    "",
+    "**A model writes:** each file that has errors, repaired.",
+    "",
+    "**Done when:** `nuclear check .` reports nothing and the tests that passed still pass.",
+    "",
+    "**Stop and say it when:** the repair did not clear it (the lead takes the file, with the errors and what was tried); the error is in a generated or installed file (`failure:the-installed-tools-are-old`, `dragonfly doctor`)."
+   ],
+   "keys": [
+    "bug compile"
+   ],
+   "asks": [
+    "it does not compile",
+    "no compila",
+    "nuclear check reports errors",
+    "error[N0114] in my use case",
+    "fix the build",
+    "arregla los errores del compilador",
+    "el proyecto no construye"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-compiler-errors"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.check"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.fix"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:the-installed-tools-are-old"
+    },
+    {
+     "rel": "when-beyond",
+     "to": "playbook:escalate"
+    }
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "developer",
+    "family": "fix",
+    "scope": "project",
+    "triggers": [
+     "compile",
+     "compila",
+     "compilar",
+     "compiler",
+     "compilador",
+     "compilation",
+     "compilación",
+     "build fails",
+     "no compila",
+     "syntax error",
+     "error de sintaxis"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\bN0[0-24-9]\\d{2}\\b",
+     "\\berror\\[N",
+     "\\b(does not|doesn't|won't|will not|cannot|can't)\\s+(compile|build)\\b",
+     "\\bno\\s+(compila|construye)\\b",
+     "\\b(compiler|compilation|compilador|compilaci[oó]n)\\b.{0,24}\\b(error|errors|errores)\\b",
+     "\\b(dej[oó] de|stopped|no longer)\\s+(compilar|construir|compil(es|ing)|build(s|ing)?)\\b"
+    ],
+    "mode": "repair",
+    "stages": [
+     "spec",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "none",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:bug-failing-test",
+   "type": "strategy",
+   "title": "Strategy: a test fails",
+   "summary": "Run it, read the failure in Nuclear (`dragonfly explain`), decide which is wrong, the test or the code, by the acceptance criterion, repair that one file and run again. A test is never deleted or weakened to pass.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. `dragonfly test`: which test, which message.",
+    "2. `dragonfly explain`: the failure told in Nuclear, the `.nuc` file and line, a hint.",
+    "3. Which is wrong: the criterion decides. The test asks for what the criterion says: the code is wrong. It asks for something else: the test is.",
+    "4. The usual causes: `pitfall:test-reads-an-empty-database` (rows are created before they are read), `pitfall:result-read-as-its-value`, `pitfall:a-call-without-its-await`.",
+    "5. One repair: the file of the code the failure names, with the failure as `dragonfly explain` tells it. A failure that names only the test stops here: a test is not rewritten to pass, and where the cause is needs the lead or the user.",
+    "6. `dragonfly test` again; three rounds.",
+    "7. It passes: every other test still passes.",
+    "",
+    "**A model writes:** the one file that is wrong.",
+    "",
+    "**Done when:** the test passes, no other test turned red, and no assertion was removed.",
+    "",
+    "**Stop and say it when:** the test and the criterion disagree and the request does not say which holds (ask); the failure is not of the code (`strategy:bug-environment`)."
+   ],
+   "keys": [
+    "bug failing test"
+   ],
+   "asks": [
+    "this test fails",
+    "falla esta prueba",
+    "the tests are red",
+    "las pruebas están rojas",
+    "FAILED tests/test_orders.py",
+    "fix the failing test",
+    "una prueba dejó de pasar"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-a-failing-test"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.test"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.explain"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-test-fails"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:test-reads-an-empty-database"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:diagnoser"
+    }
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "tester",
+    "family": "fix",
+    "scope": "declaration",
+    "triggers": [
+     "test fails",
+     "failing test",
+     "tests fail",
+     "falla la prueba",
+     "prueba falla",
+     "pruebas fallan",
+     "red",
+     "rojas",
+     "assertion"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(FAILED|AssertionError|Expected:|not ok \\d+|tests? failed|\\d+ failed)\\b",
+     "\\b(test|tests|prueba|pruebas)\\b.{0,40}\\b(fail|fails|failing|failed|falla|fallan|fallando|red|roja|rojas|rota|rotas|broken)\\b",
+     "\\b(fail|fails|failing|failed|falla|fallan)\\b.{0,30}\\b(test|tests|prueba|pruebas)\\b",
+     "\\bdragonfly test\\b.{0,40}\\b(fail|falla|error)",
+     "\\b(test|tests|prueba|pruebas)\\b.{0,50}\\b(dej[oó] de pasar|dejaron de pasar|stopped passing|no longer pass(es)?|does not pass|doesn't pass|no pasa|no pasan)\\b"
+    ],
+    "mode": "fix",
+    "stages": [
+     "spec",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "none",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:bug-behaviour",
+   "type": "strategy",
+   "title": "Strategy: it does the wrong thing (no test shows it yet)",
+   "summary": "Reproduce it first: the smallest test that fails for the reason the user gives. From there it is a failing test, and the new test stays.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. What should happen and what happens: both from the request. One is missing: ask.",
+    "2. Reproduce: one `@test` that states what should happen (the tester, from that sentence and the project map). It must fail now.",
+    "3. It passes: the bug is not where the request says; say it and ask where it was seen.",
+    "4. `dragonfly explain` of the failure: the `.nuc` file and line.",
+    "5. Search the errors shelf with the behaviour: many bugs are a habit of another language (`pitfall:library-names-of-other-languages`, `pitfall:replace-changes-only-the-first`, `pitfall:result-read-as-its-value`).",
+    "6. The request names the declaration (`CancelOrder`): its file is the piece, with the request as its task. It names none: the failure's own frames say the file.",
+    "7. Find every caller of what changes (the project's files) and fix it once, where it starts.",
+    "8. `dragonfly test`: the new test and every old one.",
+    "",
+    "**A model writes:** the reproducing test, then the one file with the cause.",
+    "",
+    "**Done when:** the new test passes, every old test passes, and two lines say the cause and the fix.",
+    "",
+    "**Stop and say it when:** the bug cannot be reproduced with a test (a real device, a real service: `limit:untested`); the fix needs a decision about what the right behaviour is (ask)."
+   ],
+   "keys": [
+    "bug behaviour"
+   ],
+   "asks": [
+    "it should answer 409 and answers 200",
+    "debería dar 409 y da 200",
+    "the total is wrong when there is a discount",
+    "el total sale mal",
+    "there is a bug in the cancel flow",
+    "no funciona el filtro por autor"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-a-bug"
+    },
+    {
+     "rel": "next",
+     "to": "strategy:bug-failing-test"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.explain"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:library-names-of-other-languages"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untested"
+    }
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "developer",
+    "family": "fix",
+    "scope": "declaration",
+    "triggers": [
+     "bug",
+     "wrong",
+     "incorrect",
+     "incorrecto",
+     "mal",
+     "erróneo",
+     "no funciona",
+     "not working",
+     "should",
+     "debería",
+     "instead",
+     "en vez"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(should|must|deber[ií]a|debe)\\b.{0,90}\\b(but|pero|instead|en vez|en lugar|and it|y da|y devuelve|y responde)\\b",
+     "\\b(bug|defect|defecto)\\b",
+     "\\b(wrong|incorrect|incorrecto|incorrecta|err[oó]neo|err[oó]nea)\\b",
+     "\\b(no funciona|doesn't work|does not work|not working|sale mal|est[aá] mal)\\b",
+     "\\b[1-5]\\d\\d\\b.{0,40}\\b(instead of|en vez de|en lugar de|should be|deber[ií]a ser)\\b"
+    ],
+    "mode": "fix",
+    "stages": [
+     "spec",
+     "test",
+     "plan",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "declaring",
+    "needs": {
+     "expected": "What should happen, and what happens instead? One sentence each."
+    },
+    "generators": [],
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:bug-runtime",
+   "type": "strategy",
+   "title": "Strategy: it fails while running: an exception, a crash, a 500",
+   "summary": "The trace is of the generated code: `dragonfly explain` turns it into the `.nuc` file and line. A test reproduces it, then it is a failing test.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. The trace or the log: from the request. None: `dragonfly test` or `dragonfly run` to get one, or ask.",
+    "2. `dragonfly explain`: the `.nuc` file and line of each frame, and a hint. Never read or fix `build/`.",
+    "3. The errors shelf with the message: a failure of a tool (`failure:*`) or a mistake of the code (`pitfall:a-call-without-its-await`, `pitfall:result-read-as-its-value`, `limit:untyped-values`).",
+    "4. A test that reproduces it (the tester): it fails with the same message.",
+    "5. One repair: the file `dragonfly explain` named.",
+    "6. `dragonfly test`; then the same call again when the app runs.",
+    "",
+    "**A model writes:** the reproducing test and the one file.",
+    "",
+    "**Done when:** the test passes and the call no longer fails.",
+    "",
+    "**Stop and say it when:** the failure is of the machine or a service, not of the code (`strategy:bug-environment`); it only happens on a real device or a real database (`limit:untested`)."
+   ],
+   "keys": [
+    "bug runtime"
+   ],
+   "asks": [
+    "it crashes with a TypeError",
+    "se cae con TypeError",
+    "the API answers 500",
+    "la API responde 500",
+    "Traceback (most recent call last)",
+    "unhandled exception on startup",
+    "la app revienta al abrir"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.explain"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-a-bug"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:a-call-without-its-await"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untyped-values"
+    },
+    {
+     "rel": "or",
+     "to": "strategy:bug-environment"
+    }
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "developer",
+    "family": "fix",
+    "scope": "declaration",
+    "triggers": [
+     "crash",
+     "crashes",
+     "exception",
+     "excepción",
+     "traceback",
+     "stack trace",
+     "500",
+     "se cae",
+     "revienta",
+     "truena",
+     "runtime"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(Traceback|TypeError|ValueError|KeyError|AttributeError|RuntimeError|NullPointer\\w*|Unhandled|RangeError|StateError|NoSuchMethodError)\\b",
+     "\\b(crash|crashes|crashed|exception|excepci[oó]n|stack ?trace)\\b",
+     "\\b(se cae|revienta|truena|se cuelga)\\b",
+     "\\b(500|Internal Server Error)\\b",
+     "File \\\".*\\\", line \\d+|^\\s+at \\S+ \\(.*:\\d+:\\d+\\)"
+    ],
+    "mode": "fix",
+    "stages": [
+     "spec",
+     "test",
+     "plan",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "declaring",
+    "needs": {
+     "where": "Where does it fail? Paste the message, the output of the command or the test's name."
+    },
+    "generators": [],
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:bug-data-contract",
+   "type": "strategy",
+   "title": "Strategy: the data does not match: a field is empty, renamed or of another type",
+   "summary": "Compare the real answer with the model: `api_inspect` shows the shape, the model says what was expected. The fix is in the model (`@key`, an optional `?`, a type); with a contract, `nuclear contracts update`.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. The real shape: `api_inspect <url>` (keys, types, what is null).",
+    "2. The model: its file (the project's files). Line by line against the shape: a key written another way, a value that can be null, a type that changed.",
+    "3. A snake_case or renamed key: `@key(\"<key>\")` on the field. A value that may be missing: `?` on its type. Another type: the field's type.",
+    "4. Easier for many fields: `dragonfly gen resource ... --from-json <url> --dry-run` shows the model the answer gives now; copy the difference.",
+    "5. A backend of the project changed: `nuclear contracts update` in the app; N0116 names each use of a member that is gone.",
+    "6. A 400 or 422 on a POST: the body against the backend's model and its rules (`failure:a-request-is-invalid`).",
+    "7. A test with the real answer as its example; `dragonfly test`.",
+    "",
+    "**A model writes:** the model's file.",
+    "",
+    "**Done when:** the model reads the real answer and a test holds an example of it.",
+    "",
+    "**Stop and say it when:** the API needs a key or is not reachable (ask for an example answer)."
+   ],
+   "keys": [
+    "bug data contract"
+   ],
+   "asks": [
+    "the name arrives undefined",
+    "llega undefined el nombre",
+    "the API answers 422",
+    "a field is always null",
+    "el campo viene vacío",
+    "the backend renamed a field",
+    "la respuesta cambió de forma"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "mcp:api_inspect"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.contracts"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-request-is-invalid"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.resource"
+    }
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "developer",
+    "family": "fix",
+    "scope": "declaration",
+    "triggers": [
+     "undefined",
+     "null",
+     "422",
+     "400",
+     "json",
+     "payload",
+     "field",
+     "campo",
+     "key",
+     "clave",
+     "response",
+     "respuesta",
+     "shape",
+     "forma",
+     "contract",
+     "contrato"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(undefined|NaN)\\b",
+     "\\b(is|are|comes|arrives|llega|viene|sale)\\b.{0,20}\\b(null|none|empty|vac[ií]o|vac[ií]a|nulo|nula)\\b",
+     "\\b(422|400|Unprocessable|Bad Request)\\b",
+     "\\b(renamed|renombr[oó]|changed|cambi[oó])\\b.{0,30}\\b(field|campo|key|clave|response|respuesta)\\b",
+     "\\b(field|campo|key|clave)\\b.{0,30}\\b(missing|falta|faltante)\\b",
+     "\\b(manda|env[ií]a|sends?|returns?|devuelve)\\b.{0,50}\\b(y|and|but|pero)\\b.{0,30}\\b(no (lo|la|los|las) (lee|toma|recibe|muestra)|does not read|doesn't read|is not read|ignores)\\b"
+    ],
+    "target": "existing",
+    "pieces": "declaring",
+    "stages": [
+     "spec",
+     "plan",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "needs": {
+     "declaration": "Which declaration is it? Write its name as the project declares it (`Order`, `CancelOrder`): `dragonfly gen inspect` lists them."
+    },
+    "mode": "write",
+    "generators": [],
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:bug-interface",
+   "type": "strategy",
+   "title": "Strategy: a screen shows the wrong thing (mobile, web)",
+   "summary": "A screen shows a state: reproduce the wrong one with a `@states` test of its state manager, fix the manager (or the view's builder for that state), then the `@widget` test.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Which screen, which state: from the request (it stays loading, the list is empty, the error is not shown).",
+    "2. Read its three files: the state model, the state manager, the view.",
+    "3. A `@states(...)` test of the manager: the states it must emit for that case, in order. It fails now.",
+    "4. The usual causes: a method that never emits its last state, a `Result` read as its value, a call without its await, a state the view has no callback for.",
+    "5. One repair: the manager, or the view's builder.",
+    "6. The `@widget(...)` test of the view; `dragonfly test`.",
+    "7. `nuclear check .`: N0301 when the fix made the view call past its manager.",
+    "",
+    "**A model writes:** the reproducing test and the one file.",
+    "",
+    "**Done when:** the manager emits the right states and the view's test passes.",
+    "",
+    "**Stop and say it when:** it is seen only on a real device or browser (`limit:untested`); it is a matter of looks, which no test shows (the user checks it on a device)."
+   ],
+   "keys": [
+    "bug interface"
+   ],
+   "asks": [
+    "the screen stays loading forever",
+    "se queda cargando",
+    "the list shows empty",
+    "la lista sale vacía",
+    "the button does nothing",
+    "no navega al detalle",
+    "the error message never appears"
+   ],
+   "platforms": [
+    "mobile",
+    "web"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-a-bug"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:state-manager-shape"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:result-read-as-its-value"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untested"
+    }
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "developer",
+    "family": "fix",
+    "scope": "layer",
+    "triggers": [
+     "loading",
+     "cargando",
+     "spinner",
+     "blank",
+     "en blanco",
+     "empty list",
+     "lista vacía",
+     "button",
+     "botón",
+     "navigation",
+     "navegación",
+     "does not navigate",
+     "no navega",
+     "render"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(stays?|stuck|se queda|queda)\\b.{0,30}\\b(loading|cargando|blank|en blanco|spinner|pegad[oa]|colgad[oa])\\b",
+     "\\b(spinner|loading|cargando)\\b.{0,30}\\b(forever|para siempre|never (ends|stops)|nunca (termina|se quita))\\b",
+     "\\b(screen|view|widget|pantalla|vista)\\b.{0,60}\\b(wrong|empty|blank|nothing|mal|vac[ií]a|en blanco|nada)\\b",
+     "\\b(button|bot[oó]n)\\b.{0,30}\\b(does nothing|no hace nada|not work|no funciona)\\b",
+     "\\b(does not|doesn't|no)\\s+(navigate|navega)\\b"
+    ],
+    "mode": "fix",
+    "stages": [
+     "spec",
+     "test",
+     "plan",
+     "code",
+     "verify",
+     "security",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "declaring",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:bug-environment",
+   "type": "strategy",
+   "title": "Strategy: the machine or a service fails, not the code",
+   "summary": "Nothing of the project changes. Name the failure (the failures of the errors shelf), run `dragonfly doctor`, do what the failure's card says, and try again.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. The message: from the request or the failed step's log.",
+    "2. The local diagnoser classifies it: passing (a service that was down), environment (something missing on the machine), or the code after all.",
+    "3. The failure's card: `failure:the-developer-is-not-running`, `failure:the-graph-is-not-running`, `failure:a-model-is-missing`, `failure:a-package-is-missing`, `failure:a-command-is-not-found`, `failure:the-disk-is-full`, `failure:a-call-timed-out`.",
+    "4. `dragonfly doctor`: what of the machine is missing; `dragonfly install` for the project's packages.",
+    "5. Do what the card says, then run the failed step again (`nuclear-loop retry`).",
+    "6. It was the code after all: `strategy:bug-runtime` or `strategy:bug-compile`.",
+    "",
+    "**A model writes:** nothing.",
+    "",
+    "**Done when:** the step that failed passes with no file of the project changed.",
+    "",
+    "**Stop and say it when:** the fix needs something only the user can do (install a system package, free the disk, start a service with their account)."
+   ],
+   "keys": [
+    "bug environment"
+   ],
+   "asks": [
+    "the developer is not running",
+    "no arranca el servidor",
+    "ollama says the model is missing",
+    "my terminal does not find the command",
+    "connection refused on 7878",
+    "npm install fails",
+    "se acabó el espacio en disco"
+   ],
+   "links": [
+    {
+     "rel": "agent",
+     "to": "agent:diagnoser"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.doctor"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:the-developer-is-not-running"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:the-graph-is-not-running"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-model-is-missing"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-package-is-missing"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-command-is-not-found"
+    }
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "support",
+    "family": "fix",
+    "scope": "project",
+    "triggers": [
+     "not running",
+     "no arranca",
+     "connection refused",
+     "command not found",
+     "timeout",
+     "timed out",
+     "install fails",
+     "disk full",
+     "permission denied",
+     "port in use",
+     "missing model"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(connection refused|ECONNREFUSED|command not found|No module named|permission denied|address already in use|No space left)\\b",
+     "\\b(not running|is down|no est[aá] corriendo|no arranca|no levanta|est[aá] ca[ií]do)\\b",
+     "\\b(timed? ?out|timeout)\\b",
+     "\\b(npm|pip|uv|pub get|ollama|uvicorn|docker)\\b.{0,40}\\b(fail|fails|failed|error|falla|fall[oó])\\b",
+     "\\bdragonfly doctor\\b"
+    ],
+    "mode": "commands",
+    "stages": [],
+    "pieces": "none",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:tests",
+   "type": "strategy",
+   "title": "Strategy: tests for what exists",
+   "summary": "One file of tests per declaration, one `@test` per behaviour: the normal case, the edges, each error. Only names the project has. A new test that fails may have found a bug: it is reported, never bent to pass.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. What to test: the declarations the request names (the project map `.nuclear/map.md` gives their members).",
+    "2. For each: its behaviours, from its code and the acceptance criteria.",
+    "3. The tester writes `test/<name>_test.nuc` (`tests <Name>`), with examples of the `tests` kind of the same platform and its pitfalls (`pitfall:test-injects-an-unknown-class`, `pitfall:test-reads-an-empty-database`).",
+    "4. Backend: the database is in memory and empty in each test. Mobile and web: `@mock` for the repository, `@states` for a manager, `@widget` for a view.",
+    "5. `nuclear check .`, `dragonfly test`.",
+    "6. A new test fails: `dragonfly explain`. The code is wrong: say it (`strategy:bug-behaviour`); the test is: repair the test.",
+    "",
+    "**A model writes:** the test files.",
+    "",
+    "**Done when:** the new tests compile and pass, or a failing one is reported as a bug with its message.",
+    "",
+    "**Stop and say it when:** the request names something the project does not declare; a backend resource over another API has no mock yet (`limit:generators`)."
+   ],
+   "keys": [
+    "tests"
+   ],
+   "asks": [
+    "write tests for CancelOrder",
+    "escribe pruebas para CancelOrder",
+    "add tests to the orders component",
+    "falta cobertura en el repositorio",
+    "test the price service",
+    "agrega pruebas al manejador de estado"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:write-tests"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:tester"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:test-injects-an-unknown-class"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:test-reads-an-empty-database"
+    },
+    {
+     "rel": "skill",
+     "to": "skill:testing"
+    }
+   ],
+   "meta": {
+    "use_case": "test",
+    "role": "tester",
+    "family": "verify",
+    "scope": "declaration",
+    "triggers": [
+     "tests",
+     "test",
+     "pruebas",
+     "prueba",
+     "coverage",
+     "cobertura",
+     "untested",
+     "sin pruebas",
+     "unit test"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(write|add|create|generate)\\b.{0,30}\\b(test|tests|unit tests?)\\b",
+     "\\b(escribe|escribir|agrega|agregar|a[nñ]ade|crea|crear|genera|generar|haz)\\b.{0,30}\\b(prueba|pruebas|tests?)\\b",
+     "\\b(coverage|cobertura|untested|sin pruebas)\\b",
+     "\\btests? for\\b|\\bpruebas (para|de)\\b"
+    ],
+    "target": "existing",
+    "stages": [
+     "spec",
+     "test",
+     "verify"
+    ],
+    "pieces": "none",
+    "mode": "write",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:security-review",
+   "type": "strategy",
+   "title": "Strategy: a security review",
+   "summary": "The local reviewer reads each file against the platform's security rules and the project's security commands run. A critical finding stops the run; nothing is changed without saying it.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Which files: the ones the request names, or every file changed in the run.",
+    "2. The security rules of the platform (`skill:security`): what a route may answer, what is validated, where a secret may be.",
+    "3. The local reviewer, one file at a time: each finding with its line and how grave it is.",
+    "4. The project's security commands (`.nuclear/loop.json`).",
+    "5. A critical finding: it is fixed as `strategy:bug-behaviour` (a test that shows it, then the fix).",
+    "6. What the platform cannot do yet (guards on routes, sessions) is said, not worked around (`limit:backend-not-yet`).",
+    "",
+    "**A model writes:** nothing; it reviews.",
+    "",
+    "**Done when:** every file was read and each finding is listed with its line.",
+    "",
+    "**Stop and say it when:** the review needs to understand the whole app's flow of data (a frontier model's review)."
+   ],
+   "keys": [
+    "security review"
+   ],
+   "asks": [
+    "review the security of the orders component",
+    "revisa la seguridad",
+    "is this endpoint safe",
+    "audit the new code",
+    "busca vulnerabilidades en el login"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:security-review"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:security"
+    },
+    {
+     "rel": "skill",
+     "to": "skill:security"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:backend-not-yet"
+    }
+   ],
+   "meta": {
+    "use_case": "security",
+    "role": "security",
+    "family": "verify",
+    "scope": "component",
+    "triggers": [
+     "security",
+     "seguridad",
+     "vulnerability",
+     "vulnerabilidad",
+     "audit",
+     "auditoría",
+     "injection",
+     "secret",
+     "safe",
+     "seguro"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(security|seguridad)\\b",
+     "\\b(vulnerab\\w+|injection|inyecci[oó]n|audit|auditor[ií]a|xss|csrf)\\b"
+    ],
+    "mode": "review",
+    "stages": [
+     "spec",
+     "security"
+    ],
+    "pieces": "none",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:document",
+   "type": "strategy",
+   "title": "Strategy: documentation of what was built",
+   "summary": "The local agents read and write only Nuclear: they answer the text (what each declaration does, from the project map and the code) and write doc comments in `.nuc`; a `.md` file is put in place by the user or the lead.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. What to document: the declarations or the component the request names (the project map `.nuclear/map.md`).",
+    "2. A doc comment (`//` lines above a declaration): one piece per file, the file as it is, the comments added and nothing else changed. The map and the editor show them.",
+    "3. A text for people (a README section, how to use the API): the assistant or the documenter answers it from the map and the code; the contract and the OpenAPI document (`.nuclear/openapi.json`) are already generated.",
+    "4. Every run of the Loop is documented by itself: its journal says what was built, how it was checked and what is left.",
+    "5. A diagram: the lead draws it (`graph_prompt(\"diagram\")`).",
+    "",
+    "**A model writes:** doc comments in `.nuc`; the text of the answer.",
+    "",
+    "**Done when:** the comments compile (`nuclear check .`) and the text names only what the project has.",
+    "",
+    "**Stop and say it when:** a document in another format is asked to be written to disk (`limit:agent-nuclear-only`: the lead or the user)."
+   ],
+   "keys": [
+    "document"
+   ],
+   "asks": [
+    "document the orders component",
+    "documenta el componente de pedidos",
+    "add doc comments to the use cases",
+    "escribe el README de la API",
+    "explain this module in the docs",
+    "un diagrama de la arquitectura"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:document"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:documenter"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-nuclear-only"
+    }
+   ],
+   "meta": {
+    "use_case": "docs",
+    "role": "documenter",
+    "family": "verify",
+    "scope": "component",
+    "triggers": [
+     "document",
+     "documenta",
+     "documentar",
+     "documentation",
+     "documentación",
+     "docs",
+     "readme",
+     "doc comments",
+     "comentarios",
+     "diagram",
+     "diagrama"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(document|documents|documenting|documentation|documenta|documentar|documentaci[oó]n)\\b",
+     "\\b(readme|doc comments?|docstrings?)\\b",
+     "\\b(diagram|diagrama)\\b"
+    ],
+    "target": "existing",
+    "pieces": "declaring",
+    "stages": [
+     "spec",
+     "plan",
+     "code",
+     "verify"
+    ],
+    "needs": {
+     "declaration": "Which declaration is it? Write its name as the project declares it (`Order`, `CancelOrder`): `dragonfly gen inspect` lists them."
+    },
+    "mode": "write",
+    "generators": [],
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:question",
+   "type": "strategy",
+   "title": "Strategy: a question: explain, do not change",
+   "summary": "No run and no file: the assistant answers from the graph's cards, the project map and the files the question names, in the language it was asked.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. The cards closest to the question, over every shelf (what it is, how it is done, what can and cannot be done).",
+    "2. The project: its map, and the files that declare the names the question writes.",
+    "3. The answer names the command, the kind or the row; code it shows is Nuclear.",
+    "4. The graph does not know: it says so; a fact about an outside API is looked up (`web_search`, a frontier model's tool).",
+    "5. The question hides an order (\"can you add...\"): it says which strategy the order is, and that `/task` or a spec runs it.",
+    "",
+    "**A model writes:** nothing.",
+    "",
+    "**Done when:** the question is answered with what the graph and the project say, or it says it does not know.",
+    "",
+    "**Stop and say it when:** the answer would need a decision or a change: that is an order, not a question."
+   ],
+   "keys": [
+    "question"
+   ],
+   "asks": [
+    "how do I add a route?",
+    "¿cómo agrego una ruta?",
+    "what does this use case do",
+    "qué hace OrdersAppComponent",
+    "why do I get this error",
+    "explícame la arquitectura",
+    "can I use Postgres?"
+   ],
+   "links": [
+    {
+     "rel": "agent",
+     "to": "agent:assistant"
+    },
+    {
+     "rel": "faq",
+     "to": "faq:ask-the-agent"
+    },
+    {
+     "rel": "role",
+     "to": "role:support"
+    }
+   ],
+   "meta": {
+    "use_case": "chat",
+    "role": "support",
+    "family": "verify",
+    "scope": "project",
+    "triggers": [
+     "how",
+     "what",
+     "why",
+     "which",
+     "where",
+     "explain",
+     "cómo",
+     "como",
+     "qué",
+     "que es",
+     "por qué",
+     "cuál",
+     "dónde",
+     "donde",
+     "explica",
+     "explícame",
+     "se puede"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\?\\s*$",
+     "^\\s*¿",
+     "^\\s*(how|what|why|where|which|who|can i|could i|does|is there|are there|explain)\\b",
+     "^\\s*(c[oó]mo|qu[eé]|por qu[eé]|d[oó]nde|cu[aá]l|qui[eé]n|puedo|se puede|explica|expl[ií]came)\\b"
+    ],
+    "mode": "answer",
+    "stages": [],
+    "pieces": "none",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:operate",
+   "type": "strategy",
+   "title": "Strategy: building, running, migrating, shipping",
+   "summary": "Commands, not code: the project's own pipeline in `.nuclear/loop.json` (check, test, security, artifacts, deploy), the same ones the exported CI runs. No model writes anything.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Which command: build (`dragonfly build`), install, run, test, migrate (`dragonfly migrate`), the deploy of `.nuclear/loop.json`.",
+    "2. Before shipping: `nuclear check .` and `dragonfly test`.",
+    "3. The artifacts: the build's output, the contract and the OpenAPI document, kept with the run.",
+    "4. Deploy: the `seed`, `integration` and `deploy` commands of `.nuclear/loop.json`; `nuclear-loop export` writes the same pipeline for GitHub, GitLab or Bitbucket.",
+    "5. A command fails: the diagnoser says whether it was passing, the environment or the code; then `strategy:bug-environment` or a bug strategy.",
+    "",
+    "**A model writes:** nothing.",
+    "",
+    "**Done when:** every command of the pipeline exited 0.",
+    "",
+    "**Stop and say it when:** a command is not declared in `.nuclear/loop.json` (the Loop runs only declared commands: add it there first); the target was never run for real (`limit:untested`)."
+   ],
+   "keys": [
+    "operate"
+   ],
+   "asks": [
+    "deploy the backend",
+    "despliega el backend",
+    "run the migrations",
+    "aplica las migraciones",
+    "build and run the app",
+    "export the CI pipeline",
+    "publica la versión"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:deploy"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.build"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.migrate"
+    },
+    {
+     "rel": "role",
+     "to": "role:devops"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untested"
+    }
+   ],
+   "meta": {
+    "use_case": "devops",
+    "role": "devops",
+    "family": "verify",
+    "scope": "project",
+    "triggers": [
+     "deploy",
+     "despliega",
+     "desplegar",
+     "release",
+     "publicar",
+     "ci",
+     "pipeline",
+     "run",
+     "ejecutar",
+     "correr",
+     "build",
+     "construir",
+     "docker"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(deploy|deploys|deployment|despliega|desplegar|despliegue)\\b",
+     "\\b(release|publica|publicar|ship)\\b",
+     "\\b(ci|pipeline|docker(file)?)\\b",
+     "\\b(run|corre|correr|ejecuta|ejecutar|aplica|aplicar)\\b.{0,24}\\b(migrations?|migraciones|the app|la app|server|servidor)\\b"
+    ],
+    "mode": "commands",
+    "stages": [
+     "spec",
+     "verify",
+     "artifacts",
+     "deploy"
+    ],
+    "pieces": "none",
+    "generators": [],
+    "needs": {},
+    "lead": "local"
+   }
+  },
+  {
+   "id": "strategy:beyond",
+   "type": "strategy",
+   "title": "Strategy: something NuclearLang or the local agents cannot do",
+   "summary": "Say it before writing anything: the row that names the limit, what is possible instead, and who takes it (a frontier model, the user, a later version). Never half of it.",
+   "body": [
+    "**The plan.**",
+    "",
+    "1. Which limit: the capabilities rows whose words the request writes (`cannot:*`, `limit:*`).",
+    "2. By design: target code is never read or converted into Nuclear (`cannot:read-target-code`); Node.js with Express is postponed (`cannot:nodejs-express`).",
+    "3. Not yet in a platform: `limit:backend-not-yet`, `limit:mobile-not-yet`, `limit:web-first-version`, `limit:generators`.",
+    "4. Beyond a local model, not the platform: one small file per order, 8192 tokens, no judgment (`limit:agent-one-file`, `limit:agent-context`, `limit:agent-reasoning`): a frontier model leads (`playbook:escalate`).",
+    "5. What is possible instead: the closest thing the platform does, with its row.",
+    "6. The part of the request that is possible is a request of its own, with its strategy.",
+    "",
+    "**A model writes:** nothing.",
+    "",
+    "**Done when:** the user knows what cannot be done, why, and what can.",
+    "",
+    "**Stop and say it when:** always: this strategy is the stop."
+   ],
+   "keys": [
+    "beyond"
+   ],
+   "asks": [
+    "convert this TypeScript into Nuclear",
+    "convierte este código Python a Nuclear",
+    "an Express server",
+    "push notifications on mobile",
+    "import my Flutter project",
+    "authentication with OAuth"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:escalate"
+    },
+    {
+     "rel": "limit",
+     "to": "cannot:read-target-code"
+    },
+    {
+     "rel": "limit",
+     "to": "cannot:nodejs-express"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-reasoning"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:backend-not-yet"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:mobile-not-yet"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:web-first-version"
+    }
+   ],
+   "meta": {
+    "use_case": "limits",
+    "role": "support",
+    "family": "beyond",
+    "scope": "project",
+    "triggers": [
+     "convert",
+     "convierte",
+     "convertir",
+     "port",
+     "import",
+     "importar",
+     "translate",
+     "traducir",
+     "express",
+     "node.js",
+     "nodejs"
+    ]
+   },
+   "data": {
+    "signals": [
+     "\\b(convert|converts|convierte|convertir|port|translate|traduce|traducir|import|importa|importar)\\b.{0,50}\\b(typescript|javascript|dart|python|java|kotlin|swift|flutter|react|express)\\b",
+     "\\b(express|node\\.?js)\\b"
+    ],
+    "mode": "lead",
+    "stages": [],
+    "pieces": "none",
+    "lead": "frontier",
+    "generators": [],
+    "needs": {}
+   }
+  }
+ ]
+}

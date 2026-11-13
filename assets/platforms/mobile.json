@@ -1,0 +1,3178 @@
+{
+ "shelf": "platforms",
+ "origin": "generated",
+ "generator": "mobile",
+ "about": "The mobile platform: its kinds, decorators, layout and plugins (platform.toml and the default dialect's docs.toml).",
+ "rows": [
+  {
+   "id": "decorator:mobile.acl",
+   "type": "decorator",
+   "title": "`@acl` — a decorator of the mobile platform",
+   "summary": "On the `exec` of a `usecase`: the session must pass this access rule; otherwise it returns `Err` without running.",
+   "body": [
+    "On the `exec` of a `usecase`: the session must pass this access rule; otherwise it returns `Err`",
+    "without running.",
+    "",
+    "```nuclear",
+    "@acl(roles = [\"admin\"], permissions = [\"orders.write\"], guards = [PremiumGuard])",
+    "exec(order: Order) Result<OrderError, Order>",
+    "```",
+    "",
+    "| Rule | Passes when |",
+    "|---|---|",
+    "| `roles` | the session has one of them, or one that inherits it |",
+    "| `permissions` | the session has all of them |",
+    "| `guards` | the `canActivate()` of each guard returns `true` |",
+    "",
+    "Screens use `@screen(acl = { ... })` instead."
+   ],
+   "keys": [
+    "@acl",
+    "acl"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "acl"
+   }
+  },
+  {
+   "id": "decorator:mobile.after",
+   "type": "decorator",
+   "title": "`@after` — a decorator of the mobile platform",
+   "summary": "On a method of a `statemanager`: calls another method after this one.",
+   "body": [
+    "On a method of a `statemanager`: calls another method **after** this one.",
+    "",
+    "```nuclear",
+    "@after(track)",
+    "@state(CartState.full)",
+    "add(item: Item) Result<CartError, Item[]>",
+    "  ~cart.add(item)",
+    "```"
+   ],
+   "keys": [
+    "@after",
+    "after"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "after"
+   }
+  },
+  {
+   "id": "decorator:mobile.before",
+   "type": "decorator",
+   "title": "`@before` — a decorator of the mobile platform",
+   "summary": "On a method of a `statemanager`: calls another method before this one (usually the `loading` state).",
+   "body": [
+    "On a method of a `statemanager`: calls another method **before** this one (usually the `loading`",
+    "state).",
+    "",
+    "```nuclear",
+    "@before(loading)",
+    "@state(CharactersState.full)",
+    "loadPage(page: int) Result<CharacterError, Character[]>",
+    "  ~characters.getPage(page)",
+    "```"
+   ],
+   "keys": [
+    "@before",
+    "before"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "before"
+   }
+  },
+  {
+   "id": "decorator:mobile.body",
+   "type": "decorator",
+   "title": "`@body` — a decorator of the mobile platform",
+   "summary": "On a parameter of a `repository` method: the parameter is the body of the request.",
+   "body": [
+    "On a parameter of a `repository` method: the parameter is the **body** of the request.",
+    "",
+    "```nuclear",
+    "@post",
+    "save(@body character: CharacterParams, @query dryRun: boolean) Character",
+    "```"
+   ],
+   "keys": [
+    "@body",
+    "body"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "body"
+   }
+  },
+  {
+   "id": "decorator:mobile.created",
+   "type": "decorator",
+   "title": "`@created` — a decorator of the mobile platform",
+   "summary": "On a `DateTime?` or `string?` field of a model: the local table writes the moment the row was first saved, when the field is null (as `@created` of a backend entity).",
+   "body": [
+    "On a `DateTime?` or `string?` field of a model: the local table writes the moment the row was first",
+    "saved, when the field is null (as `@created` of a backend entity).",
+    "",
+    "```nuclear",
+    "Note",
+    "  @primary",
+    "  id: string",
+    "  @created",
+    "  createdAt?: DateTime",
+    "```"
+   ],
+   "keys": [
+    "@created",
+    "created"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "created"
+   }
+  },
+  {
+   "id": "decorator:mobile.delete",
+   "type": "decorator",
+   "title": "`@delete` — a decorator of the mobile platform",
+   "summary": "An http DELETE on a method of a `repository`.",
+   "body": [
+    "An **http DELETE** on a method of a `repository`. The parameters that are not in the path go to the",
+    "query. Retries 2 times on temporary failures.",
+    "",
+    "```nuclear",
+    "@delete(path = \":id\")",
+    "remove(id: int) Result<CharacterError, void>",
+    "```"
+   ],
+   "keys": [
+    "@delete",
+    "delete"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "delete"
+   }
+  },
+  {
+   "id": "decorator:mobile.email",
+   "type": "decorator",
+   "title": "`@email` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: an email address.",
+   "body": [
+    "A rule of a form model field: an **email** address.",
+    "",
+    "```nuclear",
+    "@required",
+    "@email(message = \"signup.badEmail\")",
+    "email: string",
+    "```"
+   ],
+   "keys": [
+    "@email",
+    "email"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "email"
+   }
+  },
+  {
+   "id": "decorator:mobile.entity",
+   "type": "decorator",
+   "title": "`@entity` — a decorator of the mobile platform",
+   "summary": "On a model with a `@primary` field: the name of its local table (default: the model's name in snake_case).",
+   "body": [
+    "On a model with a `@primary` field: the **name of its local table** (default: the model's name in",
+    "snake_case). The same word as a backend entity; the other column options of the backend (`@column`) have no",
+    "meaning in the device's document store, where the JSON name (`@key`) is the column.",
+    "",
+    "```nuclear",
+    "@entity(\"characters\")",
+    "Character",
+    "  @primary",
+    "  id: int",
+    "  name: string",
+    "```"
+   ],
+   "keys": [
+    "@entity",
+    "entity"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "entity"
+   }
+  },
+  {
+   "id": "decorator:mobile.flow",
+   "type": "decorator",
+   "title": "`@flow` — a decorator of the mobile platform",
+   "summary": "On a method of a `remote` kind: `@flow(\"path\")`, the flow it calls (default: the method's name); it answers once.",
+   "body": "On a method of a `remote` kind: `@flow(\"path\")`, the flow it calls (default: the method's name); it answers once.",
+   "keys": [
+    "@flow",
+    "flow"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "flow"
+   }
+  },
+  {
+   "id": "decorator:mobile.form",
+   "type": "decorator",
+   "title": "`@form` — a decorator of the mobile platform",
+   "summary": "On a `formmanager`: its form model.",
+   "body": [
+    "On a `formmanager`: its **form model**.",
+    "",
+    "```nuclear",
+    "@form(LoginForm)",
+    "formmanager LoginFormManager",
+    "```"
+   ],
+   "keys": [
+    "@form",
+    "form"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "form"
+   }
+  },
+  {
+   "id": "decorator:mobile.get",
+   "type": "decorator",
+   "title": "`@get` — a decorator of the mobile platform",
+   "summary": "An http GET on a method of a `repository` (without a body).",
+   "body": [
+    "An **http GET** on a method of a `repository` (without a body).",
+    "",
+    "```nuclear",
+    "@get(path = \":id\", cache = true, ttl = Duration(minutes = 10))",
+    "getOne(id: int) Result<CharacterError, Character>",
+    "```",
+    "",
+    "| Argument | Does |",
+    "|---|---|",
+    "| `path` | appended to the `@repository` path; `:name` takes a parameter |",
+    "| `headers` | a map of extra headers |",
+    "| `cache = true`, `cacheKey`, `ttl` | keeps each response until `ttl` (5 min by default) |",
+    "| `retry` | attempts on temporary failures (2 by default for GET) |",
+    "| `local = true` | saves the rows it answers (a model with `@primary`, or a list) in the local database and adds `<method>AsLocal()`; `@repository(saveLocal = true)` does it for every GET |",
+    "",
+    "The parameters that are not in the path go to the query."
+   ],
+   "keys": [
+    "@get",
+    "get"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "get"
+   }
+  },
+  {
+   "id": "decorator:mobile.key",
+   "type": "decorator",
+   "title": "`@key` — a decorator of the mobile platform",
+   "summary": "On a model field: its name in the JSON, when it differs from the field's.",
+   "body": [
+    "On a model field: its **name in the JSON**, when it differs from the field's.",
+    "",
+    "```nuclear",
+    "Episode",
+    "  @key(\"air_date\")",
+    "  airDate: string",
+    "```"
+   ],
+   "keys": [
+    "@key",
+    "key"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "key"
+   }
+  },
+  {
+   "id": "decorator:mobile.matches",
+   "type": "decorator",
+   "title": "`@matches` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: equal to another field (repeating a password).",
+   "body": [
+    "A rule of a form model field: **equal to another field** (repeating a password).",
+    "",
+    "```nuclear",
+    "SignupForm",
+    "  pass: string",
+    "",
+    "  @matches(\"pass\", message = \"signup.repeat\")",
+    "  repeat: string",
+    "```"
+   ],
+   "keys": [
+    "@matches",
+    "matches"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "matches"
+   }
+  },
+  {
+   "id": "decorator:mobile.max",
+   "type": "decorator",
+   "title": "`@max` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: the number is at most n.",
+   "body": [
+    "A rule of a form model field: the number is **at most n**.",
+    "",
+    "```nuclear",
+    "@max(10)",
+    "quantity: int",
+    "```"
+   ],
+   "keys": [
+    "@max",
+    "max"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "max"
+   }
+  },
+  {
+   "id": "decorator:mobile.maxLength",
+   "type": "decorator",
+   "title": "`@maxLength` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: the text has at most n characters.",
+   "body": [
+    "A rule of a form model field: the text has **at most n** characters.",
+    "",
+    "```nuclear",
+    "ProfileForm",
+    "  @maxLength(140)",
+    "  bio?: string",
+    "```"
+   ],
+   "keys": [
+    "@maxlength",
+    "maxlength"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "maxLength"
+   }
+  },
+  {
+   "id": "decorator:mobile.min",
+   "type": "decorator",
+   "title": "`@min` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: the number is at least n.",
+   "body": [
+    "A rule of a form model field: the number is **at least n**.",
+    "",
+    "```nuclear",
+    "@min(18)",
+    "age: int",
+    "```"
+   ],
+   "keys": [
+    "@min",
+    "min"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "min"
+   }
+  },
+  {
+   "id": "decorator:mobile.minLength",
+   "type": "decorator",
+   "title": "`@minLength` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: the text has at least n characters.",
+   "body": [
+    "A rule of a form model field: the text has **at least n** characters.",
+    "",
+    "```nuclear",
+    "@minLength(8, message = \"signup.shortPass\")",
+    "pass: string",
+    "```"
+   ],
+   "keys": [
+    "@minlength",
+    "minlength"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "minLength"
+   }
+  },
+  {
+   "id": "decorator:mobile.mock",
+   "type": "decorator",
+   "title": "`@mock` — a decorator of the mobile platform",
+   "summary": "On a `tests` group: those classes are mocks (mocktail) in the injector, instead of the real ones.",
+   "body": [
+    "On a `tests` group: those classes are **mocks** (mocktail) in the injector, instead of the real ones.",
+    "",
+    "```nuclear",
+    "@mock([CharacterRepository])",
+    "CharactersTest",
+    "  setUp()",
+    "    when(() => CharacterRepository.getPage(1)).thenReturnAsync(Ok(page()))",
+    "```"
+   ],
+   "keys": [
+    "@mock",
+    "mock"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "mock"
+   }
+  },
+  {
+   "id": "decorator:mobile.offline",
+   "type": "decorator",
+   "title": "`@offline` — a decorator of the mobile platform",
+   "summary": "On a `tests` group: the network is disconnected (`NetworkManager`) in its tests, so `@requires(internet = true)` fails.",
+   "body": [
+    "On a `tests` group: the network is **disconnected** (`NetworkManager`) in its tests, so",
+    "`@requires(internet = true)` fails.",
+    "",
+    "```nuclear",
+    "@offline",
+    "OfflineTest",
+    "  @test(\"without internet the page fails\")",
+    "  noNetwork()",
+    "    expect(~GetPageUseCase.exec(1), isErr)",
+    "```"
+   ],
+   "keys": [
+    "@offline",
+    "offline"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "offline"
+   }
+  },
+  {
+   "id": "decorator:mobile.on",
+   "type": "decorator",
+   "title": "`@on` — a decorator of the mobile platform",
+   "summary": "On a method of a global `component`: the method runs with every event of that type, wherever the user is.",
+   "body": [
+    "On a method of a global `component`: the method runs with **every event** of that type, wherever the",
+    "user is. Its parameter is the event.",
+    "",
+    "```nuclear",
+    "@on(ForceLogout)",
+    "exec(event: ForceLogout) void",
+    "  ~session.destroy()",
+    "```"
+   ],
+   "keys": [
+    "@on",
+    "on"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "on"
+   }
+  },
+  {
+   "id": "decorator:mobile.patch",
+   "type": "decorator",
+   "title": "`@patch` — a decorator of the mobile platform",
+   "summary": "An http PATCH on a method of a `repository`.",
+   "body": [
+    "An **http PATCH** on a method of a `repository`. The parameters go to the body. Retries only with",
+    "`retry`.",
+    "",
+    "```nuclear",
+    "@patch(path = \":id\")",
+    "rename(id: int, name: string) Result<CharacterError, Character>",
+    "```"
+   ],
+   "keys": [
+    "@patch",
+    "patch"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "patch"
+   }
+  },
+  {
+   "id": "decorator:mobile.path",
+   "type": "decorator",
+   "title": "`@path` — a decorator of the mobile platform",
+   "summary": "On a parameter of a `repository` method: the parameter goes to the path.",
+   "body": [
+    "On a parameter of a `repository` method: the parameter goes to the **path**.",
+    "",
+    "```nuclear",
+    "@get(path = \":ids\")",
+    "getMany(@path ids: string) Character[]",
+    "```"
+   ],
+   "keys": [
+    "@path",
+    "path"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "path"
+   }
+  },
+  {
+   "id": "decorator:mobile.pattern",
+   "type": "decorator",
+   "title": "`@pattern` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: the text matches a regular expression (`\\\\d` is written with two backslashes).",
+   "body": [
+    "A rule of a form model field: the text matches a **regular expression** (`\\\\d` is written with two",
+    "backslashes).",
+    "",
+    "```nuclear",
+    "@pattern(\"^\\\\d{5}$\", message = \"address.zip\")",
+    "zip: string",
+    "```"
+   ],
+   "keys": [
+    "@pattern",
+    "pattern"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "pattern"
+   }
+  },
+  {
+   "id": "decorator:mobile.post",
+   "type": "decorator",
+   "title": "`@post` — a decorator of the mobile platform",
+   "summary": "An http POST on a method of a `repository`.",
+   "body": [
+    "An **http POST** on a method of a `repository`. One parameter is the body as is; several form an",
+    "object. It does not retry unless `retry` says so (repeating a write may duplicate it).",
+    "",
+    "```nuclear",
+    "@post(retry = 1)",
+    "save(character: CharacterParams) Result<CharacterError, Character>",
+    "```",
+    "",
+    "Arguments: `path`, `headers`, `retry`."
+   ],
+   "keys": [
+    "@post",
+    "post"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "post"
+   }
+  },
+  {
+   "id": "decorator:mobile.primary",
+   "type": "decorator",
+   "title": "`@primary` — a decorator of the mobile platform",
+   "summary": "On a field of a model: its key in the local database.",
+   "body": [
+    "On a field of a model: its **key** in the local database. The model gets a table (`Character.table`,",
+    "a `LocalTable`), and a `repository` with `saveLocal = true` keeps there what its GET methods answer.",
+    "The JSON name of the field (`@key`) is the column.",
+    "",
+    "```nuclear",
+    "Character",
+    "  @primary",
+    "  id: int",
+    "  name: string",
+    "```",
+    "",
+    "One `@primary` per model; the same word as a backend entity. `@primary(generated = true)`: the table gives the key",
+    "when a row is saved with it null (an auto-increment; the field is optional, `id?: int`).",
+    "",
+    "Its arguments: `generated`, `length` (`!` = required)."
+   ],
+   "keys": [
+    "@primary",
+    "primary"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "primary"
+   }
+  },
+  {
+   "id": "decorator:mobile.put",
+   "type": "decorator",
+   "title": "`@put` — a decorator of the mobile platform",
+   "summary": "An http PUT on a method of a `repository`.",
+   "body": [
+    "An **http PUT** on a method of a `repository`. The parameters go to the body. Retries 2 times on",
+    "temporary failures.",
+    "",
+    "```nuclear",
+    "@put(path = \":id\")",
+    "update(id: int, data: CharacterParams) Result<CharacterError, Character>",
+    "```"
+   ],
+   "keys": [
+    "@put",
+    "put"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "put"
+   }
+  },
+  {
+   "id": "decorator:mobile.query",
+   "type": "decorator",
+   "title": "`@query` — a decorator of the mobile platform",
+   "summary": "On a parameter of a `repository` method: the parameter goes to the query (`?name=rick`), even with `@post`.",
+   "body": [
+    "On a parameter of a `repository` method: the parameter goes to the **query** (`?name=rick`), even",
+    "with `@post`.",
+    "",
+    "```nuclear",
+    "@post",
+    "search(@query lang: string, filter: Filter) Character[]",
+    "```"
+   ],
+   "keys": [
+    "@query",
+    "query"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "query"
+   }
+  },
+  {
+   "id": "decorator:mobile.remote",
+   "type": "decorator",
+   "title": "`@remote` — a decorator of the mobile platform",
+   "summary": "On a `remote` kind: `@remote(\"https://server\")`, the Genkit server whose flows its methods call.",
+   "body": "On a `remote` kind: `@remote(\"https://server\")`, the Genkit server whose flows its methods call.",
+   "keys": [
+    "@remote",
+    "remote"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "remote"
+   }
+  },
+  {
+   "id": "decorator:mobile.repository",
+   "type": "decorator",
+   "title": "`@repository` — a decorator of the mobile platform",
+   "summary": "On a `repository`: the base `path` of its requests, the `connection` they use and whether its GET methods save what they answer in the local database (`saveLocal`).",
+   "body": [
+    "On a `repository`: the base `path` of its requests, the `connection` they use and whether its GET",
+    "methods save what they answer in the local database (`saveLocal`).",
+    "",
+    "```nuclear",
+    "@repository(path = \"character\", connection = \"\", saveLocal = true)",
+    "repository CharacterRepository",
+    "```",
+    "",
+    "`path` is appended to the connection's `baseUrl`; `connection` is a `connectionName` of the",
+    "`appConfig` or a `config` (`\"\"` = the default one). `saveLocal = true`: every `@get` that answers a model",
+    "with `@primary` (or a list of them) saves its rows on the device and gets `<method>AsLocal()`, which",
+    "answers the same without a request."
+   ],
+   "keys": [
+    "@repository",
+    "repository"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "repository"
+   }
+  },
+  {
+   "id": "decorator:mobile.required",
+   "type": "decorator",
+   "title": "`@required` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: not empty.",
+   "body": [
+    "A rule of a form model field: **not empty**. A `boolean` must be `true` (accepting the terms).",
+    "",
+    "```nuclear",
+    "@required(message = \"signup.terms\")",
+    "terms: boolean",
+    "```"
+   ],
+   "keys": [
+    "@required",
+    "required"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "required"
+   }
+  },
+  {
+   "id": "decorator:mobile.requires",
+   "type": "decorator",
+   "title": "`@requires` — a decorator of the mobile platform",
+   "summary": "On the `exec` of a `usecase`: what must hold before it runs; otherwise it returns `Err` without running.",
+   "body": [
+    "On the `exec` of a `usecase`: what must hold **before** it runs; otherwise it returns `Err` without",
+    "running.",
+    "",
+    "```nuclear",
+    "@requires(internet = true, session = true)",
+    "exec(id: int) Result<OrderError, Order>",
+    "```",
+    "",
+    "| Argument | Checks |",
+    "|---|---|",
+    "| `internet = true` | there is a connection (`NetworkManager`) |",
+    "| `session = true` | there is an active session (`SessionManager`) |"
+   ],
+   "keys": [
+    "@requires",
+    "requires"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "requires"
+   }
+  },
+  {
+   "id": "decorator:mobile.screen",
+   "type": "decorator",
+   "title": "`@screen` — a decorator of the mobile platform",
+   "summary": "Makes a `stateless` or `stateful` a screen: its route, the managers it creates and who may open it.",
+   "body": [
+    "Makes a `stateless` or `stateful` a **screen**: its route, the managers it creates and who may open",
+    "it. One decorator with everything (an unknown argument is `N0217`).",
+    "",
+    "```nuclear",
+    "@screen(",
+    "  route = \"/favorites\",",
+    "  providers = [FavoritesManager],",
+    "  loggedIn = { forward: LoginScreen },",
+    "  acl = { roles: [\"fan\"], guards: [PremiumGuard], forward: DeniedScreen },",
+    "  shell = { widget: MainShell, tab: 1 },",
+    ")",
+    "stateless FavoritesScreen",
+    "  build(context: BuildContext) Widget",
+    "    Scaffold(body = Text(\"Favorites\"))",
+    "```",
+    "",
+    "| Argument | Does |",
+    "|---|---|",
+    "| `route = \"/users/:id\"` | a route of `appRouter`; `:id` is a parameter of the screen, the others go in the query |",
+    "| `providers = [Manager]` | creates those managers for the screen; `Manager.x()` inside uses them |",
+    "| `loggedIn = { forward: Login }` | without a session, the router goes to `forward` |",
+    "| `acl = { roles, permissions, guards, forward }` | the session must pass the rule, or the router goes to `forward` |",
+    "| `shell = { widget: MainShell, tab: 0 }` | the screen is a tab of `widget` (each tab keeps its stack) |",
+    "| `notFound = true` | the screen for an address no route has |",
+    "| `transition = ScreenTransition.fade` | how it comes in: `fade`, `slide`, `up`, `scale`, `none` |",
+    "",
+    "A route inside another's address (`/characters/:id` in `/characters`) stacks on it: back returns there.",
+    "",
+    "```",
+    " open /favorites ─► session? ─ no ─► LoginScreen",
+    "                       │ yes",
+    "                       ▼",
+    "                 roles + guards ok? ─ no ─► DeniedScreen",
+    "                       │ yes",
+    "                       ▼",
+    "                 FavoritesScreen (tab 1 of MainShell)",
+    "```",
+    "",
+    "Navigate with the screen, not the address: `context.goTo(UserScreen(id = 7))`,",
+    "`~context.pushTo(PickerScreen())`, `context.goBack(value)`."
+   ],
+   "keys": [
+    "@screen",
+    "screen"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "screen"
+   }
+  },
+  {
+   "id": "decorator:mobile.splash",
+   "type": "decorator",
+   "title": "`@splash` — a decorator of the mobile platform",
+   "summary": "The native launch screen of the screen that is the splash: the background color and image the device shows while the app starts.",
+   "body": [
+    "The **native launch screen** of the screen that is the splash: the background color and image the",
+    "device shows while the app starts.",
+    "",
+    "```nuclear",
+    "@screen(route = \"/start\")",
+    "@splash(color = \"#ffffff\", image = \"assets/splash/logo.png\")",
+    "stateless StartScreen",
+    "  build(context: BuildContext) Widget",
+    "    SplashScreen(",
+    "      next = HomeScreen(),",
+    "      minDuration = Duration(seconds = 2),",
+    "      onLoad = () => ~prepare(),",
+    "      child = Center(child = Image.asset(\"assets/splash/logo.png\", width = 128)),",
+    "    )",
+    "```",
+    "",
+    "```",
+    " tap icon ─► native splash (@splash) ─► first frame: SplashScreen ─► onLoad + minDuration ─► next",
+    "             └─────────── same color and image: no visible jump ──────────┘",
+    "```",
+    "",
+    "- `color` is required; `image` is a 4x image of `assets/`.",
+    "- One per project; its route becomes the initial one."
+   ],
+   "keys": [
+    "@splash",
+    "splash"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "splash"
+   }
+  },
+  {
+   "id": "decorator:mobile.state",
+   "type": "decorator",
+   "title": "`@state` — a decorator of the mobile platform",
+   "summary": "On a method of a `statemanager`: the method's value is emitted as that state.",
+   "body": [
+    "On a method of a `statemanager`: the method's value is **emitted as that state**. A `Result` that",
+    "fails emits the `error` state. Without a body, it emits the state with its parameters.",
+    "",
+    "```nuclear",
+    "@state(CharactersState.loading)",
+    "loading()",
+    "",
+    "@state(CharactersState.full)",
+    "loadPage(page: int) Result<CharacterError, Character[]>",
+    "  ~characters.getPage(page)",
+    "```",
+    "",
+    "The caller receives nothing (`void`): the screen sees the new state."
+   ],
+   "keys": [
+    "@state",
+    "state"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "state"
+   }
+  },
+  {
+   "id": "decorator:mobile.stateModel",
+   "type": "decorator",
+   "title": "`@stateModel` — a decorator of the mobile platform",
+   "summary": "On a `statemanager`: its state model (the states it emits).",
+   "body": [
+    "On a `statemanager`: its **state model** (the states it emits).",
+    "",
+    "```nuclear",
+    "@stateModel(CharactersState)",
+    "statemanager CharactersManager",
+    "```",
+    "",
+    "The manager starts in `CharactersState.initial()`."
+   ],
+   "keys": [
+    "@statemodel",
+    "statemodel"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "stateModel"
+   }
+  },
+  {
+   "id": "decorator:mobile.states",
+   "type": "decorator",
+   "title": "`@states` — a decorator of the mobile platform",
+   "summary": "A statemanager test: the parameter is the manager (from the injector), the body is what it does and `expect` the states it emits, in order.",
+   "body": [
+    "A **statemanager test**: the parameter is the manager (from the injector), the body is",
+    "what it does and `expect` the states it emits, in order.",
+    "",
+    "```nuclear",
+    "@states(\"loads the page\", expect = [CharactersState.loading(), CharactersState.full([rick])])",
+    "loadsPage(manager: CharactersManager)",
+    "  manager.loadPage(1)",
+    "```",
+    "",
+    "Also: `seed = ...` (the starting state), `wait = Duration(...)`, `skip = n`."
+   ],
+   "keys": [
+    "@states",
+    "states"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "states"
+   }
+  },
+  {
+   "id": "decorator:mobile.stream",
+   "type": "decorator",
+   "title": "`@stream` — a decorator of the mobile platform",
+   "summary": "On a method of a `remote` kind: `@stream(\"path\")`, a flow whose chunks it streams (the method returns a Stream).",
+   "body": "On a method of a `remote` kind: `@stream(\"path\")`, a flow whose chunks it streams (the method returns a Stream).",
+   "keys": [
+    "@stream",
+    "stream"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "stream"
+   }
+  },
+  {
+   "id": "decorator:mobile.test",
+   "type": "decorator",
+   "title": "`@test` — a decorator of the mobile platform",
+   "summary": "A unit test in a `tests` group.",
+   "body": [
+    "A **unit test** in a `tests` group. The argument is its description.",
+    "",
+    "```nuclear",
+    "@test(\"a failed request is an error of the component\")",
+    "failure()",
+    "  when(() => CharacterRepository.getPage(2)).thenReturnAsync(Err(CharacterError(message = \"down\")))",
+    "  expect(~CharactersComponent.getPage(2), isErrWith(CharacterError(message = \"down\")))",
+    "```"
+   ],
+   "keys": [
+    "@test",
+    "test"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "test"
+   }
+  },
+  {
+   "id": "decorator:mobile.updated",
+   "type": "decorator",
+   "title": "`@updated` — a decorator of the mobile platform",
+   "summary": "On a `DateTime?` or `string?` field of a model: the local table writes the moment of every save (as `@updated` of a backend entity).",
+   "body": [
+    "On a `DateTime?` or `string?` field of a model: the local table writes the moment of every save (as",
+    "`@updated` of a backend entity)."
+   ],
+   "keys": [
+    "@updated",
+    "updated"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "updated"
+   }
+  },
+  {
+   "id": "decorator:mobile.url",
+   "type": "decorator",
+   "title": "`@url` — a decorator of the mobile platform",
+   "summary": "A rule of a form model field: a URL.",
+   "body": [
+    "A rule of a form model field: a **URL**.",
+    "",
+    "```nuclear",
+    "ProfileForm",
+    "  @url",
+    "  website?: string",
+    "```"
+   ],
+   "keys": [
+    "@url",
+    "url"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "url"
+   }
+  },
+  {
+   "id": "decorator:mobile.validate",
+   "type": "decorator",
+   "title": "`@validate` — a decorator of the mobile platform",
+   "summary": "On a method of a `formmanager`: a remote validation of a field.",
+   "body": [
+    "On a method of a `formmanager`: a **remote validation** of a field. It runs when the field's rules",
+    "pass, 400 ms after the last keystroke (and on submit), and returns the error message or `null`.",
+    "",
+    "```nuclear",
+    "@validate(\"user\")",
+    "knownUser(value: string) string?",
+    "  match ~characters.search(value)",
+    "    Ok(found) -> null",
+    "    Err(e) -> \"session.login.unknownUser\"",
+    "```",
+    "",
+    "The name must be a field of the form model (a generated test checks it)."
+   ],
+   "keys": [
+    "@validate",
+    "validate"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "validate"
+   }
+  },
+  {
+   "id": "decorator:mobile.widget",
+   "type": "decorator",
+   "title": "`@widget` — a decorator of the mobile platform",
+   "summary": "A widget test in a `tests` or `integration` group: the parameter is the `WidgetTester`.",
+   "body": [
+    "A **widget test** in a `tests` or `integration` group: the parameter is the `WidgetTester`.",
+    "",
+    "```nuclear",
+    "@widget(\"the list shows the alive characters\")",
+    "showsList(tester: WidgetTester)",
+    "  ~tester.pumpScreen(CharacterListScreen())",
+    "  expect(find.text(\"Rick\"), findsOneWidget)",
+    "```"
+   ],
+   "keys": [
+    "@widget",
+    "widget"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "name": "widget"
+   }
+  },
+  {
+   "id": "kind:mobile.aggregate",
+   "type": "kind",
+   "title": "`aggregate` — a kind of the mobile platform",
+   "summary": "A business aggregate: rules of the domain that several use cases share (a cart with its prices, a set of permissions).",
+   "body": [
+    "A **business aggregate**: rules of the domain that several use cases share (a cart with its",
+    "prices, a set of permissions). Its dependencies are injected.",
+    "",
+    "```nuclear",
+    "aggregate Cart",
+    "  (prices: PriceService)",
+    "",
+    "  total(items: Item[]) double",
+    "    items.fold(0.0, (sum, i) => sum + prices.of(i))",
+    "```",
+    "",
+    "Only a `usecase` may use it (`N0301`).",
+    "",
+    "Its file: `components/{component}/domain/aggregates/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "aggregate"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "aggregate",
+    "name": "aggregate"
+   }
+  },
+  {
+   "id": "kind:mobile.appConfig",
+   "type": "kind",
+   "title": "`appConfig` — a kind of the mobile platform",
+   "summary": "The configuration of the whole app (in `config/`): its connections and its global services.",
+   "body": [
+    "The **configuration of the whole app** (in `config/`): its connections and its global services.",
+    "There is one per project.",
+    "",
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    Http(baseUrl = \"https://api.example.com/\", interceptors = [SessionInterceptor()]),",
+    "    WebSocket(connectionName = \"live\", uri = \"wss://example.com/live\"),",
+    "  ]",
+    "  globals: Global[] = [",
+    "    Events(),",
+    "    SessionManager(timeout = Duration(minutes = 30)),",
+    "    Acl(inherits = {\"admin\": [\"fan\"]}),",
+    "    NetworkManager(),",
+    "    Translations(locales = [\"en\", \"es\"], fallback = \"en\"),",
+    "  ]",
+    "```",
+    "",
+    "```",
+    " appConfig ──► connections ──► Http (\"\")        ◄── @repository(connection = \"\")",
+    "     │                    └──► WebSocket (\"live\")",
+    "     └──────► globals ─────► Events, SessionManager, Acl, NetworkManager, Translations",
+    "```",
+    "",
+    "- Each connection has a `connectionName` (`\"\"` is the default one); names do not repeat.",
+    "- `Http(...)` takes `baseUrl`, `connectTimeout`, `receiveTimeout`, `headers`,",
+    "  `interceptors`...",
+    "- `~startDragonfly()` (in `main.nuc`) starts it before `runApp`.",
+    "- A component adds its own with `config`.",
+    "- `local: LocalDatabase = LocalDatabase(encrypted = true)` says how the local database (the tables of the models",
+    "  with `@primary`) is kept: encrypted (the default: AES-256, key in the device's secure storage) or plain.",
+    "",
+    "Its file: `config/project_config.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "app config",
+    "appconfig",
+    "application config"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.primary"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.repository"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "appConfig",
+    "name": "appConfig"
+   }
+  },
+  {
+   "id": "kind:mobile.appcomponent",
+   "type": "kind",
+   "title": "`appcomponent` — a kind of the mobile platform",
+   "summary": "The facade of a component: aliases to the `exec` of its use cases.",
+   "body": [
+    "The **facade of a component**: aliases to the `exec` of its use cases. It is the only part of the",
+    "component that screens and other components see.",
+    "",
+    "```nuclear",
+    "appcomponent CharactersComponent",
+    "  getOne() = GetOneCharacterUseCase.exec",
+    "  getPage() = GetPageUseCase.exec",
+    "  search() = SearchCharactersUseCase.exec",
+    "```",
+    "",
+    "```",
+    "              components/characters/",
+    " other   ┌──────────────────────────────────────────────┐",
+    " code ──►│ CharactersComponent ─► GetPageUseCase ─► ... │",
+    "         │  (appcomponent)        (hidden: N0302)       │",
+    "         └──────────────────────────────────────────────┘",
+    "```",
+    "",
+    "- `getPage() = GetPageUseCase.exec` is the same function as `exec`: same parameters, same",
+    "  `Result`, async if it is.",
+    "- From outside: `~characters.getPage(1)` with `characters: CharactersComponent` injected.",
+    "",
+    "Its file: `components/{component}/{component}_component.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "app component",
+    "appcomponent",
+    "application component"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "appcomponent",
+    "name": "appcomponent"
+   }
+  },
+  {
+   "id": "kind:mobile.chat",
+   "type": "kind",
+   "title": "`chat` — a kind of the mobile platform",
+   "summary": "A conversation with a model (plugin `genkit`): its `prompt`, its `model` (connection name) and the tools of its constructor parameters.",
+   "body": [
+    "A **conversation** with a model (plugin `genkit`): its `prompt`, its `model` (connection name) and the tools of its constructor parameters. `~chat.send(text)` answers and keeps the history; `chat.stream(text)` gives the answer piece by piece; `ChatController(chat)` is the state of a chat screen (messages, sending, error). Each `inject<Assistant>()` is a new conversation.",
+    "",
+    "```nuclear",
+    "chat Assistant(notes: NoteTools)",
+    "  prompt: string = \"You keep notes with your tools.\"",
+    "```",
+    "",
+    "Its file: `components/{component}/ai/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "chat"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "chat",
+    "name": "chat"
+   }
+  },
+  {
+   "id": "kind:mobile.component",
+   "type": "kind",
+   "title": "`component` — a kind of the mobile platform",
+   "summary": "A global component (in `shared/components/`): a cross-cutting use case any declaration can use.",
+   "body": [
+    "A **global component** (in `shared/components/`): a cross-cutting use case any declaration can use.",
+    "A method with `@on(Event)` runs with every event of that type, wherever the user is.",
+    "",
+    "```nuclear",
+    "component ForceLogoutComponent",
+    "  (session: SessionManager)",
+    "",
+    "  @on(ForceLogout)",
+    "  exec(event: ForceLogout) void",
+    "    ~session.destroy()",
+    "```",
+    "",
+    "```",
+    " backend header x-app-event: force_logout",
+    "   └─► EventInterceptor ─► Events.publish(ForceLogout())",
+    "                             └─► ForceLogoutComponent.exec ─► session.destroy()",
+    "```",
+    "",
+    "Its file: `shared/components/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "component"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.on"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "component",
+    "name": "component"
+   }
+  },
+  {
+   "id": "kind:mobile.config",
+   "type": "kind",
+   "title": "`config` — a kind of the mobile platform",
+   "summary": "The configuration of one component (in `components/<c>/config/`): connections and services only that component uses, and the color of its logs.",
+   "body": [
+    "The **configuration of one component** (in `components/<c>/config/`): connections and services only",
+    "that component uses, and the color of its logs.",
+    "",
+    "```nuclear",
+    "config CharactersConfig",
+    "  connections: Connection[] = [",
+    "    Http(connectionName = \"images\", baseUrl = \"https://images.example.com/\"),",
+    "  ]",
+    "  logColor: LogColor = LogColor.mint",
+    "```",
+    "",
+    "- Same fields as `appConfig` (`connections`, `globals`, `local`) plus `logColor`; its `local` applies to the",
+    "  tables of the component's own models.",
+    "- Connection names are unique in the whole project.",
+    "",
+    "Its file: `components/{component}/config/{component}_config.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "config"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "config",
+    "name": "config"
+   }
+  },
+  {
+   "id": "kind:mobile.converter",
+   "type": "kind",
+   "title": "`converter` — a kind of the mobile platform",
+   "summary": "A JSON converter for a model field whose type the JSON does not bring as is (a date, a color).",
+   "body": [
+    "A **JSON converter** for a model field whose type the JSON does not bring as is (a date, a color).",
+    "A field uses it by writing `@Name` above it.",
+    "",
+    "```nuclear",
+    "converter DateConverter",
+    "  fromJson(json: string) DateTime",
+    "    DateTime.parse(json)",
+    "",
+    "  toJson(value: DateTime) string",
+    "    value.toIso8601String()",
+    "",
+    "Episode",
+    "  @DateConverter",
+    "  created: DateTime",
+    "```",
+    "",
+    "```",
+    " JSON \"2017-11-04\" ──fromJson──► DateTime ──toJson──► \"2017-11-04\"",
+    "```",
+    "",
+    "- Only `fromJson(json: J) T` and `toJson(value: T) J`, both required (`N0209`); the types of",
+    "  `JsonConverter<T, J>` come from `fromJson`.",
+    "- It lives anywhere (usually `shared/converters/`) and every component can use it.",
+    "- Optional `sample() T`: the value generated tests use for a type they cannot invent (`Uri`, a color).",
+    "",
+    "Its file: `shared/converters/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "converter"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "converter",
+    "name": "converter"
+   }
+  },
+  {
+   "id": "kind:mobile.event",
+   "type": "kind",
+   "title": "`event` — a kind of the mobile platform",
+   "summary": "A global event: a typed message.",
+   "body": [
+    "A **global event**: a typed message. Whoever publishes it does not know who listens.",
+    "",
+    "```nuclear",
+    "event ForceLogout",
+    "  reason?: string",
+    "```",
+    "",
+    "| Write | Does |",
+    "|---|---|",
+    "| `Events.publish(ForceLogout())` | publishes it (also from a background isolate or a workmanager task) |",
+    "| `sub = Events.subscribe<ForceLogout>((e) => ...)` | receives every one; `sub.cancel()` stops |",
+    "| `EventBuilder<ForceLogout>(builder = (context, e) => ...)` | redraws with the last event |",
+    "| `EventListener<ForceLogout>(onEvent = ..., child = ...)` | runs code with each event |",
+    "",
+    "Delivery is **on demand**: only the visible screen receives events; a hidden one gets the last",
+    "event of each type when it shows again. Global components (`component`) always receive them.",
+    "An event has `fromJson`/`toJson`: from a background task it travels as JSON, so its",
+    "fields are JSON types (basic, `DateTime`, enums, models, lists).",
+    "",
+    "```",
+    " publish ──► visible screen ✓",
+    "        ├──► hidden screens … (last event kept, delivered on return)",
+    "        └──► @on components ✓ (always)",
+    "```",
+    "",
+    "Its file: `shared/events/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "event"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.on"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "event",
+    "name": "event"
+   }
+  },
+  {
+   "id": "kind:mobile.flow",
+   "type": "kind",
+   "title": "`flow` — a kind of the mobile platform",
+   "summary": "A Genkit flow (plugin `genkit`): one AI operation with a typed input and output (`run(input: I) O`), registered in Genkit (traces, Developer UI).",
+   "body": [
+    "A **Genkit flow** (plugin `genkit`): one AI operation with a typed input and output (`run(input: I) O`), registered in Genkit (traces, Developer UI). Call it like a function: `~summarize(text)`. `~generateObject<Summary>(prompt)` makes the model answer a model of the app (structured output).",
+    "",
+    "```nuclear",
+    "flow Summarize",
+    "  run(text: string) Summary",
+    "    ~generateObject<Summary>(\"Summarize: ${text}\")",
+    "```",
+    "",
+    "Its file: `components/{component}/ai/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "flow"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "flow",
+    "name": "flow"
+   }
+  },
+  {
+   "id": "kind:mobile.form",
+   "type": "kind",
+   "title": "`form` — a kind of the mobile platform",
+   "summary": "A form model: the fields of a form and their rules.",
+   "body": [
+    "A **form model**: the fields of a form and their rules. No header",
+    "word is needed in `presentation/<screen>/forms/`.",
+    "",
+    "```nuclear",
+    "LoginForm",
+    "  @required",
+    "  @minLength(3)",
+    "  user: string",
+    "",
+    "  @required",
+    "  @minLength(5, message = \"session.login.shortPass\")",
+    "  pass: string",
+    "```",
+    "",
+    "| Rule | Checks |",
+    "|---|---|",
+    "| `@required` | not empty (a `boolean` must be `true`) |",
+    "| `@email`, `@url` | the format |",
+    "| `@minLength(n)`, `@maxLength(n)` | the length of the text |",
+    "| `@min(n)`, `@max(n)` | the value of a number |",
+    "| `@pattern(\"regex\")` | a regular expression |",
+    "| `@matches(\"other\")` | equal to the field `other` |",
+    "",
+    "- Every rule takes `message = ...`: a dictionary key or the text.",
+    "- The form widgets (`FormTextField(\"user\")`) are bound to a field **by its name**.",
+    "- Format rules belong to the presentation; business rules stay in the domain (`@validate`).",
+    "",
+    "Its file: `components/{component}/presentation/{screen}/forms/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "form"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.email"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.matches"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.max"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.maxLength"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.min"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.minLength"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.pattern"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.required"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.url"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.validate"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "form",
+    "name": "form"
+   }
+  },
+  {
+   "id": "kind:mobile.formmanager",
+   "type": "kind",
+   "title": "`formmanager` — a kind of the mobile platform",
+   "summary": "The state of a form: values, errors and remote validations (`FormManager<F>`).",
+   "body": [
+    "The **state of a form**: values, errors and remote validations (`FormManager<F>`).",
+    "`@form(F)` binds it to its form model.",
+    "",
+    "```nuclear",
+    "@form(LoginForm)",
+    "formmanager LoginFormManager",
+    "  (characters: CharactersComponent)",
+    "",
+    "  @validate(\"user\")",
+    "  knownUser(value: string) string?",
+    "    match ~characters.search(value)",
+    "      Ok(found) -> null",
+    "      Err(e) -> \"session.login.unknownUser\"",
+    "```",
+    "",
+    "```",
+    " keystroke ─► rules of LoginForm ─ ok ─► 400 ms later ─► @validate(\"user\") ─► error or null",
+    "                    └─ fail ─► error shown when the user leaves the field",
+    "```",
+    "",
+    "- A `@validate(\"field\")` method receives the value and returns the error message or `null`.",
+    "- The screen lists it in `providers`; `DragonflyForm(manager = LoginFormManager, onSubmit = ...)`",
+    "  finds its fields by name.",
+    "- Also: `X.change(\"user\", v)`, `~X.submit((form) => ...)`, `X.reset()`, `X.state.errorOf(\"user\")`.",
+    "",
+    "Its file: `components/{component}/presentation/{screen}/managers/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "form manager",
+    "formmanager"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.form"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.validate"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "formmanager",
+    "name": "formmanager"
+   }
+  },
+  {
+   "id": "kind:mobile.guard",
+   "type": "kind",
+   "title": "`guard` — a kind of the mobile platform",
+   "summary": "A custom access check.",
+   "body": [
+    "A **custom access check**. A single method `canActivate()` (`N0215`); its",
+    "dependencies are injected.",
+    "",
+    "```nuclear",
+    "guard PremiumGuard",
+    "  (session: SessionManager)",
+    "",
+    "  canActivate() boolean",
+    "    session.value<boolean>(\"premium\") != false",
+    "```",
+    "",
+    "Used in a screen, `@screen(acl = { guards: [PremiumGuard], forward: DeniedScreen })`, and in a use",
+    "case, `@acl(guards = [PremiumGuard])`.",
+    "",
+    "With `~` in its body it waits (`Future<bool>`): the router, `AclBuilder`, an async use case and",
+    "`~Acl.check(guards = [...])` wait for it; the sync `Acl.can` throws.",
+    "",
+    "Its file: `shared/guards/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "guard"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.acl"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.screen"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "guard",
+    "name": "guard"
+   }
+  },
+  {
+   "id": "kind:mobile.integration",
+   "type": "kind",
+   "title": "`integration` — a kind of the mobile platform",
+   "summary": "Integration tests (in `integration_test/`): the real app on a device or emulator.",
+   "body": [
+    "**Integration tests** (in `integration_test/`): the real app on a device or emulator.",
+    "",
+    "```nuclear",
+    "AppTest",
+    "  @widget(\"the app opens on the list\")",
+    "  opens(tester: WidgetTester)",
+    "    ~startDragonfly()",
+    "    ~tester.pumpWidget(App())",
+    "    ~tester.pumpAndSettle()",
+    "    expect(find.byType(CharacterListScreen), findsOneWidget)",
+    "```",
+    "",
+    "Run them with `dragonfly test --integration -- -d <device>`.",
+    "",
+    "Its file: `integration_test/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "integration"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.widget"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "integration",
+    "name": "integration"
+   }
+  },
+  {
+   "id": "kind:mobile.knowledge",
+   "type": "kind",
+   "title": "`knowledge` — a kind of the mobile platform",
+   "summary": "A knowledge base (plugin `genkit`): texts searched by meaning with the embedder of a provider (`embedder = \"...\"`).",
+   "body": [
+    "A **knowledge base** (plugin `genkit`): texts searched by meaning with the embedder of a provider (`embedder = \"...\"`). `documents()` gives the first texts; `~facts.add(texts)` adds more; `~facts.search(question, k = 4)` gives the closest; `~facts.context(question)` gives them as a block for a prompt (RAG).",
+    "",
+    "```nuclear",
+    "knowledge Faq",
+    "  documents() string[]",
+    "    [\"Notes are kept while the app is open.\"]",
+    "```",
+    "",
+    "Its file: `components/{component}/ai/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "knowledge"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "knowledge",
+    "name": "knowledge"
+   }
+  },
+  {
+   "id": "kind:mobile.model",
+   "type": "kind",
+   "title": "`model` — a kind of the mobile platform",
+   "summary": "A domain model: only its fields.",
+   "body": [
+    "A **domain model**: only its fields. Nuclear writes the immutable class, `fromJson`/`toJson`",
+    "(json_serializable) and `==`. No header word is needed in `domain/models/` or `shared/models/`. With a",
+    "`@primary` field it has a local table, named by `@entity(\"table\")` (default: the name in snake_case).",
+    "",
+    "```nuclear",
+    "Character",
+    "  id: int",
+    "  name: string",
+    "  status: string",
+    "  @key(\"air_date\")              // its name in the JSON",
+    "  airDate?: string              // optional",
+    "  @DateConverter                // a converter of the project",
+    "  created: DateTime",
+    "```",
+    "",
+    "Generates `@JsonSerializable class Character` with a `const` constructor, `fromJson`, `toJson`,",
+    "`==` and `hashCode`; `dragonfly build` runs build_runner.",
+    "",
+    "- Generic models: `Page<T>` + `results: T[]`; each use says which: `Page<Character>`.",
+    "- `ApiFailure > Exception` implements an interface.",
+    "- The error type of a dragonfly `Result` (repositories, guards) has a `message: string` field.",
+    "- A model is visible from every component (`N0302` does not apply).",
+    "",
+    "Its file: `components/{component}/domain/models/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "model"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.entity"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.key"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.primary"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "model",
+    "name": "model"
+   }
+  },
+  {
+   "id": "kind:mobile.remote",
+   "type": "kind",
+   "title": "`remote` — a kind of the mobile platform",
+   "summary": "Flows of a Genkit server (plugin `genkit`), called like a repository calls an API: `@remote(\"https://server\")` on the kind, `@flow(\"path\")` on a method that answers once, `@stream(\"path\")` on one that streams its chunks.",
+   "body": [
+    "**Flows of a Genkit server** (plugin `genkit`), called like a repository calls an API: `@remote(\"https://server\")` on the kind, `@flow(\"path\")` on a method that answers once, `@stream(\"path\")` on one that streams its chunks. The input is the first parameter.",
+    "",
+    "```nuclear",
+    "@remote(\"http://localhost:3400\")",
+    "remote StoryFlows",
+    "  @flow(\"tellJoke\")",
+    "  tellJoke(topic: string) string",
+    "",
+    "  @stream(\"streamStory\")",
+    "  story(topic: string) string",
+    "```",
+    "",
+    "Its file: `components/{component}/data/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "remote"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.flow"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.remote"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.stream"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "remote",
+    "name": "remote"
+   }
+  },
+  {
+   "id": "kind:mobile.repository",
+   "type": "kind",
+   "title": "`repository` — a kind of the mobile platform",
+   "summary": "The http calls of a component (in `data/`).",
+   "body": [
+    "The **http calls** of a component (in `data/`). Each method **without a body** and with a verb",
+    "decorator is one request; its return type says how the response is decoded.",
+    "",
+    "```nuclear",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<CharacterError, Character>",
+    "",
+    "  @get(cache = true, ttl = Duration(minutes = 10))",
+    "  getPage(page: int) Result<CharacterError, Page<Character>>",
+    "",
+    "  @post(retry = 1)",
+    "  save(character: CharacterParams) Result<CharacterError, Character>",
+    "```",
+    "",
+    "```",
+    " getOne(7) ──► GET {baseUrl}/character/7 ──► 200 JSON ──► Character.fromJson ──► Ok(character)",
+    "                                        └──► 404/timeout/offline ─────────────► Err(CharacterError)",
+    "```",
+    "",
+    "| Parameter | Goes to |",
+    "|---|---|",
+    "| named in the path (`:id`) | the path |",
+    "| any other, with `@get`/`@delete` | the query (`?page=2`) |",
+    "| any other, with `@post`/`@put`/`@patch` | the body (one = the body as is; several = an object) |",
+    "| `@path` / `@query` / `@body` | where the decorator says |",
+    "",
+    "- With `Result<E, T>` a failure is `Err(E(message = ...))`; without it, a `HttpError` is thrown.",
+    "- Methods are always async: call them with `~`.",
+    "- `@get`, `@put`, `@delete` retry 2 times on temporary failures; `@post`/`@patch` only with",
+    "  `retry`.",
+    "- Only a `usecase` or an `aggregate` may use it (`N0301`).",
+    "With `@repository(saveLocal = true)` (or `@get(local = true)` on one method), a GET that answers a model with a",
+    "`@primary` field (or a list of them) also saves its rows in the **local database** of the app (encrypted, on the",
+    "device) and gets a twin `<method>AsLocal()` with the same signature that answers what that call last answered,",
+    "without a request. `local<Character>()` is the model's table: `find`, `findAll`, `save`, `remove`, and queries",
+    "`where({...})`, `orderBy`, `limit`, `offset`, `getOne`, `getMany`, `count`, `exists`, `update`, `delete`, as a",
+    "backend repository (a plain `null` in `where` is \"is null\": `isNull` is the test matcher in this platform).",
+    "",
+    "```nuclear",
+    "@repository(path = \"character\", saveLocal = true)",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  getOne(id: int) Result<CharacterError, Character>   // + getOneAsLocal(id)",
+    "",
+    "  recent() Character[]",
+    "    local<Character>().orderBy(\"created\", desc = true).limit(20).getMany()",
+    "```",
+    "",
+    "Its file: `components/{component}/data/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "repository"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.body"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.delete"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.get"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.patch"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.path"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.post"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.primary"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.put"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.query"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.repository"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "repository",
+    "name": "repository"
+   }
+  },
+  {
+   "id": "kind:mobile.service",
+   "type": "kind",
+   "title": "`service` — a kind of the mobile platform",
+   "summary": "Helpers of the use cases: mappings, transformations, calculations without state.",
+   "body": [
+    "**Helpers of the use cases**: mappings, transformations, calculations without state. Its",
+    "dependencies are injected.",
+    "",
+    "```nuclear",
+    "service CharacterNames",
+    "  alive(characters: Character[]) Character[]",
+    "    characters.filter(c => c.status == \"Alive\")",
+    "```",
+    "",
+    "Only a `usecase` or an `aggregate` may use it (`N0301`).",
+    "",
+    "Its file: `components/{component}/domain/services/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "service"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "service",
+    "name": "service"
+   }
+  },
+  {
+   "id": "kind:mobile.stateful",
+   "type": "kind",
+   "title": "`stateful` — a kind of the mobile platform",
+   "summary": "A widget with its own state: fields that change and redraw it with `setState`.",
+   "body": [
+    "A **widget with its own state**: fields that change and redraw it with `setState`.",
+    "",
+    "```nuclear",
+    "stateful Counter(start: int = 0)",
+    "  count: int = 0",
+    "",
+    "  initState() void",
+    "    super.initState()",
+    "    count = start               // start is read as widget.start",
+    "",
+    "  build(context: BuildContext) Widget",
+    "    TextButton(",
+    "      onPressed = ()",
+    "        setState()",
+    "          count += 1",
+    "      child = Text('${count}'),",
+    "    )",
+    "```",
+    "",
+    "```",
+    " Counter (StatefulWidget)          _CounterState (State<Counter>)",
+    " ┌──────────────────────┐          ┌──────────────────────────────┐",
+    " │ header parameters    │ ───────► │ fields of the block (count)  │",
+    " │ start: int           │  widget. │ methods: initState, build... │",
+    " └──────────────────────┘          └──────────────────────────────┘",
+    "```",
+    "",
+    "**Rules**",
+    "- The header parameters are the inputs of the screen or widget; the fields and methods of the block are",
+    "  its state, and a parameter is read as `widget.<name>`.",
+    "- `setState()` + block changes the state and draws it again.",
+    "- `State` members (`setState`, `context`, `widget`, `mounted`) exist without declaring them, and",
+    "  `initState`, `dispose`, `didUpdateWidget`... get `@override`.",
+    "- `with Mixin` applies to the `State`:",
+    "  `stateful Spinner with SingleTickerProviderStateMixin`.",
+    "- `build` is required (`N0209`). With `@screen` it is a screen, as in `stateless`.",
+    "",
+    "Its file: `components/{component}/presentation/{screen}/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "stateful"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.screen"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "stateful",
+    "name": "stateful"
+   }
+  },
+  {
+   "id": "kind:mobile.stateless",
+   "type": "kind",
+   "title": "`stateless` — a kind of the mobile platform",
+   "summary": "A widget without its own state: everything it shows comes from its parameters.",
+   "body": [
+    "A **widget without its own state**: everything it shows comes from its parameters. With `@screen`",
+    "it is also a screen (a route of the app).",
+    "",
+    "```nuclear",
+    "stateless Greeting(name: string, onTap?: VoidCallback)",
+    "  build(context: BuildContext) Widget",
+    "    GestureDetector(onTap = onTap, child = Text('Hello ${name}'))",
+    "```",
+    "",
+    "Generates a `StatelessWidget` with a `const` constructor:",
+    "",
+    "",
+    "**Rules**",
+    "- The header parameters are `final` fields and **named** parameters: `Greeting(name = 'Ana')`.",
+    "  `name?: T` is optional; `name: T = value` has a default.",
+    "- `build(context: BuildContext) Widget` is required (`N0209`).",
+    "- A method named like a `StatelessWidget` member gets `@override`.",
+    "- Only views (`stateless`, `stateful`) may use `BuildContext` and navigate (`N0301`).",
+    "",
+    "**As a screen:** `@screen(route = \"/users/:id\", providers = [UsersManager])` → see `@screen`.",
+    "",
+    "Use `stateful` when the widget changes by itself (a counter, an animation).",
+    "",
+    "Its file: `components/{component}/presentation/{screen}/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "stateless"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.screen"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "stateless",
+    "name": "stateless"
+   }
+  },
+  {
+   "id": "kind:mobile.statemanager",
+   "type": "kind",
+   "title": "`statemanager` — a kind of the mobile platform",
+   "summary": "The state of a screen.",
+   "body": [
+    "The **state of a screen**. `@stateModel(S)` names its state model; each `@state` method",
+    "emits one state. Its dependencies are the constructor parameters, and the lines below the",
+    "constructor run when it is created.",
+    "",
+    "```nuclear",
+    "@stateModel(CharactersState)",
+    "statemanager CharactersManager",
+    "  (characters: CharactersComponent)",
+    "    loadPage(1)",
+    "",
+    "  @state(CharactersState.loading)",
+    "  loading()",
+    "",
+    "  @before(loading)",
+    "  @state(CharactersState.full)",
+    "  loadPage(page: int) Result<CharacterError, Character[]>",
+    "    ~characters.getPage(page)",
+    "```",
+    "",
+    "```",
+    " loadPage(2) ─► @before(loading) ─► emit loading",
+    "             └─► getPage(2) ─┬─ Ok(list) ─► emit full(list)",
+    "                             └─ Err(e) ───► emit error(e)",
+    "```",
+    "",
+    "- A screen creates it with `@screen(providers = [CharactersManager])`; inside the screen,",
+    "  `CharactersManager.loadPage(2)` calls that instance.",
+    "- Callers of a `@state` method receive nothing: its value becomes the state.",
+    "- Business logic stays in the component; the manager only turns results into states.",
+    "",
+    "Its file: `components/{component}/presentation/{screen}/managers/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "state manager",
+    "statemanager"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.before"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.screen"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.state"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.stateModel"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "statemanager",
+    "name": "statemanager"
+   }
+  },
+  {
+   "id": "kind:mobile.statemodel",
+   "type": "kind",
+   "title": "`statemodel` — a kind of the mobile platform",
+   "summary": "The states of a screen.",
+   "body": [
+    "The **states of a screen**. Each field is one state; a `boolean` field is a state without data. No",
+    "header word is needed in `presentation/<screen>/state_models/`.",
+    "",
+    "```nuclear",
+    "CharactersState",
+    "  (full: Character[], error: CharacterError, loading: boolean)",
+    "```",
+    "",
+    "Generates one constructor per state plus `initial`, and a builder widget with one optional",
+    "callback per state:",
+    "",
+    "```nuclear",
+    "CharactersStateBuilder<CharactersManager>(",
+    "  loading = () => CircularProgressIndicator(),",
+    "  full = (characters) => CharacterList(characters = characters),",
+    "  error = (e) => Text(e.message),",
+    "  orElse = () => SizedBox(),",
+    ")",
+    "```",
+    "",
+    "```",
+    " initial ──► loading ──► full(characters)",
+    "                    └──► error(e)",
+    "```",
+    "",
+    "States compare by value (`==`), so tests can expect them.",
+    "",
+    "Its file: `components/{component}/presentation/{screen}/state_models/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "state model",
+    "statemodel"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "statemodel",
+    "name": "statemodel"
+   }
+  },
+  {
+   "id": "kind:mobile.tests",
+   "type": "kind",
+   "title": "`tests` — a kind of the mobile platform",
+   "summary": "A group of tests (in `test/`, no header word needed): unit, state and widget tests, with mocks from mocktail.",
+   "body": [
+    "A **group of tests** (in `test/`, no header word needed): unit, state and widget tests, with mocks",
+    "from mocktail. Before each test the app starts without network or device.",
+    "",
+    "```nuclear",
+    "@mock([CharacterRepository])",
+    "CharactersTest",
+    "  setUp()",
+    "    when(() => CharacterRepository.getPage(1)).thenReturnAsync(Ok(page()))",
+    "",
+    "  @test(\"keeps only the alive characters\")",
+    "  aliveOnly()",
+    "    expect(~GetPageUseCase.exec(1), isOkWith([rick]))",
+    "",
+    "  @states(\"loads the page\", expect = [CharactersState.full([rick])])",
+    "  loadsPage(manager: CharactersManager)",
+    "    manager.loadPage(1)",
+    "",
+    "  @widget(\"shows the list\")",
+    "  showsList(tester: WidgetTester)",
+    "    ~tester.pumpScreen(CharacterListScreen())",
+    "    expect(find.text(\"Rick\"), findsOneWidget)",
+    "```",
+    "",
+    "| Inside a group | Is |",
+    "|---|---|",
+    "| `setUp()`, `tearDown()`, `setUpAll()`, `tearDownAll()` | run before / after the tests |",
+    "| `@test(\"...\")` | a unit test |",
+    "| `@states(\"...\", expect = [...])` | a statemanager test |",
+    "| `@widget(\"...\")` | a widget test |",
+    "| `X.method()` | the instance of the injector (the mock or the real one) |",
+    "",
+    "A `Result` does not propagate here: compare it with `isOk`, `isErr`, `isOkWith(v)`, `isErrWith(e)`.",
+    "Run them with `dragonfly test`.",
+    "",
+    "Its file: `test/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "tests"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.mock"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.states"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.test"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.widget"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "tests",
+    "name": "tests"
+   }
+  },
+  {
+   "id": "kind:mobile.tools",
+   "type": "kind",
+   "title": "`tools` — a kind of the mobile platform",
+   "summary": "Genkit tools (plugin `genkit`): each method with a doc comment is a tool the model can call; the doc comment is the description it reads and the parameters become its JSON schema.",
+   "body": [
+    "**Genkit tools** (plugin `genkit`): each method with a doc comment is a tool the model can call; the doc comment is the description it reads and the parameters become its JSON schema. A method without one is a helper.",
+    "",
+    "```nuclear",
+    "tools NoteTools",
+    "  notes: string[] = []",
+    "",
+    "  // Saves a note with the given text.",
+    "  addNote(text: string) string",
+    "    notes.add(text)",
+    "    \"saved\"",
+    "```",
+    "",
+    "Its file: `components/{component}/ai/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "tools"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "tools",
+    "name": "tools"
+   }
+  },
+  {
+   "id": "kind:mobile.usecase",
+   "type": "kind",
+   "title": "`usecase` — a kind of the mobile platform",
+   "summary": "One business operation: a single method `exec` that returns a `Result`.",
+   "body": [
+    "**One business operation**: a single method `exec` that returns a `Result`. Its dependencies are",
+    "the constructor parameters; the injector gives them.",
+    "",
+    "```nuclear",
+    "usecase GetPageUseCase",
+    "  (repository: CharacterRepository, names: CharacterNames)",
+    "",
+    "  @requires(internet = true)",
+    "  exec(page: int) Result<CharacterError, Character[]>",
+    "    data = ~repository.getPage(page)     // an Err returns from exec",
+    "    Ok(names.alive(data.results))",
+    "```",
+    "",
+    "```",
+    " screen ─► statemanager ─► appcomponent ─► usecase ─┬─► repository ─► http",
+    "                                                    ├─► service",
+    "                                                    └─► aggregate",
+    "```",
+    "",
+    "- Exactly one method, `exec` (`N0215`), returning `Result<E, T>` (`N0216`).",
+    "- Errors of the calls propagate on their own (`Result`).",
+    "- `@requires(internet = true)`, `@requires(session = true)` and `@acl(...)` check before `exec`.",
+    "- Only the `appcomponent` may use it (`N0301`): it is exposed with an alias.",
+    "",
+    "Its file: `components/{component}/domain/usecases/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
+   ],
+   "keys": [
+    "use case",
+    "usecase"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.acl"
+    },
+    {
+     "rel": "uses",
+     "to": "decorator:mobile.requires"
+    },
+    {
+     "rel": "placed-by",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/docs.toml"
+   ],
+   "meta": {
+    "kind": "usecase",
+    "name": "usecase"
+   }
+  },
+  {
+   "id": "layout:mobile",
+   "type": "layout",
+   "title": "Where each kind's file goes in a mobile project",
+   "summary": "The folder and file name of every kind of a mobile project: `{component}` is the component's folder, `{screen}` the screen's, `{file}` the declaration's name in snake_case.",
+   "body": [
+    "`nuclear help layout --platform mobile` prints it; `dragonfly make` and the generators follow it.",
+    "",
+    "- `aggregate` → `components/{component}/domain/aggregates/{file}.nuc`",
+    "- `appConfig` → `config/project_config.nuc`",
+    "- `appcomponent` → `components/{component}/{component}_component.nuc`",
+    "- `chat` → `components/{component}/ai/{file}.nuc`",
+    "- `component` → `shared/components/{file}.nuc`",
+    "- `config` → `components/{component}/config/{component}_config.nuc`",
+    "- `converter` → `shared/converters/{file}.nuc`",
+    "- `event` → `shared/events/{file}.nuc`",
+    "- `flow` → `components/{component}/ai/{file}.nuc`",
+    "- `form` → `components/{component}/presentation/{screen}/forms/{file}.nuc`",
+    "- `formmanager` → `components/{component}/presentation/{screen}/managers/{file}.nuc`",
+    "- `guard` → `shared/guards/{file}.nuc`",
+    "- `integration` → `integration_test/{file}.nuc`",
+    "- `knowledge` → `components/{component}/ai/{file}.nuc`",
+    "- `model` → `components/{component}/domain/models/{file}.nuc`",
+    "- `remote` → `components/{component}/data/{file}.nuc`",
+    "- `repository` → `components/{component}/data/{file}.nuc`",
+    "- `service` → `components/{component}/domain/services/{file}.nuc`",
+    "- `stateful` → `components/{component}/presentation/{screen}/{file}.nuc`",
+    "- `stateless` → `components/{component}/presentation/{screen}/{file}.nuc`",
+    "- `statemanager` → `components/{component}/presentation/{screen}/managers/{file}.nuc`",
+    "- `statemodel` → `components/{component}/presentation/{screen}/state_models/{file}.nuc`",
+    "- `tests` → `test/{file}.nuc`",
+    "- `tools` → `components/{component}/ai/{file}.nuc`",
+    "- `usecase` → `components/{component}/domain/usecases/{file}.nuc`"
+   ],
+   "keys": [
+    "layout",
+    "mobile layout"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml"
+   ],
+   "meta": {
+    "name": "layout"
+   },
+   "asks": [
+    "where does the file of each kind go in a mobile project",
+    "in which folder do I put a repository, a use case or a model of a mobile project"
+   ]
+  },
+  {
+   "id": "platform:mobile",
+   "type": "platform",
+   "title": "The mobile platform of Dragonfly",
+   "summary": "The mobile platform: apps for Android, iOS, desktop and web through one UI toolkit. 25 kinds, 42 decorators, 6 plugins; built by the dialects flutter (default: flutter).",
+   "body": [
+    "A project of the platform is written once in Nuclear and builds with any of its dialects (`flutter`; `flutter` when none is named). Create one: `dragonfly new <name> -p mobile`.",
+    "",
+    "Its kinds:",
+    "",
+    "- `stateless`: A widget without its own state: everything it shows comes from its parameters.",
+    "- `stateful`: A widget with its own state: fields that change and redraw it with `setState`.",
+    "- `appConfig`: The configuration of the whole app (in `config/`): its connections and its global services.",
+    "- `config`: The configuration of one component (in `components/<c>/config/`): connections and services only that component uses, and the color of its logs.",
+    "- `repository`: The http calls of a component (in `data/`).",
+    "- `usecase`: One business operation: a single method `exec` that returns a `Result`.",
+    "- `appcomponent`: The facade of a component: aliases to the `exec` of its use cases.",
+    "- `service`: Helpers of the use cases: mappings, transformations, calculations without state.",
+    "- `aggregate`: A business aggregate: rules of the domain that several use cases share (a cart with its prices, a set of permissions).",
+    "- `statemanager`: The state of a screen.",
+    "- `statemodel`: The states of a screen.",
+    "- `model`: A domain model: only its fields.",
+    "- `converter`: A JSON converter for a model field whose type the JSON does not bring as is (a date, a color).",
+    "- `form`: A form model: the fields of a form and their rules.",
+    "- `formmanager`: The state of a form: values, errors and remote validations (`FormManager<F>`).",
+    "- `component`: A global component (in `shared/components/`): a cross-cutting use case any declaration can use.",
+    "- `guard`: A custom access check.",
+    "- `event`: A global event: a typed message.",
+    "- `tests`: A group of tests (in `test/`, no header word needed): unit, state and widget tests, with mocks from mocktail.",
+    "- `integration`: Integration tests (in `integration_test/`): the real app on a device or emulator.",
+    "- `tools`: Genkit tools (plugin `genkit`): each method with a doc comment is a tool the model can call; the doc comment is the description it reads and the parameters…",
+    "- `flow`: A Genkit flow (plugin `genkit`): one AI operation with a typed input and output (`run(input: I) O`), registered in Genkit (traces, Developer UI).",
+    "- `chat`: A conversation with a model (plugin `genkit`): its `prompt`, its `model` (connection name) and the tools of its constructor parameters.",
+    "- `remote`: Flows of a Genkit server (plugin `genkit`), called like a repository calls an API: `@remote(\"https://server\")` on the kind, `@flow(\"path\")` on a method that…",
+    "- `knowledge`: A knowledge base (plugin `genkit`): texts searched by meaning with the embedder of a provider (`embedder = \"...\"`).",
+    "",
+    "Its plugins: `genkit`, `firebaseAI`, `googleAI`, `vertexAI`, `openAI`, `anthropic`."
+   ],
+   "keys": [
+    "mobile",
+    "mobile platform"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "has",
+     "to": "kind:mobile.stateless"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.stateful"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.appConfig"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.config"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.repository"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.usecase"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.appcomponent"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.service"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.aggregate"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.statemanager"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.statemodel"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.model"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.converter"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.form"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.formmanager"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.component"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.guard"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.event"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.tests"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.integration"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.tools"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.flow"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.chat"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.remote"
+    },
+    {
+     "rel": "has",
+     "to": "kind:mobile.knowledge"
+    },
+    {
+     "rel": "has",
+     "to": "layout:mobile"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml"
+   ],
+   "meta": {
+    "name": "mobile"
+   }
+  },
+  {
+   "id": "plugin:mobile.anthropic",
+   "type": "plugin",
+   "title": "`anthropic` — a plugin of the mobile platform",
+   "summary": "Anthropic's Claude models (ANTHROPIC_API_KEY): Anthropic(model = \"claude-sonnet-4-5\")",
+   "body": [
+    "Anthropic's Claude models (ANTHROPIC_API_KEY): Anthropic(model = \"claude-sonnet-4-5\")",
+    "",
+    "It enables: `genkit`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(anthropic = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "anthropic",
+    "plugin anthropic"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/dialect.toml"
+   ],
+   "meta": {
+    "name": "anthropic"
+   }
+  },
+  {
+   "id": "plugin:mobile.firebaseAI",
+   "type": "plugin",
+   "title": "`firebaseAI` — a plugin of the mobile platform",
+   "summary": "Gemini through Firebase AI Logic (App Check, no API key in the app): FirebaseAI(model = \"gemini-flash-latest\"); the app needs Firebase configured (flutterfire configure)",
+   "body": [
+    "Gemini through Firebase AI Logic (App Check, no API key in the app): FirebaseAI(model = \"gemini-flash-latest\"); the app needs Firebase configured (flutterfire configure)",
+    "",
+    "It enables: `genkit`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(firebaseAI = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "firebaseai",
+    "plugin firebaseai"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/dialect.toml"
+   ],
+   "meta": {
+    "name": "firebaseAI"
+   }
+  },
+  {
+   "id": "plugin:mobile.genkit",
+   "type": "plugin",
+   "title": "`genkit` — a plugin of the mobile platform",
+   "summary": "Genkit Dart in the app: the tools, flow, chat, remote and knowledge kinds (add a provider: googleAI, firebaseAI, vertexAI, openAI, anthropic)",
+   "body": [
+    "Genkit Dart in the app: the tools, flow, chat, remote and knowledge kinds (add a provider: googleAI, firebaseAI, vertexAI, openAI, anthropic)",
+    "",
+    "Kinds it brings: `tools`, `flow`, `chat`, `remote`, `knowledge`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(genkit = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "genkit",
+    "plugin genkit"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/dialect.toml"
+   ],
+   "meta": {
+    "name": "genkit"
+   }
+  },
+  {
+   "id": "plugin:mobile.googleAI",
+   "type": "plugin",
+   "title": "`googleAI` — a plugin of the mobile platform",
+   "summary": "Gemini with an API key (GEMINI_API_KEY): GoogleAI(model = \"gemini-flash-latest\", embedder = \"text-embedding-004\")",
+   "body": [
+    "Gemini with an API key (GEMINI_API_KEY): GoogleAI(model = \"gemini-flash-latest\", embedder = \"text-embedding-004\")",
+    "",
+    "It enables: `genkit`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(googleAI = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "googleai",
+    "plugin googleai"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/dialect.toml"
+   ],
+   "meta": {
+    "name": "googleAI"
+   }
+  },
+  {
+   "id": "plugin:mobile.openAI",
+   "type": "plugin",
+   "title": "`openAI` — a plugin of the mobile platform",
+   "summary": "OpenAI, or an OpenAI-compatible server such as a local Ollama: OpenAI(model = \"gpt-4o-mini\"), OpenAI(model = \"qwen3.5:4b\", baseUrl = \"http://localhost:11434/v1\", apiKey = \"ollama\")",
+   "body": [
+    "OpenAI, or an OpenAI-compatible server such as a local Ollama: OpenAI(model = \"gpt-4o-mini\"), OpenAI(model = \"qwen3.5:4b\", baseUrl = \"http://localhost:11434/v1\", apiKey = \"ollama\")",
+    "",
+    "It enables: `genkit`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(openAI = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "openai",
+    "plugin openai"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/dialect.toml"
+   ],
+   "meta": {
+    "name": "openAI"
+   }
+  },
+  {
+   "id": "plugin:mobile.vertexAI",
+   "type": "plugin",
+   "title": "`vertexAI` — a plugin of the mobile platform",
+   "summary": "Vertex AI on Google Cloud: VertexAI(model = \"gemini-flash-latest\", projectId = \"...\", location = \"us-central1\")",
+   "body": [
+    "Vertex AI on Google Cloud: VertexAI(model = \"gemini-flash-latest\", projectId = \"...\", location = \"us-central1\")",
+    "",
+    "It enables: `genkit`.",
+    "",
+    "Enable it in `config.nuc`: `plugins(vertexAI = true)`. A kind or a name of a plugin that is not enabled is `N0304`, which says the line to add."
+   ],
+   "keys": [
+    "vertexai",
+    "plugin vertexai"
+   ],
+   "platforms": [
+    "mobile"
+   ],
+   "links": [
+    {
+     "rel": "missing-is",
+     "to": "error:N0304"
+    }
+   ],
+   "sources": [
+    "dragonfly-mobile/dialects/mobile/platform.toml",
+    "dragonfly-mobile/dialects/mobile/flutter/dialect.toml"
+   ],
+   "meta": {
+    "name": "vertexAI"
+   }
+  }
+ ]
+}

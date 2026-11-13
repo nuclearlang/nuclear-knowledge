@@ -1,0 +1,218 @@
+{
+ "shelf": "tools",
+ "origin": "generated",
+ "generator": "agents",
+ "about": "The local agents of the Nuclear Developer, from their sources.",
+ "rows": [
+  {
+   "id": "agent:analyst",
+   "type": "agent",
+   "title": "Analyst — a local agent of the Nuclear Developer",
+   "summary": "The analyst: before anything is generated or planned, says which kind of request a spec is and what the strategy of that kind asks of the run (ADR-0105).",
+   "body": [
+    "The analyst: before anything is generated or planned, says which kind of request a spec is and what the strategy of that kind asks of the run (ADR-0105). Tools decide, in a fixed order: the project's files say which names of the request the project has; the graph's strategy rows say which kind of request it is, by its exact signs first; the strategy says which stages run, where the pieces come from and which facts it cannot start without. A model is asked for one thing only, the resources a request in plain words describes, and the generator's dry run accepts or refuses each. Prompt: agents/analyze.md.",
+    "",
+    "Its steps, always in this order: read → classify → derive.",
+    "",
+    "Its model: `gemma4:e2b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "analyst",
+    "analyst agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/analyst.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Analyst"
+   }
+  },
+  {
+   "id": "agent:assistant",
+   "type": "agent",
+   "title": "Assistant — a local agent of the Nuclear Developer",
+   "summary": "The assistant: answers a message of the chat about the project or about NuclearLang, with the cards of the graph closest to the question (every shelf: what it is, how it is done, what can and cannot be done), the project's map and the last messages of the session.",
+   "body": [
+    "The assistant: answers a message of the chat about the project or about NuclearLang, with the cards of the graph closest to the question (every shelf: what it is, how it is done, what can and cannot be done), the project's map and the last messages of the session. It explains and proposes Nuclear; it changes no file (an order to change the project is a Loop run). Prompt: agents/chat.md.",
+    "",
+    "Its steps, always in this order: recall → answer.",
+    "",
+    "Its model: `gemma4:e2b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "assistant",
+    "assistant agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/assistant.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Assistant"
+   }
+  },
+  {
+   "id": "agent:coder",
+   "type": "agent",
+   "title": "Coder — a local agent of the Nuclear Developer",
+   "summary": "The coder: writes one .nuc file from a precise task, with the card of the kind it writes, the mistakes to avoid with that kind and validated examples of it (all from the graph), and repairs it with the card of each error the compiler reports until `nuclear check` reports none.",
+   "body": [
+    "The coder: writes one .nuc file from a precise task, with the card of the kind it writes, the mistakes to avoid with that kind and validated examples of it (all from the graph), and repairs it with the card of each error the compiler reports until `nuclear check` reports none. Prompts: agents/piece.md, agents/repair.md.",
+    "",
+    "Its steps, always in this order: recall → write.",
+    "",
+    "Its model: `qwen2.5-coder:3b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "coder",
+    "coder agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/coder.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Coder"
+   }
+  },
+  {
+   "id": "agent:diagnoser",
+   "type": "agent",
+   "title": "Diagnoser — a local agent of the Nuclear Developer",
+   "summary": "The diagnoser: tells why a step of the pipeline failed and what to do next.",
+   "body": [
+    "The diagnoser: tells why a step of the pipeline failed and what to do next. The kind of failure comes from fixed rules (a small model guesses it badly), the evidence from the tools (the compiler for code, `dragonfly doctor` for the environment), and the local model explains it in plain words. It changes nothing. Prompt: agents/diagnose.md.",
+    "",
+    "Its steps, always in this order: gather → explain.",
+    "",
+    "Its model: `gemma4:e2b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "diagnoser",
+    "diagnoser agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Diagnoser"
+   }
+  },
+  {
+   "id": "agent:documenter",
+   "type": "agent",
+   "title": "Documenter — a local agent of the Nuclear Developer",
+   "summary": "The documenter: reads the journal of a run (what every agent did, step by step) and writes what was done in plain English for the person or the frontier model that reviews it.",
+   "body": [
+    "The documenter: reads the journal of a run (what every agent did, step by step) and writes what was done in plain English for the person or the frontier model that reviews it. It documents; it does not change the code. Prompt: agents/document.md (over the `docs` guide).",
+    "",
+    "Its steps, always in this order: recall → write.",
+    "",
+    "Its model: `gemma4:e2b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "documenter",
+    "documenter agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/documenter.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Documenter"
+   }
+  },
+  {
+   "id": "agent:planner",
+   "type": "agent",
+   "title": "Planner — a local agent of the Nuclear Developer",
+   "summary": "The planner: splits a spec into pieces of one file each, in the order they can be written (the local plan when no frontier model leads the work).",
+   "body": [
+    "The planner: splits a spec into pieces of one file each, in the order they can be written (the local plan when no frontier model leads the work). The model names each piece's kind, declaration, component and screen; its path comes from the platform's layout (`nuclear help layout`), so a small model never guesses a folder. Prompts: agents/plan.md, agents/plan-again.md.",
+    "",
+    "Its steps, always in this order: recall → split.",
+    "",
+    "Its model: `gemma4:e2b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "planner",
+    "planner agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/planner.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Planner"
+   }
+  },
+  {
+   "id": "agent:security",
+   "type": "agent",
+   "title": "Security — a local agent of the Nuclear Developer",
+   "summary": "The security reviewer: the compiler's check plus a review guided by the graph's security rules.",
+   "body": [
+    "The security reviewer: the compiler's check plus a review guided by the graph's security rules. It reports; it does not change the code. Prompt: agents/security.md.",
+    "",
+    "Its steps, always in this order: recall → review.",
+    "",
+    "Its model: `gemma4:e2b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "security",
+    "security agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/security.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Security"
+   }
+  },
+  {
+   "id": "agent:tester",
+   "type": "agent",
+   "title": "Tester — a local agent of the Nuclear Developer",
+   "summary": "The tester: writes the Nuclear tests (`tests` kind) of a piece of code, checked like any other file.",
+   "body": [
+    "The tester: writes the Nuclear tests (`tests` kind) of a piece of code, checked like any other file. Prompts: agents/test.md (over the `test` guide), agents/piece.md, agents/repair.md.",
+    "",
+    "Its steps, always in this order: recall → write.",
+    "",
+    "Its model: `qwen2.5-coder:3b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "tester",
+    "tester agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/tester.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Tester"
+   }
+  },
+  {
+   "id": "agent:workbench",
+   "type": "agent",
+   "title": "Workbench — a local agent of the Nuclear Developer",
+   "summary": "What every local agent shares: the Nuclear Smart Graph, the NuclearLang tools and the models.",
+   "body": "What every local agent shares: the Nuclear Smart Graph, the NuclearLang tools and the models. No method has a doc comment, so none is offered to a model as a tool: the graphs call them in a fixed order, because a small model follows steps better than it chooses tools.  The prompts are files of the graph (`nuclear-graph/src/nuclear_graph/prompts/agents/<name>.md`), read with `prompt(name, values)`: nothing a model reads is written inside this code.",
+   "keys": [
+    "workbench",
+    "workbench agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/workbench.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Workbench"
+   }
+  }
+ ]
+}

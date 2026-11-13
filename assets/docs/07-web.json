@@ -1,0 +1,631 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "07-web",
+ "about": "The web platform: its repository and context, and the website",
+ "rows": [
+  {
+   "id": "doc:dragonfly-web/AGENTS.md#agents-md-dragonfly-web",
+   "type": "readme",
+   "title": "AGENTS.md — dragonfly-web",
+   "summary": "The web platform of Dragonfly: single-page apps written in Nuclear with the same words as the mobile platform.",
+   "body": [
+    "The web platform of Dragonfly: single-page apps written in Nuclear with the same words as the mobile platform. Its dialect `react` (React 19, React Router, Vite, Vitest) and its TypeScript runtime `dragonfly-web`.",
+    "",
+    "This repository is a folder of the NuclearLang working tree (`nuclear/dragonfly-web`); the platform's rules are the",
+    "working tree's `../AGENTS.md` ([nuclear](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md)) and its state is `../STATUS.md`.",
+    "",
+    "- Context of this repository: [docs/context/dragonfly-web/CONTEXT.md](docs/context/dragonfly-web/CONTEXT.md).",
+    "- What is inside: `dialects/web/` (the platform contract and `react`), `packages/dragonfly-web` (the runtime), `defs/typescript/` (React and its tools), `spec/{web,react}.md`, `examples/`, `tools/react-check`, `docs/`.",
+    "- Checks:",
+    "",
+    "```sh",
+    "(cd .. && cargo test)                 # the example, the golden",
+    "sh tools/react-check/check.sh         # tsc --strict, the tests, vite build",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/AGENTS.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to dragonfly-web are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to dragonfly-web are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/CHANGELOG.md#unreleased",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- `[[generators]]` in the platform: `dragonfly gen` writes a resource's models, repository, use cases, view with its state manager and tests (ADR-0103).",
+    "- `[[generators.usecase]]`: `dragonfly gen usecase` adds a use case's alias to its component's facade and, with `--calls`, writes a use case over a repository method (ADR-0103).",
+    "- `[[generators.resource]]`: the repository is merged (`merge = true`), so an action added to a resource that exists gets the members it lacks (ADR-0105)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/CONTRIBUTING.md#before-a-pull-request",
+   "type": "readme",
+   "title": "Contributing to dragonfly-web — Before a pull request",
+   "summary": "(cd .. && cargo test) # the example, the golden sh tools/react-check/check.sh # tsc --strict, the tests, vite build the area, the guide, `docs/context/` for agents and contributors).",
+   "body": [
+    "```sh",
+    "(cd .. && cargo test)                 # the example, the golden",
+    "sh tools/react-check/check.sh         # tsc --strict, the tests, vite build",
+    "```",
+    "",
+    "- Everything is written in English: code, comments, docs and messages.",
+    "- A change that the user of NuclearLang can see updates its documentation in the same pull request (the spec of",
+    "  the area, the guide, `docs/context/` for agents and contributors).",
+    "- Rules and the reasons behind them: the [nuclear repository's AGENTS.md](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md) and its",
+    "  [decision records](https://github.com/nuclearlang/nuclear/tree/main/docs/adr).",
+    "",
+    "By contributing you agree that your contribution is licensed under the [Apache License 2.0](LICENSE)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/CONTRIBUTING.md#contributing-to-dragonfly-web",
+   "type": "readme",
+   "title": "Contributing to dragonfly-web",
+   "summary": "Thank you for helping.",
+   "body": [
+    "Thank you for helping. This repository is part of [NuclearLang](https://github.com/nuclearlang): the language is the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository, and the other repositories live as folders inside a clone of it, each with its",
+    "own git (the tools find each other that way)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/CONTRIBUTING.md#set-up",
+   "type": "readme",
+   "title": "Contributing to dragonfly-web — Set up",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear git clone https://github.com/nuclearlang/dragonfly-web ./install.sh",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "git clone https://github.com/nuclearlang/dragonfly-web",
+    "./install.sh",
+    "```"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/README.md#dragonfly-web",
+   "type": "readme",
+   "title": "Dragonfly web",
+   "summary": "The web platform of Dragonfly: single-page apps written in Nuclear with the same words as the mobile platform.",
+   "body": [
+    "The web platform of Dragonfly: single-page apps written in Nuclear with the same words as the mobile platform. Its dialect `react` (React 19, React Router, Vite, Vitest) and its TypeScript runtime `dragonfly-web`.",
+    "",
+    "Start with the guide [docs/dragonfly/react.md](docs/dragonfly/react.md) and [spec/web.md](spec/web.md)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/README.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/README.md#what-is-inside",
+   "type": "readme",
+   "title": "Dragonfly web — What is inside",
+   "summary": "`dialects/web/` (the platform contract and `react`), `packages/dragonfly-web` (the runtime), `defs/typescript/` (React and its tools), `spec/{web,react}.md`, `examples/`, `tools/react-check`, `docs/`.",
+   "body": "`dialects/web/` (the platform contract and `react`), `packages/dragonfly-web` (the runtime), `defs/typescript/` (React and its tools), `spec/{web,react}.md`, `examples/`, `tools/react-check`, `docs/`.",
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/README.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/README.md#working-on-it",
+   "type": "readme",
+   "title": "Dragonfly web — Working on it",
+   "summary": "It is built by the `nuclear` compiler and the `dragonfly` CLI, so it lives inside a clone of the nuclear repository: git clone https://github.com/nuclearlang/nuclear && cd nuclear git clone https://github.com/nuclearlang/dragonfly-web ./install.sh The checks before a change: CONTRIBUTING.md.",
+   "body": [
+    "It is built by the `nuclear` compiler and the `dragonfly` CLI, so it lives inside a clone of the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository:",
+    "",
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "git clone https://github.com/nuclearlang/dragonfly-web",
+    "./install.sh",
+    "```",
+    "",
+    "The checks before a change: [CONTRIBUTING.md](CONTRIBUTING.md)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/README.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/context/dragonfly-web/CONTEXT.md#checks",
+   "type": "context",
+   "title": "Dragonfly for web — the platform and its dialect `react` — Checks",
+   "summary": "(cd packages/dragonfly-web && npm install && npx tsc -p tsconfig.json && npx vitest run) (cd tools/node && npm install && npm install --no-save --install-links ../../packages/dragonfly-web) tools/react-check/check.sh tools/spec-check/check.py spec/react.md react typescript State and pending:…",
+   "body": [
+    "```sh",
+    "(cd packages/dragonfly-web && npm install && npx tsc -p tsconfig.json && npx vitest run)",
+    "(cd tools/node && npm install && npm install --no-save --install-links ../../packages/dragonfly-web)",
+    "tools/react-check/check.sh",
+    "tools/spec-check/check.py spec/react.md react typescript",
+    "```",
+    "",
+    "State and pending: [STATUS.md](https://github.com/nuclearlang/nuclear/blob/main/STATUS.md)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/docs/context/dragonfly-web/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/context/dragonfly-web/CONTEXT.md#dialect-react.2c2aed",
+   "type": "context",
+   "title": "Dragonfly for web — the platform and its dialect `react` — Dialect `react`",
+   "summary": "Dialect `react`",
+   "body": [
+    "| Path | What it does |",
+    "|---|---|",
+    "| `dialects/web/react/dialect.toml` | kinds, decorators, `[architecture]`, `[project]` (`output = \"build/app\"`, `assets = [\"public\"]`), `[toolchain]`, `[call_site.Log]`, defs list, auto_imports of the runtime |",
+    "| `dialects/web/react/templates/` | kind templates; `dragonfly_g.tpl` → `src/dragonfly.g.ts` (startDragonfly, dragonflyConfig, registerModels, registerDragonfly, routes, appRouter); `index_ts.tpl`, `index_html.tpl`, `package_json.tpl`, `tsconfig.tpl`, `vite_config.tpl` |",
+    "| `dialects/web/react/docs.toml` | editor docs of every kind and decorator (required by a test) |",
+    "| `packages/dragonfly-web/src/` | runtime: `result`, `errors`, `inject`, `config`, `app`, `http` (Repository, Decode, Cache), `state`, `react` (views, Providers, hooks), `html`, `events`, `session` (SessionManager, Acl, Guards, NetworkManager), `router`, `log`, `testing` (entry `dragonfly-web/testing`) |",
+    "| `packages/dragonfly-web/test/runtime.test.ts` | 7 vitest tests (repository, cache, mocks, states, views, events) |",
+    "| `examples/examples-web/characters/` | the complete example (golden `examples/expected/characters`): list and detail screens, state, tests |",
+    "| `tools/react-check/check.sh` | runtime tsc, example built, tsc --strict, vitest (4 tests), vite build, runtime tests |"
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/docs/context/dragonfly-web/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/context/dragonfly-web/CONTEXT.md#dialect-react.47860e",
+   "type": "context",
+   "title": "Dragonfly for web — the platform and its dialect `react` — Dialect `react`",
+   "summary": "`dialects/web/react/` (extends `typescript`): React 19 without JSX, React Router 7, Vite 7, Vitest 4 + jsdom + Testing Library.",
+   "body": [
+    "`dialects/web/react/` (extends `typescript`): React 19 without JSX, React Router 7, Vite 7, Vitest 4 + jsdom +",
+    "Testing Library. Views are classes (`StatelessView` / `StatefulView`) shown through `createElement`",
+    "(`statelessOf` / `statefulOf`), so hooks work in `build` and a stateful keeps its fields; a state model generates",
+    "`<Model>Builder`; `@screen(providers)` wraps the screen in `Providers` and `this.manager(X)` reads a provided manager",
+    "(`[decorators.provide]`). Two generic emitter rules came with it: `[kinds.<k>.syntax] construct` (a call to a",
+    "declaration of that kind, here a function call instead of `new`) and named arguments to a `named_params` kind kept",
+    "as one object in a dialect with `named_args = \"object\"`."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/docs/context/dragonfly-web/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/context/dragonfly-web/CONTEXT.md#dialect-react.8258c5",
+   "type": "context",
+   "title": "Dragonfly for web — the platform and its dialect `react` — Dialect `react`",
+   "summary": "Type definitions `defs/typescript/{react@19.3.1, react_router@7.18.5, vitest@4.1.12, testing_library_react@16.3.3, dragonfly-web@0.1.0}`: generated with `tools/defs/typescript/gen.js` from `tools/node/node_modules` (react and the test libraries are installed there; the runtime with `npm install…",
+   "body": [
+    "| `spec/web.md`, `spec/react.md` | the platform; the dialect (3 equivalences checked by `tools/spec-check/check.py spec/react.md react typescript`) |",
+    "| `spec/brief/react.md` | the short sheet for agents (`nuclear spec --brief --dialect react`; the code compiles with the dialect) |",
+    "| `docs/dragonfly/react.md` | the user guide (website) |",
+    "",
+    "Type definitions `defs/typescript/{react@19.3.1, react_router@7.18.5, vitest@4.1.12, testing_library_react@16.3.3,",
+    "dragonfly-web@0.1.0}`: generated with `tools/defs/typescript/gen.js` from `tools/node/node_modules` (react and the",
+    "test libraries are installed there; the runtime with `npm install --no-save --install-links",
+    "../../packages/dragonfly-web` after `npm run build` in its folder). Regenerate `dragonfly-web`'s after changing its",
+    "public API (the command is in `tools/defs/typescript/generate.sh`'s style; the five lines are in the Log of",
+    "2026-11-06 in STATUS.md)."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/docs/context/dragonfly-web/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/context/dragonfly-web/CONTEXT.md#dragonfly-for-web-the-platform-and-its-dialect-react",
+   "type": "context",
+   "title": "Dragonfly for web — the platform and its dialect `react`",
+   "summary": "Future repository `dragonfly-web` (ADR-0093).",
+   "body": [
+    "Future repository `dragonfly-web` (ADR-0093). Decisions: ADR-0097 (the web platform is the mobile platform in a",
+    "browser; first dialect `react`; the analysis of zustand / TanStack Query / react-hook-form for later steps).",
+    "",
+    "**The platform** (`spec/web.md`, Nuclear only): the mobile kinds that make sense in a browser, with the same words:",
+    "views (`stateless`, `stateful` with `build() Element`), `appConfig`/`config`, `repository` (http), `usecase`,",
+    "`appcomponent`, `service`, `aggregate`, state models + `statemanager`, `@screen`, `event` + `component` with `@on`,",
+    "`guard`, `tests`. Contract: `dialects/web/platform.toml`. Not yet: forms, converters, translations, local database,",
+    "plugins, AI."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/docs/context/dragonfly-web/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-web/docs/context/dragonfly-web/CONTEXT.md#the-cli",
+   "type": "context",
+   "title": "Dragonfly for web — the platform and its dialect `react` — The CLI",
+   "summary": "`dragonfly new <name> -p web -d react` writes the skeleton (`dragonfly/dragonfly/src/scaffold.rs`, `web_project`); `build`, `install`, `run` and `test` go through the dialect's `[toolchain]` and `check` runs `nuclear check .`, as for backend projects; `dragonfly gen resource` writes a resource's…",
+   "body": [
+    "`dragonfly new <name> -p web -d react` writes the skeleton (`dragonfly/dragonfly/src/scaffold.rs`, `web_project`); `build`,",
+    "`install`, `run` and `test` go through the dialect's `[toolchain]` and `check` runs `nuclear check .`, as for backend",
+    "projects; `dragonfly gen resource` writes a resource's models, repository, use cases, view and tests from the",
+    "`[[generators.*]]` of `dialects/web/platform.toml` (ADR-0103) (`non_mobile_manifest` in `dragonfly/dragonfly/src/main.rs`; [cli CONTEXT](https://github.com/nuclearlang/dragonfly/blob/main/docs/context/cli/CONTEXT.md))."
+   ],
+   "platforms": [
+    "web"
+   ],
+   "sources": [
+    "dragonfly-web/docs/context/dragonfly-web/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "dragonfly-web",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/AGENTS.md#nuclearlang",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang",
+   "summary": "This project is written in NuclearLang (`.nuc`), dialect `react`.",
+   "body": [
+    "This project is written in NuclearLang (`.nuc`), dialect `react`. Its syntax is not TypeScript, Dart nor Python.",
+    "",
+    "- Before writing code, read the sheet: `nuclear spec --brief --dialect react`.",
+    "- After each change: `nuclear check <file>.nuc --dialect react --json` must report no errors; fix exactly what each error says (most carry a `fix`).",
+    "- Look up instead of guessing: an API `nuclear defs show <Name> --dialect react`; a kind or decorator",
+    "  `nuclear help <word> --dialect react` (all: `nuclear help words --dialect react`); a topic `nuclear help <topic>`.",
+    "- Never edit generated code (`build/` and the `.ts`/`.dart`/`.py` built from the `.nuc`): change the `.nuc` files.",
+    "<!-- /nuclearlang -->"
+   ],
+   "sources": [
+    "website/AGENTS.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to the website are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to the website are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "sources": [
+    "website/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/CHANGELOG.md#unreleased",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- Deploy to GitHub Pages (`nuclearlang.github.io`) from CI, with the SPA `404.html` fallback.",
+    "- The AI menu has the MCP server's page (`docs/ai/mcp`); the Dragonfly menu gets the generators' guide by its pattern.",
+    "- The AI menu starts with the set-up of the AI services (`docs/ai/setup`)."
+   ],
+   "sources": [
+    "website/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/CONTRIBUTING.md#before-a-pull-request",
+   "type": "readme",
+   "title": "Contributing to website — Before a pull request",
+   "summary": "(cd tools && npm install) && node tools/content.mjs dragonfly build && dragonfly install && dragonfly test (cd build/app && npx vite build) the area, the guide, `docs/context/` for agents and contributors).",
+   "body": [
+    "```sh",
+    "(cd tools && npm install) && node tools/content.mjs",
+    "dragonfly build && dragonfly install && dragonfly test",
+    "(cd build/app && npx vite build)",
+    "```",
+    "",
+    "- Everything is written in English: code, comments, docs and messages.",
+    "- A change that the user of NuclearLang can see updates its documentation in the same pull request (the spec of",
+    "  the area, the guide, `docs/context/` for agents and contributors).",
+    "- Rules and the reasons behind them: the [nuclear repository's AGENTS.md](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md) and its",
+    "  [decision records](https://github.com/nuclearlang/nuclear/tree/main/docs/adr).",
+    "",
+    "By contributing you agree that your contribution is licensed under the [Apache License 2.0](LICENSE)."
+   ],
+   "sources": [
+    "website/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/CONTRIBUTING.md#contributing-to-website",
+   "type": "readme",
+   "title": "Contributing to website",
+   "summary": "Thank you for helping.",
+   "body": [
+    "Thank you for helping. This repository is part of [NuclearLang](https://github.com/nuclearlang): the language is the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository, and the other repositories live as folders inside a clone of it, each with its",
+    "own git (the tools find each other that way)."
+   ],
+   "sources": [
+    "website/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/CONTRIBUTING.md#set-up",
+   "type": "readme",
+   "title": "Contributing to website — Set up",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear for r in dragonfly dragonfly-mobile dragonfly-backend dragonfly-web nuclear-vscode; do git clone https://github.com/nuclearlang/$r; done ./install.sh && cd .. git clone https://github.com/nuclearlang/website && cd website export…",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "for r in dragonfly dragonfly-mobile dragonfly-backend dragonfly-web nuclear-vscode; do git clone https://github.com/nuclearlang/$r; done",
+    "./install.sh && cd ..",
+    "git clone https://github.com/nuclearlang/website && cd website",
+    "export NUCLEAR_TREE=../nuclear                     # the working tree (site.toml's [source] tree is the author's)",
+    "```"
+   ],
+   "sources": [
+    "website/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/README.md#build",
+   "type": "readme",
+   "title": "NuclearLang website — Build",
+   "summary": "(cd tools && npm install) # markdown-it, shiki and smol-toml, once node tools/content.mjs # the content, from the tree site.toml names ([source] tree; NUCLEAR_TREE overrides it) dragonfly build # the app into build/app (public/ copied) dragonfly install # npm install in build/app dragonfly test #…",
+   "body": [
+    "```sh",
+    "(cd tools && npm install)        # markdown-it, shiki and smol-toml, once",
+    "node tools/content.mjs           # the content, from the tree site.toml names ([source] tree; NUCLEAR_TREE overrides it)",
+    "dragonfly build                  # the app into build/app (public/ copied)",
+    "dragonfly install                # npm install in build/app",
+    "dragonfly test                   # vitest: the tests of test/",
+    "dragonfly run                    # vite dev, http://localhost:5173",
+    "(cd build/app && npx vite build) # the published site in build/app/dist",
+    "```",
+    "",
+    "`tools/content.mjs` renders every page's markdown with the code already highlighted (shiki, with the Nuclear grammar",
+    "of the editors and their Chernobyl theme), so the browser receives HTML and never parses markdown. The home page's",
+    "sample is transpiled to TypeScript, Dart and Python by the installed `nuclear` when the site is built. For search",
+    "engines and agents that read without JavaScript, every page also has a plain HTML copy in `/static/` (and the",
+    "sitemap, `llms.txt`, `llms-full.txt`).",
+    "",
+    "The addresses are the paths of the repositories' files: `/docs/language/01-syntax` is `docs/language/01-syntax.md`.",
+    "A link between pages reloads the page (the content is cached by the browser); navigation by address inside the app is",
+    "a later step of the web platform."
+   ],
+   "sources": [
+    "website/README.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/README.md#nuclearlang-website.6b02a6",
+   "type": "readme",
+   "title": "NuclearLang website",
+   "summary": "config.nuc dragonfly(platform = \"web\", dialect = \"react\"), app(title, description) config/project_config.nuc Http(baseUrl = \"/\"): the site reads its own public/content/ components/docs/ data/content_repository.nuc page, site, search index and home (public/content/*.json) domain/ models, use cases…",
+   "body": [
+    "```",
+    "config.nuc                       dragonfly(platform = \"web\", dialect = \"react\"), app(title, description)",
+    "config/project_config.nuc        Http(baseUrl = \"/\"): the site reads its own public/content/",
+    "components/docs/",
+    "  data/content_repository.nuc    page, site, search index and home (public/content/*.json)",
+    "  domain/                        models, use cases (GetPage, GetSite, GetHome, Search), the search score",
+    "  presentation/                  HomeScreen \"/\", DocScreen \"/:area/:name\", DocGroupScreen \"/:area/:group/:name\",",
+    "                                 NotFoundScreen; the layout (top bar, menu, footer) and the search box",
+    "public/styles.css, favicon.svg   the look: the Chernobyl palette of the editors (dark) and a light theme",
+    "test/docs_test.nuc               the search ranking, the pages and the home page (the repository is a mock)",
+    "site.toml                        every text, menu, link and address: site, top bar, side menu (paths or * patterns),",
+    "                                 home page (actions, features, sample and its targets, platforms, install)",
+    "tools/content.mjs                public/content, public/static, llms.txt, llms-full.txt, sitemap.xml, robots.txt and",
+    "                                 the installers (install.sh, install.ps1 from the tree's tools/release/)",
+    "```"
+   ],
+   "sources": [
+    "website/README.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/README.md#nuclearlang-website.87200b",
+   "type": "readme",
+   "title": "NuclearLang website",
+   "summary": "The NuclearLang site, written in Nuclear with Dragonfly's web platform (dialect `react`): its screens, state managers, search and content repository are `.nuc` files.",
+   "body": [
+    "The NuclearLang site, written in **Nuclear** with Dragonfly's web platform (dialect `react`): its screens, state",
+    "managers, search and content repository are `.nuc` files. The content is the documentation of the `nuclearlang`",
+    "repositories (`docs/`, `spec/` of `nuclear`, `dragonfly-mobile`, `dragonfly-backend`, `dragonfly-web`), turned into",
+    "JSON by a build script; the app only reads it."
+   ],
+   "sources": [
+    "website/README.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:website/docs/context/website/CONTEXT.md#website",
+   "type": "context",
+   "title": "Website",
+   "summary": "Its own repository, `website` (today `~/Documents/projects/nuc/react/nuclearlang_website`; ADR-0083): only the site, written in Nuclear with Dragonfly web (react); the content stays with the code it documents.",
+   "body": [
+    "Its own repository, `website` (today `~/Documents/projects/nuc/react/nuclearlang_website`; ADR-0083): only the site, written in Nuclear with",
+    "Dragonfly web (react); the content stays with the code it documents. Its README has the details.",
+    "",
+    "- `site.toml` holds every text, menu, link and address of the site (ADR-0101); the side menu lists pages by path or",
+    "  `*` pattern of the source tree.",
+    "- `tools/content.mjs` reads the `.md` files of the source roots (`nuclear`, `dragonfly-*`), skipping",
+    "  `[source] internal` (`docs/aprende/`, `docs/context/`), and writes `public/content/` (pages as JSON with shiki",
+    "  highlighting, `site.json`, `home.json`, the search index), `/static/` plain pages, `llms.txt` / `llms-full.txt`",
+    "  (ADR-0088), the sitemap, and copies `tools/release/install.sh` / `install.ps1` to the root.",
+    "- A new dialect or framework feature gets its user guide (a `.md` in its repository) and, if it is a new area, a",
+    "  line in `site.toml`'s sidebar.",
+    "- Language: English (ADR-0082). Deploy (GitHub Pages, SPA fallback) is pending (STATUS.md)."
+   ],
+   "sources": [
+    "website/docs/context/website/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "07-web",
+    "repo": "website",
+    "dialect": ""
+   }
+  }
+ ]
+}

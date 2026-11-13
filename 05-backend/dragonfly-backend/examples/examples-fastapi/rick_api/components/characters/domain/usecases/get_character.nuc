@@ -1,3 +1,0 @@
-usecase GetCharacter(characters: CharacterRepository)
-  exec(id: int) Result<Error, Character>
-    ~characters.find(id)

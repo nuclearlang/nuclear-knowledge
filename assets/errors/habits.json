@@ -1,0 +1,575 @@
+{
+ "shelf": "errors",
+ "origin": "generated",
+ "generator": "habits",
+ "about": "What someone who knows another language writes by reflex, and the Nuclear form (the base brief's table).",
+ "rows": [
+  {
+   "id": "habit:a-contains-x-a-includes-x",
+   "type": "habit",
+   "title": "Not `a.contains(x)` / `a.includes(x)` — in Nuclear: `x in a`",
+   "summary": "In Nuclear write `x in a` instead of `a.contains(x)` / `a.includes(x)`. Also `key in map`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `a.contains(x)` / `a.includes(x)`.",
+    "",
+    "In Nuclear: `x in a`. Also `key in map`.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "contains",
+    "includes"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:and-or-not-x",
+   "type": "habit",
+   "title": "Not `&&` `||` `!x` `===` — in Nuclear: `and` `or` `not x` `==`",
+   "summary": "In Nuclear write `and` `or` `not x` `==` instead of `&&` `||` `!x` `===`. Comparisons are always strict.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `&&` `||` `!x` `===`.",
+    "",
+    "In Nuclear: `and` `or` `not x` `==`. Comparisons are always strict.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:await-load-async",
+   "type": "habit",
+   "title": "Not `await load()`, `async` — in Nuclear: `~load()`",
+   "summary": "In Nuclear write `~load()` instead of `await load()`, `async`. Afunction that uses `~` is async by itself.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `await load()`, `async`.",
+    "",
+    "In Nuclear: `~load()`. A function that uses `~` is async by itself.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "async",
+    "await"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:bitwise",
+   "type": "habit",
+   "title": "Not bitwise `& | ^ ~ << >> >>>` — in Nuclear: `& | ^ ^x << >> >>>`",
+   "summary": "In Nuclear write `& | ^ ^x << >> >>>` instead of bitwise `& | ^ ~ << >> >>>`. `^x` is the complement (`~` is await).",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes bitwise `& | ^ ~ << >> >>>`.",
+    "",
+    "In Nuclear: `& | ^ ^x << >> >>>`. `^x` is the complement (`~` is await).",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:blocks",
+   "type": "habit",
+   "title": "Not `{ ... }` blocks, `;` — in Nuclear: a 2-space indented block, no `;`",
+   "summary": "In Nuclear write a 2-space indented block, no `;` instead of `{ ... }` blocks, `;`. Atab is N0002.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `{ ... }` blocks, `;`.",
+    "",
+    "In Nuclear: a 2-space indented block, no `;`. A tab is N0002.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:class-user-extends-person-implements-named",
+   "type": "habit",
+   "title": "Not `class User extends Person implements Named` — in Nuclear: `User(name: string) : Person > Named` + block",
+   "summary": "In Nuclear write `User(name: string) : Person > Named` + block instead of `class User extends Person implements Named`. The header holds the constructor.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `class User extends Person implements Named`.",
+    "",
+    "In Nuclear: `User(name: string) : Person > Named` + block. The header holds the constructor.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "class",
+    "extends",
+    "implements"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:cond-a-b-statements",
+   "type": "habit",
+   "title": "Not `cond ? a : b` statements — in Nuclear: `if`/`match` are values",
+   "summary": "In Nuclear write `if`/`match` are values instead of `cond ? a : b` statements. `x = if c` + branches.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `cond ? a : b` statements.",
+    "",
+    "In Nuclear: `if`/`match` are values. `x = if c` + branches.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:const-x-1-let-var-final",
+   "type": "habit",
+   "title": "Not `const x = 1`, `let`, `var`, `final` — in Nuclear: `x = 1`",
+   "summary": "In Nuclear write `x = 1` instead of `const x = 1`, `let`, `var`, `final`. Const or mutable is decided by the transpiler.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `const x = 1`, `let`, `var`, `final`.",
+    "",
+    "In Nuclear: `x = 1`. Const or mutable is decided by the transpiler.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "const",
+    "final",
+    "let",
+    "var"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:f-name-ana-f-name",
+   "type": "habit",
+   "title": "Not `f(name: \"Ana\")`, `f({ name })` — in Nuclear: `f(name = \"Ana\")`",
+   "summary": "In Nuclear write `f(name = \"Ana\")` instead of `f(name: \"Ana\")`, `f({ name })`. Named arguments use `=`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `f(name: \"Ana\")`, `f({ name })`.",
+    "",
+    "In Nuclear: `f(name = \"Ana\")`. Named arguments use `=`.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:function-f-a-number-string",
+   "type": "habit",
+   "title": "Not `function f(a: number): string` — in Nuclear: `f(a: int) string`",
+   "summary": "In Nuclear write `f(a: int) string` instead of `function f(a: number): string`. The return type goes after `)`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `function f(a: number): string`.",
+    "",
+    "In Nuclear: `f(a: int) string`. The return type goes after `)`.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "function"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:hi-name",
+   "type": "habit",
+   "title": "Not `` `Hi ${name}` `` — in Nuclear: `\"Hi ${name}\"` (both quotes are the same)",
+   "summary": "In Nuclear write `\"Hi ${name}\"` (both quotes are the same) instead of `` `Hi ${name}` ``. `r\"\\d+\"` = raw text (regex).",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `` `Hi ${name}` ``.",
+    "",
+    "In Nuclear: `\"Hi ${name}\"` (both quotes are the same). `r\"\\d+\"` = raw text (regex).",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:import",
+   "type": "habit",
+   "title": "Not `import` — in Nuclear: nothing: the target's library names are imported automatically; `use path{ a, b }` for others",
+   "summary": "In Nuclear write nothing: the target's library names are imported automatically; `use path{ a, b }` for others instead of `import`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `import`.",
+    "",
+    "In Nuclear: nothing: the target's library names are imported automatically; `use path{ a, b }` for others.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "import"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:interface-enum",
+   "type": "habit",
+   "title": "Not `interface`, `enum` — in Nuclear: the shape decides: only signatures = interface; only names (or `name(\"value\")`) = enum",
+   "summary": "In Nuclear write the shape decides: only signatures = interface; only names (or `name(\"value\")`) = enum instead of `interface`, `enum`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `interface`, `enum`.",
+    "",
+    "In Nuclear: the shape decides: only signatures = interface; only names (or `name(\"value\")`) = enum.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "enum",
+    "interface"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:math-pow-a-b-a-b",
+   "type": "habit",
+   "title": "Not `Math.pow(a, b)`, `a ~/ b` — in Nuclear: `a b`, `a ~/ b` (integer division)",
+   "summary": "In Nuclear write `a b`, `a ~/ b` (integer division) instead of `Math.pow(a, b)`, `a ~/ b`. `-2 2` is -4.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `Math.pow(a, b)`, `a ~/ b`.",
+    "",
+    "In Nuclear: `a ** b`, `a ~/ b` (integer division). `-2 ** 2` is -4.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "pow"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:new-user-ana",
+   "type": "habit",
+   "title": "Not `new User(\"Ana\")` — in Nuclear: `User(\"Ana\")`",
+   "summary": "In Nuclear write `User(\"Ana\")` instead of `new User(\"Ana\")`. No `new`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `new User(\"Ana\")`.",
+    "",
+    "In Nuclear: `User(\"Ana\")`. No `new`.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "new"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:return-x-at-the-end",
+   "type": "habit",
+   "title": "Not `return x` at the end — in Nuclear: the last line is the value",
+   "summary": "In Nuclear write the last line is the value instead of `return x` at the end. `return` only to leave early; `void` returns nothing.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `return x` at the end.",
+    "",
+    "In Nuclear: the last line is the value. `return` only to leave early; `void` returns nothing.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "return"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:switch",
+   "type": "habit",
+   "title": "Not `switch` — in Nuclear: `match value` + `pattern -> value`, `_` = else",
+   "summary": "In Nuclear write `match value` + `pattern -> value`, `_` = else instead of `switch`. `is Type ->`, `a | b ->`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `switch`.",
+    "",
+    "In Nuclear: `match value` + `pattern -> value`, `_` = else. `is Type ->`, `a | b ->`.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "switch"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:this-name",
+   "type": "habit",
+   "title": "Not `this.name` — in Nuclear: `name`; `$name` when a parameter hides it",
+   "summary": "In Nuclear write `name`; `$name` when a parameter hides it instead of `this.name`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `this.name`.",
+    "",
+    "In Nuclear: `name`; `$name` when a parameter hides it.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "this"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:try-catch-e",
+   "type": "habit",
+   "title": "Not `try/catch (e)` — in Nuclear: `try` / `catch e` / `finally`",
+   "summary": "In Nuclear write `try` / `catch e` / `finally` instead of `try/catch (e)`. As the last line, its value is returned.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `try/catch (e)`.",
+    "",
+    "In Nuclear: `try` / `catch e` / `finally`. As the last line, its value is returned.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "keys": [
+    "try"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  },
+  {
+   "id": "habit:x-x-y-x-y",
+   "type": "habit",
+   "title": "Not `x!`, `x?.y`, `x ?? y` — in Nuclear: the same",
+   "summary": "In Nuclear write the same instead of `x!`, `x?.y`, `x ?? y`.",
+   "body": [
+    "Someone who knows TypeScript, Dart or Python writes `x!`, `x?.y`, `x ?? y`.",
+    "",
+    "In Nuclear: the same.",
+    "",
+    "When the compiler sees the habit it reports `N0022` with the Nuclear form, and `nuclear fix` applies the exact ones."
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "habit",
+    "code": "N0022"
+   }
+  }
+ ]
+}

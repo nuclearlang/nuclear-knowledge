@@ -1,7 +1,0 @@
-// session.destroy deletes the session from the device, clears the cache and publishes SessionEnded.
-usecase LogoutUseCase
-  (session: SessionManager)
-
-  exec() Result<AuthError, boolean>
-    ~session.destroy()
-    Ok(true)

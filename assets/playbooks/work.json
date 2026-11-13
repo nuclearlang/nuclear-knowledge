@@ -1,0 +1,832 @@
+{
+ "shelf": "playbooks",
+ "origin": "curated",
+ "about": "The procedures of the work around a feature: tests, errors, bugs, refactors, security, documentation, the database, deploy, working under a lead, and keeping this knowledge base current.",
+ "rows": [
+  {
+   "id": "playbook:write-tests",
+   "type": "playbook",
+   "title": "Playbook: write the tests (first)",
+   "summary": "One file `tests Name` in `test/`, one `@test` per acceptance criterion: the normal case, the edge cases and each error. Use only the names the task gives; create the rows a test reads before reading them; await once and keep the result.",
+   "body": [
+    "1. From the acceptance criteria, list what to check: the normal case, the empty or missing case, each error (`404`, `409`, `422`).",
+    "2. Write `test/<component>_test.nuc`:",
+    "",
+    "```nuclear",
+    "// The tests of authors.",
+    "tests Authors",
+    "  @test(\"adds an author and finds it by name\")",
+    "  addsAndFinds() void",
+    "    authors = inject<AuthorsAppComponent>()",
+    "    made = ~authors.add(NewAuthor(name = \"Ursula\"))",
+    "    expect(made.isOk)",
+    "    found = ~authors.byName(\"Ursula\")",
+    "    expect(found.value.name == \"Ursula\")",
+    "",
+    "  @test(\"a missing author is not found\")",
+    "  missing() void",
+    "    authors = inject<AuthorsAppComponent>()",
+    "    found = ~authors.byName(\"nobody\")",
+    "    expect(found.error.status == 404)",
+    "```",
+    "",
+    "3. Rules:",
+    "   - a test method returns `void`; `inject<X>()` gives an instance; `~` awaits; `expect(condition)` checks;",
+    "   - a `Result` is kept and read: `isOk`, `value`, `error` (`error.status`);",
+    "   - backend databases start **empty** in every test: first create the rows (through the code that adds them, or `~repository.save(Entity(...))`);",
+    "   - never `inject<X>()` a class the task does not name; when only models are declared, build them and check their fields;",
+    "   - mobile and web: `@mock([Repository])` on the group and `when(...).thenReturn(Ok(x))`;",
+    "   - an agent's model in a test: `FakeModel([\"answer\"])`.",
+    "4. `nuclear check .` (the tests compile with the code); `dragonfly test`.",
+    "5. A test that fails because the code is wrong is reported, never deleted or weakened."
+   ],
+   "keys": [
+    "write tests",
+    "tests first",
+    "unit test",
+    "pruebas"
+   ],
+   "asks": [
+    "how do I write tests",
+    "how do I test my use case",
+    "what should a test check",
+    "como escribo pruebas"
+   ],
+   "links": [
+    {
+     "rel": "kind",
+     "to": "kind:backend.tests"
+    },
+    {
+     "rel": "decorator",
+     "to": "decorator:backend.test"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.test"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:test-reads-an-empty-database"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:test-injects-an-unknown-class"
+    },
+    {
+     "rel": "agent",
+     "to": "agent:tester"
+    },
+    {
+     "rel": "role",
+     "to": "role:tester"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+   ],
+   "meta": {
+    "use_case": "test",
+    "role": "tester"
+   }
+  },
+  {
+   "id": "playbook:fix-compiler-errors",
+   "type": "playbook",
+   "title": "Playbook: fix the compiler's errors",
+   "summary": "`nuclear check --json`, then `nuclear fix` applies every exact fix; for what is left, read each error's message and its card (`error:<code>`), fix exactly what it says at its line, and check again. The first error of a file often causes the others.",
+   "body": [
+    "1. `nuclear check <file|folder> --json` (a piece: `--platform <p>`). Each error has `code`, `line`, `col`, `message` and often `fix`.",
+    "2. `nuclear fix <file|folder>`: applies the exact fixes (a habit of another language, a library name, a missing `~`).",
+    "3. For each error left, top to bottom:",
+    "   - read its message: it usually names the right word;",
+    "   - fetch its card: `nuclear-graph card error:<code>` (the cause, an example, the fix, the errors it comes with);",
+    "   - change only that line or declaration.",
+    "4. Check again. Repeat until `[]`.",
+    "",
+    "What helps:",
+    "",
+    "- `N0022` (a habit of another language) hides the other errors of its line: fix it first.",
+    "- `N0106` (an undefined name) after `N0105`: the name was created inside a block and read outside it.",
+    "- `N0114` names the Nuclear member to use; `N0220` and `N0219` name the closest real class or argument.",
+    "- `N0301` and `N0302` are not typos: the call is not allowed by the architecture; move it to the right kind.",
+    "- An error in a file of `build/`: never fix it there; it comes from a `.nuc`.",
+    "- The same error after three tries is not a typo: the approach is wrong; read the kind's card again or escalate."
+   ],
+   "keys": [
+    "fix errors",
+    "compiler errors",
+    "repair",
+    "errores"
+   ],
+   "asks": [
+    "how do I fix the errors of nuclear check",
+    "what do I do with a compiler error",
+    "the agent keeps failing with the same error"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.check"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear.fix"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:diagnostics"
+    },
+    {
+     "rel": "first",
+     "to": "error:N0022"
+    },
+    {
+     "rel": "when-stuck",
+     "to": "playbook:escalate"
+    }
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "nuclear-graph/src/nuclear_graph/prompts/agents/repair.md"
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "developer"
+   }
+  },
+  {
+   "id": "playbook:fix-a-failing-test",
+   "type": "playbook",
+   "title": "Playbook: fix a failing test",
+   "summary": "Run `dragonfly test`, give its output to `dragonfly explain` to get the message and the `.nuc` lines, decide whether the code or the test is wrong, fix that one file and run again. Three rounds at most; then report.",
+   "body": [
+    "1. `dragonfly test` → the output. `dragonfly explain` (the output on stdin) answers the message, a hint and the `.nuc` lines, never the generated code's.",
+    "2. Decide which side is wrong:",
+    "   - the test reads a row nobody created → the test (`pitfall:test-reads-an-empty-database`);",
+    "   - the test expects what the spec does not say → the test;",
+    "   - the code answers something else than the criterion → the code.",
+    "3. Fix that one file: the piece the lines name.",
+    "4. `nuclear check .`, `dragonfly test` again.",
+    "5. After three rounds on the same test, stop: report the test, what was tried and why it still fails."
+   ],
+   "keys": [
+    "failing test",
+    "test failed",
+    "prueba falla"
+   ],
+   "asks": [
+    "a test fails, what do I do",
+    "how do I read a test failure",
+    "how do I debug a failing test"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.test"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.explain"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-test-fails"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:verify"
+    }
+   ],
+   "sources": [
+    "docs/ai/loop.md#3. Follow the run"
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "tester"
+   }
+  },
+  {
+   "id": "playbook:fix-a-bug",
+   "type": "playbook",
+   "title": "Playbook: fix a bug",
+   "summary": "Reproduce it with the smallest failing test, find the root cause in the `.nuc` (never in `build/`), fix it once in the shared code after finding every caller, and leave the new test in place.",
+   "body": [
+    "1. Reproduce: a `@test` that shows the bug, and run it.",
+    "2. Find the cause in the `.nuc`. Many bugs are a habit of another language; search the errors shelf with the behaviour or the message.",
+    "3. Find every caller of what you change (the project map `.nuclear/map.md`; `nuclear check .` after each step says what broke).",
+    "4. Fix it once, at the root.",
+    "5. The new test and every old one pass; `nuclear check .` reports nothing.",
+    "6. Say in two lines: the cause and the fix."
+   ],
+   "keys": [
+    "bug",
+    "fix a bug",
+    "debug"
+   ],
+   "asks": [
+    "how do I fix a bug",
+    "how does the agent diagnose a bug"
+   ],
+   "links": [
+    {
+     "rel": "then",
+     "to": "playbook:fix-a-failing-test"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.explain"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-reasoning"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/bug.md"
+   ],
+   "meta": {
+    "use_case": "bug",
+    "role": "developer"
+   }
+  },
+  {
+   "id": "playbook:refactor",
+   "type": "playbook",
+   "title": "Playbook: refactor without changing behaviour",
+   "summary": "Run the tests first; move or rename in small steps, each one checked by the compiler; keep the platform's architecture; hand mechanical rewrites to the local developer one file at a time; no test is deleted.",
+   "body": [
+    "1. `dragonfly test`: what passes now must pass at the end.",
+    "2. Find every caller of what moves (the project map; `nuclear check .` after each step).",
+    "3. Small steps, each green.",
+    "4. Keep the architecture: a use case is used only from its `appcomponent`; other components see only the `appcomponent`.",
+    "5. Mechanical rewrites (a field renamed in N files): one order per file.",
+    "6. Report what moved, what was deleted and why.",
+    "",
+    "A refactor that needs to understand several files at once is led by a frontier model; the local agents do its mechanical steps."
+   ],
+   "keys": [
+    "refactor",
+    "rename",
+    "restructure"
+   ],
+   "asks": [
+    "how do I refactor in nuclear",
+    "can the agent rename something across the project"
+   ],
+   "links": [
+    {
+     "rel": "limit",
+     "to": "limit:agent-reasoning"
+    },
+    {
+     "rel": "under",
+     "to": "playbook:work-under-a-lead"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/refactor.md"
+   ],
+   "meta": {
+    "use_case": "refactor",
+    "role": "developer"
+   }
+  },
+  {
+   "id": "playbook:security-review",
+   "type": "playbook",
+   "title": "Playbook: review a change for security",
+   "summary": "Check, from the most to the least severe: input validated at every boundary, access control on what belongs to a user, no secret in the code, queries only through the repository, user paths never joined unchecked, errors that leak nothing, known dependencies. Each finding has its line, an attack and the fix in Nuclear.",
+   "body": [
+    "- **Input**: every model that comes from outside has its rule decorators (`@minLength`, `@maxLength`, `@min`, `@max`, `@pattern`, `@email`, `@url`, `@required`).",
+    "- **Access**: on mobile and web, `@acl` and guards on what belongs to a user. The backend has no guards yet: a use case that needs them checks the caller itself, and that is said in the review.",
+    "- **Secrets**: none in the code; `env(\"VAR\")`.",
+    "- **Data**: queries only through the repository's builder; never text joined into a query.",
+    "- **Files and URLs** from a user: never joined or fetched without checking.",
+    "- **Errors**: a `Result` error with a message for the user, never internals.",
+    "- **Dependencies** in `config.nuc`: known and pinned.",
+    "",
+    "For each finding: `severity | line | problem | fix`. No finding is \"maybe\": show the input that breaks it or leave it out. The reviewer reports; it does not change the code."
+   ],
+   "keys": [
+    "security",
+    "security review",
+    "seguridad",
+    "vulnerabilities"
+   ],
+   "asks": [
+    "how do I review the security of my code",
+    "what does the security agent check",
+    "how do I validate input"
+   ],
+   "links": [
+    {
+     "rel": "agent",
+     "to": "agent:security"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:security"
+    },
+    {
+     "rel": "role",
+     "to": "role:security"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:backend-not-yet"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/security.md"
+   ],
+   "meta": {
+    "use_case": "security",
+    "role": "security"
+   }
+  },
+  {
+   "id": "playbook:document",
+   "type": "playbook",
+   "title": "Playbook: document what was built",
+   "summary": "Say what it is for, then how to use it, then how it works inside; show Nuclear, never generated code; name files and commands exactly; give every declaration a one-line `//` comment, because the project map and the agents read it.",
+   "body": [
+    "- A `//` line above a declaration is its description: `nuclear check` copies it to `.nuclear/map.md`, which agents read instead of every file.",
+    "- A run's journal: what was built (each file and what it declares), how it was checked (the compiler, the tests, the review, with results), what is left.",
+    "- A document for people: who reads it and what they need first; short sentences; every Nuclear example must pass `nuclear check`.",
+    "- Plans and pending work are not documentation."
+   ],
+   "keys": [
+    "document",
+    "documentation",
+    "docs",
+    "documentar"
+   ],
+   "asks": [
+    "how do I document my project",
+    "what does the documenter write"
+   ],
+   "links": [
+    {
+     "rel": "agent",
+     "to": "agent:documenter"
+    },
+    {
+     "rel": "role",
+     "to": "role:documenter"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/docs.md"
+   ],
+   "meta": {
+    "use_case": "docs",
+    "role": "documenter"
+   }
+  },
+  {
+   "id": "playbook:migrate-the-database",
+   "type": "playbook",
+   "title": "Playbook: change the database's schema (backend)",
+   "summary": "Change the entity, then `dragonfly migrate make \"<message>\"` writes one migration (the entities minus the last migration), `dragonfly migrate` applies it and `dragonfly migrate down` reverts the last one.",
+   "body": [
+    "1. Change the entity's `.nuc` (a new field, a length, a relation).",
+    "2. `dragonfly build`.",
+    "3. `dragonfly migrate make \"add the year of a book\"`: one migration file.",
+    "4. `dragonfly migrate` (or `migrate up`); `dragonfly migrate down` to revert.",
+    "",
+    "A new column that is not optional needs a default: the rows that exist need a value. In development, `createTables = true` on the connection creates the tables without migrations."
+   ],
+   "keys": [
+    "migration",
+    "migrate",
+    "schema change",
+    "migracion"
+   ],
+   "asks": [
+    "how do I add a column to a table",
+    "how do migrations work",
+    "how do I change the database schema"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.migrate"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.entity"
+    },
+    {
+     "rel": "untested",
+     "to": "limit:untested"
+    }
+   ],
+   "sources": [
+    "docs/adr/0100-backend-data.md"
+   ],
+   "meta": {
+    "use_case": "devops",
+    "role": "devops"
+   }
+  },
+  {
+   "id": "playbook:deploy",
+   "type": "playbook",
+   "title": "Playbook: the pipeline's commands, locally and on a server",
+   "summary": "`.nuclear/loop.json` holds the commands of each stage; add `seed`, `integration` and `deploy` for the deploy stage. `nuclear-loop ci` runs them where you are, and `nuclear-loop export github|gitlab|bitbucket` writes the CI file that runs the same ones on every push.",
+   "body": [
+    "```json",
+    "{",
+    "  \"commands\": {",
+    "    \"seed\": [\"dragonfly migrate\"],",
+    "    \"integration\": [\"dragonfly test -- -m integration\"],",
+    "    \"deploy\": [\"docker compose up -d --build\"]",
+    "  },",
+    "  \"branches\": [\"main\", \"feature/**\"]",
+    "}",
+    "```",
+    "",
+    "- The defaults (check, build, install, test) come from the platform's CLI.",
+    "- `nuclear-loop ci [check|test|security|artifacts|deploy]` runs the server's stages locally: see what the server will see before pushing.",
+    "- The agent stages run on your machine; the server checks their result.",
+    "- The shell of the Loop runs nothing that is not in `.nuclear/loop.json`.",
+    "- There is no generated Dockerfile yet: the deploy command is yours."
+   ],
+   "keys": [
+    "deploy",
+    "ci",
+    "pipeline",
+    "github actions",
+    "despliegue"
+   ],
+   "asks": [
+    "how do I deploy",
+    "how do I run the pipeline in ci",
+    "how do I export the ci file"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-loop.ci"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-loop.export"
+    },
+    {
+     "rel": "stage",
+     "to": "stage:deploy"
+    },
+    {
+     "rel": "role",
+     "to": "role:devops"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:backend-not-yet"
+    }
+   ],
+   "sources": [
+    "docs/ai/loop.md#4. The pipeline's commands, locally and on a server"
+   ],
+   "meta": {
+    "use_case": "devops",
+    "role": "devops"
+   }
+  },
+  {
+   "id": "playbook:escalate",
+   "type": "playbook",
+   "title": "Playbook: when a task is beyond the local agent",
+   "summary": "Say it early and plainly: what was asked, what is missing or too large, and the options: split the task, give the missing facts, or let a frontier model lead (`--lead claude`, or `developer_task` from an MCP client). Never invent to keep going, and never report as done what was not checked.",
+   "body": [
+    "**When.**",
+    "",
+    "- The spec names nothing to build, or a fact is missing and cannot be found.",
+    "- The task needs a design decision, or to understand several files at once.",
+    "- The spec, a file or the dependencies of a piece do not fit in the context window.",
+    "- A capabilities row says the platform cannot do it yet.",
+    "- The same step failed three times.",
+    "",
+    "**How it is found.** The plan of a spec says it before any code: the capabilities rows whose trigger words the spec writes (\"authentication\" on the backend, \"form\" on the web), a spec longer than a local model reads at once, a plan without pieces or with too many.",
+    "",
+    "**What to say** (to the user in the chat, or in the run's journal):",
+    "",
+    "1. what was asked, in one line;",
+    "2. what is beyond the agent, and why (the limit's name: one file per order, the context window, a decision, a missing fact, a platform limit);",
+    "3. what was done so far, and that it was checked (or not);",
+    "4. the options:",
+    "   - **split it**: the pieces the agent can do now;",
+    "   - **give the facts**: the exact question (which fields? which rule when X?);",
+    "   - **a lead**: `nuclear-loop run <spec> --lead claude`, or from Claude Code, Codex or Cursor the tool `developer_task`: the frontier model plans and reviews, the local agents write each small piece;",
+    "   - **not possible yet**: the platform's limit and what exists instead.",
+    "",
+    "**Never**: guess a name, a field or a rule; write the easy half and call it done; delete or weaken a test."
+   ],
+   "keys": [
+    "escalate",
+    "too hard",
+    "beyond",
+    "ask for help",
+    "limit reached"
+   ],
+   "asks": [
+    "what happens when the agent cannot do a task",
+    "how does the agent ask for help",
+    "when does the agent call claude",
+    "the task is too big for the local model"
+   ],
+   "links": [
+    {
+     "rel": "limit",
+     "to": "limit:agent-one-file"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-context"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-reasoning"
+    },
+    {
+     "rel": "option",
+     "to": "playbook:decompose-a-spec"
+    },
+    {
+     "rel": "option",
+     "to": "playbook:work-under-a-lead"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/README.md#Known limits"
+   ],
+   "meta": {
+    "use_case": "limits",
+    "role": "developer"
+   }
+  },
+  {
+   "id": "playbook:work-under-a-lead",
+   "type": "playbook",
+   "title": "Playbook: a frontier model leads, the local developer writes",
+   "summary": "The lead (Sonnet, Opus, Haiku or another model over MCP) understands the spec and the project, generates the standard code, plans the rest as small orders, lets the local developer write each one, validates with the compiler and the tests, corrects only what failed and records its review.",
+   "body": [
+    "**For the lead.**",
+    "",
+    "1. `project_inspect`; for every resource the spec names, `generate_resource` (fields from the spec, `api_inspect`, or the documentation with `web_search` and `web_read`; ask the user when none gives them).",
+    "2. `developer_task(project, title, description, criteria)` with only what the generators did not write. Write each piece as an order a junior can follow: the path, the kind, every name and signature, the pieces it uses, the acceptance criterion it serves. A use case it wrote is wired with `generate_usecase` (its alias in the facade; backend: its route), not by another order.",
+    "3. Read the journal it returns: what each agent did, the files, what is left.",
+    "4. Validate: `nuclear_check(path = <project>)` says `ok`; `dragonfly(command = \"test\")` passes.",
+    "5. Correct only what failed or is wrong; never rewrite what passed. Before writing `.nuc`: `nuclear_brief(<platform>)` and `graph_search`.",
+    "6. A failed run: read its *Why it failed*; `developer_retry` when the cause was passing or is fixed.",
+    "7. `developer_review(project, run, notes, files)`: the corrected files become examples for the local developer.",
+    "",
+    "**For the local developer.** Each order is small and complete; it needs no picture of the whole. It writes the file, checks it, repairs it and answers; what it cannot do it says, and the lead takes it.",
+    "",
+    "One file outside a run: `developer_code(task, platform, path, kind, project)`. The order is short: the path, the kind, every name and signature. With `project`, the local coder reads by itself the files that declare those names, so the lead pastes nothing."
+   ],
+   "keys": [
+    "lead",
+    "manager",
+    "sonnet",
+    "opus",
+    "haiku",
+    "claude",
+    "frontier"
+   ],
+   "asks": [
+    "how does claude work with the local agent",
+    "how do I let sonnet lead",
+    "what does the lead do with the local developer"
+   ],
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:local-first"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:developer_task"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:developer_review"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:developer_retry"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:developer_code"
+    },
+    {
+     "rel": "tool",
+     "to": "mcp:generate_resource"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/mcp_server.py",
+    "nuclear-graph/src/nuclear_graph/prompts/plan.md",
+    "nuclear-graph/src/nuclear_graph/prompts/feature.md"
+   ],
+   "meta": {
+    "use_case": "lead",
+    "role": "lead"
+   }
+  },
+  {
+   "id": "playbook:connect-an-mcp-client",
+   "type": "playbook",
+   "title": "Playbook: connect Claude Code, Codex or Cursor to NuclearLang",
+   "summary": "Set up the AI services, then add `nuclear-graph mcp` to the client as an MCP server named `nuclear`. The client then has the graph, the compiler, the generators and the local developer as tools.",
+   "body": [
+    "```sh",
+    "nuclear-loop setup                                           # once: the services, and the MCP server's access to the graph",
+    "claude mcp add --scope user nuclear -- nuclear-graph mcp     # Claude Code",
+    "codex mcp add nuclear -- nuclear-graph mcp                   # Codex",
+    "```",
+    "",
+    "- Cursor and OpenCode: an MCP server with the command `nuclear-graph` and the argument `mcp`.",
+    "- VS Code: the settings page (`Ctrl+Alt+S`) has a button per client.",
+    "- Check it: ask the client to call `graph_search` with \"what is nuclear\".",
+    "- No access: `nuclear-graph connect mcp --scopes read,write`; `nuclear-graph requests`, `nuclear-graph allow <request>`.",
+    "- A machine set up for remote agents only has no `graph_*` nor `developer_*` tools (`limit:remote-agents-only`)."
+   ],
+   "keys": [
+    "connect mcp",
+    "claude code",
+    "codex",
+    "cursor",
+    "opencode"
+   ],
+   "asks": [
+    "how do I add the nuclear mcp to claude code",
+    "how do I use nuclear from cursor",
+    "how do I connect codex"
+   ],
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:mcp"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.mcp"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.connect"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:no-access-to-the-graph"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:set-up-the-ai-services"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/README.md#Use it from an AI agent (MCP)"
+   ],
+   "meta": {
+    "use_case": "setup",
+    "role": "devops"
+   }
+  },
+  {
+   "id": "playbook:set-up-the-ai-services",
+   "type": "playbook",
+   "title": "Playbook: set up the AI services (the Smart Graph, the local agents, the models)",
+   "summary": "Run the set-up: `nuclear-loop setup` in a terminal, *Nuclear: Set Up the AI Services* in VS Code, or the last step of the installer. It reads the machine, suggests a profile of models, installs what is missing and starts the Smart Graph and the Nuclear Developer, now and at every login. Nothing is downloaded before you choose.",
+   "body": [
+    "```sh",
+    "nuclear-loop setup                          # asks where the agents run and which profile",
+    "nuclear-loop setup --profile medium --yes   # no questions",
+    "nuclear-loop setup --status                 # what is installed and running",
+    "nuclear-loop setup --remove                 # takes the services away (Ollama and its models stay)",
+    "```",
+    "",
+    "1. **This machine**: its processor, memory, GPU and free disk; and where the agents run: on this machine (suggested: it saves tokens) or remote agents only.",
+    "2. **The profile**: `lite`, `medium` or `hard`: what each downloads, the memory it wants, what works with it and what does not. One is suggested; the choice is yours.",
+    "3. **What it needs**: NuclearLang, `uv`, Ollama. Each is found by itself once installed, or installed for you in a terminal (Ollama's installer asks for your password on Linux).",
+    "4. **Install**: the Smart Graph and the MCP server, the Nuclear Developer, the models, the knowledge base into the graph (about two minutes the first time), both services started. A step that fails says why; try again from it.",
+    "",
+    "- Afterwards, give your agent the MCP server: `claude mcp add --scope user nuclear -- nuclear-graph mcp`, or the buttons of *Settings and integrations* in VS Code.",
+    "- Another profile later: run it again; what is installed is kept.",
+    "- In CI or a script: the installer's `--no-ai` skips it, `--profile <id>` takes one without questions.",
+    "- From the source tree: `./install.sh --ai`."
+   ],
+   "keys": [
+    "nuclear-loop setup",
+    "set up the ai services",
+    "install the local agents",
+    "wizard",
+    "--profile",
+    "--status"
+   ],
+   "asks": [
+    "how do I install the local agents",
+    "how do I install the smart graph",
+    "how do I set up the ai services",
+    "como instalo los agentes locales",
+    "how do I change the models the agents use",
+    "how do I uninstall the ai services"
+   ],
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:ai-setup"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-loop.setup"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:connect-an-mcp-client"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-service-started-by-hand-holds-its-port"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-model-is-missing"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:remote-agents-only"
+    }
+   ],
+   "sources": [
+    "docs/ai/setup.md#2. The steps",
+    "nuclear-vscode/src/loopCli.ts"
+   ],
+   "platforms": [],
+   "meta": {
+    "use_case": "setup",
+    "role": "devops"
+   }
+  },
+  {
+   "id": "playbook:update-the-knowledge-base",
+   "type": "playbook",
+   "title": "Playbook: keep the knowledge base current after every change",
+   "summary": "After a feature of the ecosystem: `nuclear-graph knowledge build`, fix what it reports, review the hand-written rows whose sources changed, `nuclear-graph knowledge check` until clean, then `nuclear-graph ingest`. A new tool, error, kind or limit gets its row in the same change.",
+   "body": [
+    "1. **What changed?** A command, an MCP tool, a route, a kind, a decorator, a diagnostic, a version, an example, a document: their rows are generated. A new idea, capability, limit, failure or procedure: write its row by hand.",
+    "2. `nuclear-graph knowledge build`. It rewrites the generated assets and validates everything: a link to a missing row, a duplicated id or target code in an agents' row stops it.",
+    "3. **Curated rows.** For each line `review: <id> was written from <source>, which changed`: read the change; update the row in `assets/<shelf>/<file>.json` if it no longer holds, or confirm it with `nuclear-graph knowledge review <id>`.",
+    "4. **New knowledge by hand**: a row in the right shelf with its `id`, `type`, `title`, `summary`, `body`, `keys`, `asks`, `links` and `sources`. A new diagnostic's relations and example go in `assets/errors/diagnostics.overlay.json`.",
+    "5. `nuclear-graph knowledge check` must print that every row is what the tree gives now.",
+    "6. `nuclear-graph ingest`: the graph learns the new revision.",
+    "7. Ask it: `nuclear-graph search \"<a question the change answers>\"` must return the new row first. Add the question to the retrieval tests.",
+    "",
+    "The session's end hook runs the check: a change of the ecosystem is not finished while it fails."
+   ],
+   "keys": [
+    "update the knowledge base",
+    "sync the rag",
+    "knowledge build"
+   ],
+   "asks": [
+    "how do I update the rag after a change",
+    "how do I add a row to the knowledge base",
+    "what do I do when knowledge check fails"
+   ],
+   "agents": false,
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:knowledge-versions"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.knowledge"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.ingest"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:the-knowledge-base-is-stale"
+    }
+   ],
+   "sources": [
+    "docs/adr/0104-smart-graph-shelves.md"
+   ],
+   "meta": {
+    "use_case": "knowledge",
+    "role": "lead"
+   }
+  }
+ ]
+}

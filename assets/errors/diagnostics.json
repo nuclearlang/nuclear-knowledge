@@ -1,0 +1,2851 @@
+{
+ "shelf": "errors",
+ "origin": "generated",
+ "generator": "diagnostics",
+ "about": "Every diagnostic of the compiler: the codes of crates/nuclear-diag and their documentation in spec/diagnostics.md.",
+ "rows": [
+  {
+   "id": "error:N0001",
+   "type": "diagnostic",
+   "title": "N0001 — reserved word used as a name",
+   "summary": "Reserved word used as a name",
+   "body": [
+    "`N0001` · parser · error",
+    "",
+    "**What it is.** Reserved word used as a name",
+    "",
+    "**Why.** Reserved words of the base language (if, for, use, match...) cannot be names.",
+    "",
+    "**Example.** `if = 3`",
+    "",
+    "**Fix.** another name"
+   ],
+   "keys": [
+    "n0001",
+    "reserved word used as a name"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0001",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "see-also",
+     "to": "error:N0019"
+    }
+   ],
+   "tags": [
+    "names"
+   ]
+  },
+  {
+   "id": "error:N0002",
+   "type": "diagnostic",
+   "title": "N0002 — tab in indentation",
+   "summary": "Tab in the indentation",
+   "body": [
+    "`N0002` · lexer · error",
+    "",
+    "**What it is.** Tab in the indentation",
+    "",
+    "**Why.** NuclearLang indents with exactly 2 spaces; tabs are not allowed.",
+    "",
+    "**Example.** `→x = 1`",
+    "",
+    "**Fix.** 2 spaces per level"
+   ],
+   "keys": [
+    "n0002",
+    "tab in indentation"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0002",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0005"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0004"
+    }
+   ],
+   "tags": [
+    "indentation"
+   ]
+  },
+  {
+   "id": "error:N0004",
+   "type": "diagnostic",
+   "title": "N0004 — indentation does not match any block",
+   "summary": "The indentation returns to no open block",
+   "body": [
+    "`N0004` · lexer · error",
+    "",
+    "**What it is.** The indentation returns to no open block",
+    "",
+    "**Why.** When a block ends, the line must return to the indentation of an enclosing block.",
+    "",
+    "**Example.** a line at 2 when the blocks are at 0 and 4",
+    "",
+    "**Seen with.** A block closed with `}` or a line pasted from another language: fix `N0022` on the lines above first; the indentation errors usually go with it."
+   ],
+   "keys": [
+    "n0004",
+    "indentation does not match any block"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0004",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0005"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0002"
+    }
+   ],
+   "tags": [
+    "indentation"
+   ]
+  },
+  {
+   "id": "error:N0005",
+   "type": "diagnostic",
+   "title": "N0005 — indentation is not a multiple of 2",
+   "summary": "Indentation that is not a multiple of 2",
+   "body": [
+    "`N0005` · lexer · error",
+    "",
+    "**What it is.** Indentation that is not a multiple of 2",
+    "",
+    "**Why.** Each indentation level is exactly 2 spaces.",
+    "",
+    "**Example.** 3 spaces"
+   ],
+   "keys": [
+    "n0005",
+    "indentation is not a multiple of 2"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0005",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0002"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0004"
+    }
+   ],
+   "tags": [
+    "indentation"
+   ]
+  },
+  {
+   "id": "error:N0006",
+   "type": "diagnostic",
+   "title": "N0006 — unexpected character",
+   "summary": "Unexpected character",
+   "body": [
+    "`N0006` · lexer · error",
+    "",
+    "**What it is.** Unexpected character",
+    "",
+    "**Why.** This character is not part of NuclearLang syntax.",
+    "",
+    "**Example.** `#`, `&`",
+    "",
+    "**Seen with.** `#` is a comment of another language (`//` in Nuclear); `&` alone is not an operator."
+   ],
+   "keys": [
+    "n0006",
+    "unexpected character"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0006",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "often-is",
+     "to": "error:N0022"
+    },
+    {
+     "rel": "often-is",
+     "to": "error:N0009"
+    }
+   ],
+   "tags": [
+    "syntax"
+   ]
+  },
+  {
+   "id": "error:N0007",
+   "type": "diagnostic",
+   "title": "N0007 — unterminated string",
+   "summary": "Unclosed string",
+   "body": [
+    "`N0007` · lexer · error",
+    "",
+    "**What it is.** Unclosed string",
+    "",
+    "**Why.** A \"...\" or '...' string must close on the same line; use \"\"\"...\"\"\" or '''...''' for multi-line text.",
+    "",
+    "**Example.** `\"abc`",
+    "",
+    "**Fix.** close it on the same line, or use `\"\"\"`"
+   ],
+   "keys": [
+    "n0007",
+    "unterminated string"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0007",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0010"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0011"
+    }
+   ],
+   "tags": [
+    "strings"
+   ]
+  },
+  {
+   "id": "error:N0008",
+   "type": "diagnostic",
+   "title": "N0008 — unmatched bracket",
+   "summary": "Unmatched parenthesis, bracket or brace",
+   "body": [
+    "`N0008` · lexer · error",
+    "",
+    "**What it is.** Unmatched parenthesis, bracket or brace",
+    "",
+    "**Why.** Every ( [ { must be closed by its matching ) ] }.",
+    "",
+    "**Example.** `foo(1, 2`"
+   ],
+   "keys": [
+    "n0008",
+    "unmatched bracket"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0008",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "often-with",
+     "to": "error:N0013"
+    }
+   ],
+   "tags": [
+    "syntax"
+   ]
+  },
+  {
+   "id": "error:N0009",
+   "type": "diagnostic",
+   "title": "N0009 — syntax from another language",
+   "summary": "Syntax of another language",
+   "body": [
+    "`N0009` · lexer · error",
+    "",
+    "**What it is.** Syntax of another language",
+    "",
+    "**Why.** NuclearLang uses `and`, `or`, `not`, `==`, `!=` and has no `;`.",
+    "",
+    "**Example.** `&&` `||` `!` `===` `!==` `;`",
+    "",
+    "**Fix.** `and` `or` `not` `==` `!=` (and no `;`)",
+    "",
+    "**Right.** `and`, `or`, `not x`, `==`, `!=`, and no `;` at the end of a line."
+   ],
+   "keys": [
+    "n0009",
+    "syntax from another language"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0009",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0022"
+    },
+    {
+     "rel": "habit",
+     "to": "habit:and-or-not-x"
+    }
+   ],
+   "tags": [
+    "habit"
+   ]
+  },
+  {
+   "id": "error:N0010",
+   "type": "diagnostic",
+   "title": "N0010 — invalid interpolation",
+   "summary": "Invalid interpolation",
+   "body": [
+    "`N0010` · lexer · error",
+    "",
+    "**What it is.** Invalid interpolation",
+    "",
+    "**Why.** Interpolation is written \"${expr}\" with a non-empty expression and a closing }.",
+    "",
+    "**Example.** `\"${}\"`, `\"${a\"`",
+    "",
+    "**Fix.** `\"${expr}\"`"
+   ],
+   "keys": [
+    "n0010",
+    "invalid interpolation"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0010",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0007"
+    }
+   ],
+   "tags": [
+    "strings"
+   ]
+  },
+  {
+   "id": "error:N0011",
+   "type": "diagnostic",
+   "title": "N0011 — invalid escape sequence",
+   "summary": "Invalid escape sequence",
+   "body": [
+    "`N0011` · lexer · error",
+    "",
+    "**What it is.** Invalid escape sequence",
+    "",
+    "**Why.** Valid escapes: \\",
+    " \\t \\r \\0 \\\\ \\\" \\' \\$ \\u{hex}.",
+    "",
+    "**Example.** `\"\\q\"`",
+    "",
+    "**Fix.** `\\n \\t \\r \\0 \\\\ \\\" \\' \\$ \\u{hex}`",
+    "",
+    "**Tip.** A regular expression is a raw string: `r\"\\d+\"` needs no escapes."
+   ],
+   "keys": [
+    "n0011",
+    "invalid escape sequence"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0011",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0007"
+    }
+   ],
+   "tags": [
+    "strings"
+   ]
+  },
+  {
+   "id": "error:N0012",
+   "type": "diagnostic",
+   "title": "N0012 — invalid number",
+   "summary": "Invalid number",
+   "body": [
+    "`N0012` · lexer · error",
+    "",
+    "**What it is.** Invalid number",
+    "",
+    "**Why.** Numbers are 42, 1_000, 3.14 or 0xff, with no letters after them.",
+    "",
+    "**Example.** `10px`, `0x`",
+    "",
+    "**Fix.** `42`, `1_000`, `3.14`, `0xff`"
+   ],
+   "keys": [
+    "n0012",
+    "invalid number"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0012",
+    "family": "syntax",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "error:N0013",
+   "type": "diagnostic",
+   "title": "N0013 — unexpected token",
+   "summary": "Unexpected token",
+   "body": [
+    "`N0013` · parser · error",
+    "",
+    "**What it is.** Unexpected token",
+    "",
+    "**Why.** The parser expected a different token here; see the message for what was expected.",
+    "",
+    "**Example.** `x = = 1`",
+    "",
+    "**Fix.** the message says what was expected",
+    "",
+    "**Most common cause.** A decorator written after the field or method it belongs to, or on the same line: the message is `'@column' has no member below it`. A decorator goes on the line right above its member:",
+    "",
+    "```nuclear",
+    "@entity(\"readers\")",
+    "entity Reader()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 80, unique = true)",
+    "  email: string",
+    "```"
+   ],
+   "keys": [
+    "n0013",
+    "unexpected token"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0013",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "often-is",
+     "to": "pitfall:decorator-after-its-field"
+    },
+    {
+     "rel": "often-with",
+     "to": "error:N0008"
+    },
+    {
+     "rel": "often-is",
+     "to": "error:N0022"
+    }
+   ],
+   "tags": [
+    "syntax",
+    "decorators"
+   ]
+  },
+  {
+   "id": "error:N0014",
+   "type": "diagnostic",
+   "title": "N0014 — range followed by a method needs parentheses",
+   "summary": "Range followed by a method without parentheses",
+   "body": [
+    "`N0014` · parser · error",
+    "",
+    "**What it is.** Range followed by a method without parentheses",
+    "",
+    "**Why.** Write (1..10).map(...) instead of 1..10.map(...).",
+    "",
+    "**Example.** `1..10.map(...)`",
+    "",
+    "**Fix.** `(1..10).map(...)`"
+   ],
+   "keys": [
+    "n0014",
+    "range followed by a method needs parentheses"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0014",
+    "family": "syntax",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "error:N0015",
+   "type": "diagnostic",
+   "title": "N0015 — typed lambda parameter without a block",
+   "summary": "Typed lambda parameter without a block",
+   "body": [
+    "`N0015` · parser · error",
+    "",
+    "**What it is.** Typed lambda parameter without a block",
+    "",
+    "**Why.** list.map(x: T) declares lambda parameters, so the call must be followed by an indented block. For a one-line lambda write list.map((x: T) => expr).",
+    "",
+    "**Example.** `users.filter(user: User)` without a block",
+    "",
+    "**Fix.** an indented block, or `users.filter((user: User) => ...)`"
+   ],
+   "keys": [
+    "n0015",
+    "typed lambda parameter without a block"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0015",
+    "family": "syntax",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "error:N0016",
+   "type": "diagnostic",
+   "title": "N0016 — function declared inside a body",
+   "summary": "Function declared inside a body",
+   "body": [
+    "`N0016` · parser · error",
+    "",
+    "**What it is.** Function declared inside a body",
+    "",
+    "**Why.** Functions cannot be declared inside another function. Assign an anonymous function: name = (params) Type, followed by its block.",
+    "",
+    "**Example.** `helper(x: int) int` + block inside a function",
+    "",
+    "**Fix.** `helper = (x: int) int` + block"
+   ],
+   "keys": [
+    "n0016",
+    "function declared inside a body"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0016",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0017"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0018"
+    }
+   ],
+   "tags": [
+    "modules"
+   ]
+  },
+  {
+   "id": "error:N0017",
+   "type": "diagnostic",
+   "title": "N0017 — statement in a module body",
+   "summary": "Statement in the body of a module",
+   "body": [
+    "`N0017` · parser · error",
+    "",
+    "**What it is.** Statement in the body of a module",
+    "",
+    "**Why.** A module body holds fields (name: Type = value), methods and the constructor. Code that runs on construction goes in the constructor block: (params) followed by an indented block.",
+    "",
+    "**Example.** `localAttr = \"x\"` inside `User`",
+    "",
+    "**Fix.** field `localAttr: string = \"x\"` or assign it in the constructor",
+    "",
+    "**Right.** Inside a module (a class, a kind) only fields and methods: `count: int = 0` is a field; an assignment belongs inside a method."
+   ],
+   "keys": [
+    "n0017",
+    "statement in a module body"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0017",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0016"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0018"
+    }
+   ],
+   "tags": [
+    "modules"
+   ]
+  },
+  {
+   "id": "error:N0018",
+   "type": "diagnostic",
+   "title": "N0018 — module declared inside a module",
+   "summary": "Module declared inside another module",
+   "body": [
+    "`N0018` · parser · error",
+    "",
+    "**What it is.** Module declared inside another module",
+    "",
+    "**Why.** Modules are declared at the top level of a file.",
+    "",
+    "**Example.** `Inner` inside `User`",
+    "",
+    "**Fix.** declare it at the top level"
+   ],
+   "keys": [
+    "n0018",
+    "module declared inside a module"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0018",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0017"
+    }
+   ],
+   "tags": [
+    "modules"
+   ]
+  },
+  {
+   "id": "error:N0019",
+   "type": "diagnostic",
+   "title": "N0019 — invalid assignment target",
+   "summary": "Invalid assignment target",
+   "body": [
+    "`N0019` · parser · error",
+    "",
+    "**What it is.** Invalid assignment target",
+    "",
+    "**Why.** Only names, $fields, members (a.b) and indexes (a[i]) can be assigned.",
+    "",
+    "**Example.** `f() = 1`; `pieces = ~pieces(raw)` inside a module with a method `pieces` (a method is not a variable)",
+    "",
+    "**Fix.** a name, `$field`, `a.b` or `a[i]`; another name for the variable",
+    "",
+    "**Seen with.** A local variable named like a method of its own module (`pieces = ~pieces(raw)`): give the variable another name (`planned = ~pieces(raw)`)."
+   ],
+   "keys": [
+    "n0019",
+    "invalid assignment target"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0019",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "see-also",
+     "to": "error:N0102"
+    },
+    {
+     "rel": "see-also",
+     "to": "error:N0001"
+    }
+   ],
+   "tags": [
+    "names"
+   ]
+  },
+  {
+   "id": "error:N0020",
+   "type": "diagnostic",
+   "title": "N0020 — one-line function returning void",
+   "summary": "One-line function returning void",
+   "body": [
+    "`N0020` · parser · error",
+    "",
+    "**What it is.** One-line function returning void",
+    "",
+    "**Why.** A function that returns void must be written with an indented block.",
+    "",
+    "**Example.** `log(m: string) void = print(m)`",
+    "",
+    "**Fix.** an indented block"
+   ],
+   "keys": [
+    "n0020",
+    "one-line function returning void"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0020",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "see-also",
+     "to": "error:N0016"
+    }
+   ],
+   "tags": [
+    "functions"
+   ]
+  },
+  {
+   "id": "error:N0021",
+   "type": "diagnostic",
+   "title": "N0021 — comment line without ` * `",
+   "summary": "Comment line without ` * `",
+   "body": [
+    "`N0021` · parser · error",
+    "",
+    "**What it is.** Comment line without ` * `",
+    "",
+    "**Why.** Each line that continues a `//` comment starts with ` * `: the `*` goes right under the second `/` of the `//`.",
+    "",
+    "**Example.** `// title` + a more indented `  text`",
+    "",
+    "**Fix.** ` * text`, with the `*` below the second `/` (the fix writes it)"
+   ],
+   "keys": [
+    "n0021",
+    "comment line without ` * `"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0021",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "tags": [
+    "comments"
+   ]
+  },
+  {
+   "id": "error:N0022",
+   "type": "diagnostic",
+   "title": "N0022 — habit of another language",
+   "summary": "Habit of another language (TypeScript, Dart, Python, Java, Go); the other errors of that line are not shown",
+   "body": [
+    "`N0022` · parser · error",
+    "",
+    "**What it is.** Habit of another language (TypeScript, Dart, Python, Java, Go); the other errors of that line are not shown",
+    "",
+    "**Why.** A form of TypeScript, Dart, Python or Java (`{ }` blocks, `await`, `const x =`, `new`, `class`, `def`, `elif`, `None`, `#` comments, the return type first). The message gives the NuclearLang form and, when it is exact, a fix.",
+    "",
+    "**Example.** `f() int {`, `await g()`, `const x = 1`, `new User()`, `class A extends B`, `int f(int x)`, `def f(self):`, `elif`, `None`, `# note`, `i++`, `import { a } from \"x\"`",
+    "",
+    "**Fix.** the NuclearLang form; the fix writes it when it is exact (`f() int`, `~g()`, `x = 1`, `User()`, `A: B`, `f(x: int) int`, `else if`, `null`, `// note`, `i += 1`, `use x{ a }`)",
+    "",
+    "**Fix it first.** The compiler hides the other errors of a line that has a habit, because they only repeat the same mistake. `nuclear fix` applies the exact ones.",
+    "",
+    "**The whole of it, right:**",
+    "",
+    "```nuclear",
+    "// no braces, no semicolons, no const, no new, no await, no return on the last line",
+    "greet(user: User, times: int = 1) string",
+    "  name = user.name.trim()",
+    "  if times > 1",
+    "    return \"Hi ${name}, again\"",
+    "  \"Hi ${name}\"",
+    "```",
+    "",
+    "Each habit has its row: `habit:` (search the word you wrote: `await`, `const`, `new`, `import`, `class`, `switch`)."
+   ],
+   "keys": [
+    "n0022",
+    "habit of another language"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0022",
+    "family": "syntax",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0009"
+    },
+    {
+     "rel": "hides",
+     "to": "error:N0013"
+    },
+    {
+     "rel": "hides",
+     "to": "error:N0004"
+    },
+    {
+     "rel": "concept",
+     "to": "faq:learn-the-syntax"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-compiler-errors"
+    }
+   ],
+   "tags": [
+    "habit"
+   ],
+   "asks": [
+    "why is await an error",
+    "why can't I use const",
+    "why are braces an error"
+   ]
+  },
+  {
+   "id": "error:N0102",
+   "type": "diagnostic",
+   "title": "N0102 — duplicate declaration",
+   "summary": "Duplicate declaration",
+   "body": [
+    "`N0102` · resolver · error",
+    "",
+    "**What it is.** Duplicate declaration",
+    "",
+    "**Why.** Two declarations in the same file produce the same name.",
+    "",
+    "**Example.** two `User` in the same file; a member declared twice in one module (`load()` twice); a call to a method hidden by a local of the same name (`prompt(...)` inside `write(prompt: string)` of a module with a method `prompt`)",
+    "",
+    "**Seen with.** A small model that writes the same method twice, or copies into its file a declaration another file already has: write only what the task declares."
+   ],
+   "keys": [
+    "n0102",
+    "duplicate declaration"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0102",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "see-also",
+     "to": "error:N0019"
+    },
+    {
+     "rel": "in-a-project",
+     "to": "error:N0303"
+    }
+   ],
+   "tags": [
+    "names"
+   ]
+  },
+  {
+   "id": "error:N0103",
+   "type": "diagnostic",
+   "title": "N0103 — if/match inside an expression needs one expression per branch",
+   "summary": "`if`/`match` with multi-line branches inside an expression",
+   "body": [
+    "`N0103` · resolver · error",
+    "",
+    "**What it is.** `if`/`match` with multi-line branches inside an expression",
+    "",
+    "**Why.** Branches of several lines are allowed when the if/match is the value of an assignment or of a return; inside a larger expression every branch must be a single expression.",
+    "",
+    "**Example.** `f(if a` + a two-line block `)`",
+    "",
+    "**Right.** Give the branch a variable first: `label = if a` + its branches, then `f(label)`."
+   ],
+   "keys": [
+    "n0103",
+    "if/match inside an expression needs one expression per branch"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0103",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "tags": [
+    "expressions"
+   ]
+  },
+  {
+   "id": "error:N0104",
+   "type": "diagnostic",
+   "title": "N0104 — invalid enum item",
+   "summary": "Invalid enum item",
+   "body": [
+    "`N0104` · resolver · error",
+    "",
+    "**What it is.** Invalid enum item",
+    "",
+    "**Why.** An enum block only holds items written as name or name(value).",
+    "",
+    "**Example.** an enum that mixes `user` with `name: string`"
+   ],
+   "keys": [
+    "n0104",
+    "invalid enum item"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0104",
+    "family": "resolver",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "error:N0105",
+   "type": "diagnostic",
+   "title": "N0105 — name used outside the block that created it",
+   "summary": "Name used outside the block that created it",
+   "body": [
+    "`N0105` · resolver · error",
+    "",
+    "**What it is.** Name used outside the block that created it",
+    "",
+    "**Why.** A variable created inside a block (if, for, while, match, try) exists only in that block. To take a value out of an if or match, use it as a value: x = if cond ...",
+    "",
+    "**Example.** `text` created inside an `if` and read after it",
+    "",
+    "**Right.** Create the variable before the block and assign it inside, or make the `if` the value: `text = if ok` + branches."
+   ],
+   "keys": [
+    "n0105",
+    "name used outside the block that created it"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0105",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "then",
+     "to": "error:N0106"
+    }
+   ],
+   "tags": [
+    "names",
+    "scope"
+   ]
+  },
+  {
+   "id": "error:N0106",
+   "type": "diagnostic",
+   "title": "N0106 — undefined name",
+   "summary": "Undefined name",
+   "body": [
+    "`N0106` · resolver · error",
+    "",
+    "**What it is.** Undefined name",
+    "",
+    "**Why.** The name is not a variable, parameter, member, declaration or import of this file.",
+    "",
+    "**Example.** `page` not declared, not a parameter nor an import",
+    "",
+    "**Check, in this order.** A typo; a variable created inside an `if` or `for` and read after it (`N0105`); a parameter the method does not have; a name of the target's library the dialect does not know (`nuclear defs search <text>`); a declaration of another file that the task forgot to list."
+   ],
+   "keys": [
+    "n0106",
+    "undefined name"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0106",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "often-after",
+     "to": "error:N0105"
+    },
+    {
+     "rel": "a-class-is",
+     "to": "error:N0220"
+    },
+    {
+     "rel": "a-member-is",
+     "to": "error:N0116"
+    },
+    {
+     "rel": "library-is",
+     "to": "error:N0114"
+    }
+   ],
+   "tags": [
+    "names"
+   ]
+  },
+  {
+   "id": "error:N0107",
+   "type": "diagnostic",
+   "title": "N0107 — destructuring pattern mixes new and existing names",
+   "summary": "Pattern mixing new and existing names",
+   "body": [
+    "`N0107` · resolver · error",
+    "",
+    "**What it is.** Pattern mixing new and existing names",
+    "",
+    "**Why.** A pattern either declares new variables or assigns existing ones: [a, b] = xs with a and b both new, or both already declared.",
+    "",
+    "**Example.** `[a, b] = xs` with `a` already declared and `b` new"
+   ],
+   "keys": [
+    "n0107",
+    "destructuring pattern mixes new and existing names"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0107",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "tags": [
+    "patterns"
+   ]
+  },
+  {
+   "id": "error:N0108",
+   "type": "diagnostic",
+   "title": "N0108 — result that can fail is not handled",
+   "summary": "Unhandled `Result` outside a function that returns `Result`",
+   "body": [
+    "`N0108` · resolver · error",
+    "",
+    "**What it is.** Unhandled `Result` outside a function that returns `Result`",
+    "",
+    "**Why.** A call that returns Result<E, T> propagates its error automatically only inside a function that also returns a Result. Elsewhere, handle it with match (Ok(x) -> ... / Err(e) -> ...), keep it in a variable typed Result<T, E>, or declare the function's return type as Result<T, E>.",
+    "",
+    "**Example.** `user = findUser(id)` in a function that returns `string`",
+    "",
+    "**Right.** Either make the function return a `Result` (then `user = findUser(id)` unwraps it and an `Err` leaves by itself), or handle both cases: `match findUser(id)` + `Ok(user) -> ...` / `Err(e) -> ...`."
+   ],
+   "keys": [
+    "n0108",
+    "result that can fail is not handled"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0108",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0109"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0110"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0111"
+    },
+    {
+     "rel": "kind-rule",
+     "to": "error:N0216"
+    }
+   ],
+   "tags": [
+    "result"
+   ]
+  },
+  {
+   "id": "error:N0109",
+   "type": "diagnostic",
+   "title": "N0109 — propagated error has another type",
+   "summary": "The propagated error has another type",
+   "body": [
+    "`N0109` · resolver · error",
+    "",
+    "**What it is.** The propagated error has another type",
+    "",
+    "**Why.** An error propagates only to a function whose Result has the same error type. Convert it first: call(x).error(e => Err(MyError(e))).",
+    "",
+    "**Example.** `findUser` fails with `string` and the function returns `Result<AppError, Order>` (fix: `findUser(id).error(e => Err(AppError(e)))`)"
+   ],
+   "keys": [
+    "n0109",
+    "propagated error has another type"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0109",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0108"
+    }
+   ],
+   "tags": [
+    "result"
+   ]
+  },
+  {
+   "id": "error:N0110",
+   "type": "diagnostic",
+   "title": "N0110 — result cannot propagate from this position",
+   "summary": "A `Result` that cannot be propagated from that position",
+   "body": [
+    "`N0110` · resolver · error",
+    "",
+    "**What it is.** A `Result` that cannot be propagated from that position",
+    "",
+    "**Why.** A Result is unwrapped before its statement runs. Inside a branch that may not run (the right side of and, or, ??, a ternary, an else if or while condition, an if in a list) assign it to a variable first.",
+    "",
+    "**Example.** `ok and findUser(id).active` (fix: assign it to a variable first)"
+   ],
+   "keys": [
+    "n0110",
+    "result cannot propagate from this position"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0110",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0108"
+    }
+   ],
+   "tags": [
+    "result"
+   ]
+  },
+  {
+   "id": "error:N0111",
+   "type": "diagnostic",
+   "title": "N0111 — invalid use of a Result",
+   "summary": "Invalid use of a `Result`",
+   "body": [
+    "`N0111` · resolver · error",
+    "",
+    "**What it is.** Invalid use of a `Result`",
+    "",
+    "**Why.** A match on a Result has arms Ok(name) ->, Err(name) -> and _ ->, one pattern per arm. A callback of .ok()/.error() returns Ok(...)/Err(...) in every branch (it transforms) or in none (it only observes). An async function gives its Result with ~: match ~load(id).",
+    "",
+    "**Example.** a branch `Ok(1) ->` in a `match`; an `.error()` callback that returns `Ok(...)` only in some branches; `match load(id)` with an async `load` (missing `~`)"
+   ],
+   "keys": [
+    "n0111",
+    "invalid use of a result"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0111",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0108"
+    },
+    {
+     "rel": "often-is",
+     "to": "error:N0222"
+    }
+   ],
+   "tags": [
+    "result"
+   ]
+  },
+  {
+   "id": "error:N0112",
+   "type": "diagnostic",
+   "title": "N0112 — alias of a method that cannot be reached",
+   "summary": "Alias of a method that cannot be reached",
+   "body": [
+    "`N0112` · resolver · error",
+    "",
+    "**What it is.** Alias of a method that cannot be reached",
+    "",
+    "**Why.** name() = Module.method makes name the same function as method. A method that is not static is called on a new Module(), so every constructor parameter of Module needs a default.",
+    "",
+    "**Example.** `find() = Repo.find` with `Repo(url: string)`: the alias creates a new `Repo()` and `url` has no default (fix: give it a default, or write `find` as a method)"
+   ],
+   "keys": [
+    "n0112",
+    "alias of a method that cannot be reached"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0112",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "see-also",
+     "to": "error:N0221"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.appcomponent"
+    }
+   ],
+   "tags": [
+    "alias"
+   ]
+  },
+  {
+   "id": "error:N0113",
+   "type": "diagnostic",
+   "title": "N0113 — top-level statements in a file with main",
+   "summary": "Top-level statements in a file with `main` (targets that run them in `main`, like Dart)",
+   "body": [
+    "`N0113` · resolver · error",
+    "",
+    "**What it is.** Top-level statements in a file with `main` (targets that run them in `main`, like Dart)",
+    "",
+    "**Why.** In a target where top-level statements run inside main (Dart), a file cannot have both: move the statements into main(). Top-level variables (`limit = 10`) are allowed.",
+    "",
+    "**Example.** `print(\"hi\")` at the top level and `main() void` in the same file (fix: move the statement into `main`; a top-level variable `limit = 10` is allowed)"
+   ],
+   "keys": [
+    "n0113",
+    "top-level statements in a file with main"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0113",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "tags": [
+    "structure"
+   ]
+  },
+  {
+   "id": "error:N0114",
+   "type": "diagnostic",
+   "title": "N0114 — not a member of Nuclear's standard library",
+   "summary": "Not a member of Nuclear's standard library (library.md): a target's name on a base type, a function of a target (`len`, `str`, `parseInt`), a static of a target (`Math.floor`, `JSON.stringify`), a property called as a method or a method used as a property",
+   "body": [
+    "`N0114` · resolver · error",
+    "",
+    "**What it is.** Not a member of Nuclear's standard library ([library.md](library.md)): a target's name on a base type, a function of a target (`len`, `str`, `parseInt`), a static of a target (`Math.floor`, `JSON.stringify`), a property called as a method or a method used as a property",
+    "",
+    "**Why.** The members of string, lists, maps, sets, numbers, Bytes, DateTime, Duration, Regex and Match are Nuclear's own (spec/library.md, `nuclear help library`), the same in every dialect: a target's name (push, len, toUpperCase, contains) is replaced by the Nuclear one given in the message.",
+    "",
+    "**Example.** `xs.push(x)` (fix: `add(x)`), `text.toUpperCase()` (fix: `upper()`), `len(xs)` (fix: `xs.length`), `xs.length()` (fix: `length` is a property); a kept `Result` read as its value (`found.length`, `found[0]` in a test: `found.value.length`)",
+    "",
+    "**Right.**",
+    "",
+    "```nuclear",
+    "tidy(names: string[], text: string) string",
+    "  names.add(text.upper())",
+    "  if \"Ana\" in names",
+    "    return \"found among ${names.length}\"",
+    "  text.trim()",
+    "```",
+    "",
+    "`add` not `push` or `append`; `upper()` not `toUpperCase()`; `length` is a property (no parentheses) and never `len(x)`; membership is `x in xs`, never `contains` or `includes`.",
+    "",
+    "**In a test.** `found.length` on a kept `Result` is this error too: read `found.value.length`."
+   ],
+   "keys": [
+    "n0114",
+    "not a member of nuclear's standard library"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0114",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:standard-library"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0115"
+    },
+    {
+     "rel": "a-project-member-is",
+     "to": "error:N0116"
+    },
+    {
+     "rel": "members",
+     "to": "lib:string"
+    },
+    {
+     "rel": "members",
+     "to": "lib:list"
+    },
+    {
+     "rel": "members",
+     "to": "lib:map"
+    },
+    {
+     "rel": "functions",
+     "to": "lib:functions"
+    },
+    {
+     "rel": "result-read-is",
+     "to": "error:N0222"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:library-names-of-other-languages"
+    }
+   ],
+   "tags": [
+    "library"
+   ],
+   "asks": [
+    "why is push not allowed",
+    "how do I get the length of a list",
+    "why is contains an error"
+   ]
+  },
+  {
+   "id": "error:N0115",
+   "type": "diagnostic",
+   "title": "N0115 — the receiver's type is not known",
+   "summary": "The receiver's type is not known and the member is written differently for each base type in this dialect",
+   "body": [
+    "`N0115` · resolver · error",
+    "",
+    "**What it is.** The receiver's type is not known and the member is written differently for each base type in this dialect",
+    "",
+    "**Why.** A member of the standard library is written differently for each base type in this dialect, and the type of the value before the dot is not known: declare it (`items: string[] = ...`, a typed parameter) or build the value from a literal or a typed call.",
+    "",
+    "**Example.** `items.length` where `items` comes from a value without a type (fix: declare it, `items: string[] = ...`); only in the dialects where the bases differ (TypeScript's `length` against `size`)"
+   ],
+   "keys": [
+    "n0115",
+    "the receiver's type is not known"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0115",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:standard-library"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0114"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untyped-values"
+    }
+   ],
+   "tags": [
+    "library",
+    "types"
+   ]
+  },
+  {
+   "id": "error:N0116",
+   "type": "diagnostic",
+   "title": "N0116 — unknown member of a declaration of the project",
+   "summary": "A member that a declaration of the project does not have: the value's type is a model, class or kind whose members are all known (its own, its project bases' and those of the runtime classes it or its kind inherits when the type definitions list them; the kind's `method_members`), and the message names them as the `.nuc` writes them",
+   "body": [
+    "`N0116` · resolver · error",
+    "",
+    "**What it is.** A member that a declaration of the project does not have: the value's type is a model, class or kind whose members are all known (its own, its project bases' and those of the runtime classes it or its kind inherits when the type definitions list them; the kind's `method_members`), and the message names them as the `.nuc` writes them",
+    "",
+    "**Why.** The value's type is a declaration of this project whose members are all known (its fields, methods and constructor parameters, its project bases, and the runtime classes it or its kind inherits when the type definitions list their members), and it has no member with that name. A model generated from a contract changes when the backend changes: rebuild and read the generated file.",
+    "",
+    "**Example.** `saved.done` when `Task` has `completed` (a contract the backend changed); `~loans.get(id)` on a repository (the runtime's is `find`); the message names the closest member and all of them",
+    "",
+    "**Fix.** rebuild (a contract) or fix the name",
+    "",
+    "**Check.** The message lists every member the declaration has: use one of them. A repository's own methods are `find`, `findAll`, `save`, `remove`; a model of a contract changed when the backend changed (build the backend, or `nuclear contracts update`)."
+   ],
+   "keys": [
+    "n0116",
+    "unknown member of a declaration of the project"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0116",
+    "family": "resolver",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0114"
+    },
+    {
+     "rel": "see-also",
+     "to": "error:N0106"
+    },
+    {
+     "rel": "contract",
+     "to": "concept:contracts"
+    }
+   ],
+   "tags": [
+    "names",
+    "members"
+   ]
+  },
+  {
+   "id": "error:N0201",
+   "type": "diagnostic",
+   "title": "N0201 — unknown header word for the dialect",
+   "summary": "Header word unknown to the dialect",
+   "body": [
+    "`N0201` · dialects · error",
+    "",
+    "**What it is.** Header word unknown to the dialect",
+    "",
+    "**Why.** Words before a declaration's name must be kinds or modifiers defined by the active dialect (dialect files: [kinds.*], [modifiers.*]).",
+    "",
+    "**Example.** `stateless MyApp` with the `typescript` dialect",
+    "",
+    "**Check.** The word before the name must be a kind of the project's platform (`nuclear help words --platform <p>`): `usecase`, not `use case`; `appcomponent`, not `component` on the backend; a kind of the mobile platform does not exist on the backend."
+   ],
+   "keys": [
+    "n0201",
+    "unknown header word for the dialect"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0201",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:kinds"
+    },
+    {
+     "rel": "plugin-kind-is",
+     "to": "error:N0304"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0209"
+    }
+   ],
+   "tags": [
+    "kinds"
+   ]
+  },
+  {
+   "id": "error:N0202",
+   "type": "diagnostic",
+   "title": "N0202 — unknown clause for the dialect",
+   "summary": "Clause unknown to the dialect",
+   "body": [
+    "`N0202` · dialects · error",
+    "",
+    "**What it is.** Clause unknown to the dialect",
+    "",
+    "**Why.** Words after a declaration's name (on String, with Flyer) must be clauses defined by the active dialect ([clauses.*]).",
+    "",
+    "**Example.** `Bird: Animal with Flyer` with the `typescript` dialect"
+   ],
+   "keys": [
+    "n0202",
+    "unknown clause for the dialect"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0202",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0203",
+   "type": "diagnostic",
+   "title": "N0203 — the dialect does not define a template",
+   "summary": "The dialect does not define a template",
+   "body": [
+    "`N0203` · dialects · error",
+    "",
+    "**What it is.** The dialect does not define a template",
+    "",
+    "**Why.** The active dialect (or the dialect it extends) has no [syntax] template for this construct.",
+    "",
+    "**Example.** `[syntax] while` is missing"
+   ],
+   "keys": [
+    "n0203",
+    "the dialect does not define a template"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0203",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0204",
+   "type": "diagnostic",
+   "title": "N0204 — shortcut collision",
+   "summary": "Shortcut collision",
+   "body": [
+    "`N0204` · dialects · error",
+    "",
+    "**What it is.** Shortcut collision",
+    "",
+    "**Why.** Two shortcuts, kinds or auto-imports define the same name. Each name must be defined once across a dialect and the dialects it extends; to replace a parent entry, list it in [dialect] replaces.",
+    "",
+    "**Example.** `readFile` defined in two modules of `[auto_imports]`"
+   ],
+   "keys": [
+    "n0204",
+    "shortcut collision"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0204",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0205",
+   "type": "diagnostic",
+   "title": "N0205 — shortcut very similar to another",
+   "summary": "Shortcut very similar to another (warning)",
+   "body": [
+    "`N0205` · dialects · warning",
+    "",
+    "**What it is.** Shortcut very similar to another (warning)",
+    "",
+    "**Why.** Two shortcut names differ by one character or only by case, which invites typos.",
+    "",
+    "**Example.** `material` and `materal`"
+   ],
+   "keys": [
+    "n0205",
+    "shortcut very similar to another"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0205",
+    "family": "dialect",
+    "severity": "warning"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0206",
+   "type": "diagnostic",
+   "title": "N0206 — invalid dialect file",
+   "summary": "Invalid dialect file",
+   "body": [
+    "`N0206` · dialects · error",
+    "",
+    "**What it is.** Invalid dialect file",
+    "",
+    "**Why.** The dialect file is not valid TOML, has a value of the wrong type, or a template with invalid syntax.",
+    "",
+    "**Example.** malformed TOML, a value of the wrong type, a template with an unclosed `{{#x}}`"
+   ],
+   "keys": [
+    "n0206",
+    "invalid dialect file"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0206",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0207",
+   "type": "diagnostic",
+   "title": "N0207 — dialect not found",
+   "summary": "Dialect not found or circular inheritance",
+   "body": [
+    "`N0207` · dialects · error",
+    "",
+    "**What it is.** Dialect not found or circular inheritance",
+    "",
+    "**Why.** No dialect with that name was found in the dialect search path, or `extends` forms a cycle.",
+    "",
+    "**Example.** `--dialect rubi`, `a extends b` and `b extends a`"
+   ],
+   "keys": [
+    "n0207",
+    "dialect not found"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0207",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0208",
+   "type": "diagnostic",
+   "title": "N0208 — the target allows a single base",
+   "summary": "The target allows only one base",
+   "body": [
+    "`N0208` · dialects · error",
+    "",
+    "**What it is.** The target allows only one base",
+    "",
+    "**Why.** The target language of this dialect supports extending only one base.",
+    "",
+    "**Example.** `Admin: User, Person` in TypeScript or Dart"
+   ],
+   "keys": [
+    "n0208",
+    "the target allows a single base"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0208",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "tags": [
+    "inheritance"
+   ]
+  },
+  {
+   "id": "error:N0209",
+   "type": "diagnostic",
+   "title": "N0209 — kind requires a member",
+   "summary": "The kind requires a member",
+   "body": [
+    "`N0209` · dialects · error",
+    "",
+    "**What it is.** The kind requires a member",
+    "",
+    "**Why.** This dialect kind requires a member (for example stateless requires build).",
+    "",
+    "**Example.** `stateless MyApp` without `build`"
+   ],
+   "keys": [
+    "n0209",
+    "kind requires a member"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0209",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0215"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0216"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0221"
+    }
+   ],
+   "tags": [
+    "kinds"
+   ]
+  },
+  {
+   "id": "error:N0210",
+   "type": "diagnostic",
+   "title": "N0210 — unknown template variable",
+   "summary": "Unknown variable in a template (warning)",
+   "body": [
+    "`N0210` · dialects · warning",
+    "",
+    "**What it is.** Unknown variable in a template (warning)",
+    "",
+    "**Why.** A dialect template uses a variable that the transpiler does not provide for that template.",
+    "",
+    "**Example.** `{{nmae}}` in `[syntax] class`"
+   ],
+   "keys": [
+    "n0210",
+    "unknown template variable"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0210",
+    "family": "dialect",
+    "severity": "warning"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0211",
+   "type": "diagnostic",
+   "title": "N0211 — unknown use clause",
+   "summary": "Unknown `use` clause",
+   "body": [
+    "`N0211` · dialects · error",
+    "",
+    "**What it is.** Unknown `use` clause",
+    "",
+    "**Why.** Words after a use path (show, hide, deferred) must be listed in the dialect's [use] clauses.",
+    "",
+    "**Example.** `use lib show foo` in TypeScript"
+   ],
+   "keys": [
+    "n0211",
+    "unknown use clause"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0211",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0212",
+   "type": "diagnostic",
+   "title": "N0212 — shortcut named like a base keyword",
+   "summary": "Shortcut named like a reserved word",
+   "body": [
+    "`N0212` · dialects · error",
+    "",
+    "**What it is.** Shortcut named like a reserved word",
+    "",
+    "**Why.** Shortcut names cannot be reserved words of the base language.",
+    "",
+    "**Example.** `[imports] if = \"...\"`"
+   ],
+   "keys": [
+    "n0212",
+    "shortcut named like a base keyword"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0212",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0213",
+   "type": "diagnostic",
+   "title": "N0213 — type definitions package not found",
+   "summary": "Type definitions package not found or invalid",
+   "body": [
+    "`N0213` · dialects · error",
+    "",
+    "**What it is.** Type definitions package not found or invalid",
+    "",
+    "**Why.** A package of [dialect] defs (name@version) or one of its depends is not in the definitions repository (--defs-path, $NUCLEAR_DEFS_PATH, the defs/ folder next to each dialects/ folder), or its files are invalid. Generate it with tools/defs.",
+    "",
+    "**Example.** `defs = [\"flutter@9.9.9\"]` without that version in the `defs/` repository"
+   ],
+   "keys": [
+    "n0213",
+    "type definitions package not found"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0213",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false,
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0214"
+    }
+   ]
+  },
+  {
+   "id": "error:N0214",
+   "type": "diagnostic",
+   "title": "N0214 — two versions of the same type definitions package",
+   "summary": "Two versions of the same definitions package",
+   "body": [
+    "`N0214` · dialects · error",
+    "",
+    "**What it is.** Two versions of the same definitions package",
+    "",
+    "**Why.** A dialect and the dialects it extends (or the depends of their packages) ask for two versions of the same definitions package. Use one version.",
+    "",
+    "**Example.** `dart` asks for `dart@3.13.5` and a child dialect for `dart@3.12.0`"
+   ],
+   "keys": [
+    "n0214",
+    "two versions of the same type definitions package"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0214",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "agents": false,
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0213"
+    }
+   ]
+  },
+  {
+   "id": "error:N0215",
+   "type": "diagnostic",
+   "title": "N0215 — method not allowed in this kind",
+   "summary": "Method not allowed in the kind",
+   "body": [
+    "`N0215` · dialects · error",
+    "",
+    "**What it is.** Method not allowed in the kind",
+    "",
+    "**Why.** The kind declares the only methods it can have ([kinds.<k>] methods); a usecase has a single exec method.",
+    "",
+    "**Example.** a second method in a `usecase` (only `exec` is allowed)",
+    "",
+    "**Right.** One use case, one operation: a second operation is a second `usecase` file. A helper several use cases share is a `service`."
+   ],
+   "keys": [
+    "n0215",
+    "method not allowed in this kind"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0215",
+    "family": "dialect",
+    "severity": "error",
+    "kinds": [
+     "usecase"
+    ]
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0216"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.usecase"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:add-a-use-case"
+    }
+   ],
+   "tags": [
+    "kinds",
+    "usecase"
+   ]
+  },
+  {
+   "id": "error:N0216",
+   "type": "diagnostic",
+   "title": "N0216 — the kind requires another return type",
+   "summary": "The kind requires another return type",
+   "body": [
+    "`N0216` · dialects · error",
+    "",
+    "**What it is.** The kind requires another return type",
+    "",
+    "**Why.** Every method of this kind must return the type its dialect names ([kinds.<k>] returns), for example Result<E, T> in a usecase.",
+    "",
+    "**Example.** `exec() Character` in a `usecase` (it must return `Result<E, T>`)",
+    "",
+    "**Right.**",
+    "",
+    "```nuclear",
+    "usecase BooksOfAuthor(books: BookRepository)",
+    "  exec(author: string) Result<Error, Book[]>",
+    "    Ok(~books.byAuthor(author))",
+    "```"
+   ],
+   "keys": [
+    "n0216",
+    "the kind requires another return type"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0216",
+    "family": "dialect",
+    "severity": "error",
+    "kinds": [
+     "usecase"
+    ]
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0215"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.usecase"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    }
+   ],
+   "tags": [
+    "kinds",
+    "usecase",
+    "result"
+   ]
+  },
+  {
+   "id": "error:N0217",
+   "type": "diagnostic",
+   "title": "N0217 — unknown or missing argument of a decorator",
+   "summary": "Unknown or missing decorator argument (`[decorators.args]`)",
+   "body": [
+    "`N0217` · dialects · error",
+    "",
+    "**What it is.** Unknown or missing decorator argument (`[decorators.args]`)",
+    "",
+    "**Why.** The dialect lists the arguments of the decorator ([decorators.args]): each named argument, each field of an object argument, and the ones that are required (!).",
+    "",
+    "**Example.** `@screen(loggedIn = { })` (missing `forward`), `@screen(rute = \"/\")`",
+    "",
+    "**Check.** The message lists the arguments the decorator has. Look it up: `nuclear help <decorator> --platform <p>`."
+   ],
+   "keys": [
+    "n0217",
+    "unknown or missing argument of a decorator"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0217",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0309"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0308"
+    }
+   ],
+   "tags": [
+    "decorators"
+   ]
+  },
+  {
+   "id": "error:N0218",
+   "type": "diagnostic",
+   "title": "N0218 — the kind does not write that part of the declaration",
+   "summary": "The kind does not write the declaration's generics (`<T>`) or interfaces (`> I`): they would be lost",
+   "body": [
+    "`N0218` · dialects · error",
+    "",
+    "**What it is.** The kind does not write the declaration's generics (`<T>`) or interfaces (`> I`): they would be lost",
+    "",
+    "**Why.** The template of the kind never writes the generics (<T>) or the interfaces (> I) of the declaration, so they would be lost: remove them or use a kind (or a plain declaration) that writes them.",
+    "",
+    "**Example.** `Page<T>` with a kind whose template does not use `generics`; `@stateModel(S) statemanager M > Comparable`"
+   ],
+   "keys": [
+    "n0218",
+    "the kind does not write that part of the declaration"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0218",
+    "family": "dialect",
+    "severity": "error",
+    "kinds": [
+     "statemanager"
+    ]
+   },
+   "tags": [
+    "kinds",
+    "generics"
+   ]
+  },
+  {
+   "id": "error:N0219",
+   "type": "diagnostic",
+   "title": "N0219 — named argument the constructor does not have",
+   "summary": "Named argument the constructor does not have (from the type definitions; files of a project)",
+   "body": [
+    "`N0219` · dialects · error",
+    "",
+    "**What it is.** Named argument the constructor does not have (from the type definitions; files of a project)",
+    "",
+    "**Why.** The type definitions list the parameters of the constructor; the message names the closest one and all of them. `nuclear defs show <Class> --dialect <d>` prints the constructor.",
+    "",
+    "**Example.** `Text(\"a\", colour = c)`",
+    "",
+    "**Fix.** the closest parameter (`style`); the message lists all of them"
+   ],
+   "keys": [
+    "n0219",
+    "named argument the constructor does not have"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0219",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:type-definitions"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0220"
+    }
+   ],
+   "tags": [
+    "type-definitions"
+   ]
+  },
+  {
+   "id": "error:N0220",
+   "type": "diagnostic",
+   "title": "N0220 — unknown class",
+   "summary": "PascalCase call that nothing defines (files of a project, dialects with type definitions); also a call's type argument (`inject<Missing>()`), not a generic parameter",
+   "body": [
+    "`N0220` · dialects · error",
+    "",
+    "**What it is.** PascalCase call that nothing defines (files of a project, dialects with type definitions); also a call's type argument (`inject<Missing>()`), not a generic parameter",
+    "",
+    "**Why.** A PascalCase call that is not declared in the project, imported, nor in the dialect's type definitions. `nuclear defs search <text> --dialect <d>` finds the real name.",
+    "",
+    "**Example.** `Collumn(children = [])`; `inject<BooksAppComponent>()` with no such class",
+    "",
+    "**Fix.** the closest known name (`Column`); `nuclear defs search`",
+    "",
+    "**Check.** A typo in a class of a library (the message gives the closest one); or a class of the project that no file declares: `inject<BooksAppComponent>()` needs a file that declares `appcomponent BooksAppComponent`. In a run of the Loop this means the plan missed a piece."
+   ],
+   "keys": [
+    "n0220",
+    "unknown class"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0220",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:type-definitions"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0219"
+    },
+    {
+     "rel": "see-also",
+     "to": "error:N0106"
+    },
+    {
+     "rel": "in-a-run",
+     "to": "failure:a-test-names-a-class-nobody-planned"
+    }
+   ],
+   "tags": [
+    "names",
+    "type-definitions"
+   ]
+  },
+  {
+   "id": "error:N0221",
+   "type": "diagnostic",
+   "title": "N0221 — a method of this kind needs a body",
+   "summary": "A method of the kind needs a body",
+   "body": [
+    "`N0221` · dialects · error",
+    "",
+    "**What it is.** A method of the kind needs a body",
+    "",
+    "**Why.** The kind's methods do something ([kinds.<k>] needs_body): an appcomponent method is an alias of a use case (`find() = GetOne.exec`) or has a body. A method without one would be generated empty.",
+    "",
+    "**Example.** `booksOf(author: string) Result<Error, Book[]>` alone in an `appcomponent` (it would be generated empty)",
+    "",
+    "**Fix.** an alias `booksOf() = BooksOfAuthor.exec`, or a body",
+    "",
+    "**Right.** An application component is only aliases to use cases:",
+    "",
+    "```nuclear",
+    "appcomponent BooksAppComponent",
+    "  booksOf() = BooksOfAuthor.exec",
+    "  create() = CreateBook.exec",
+    "```"
+   ],
+   "keys": [
+    "n0221",
+    "a method of this kind needs a body"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0221",
+    "family": "dialect",
+    "severity": "error",
+    "kinds": [
+     "appcomponent"
+    ]
+   },
+   "links": [
+    {
+     "rel": "kind",
+     "to": "kind:backend.appcomponent"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0112"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:appcomponent-only-aliases"
+    }
+   ],
+   "tags": [
+    "kinds",
+    "appcomponent"
+   ]
+  },
+  {
+   "id": "error:N0222",
+   "type": "diagnostic",
+   "title": "N0222 — an asynchronous call used without `~`",
+   "summary": "An asynchronous call used without `~`",
+   "body": [
+    "`N0222` · dialects · error",
+    "",
+    "**What it is.** An asynchronous call used without `~`",
+    "",
+    "**Why.** A member or an index of what an asynchronous call returns (`books.exec(a).length`) reads a value that is not there yet: await the call, `(~books.exec(a)).length`.",
+    "",
+    "**Example.** `expect(booksOfAuthor.exec(\"Ada\").length > 0)` (the length of a promise); `found = books.all()` then `found.length` (the variable holds the call)",
+    "",
+    "**Fix.** `(~booksOfAuthor.exec(\"Ada\")).length`; `found = ~books.all()`",
+    "",
+    "**Right.** Await once, keep the value, then use it:",
+    "",
+    "```nuclear",
+    "usecase CountBooks(books: BookRepository)",
+    "  exec(author: string) Result<Error, int>",
+    "    found = ~books.byAuthor(author)",
+    "    Ok(found.length)",
+    "```",
+    "",
+    "Every call to a repository, a use case, an `appcomponent` alias, an agent or a model is asynchronous. `nuclear fix` adds the `~`."
+   ],
+   "keys": [
+    "n0222",
+    "an asynchronous call used without `~`"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0222",
+    "family": "dialect",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    },
+    {
+     "rel": "often-with",
+     "to": "error:N0114"
+    },
+    {
+     "rel": "often-with",
+     "to": "error:N0111"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:a-call-without-its-await"
+    }
+   ],
+   "tags": [
+    "async"
+   ],
+   "asks": [
+    "how do I await a call",
+    "why is my result empty"
+   ]
+  },
+  {
+   "id": "error:N0301",
+   "type": "diagnostic",
+   "title": "N0301 — architecture: this declaration cannot use that one",
+   "summary": "A declaration uses another one its kind does not allow (`[architecture] callers`), or a name its kind cannot use (`[architecture] names`)",
+   "body": [
+    "`N0301` · projects and architecture · error",
+    "",
+    "**What it is.** A declaration uses another one its kind does not allow (`[architecture] callers`), or a name its kind cannot use (`[architecture] names`)",
+    "",
+    "**Why.** The dialect's [architecture] callers says which kinds can use each kind (a usecase only from an appcomponent, a service only from a usecase or an aggregate), and [architecture] names which kinds can use a name (BuildContext only in views).",
+    "",
+    "**Example.** a screen calls a `usecase` (only an `appcomponent` calls it); a `statemanager` receives a `BuildContext`",
+    "",
+    "**The allowed calls.** Backend: controller → `appcomponent` → use case → repository, service or aggregate. Mobile and web: screen → state manager → `appcomponent` → use case → repository or service. Only views use the build context and navigate.",
+    "",
+    "**Right.**",
+    "",
+    "```nuclear",
+    "@controller(\"books\")",
+    "controller BooksController(books: BooksAppComponent)",
+    "  @get(\"author/{author}\")",
+    "  byAuthor(author: string) Result<Error, Book[]>",
+    "    ~books.booksOf(author)",
+    "```",
+    "",
+    "It is not a typo: move the call to the kind that may make it, and add the alias to the facade."
+   ],
+   "keys": [
+    "n0301",
+    "architecture: this declaration cannot use that one"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0301",
+    "family": "project",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:project-architecture"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0302"
+    },
+    {
+     "rel": "theory",
+     "to": "concept:clean-architecture"
+    }
+   ],
+   "tags": [
+    "architecture"
+   ],
+   "asks": [
+    "why can't my controller call a repository",
+    "who can call a use case"
+   ]
+  },
+  {
+   "id": "error:N0302",
+   "type": "diagnostic",
+   "title": "N0302 — architecture: private to its component",
+   "summary": "A declaration uses something private of another component (`[architecture] public`)",
+   "body": [
+    "`N0302` · projects and architecture · error",
+    "",
+    "**What it is.** A declaration uses something private of another component (`[architecture] public`)",
+    "",
+    "**Why.** Only the kinds listed in [architecture] public (the appcomponent) are visible from other components; use the component through its appcomponent.",
+    "",
+    "**Example.** `episodes` uses `CharacterRepository` of `characters` instead of `CharactersComponent`",
+    "",
+    "**Right.** Depend on the other component's `appcomponent` (`characters: CharactersAppComponent`), and add there the alias you need."
+   ],
+   "keys": [
+    "n0302",
+    "architecture: private to its component"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0302",
+    "family": "project",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:project-architecture"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0301"
+    }
+   ],
+   "tags": [
+    "architecture"
+   ]
+  },
+  {
+   "id": "error:N0303",
+   "type": "diagnostic",
+   "title": "N0303 — invalid project",
+   "summary": "Invalid project",
+   "body": [
+    "`N0303` · projects and architecture · error",
+    "",
+    "**What it is.** Invalid project",
+    "",
+    "**Why.** The project has no nuclear.toml, the manifest is invalid (config.nuc: only its sections, with named literal values), or two files declare the same name.",
+    "",
+    "**Example.** `nuclear.toml` is missing, two files declare the same name, or the manifest in Nuclear (`config.nuc`) has another section, an unnamed argument or a value that is not a literal"
+   ],
+   "keys": [
+    "n0303",
+    "invalid project"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0303",
+    "family": "project",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:config"
+    },
+    {
+     "rel": "a-duplicate-is",
+     "to": "error:N0102"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:not-inside-a-project"
+    }
+   ],
+   "tags": [
+    "project"
+   ]
+  },
+  {
+   "id": "error:N0304",
+   "type": "diagnostic",
+   "title": "N0304 — a plugin the project has not enabled",
+   "summary": "A kind or a name of a plugin the project does not enable (`[project.plugins]` of the dialect)",
+   "body": [
+    "`N0304` · projects and architecture · error",
+    "",
+    "**What it is.** A kind or a name of a plugin the project does not enable (`[project.plugins]` of the dialect)",
+    "",
+    "**Why.** The kind or the name belongs to an optional plugin of the dialect (Genkit, Kafka, LangChain...). A project carries a plugin only when its config.nuc enables it: plugins(name = true). The message gives the exact line.",
+    "",
+    "**Example.** `flow Chat` or `Genkit(...)` without `plugins(genkit = true)` in `config.nuc`",
+    "",
+    "**Fix.** enable it in `config.nuc`: `plugins(genkit = true)`",
+    "",
+    "**Right.** The message says the line. In `config.nuc`:",
+    "",
+    "```nuclear",
+    "dragonfly(platform = \"backend\", dialect = \"fastapi\")",
+    "app(name = \"books_api\")",
+    "plugins(sqlite = true, ai = true, ollama = true)",
+    "```"
+   ],
+   "keys": [
+    "n0304",
+    "a plugin the project has not enabled"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0304",
+    "family": "project",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:plugins"
+    },
+    {
+     "rel": "see-also",
+     "to": "error:N0201"
+    }
+   ],
+   "tags": [
+    "project",
+    "plugins"
+   ],
+   "asks": [
+    "why is agent not a kind",
+    "how do I enable sqlite"
+   ]
+  },
+  {
+   "id": "error:N0305",
+   "type": "diagnostic",
+   "title": "N0305 — a dialect does not match its platform",
+   "summary": "A dialect does not match its platform's contract (`dialects/<platform>/platform.toml`, ADR-0093): a kind missing or added, a consumed decorator or a plugin the platform does not declare (a plugin the dialect does not bring yet is a warning)",
+   "body": [
+    "`N0305` · projects and architecture · error",
+    "",
+    "**What it is.** A dialect does not match its platform's contract (`dialects/<platform>/platform.toml`, ADR-0093): a kind missing or added, a consumed decorator or a plugin the platform does not declare (a plugin the dialect does not bring yet is a warning)",
+    "",
+    "**Why.** A dialect in dialects/<platform>/ must implement that platform's contract (platform.toml, ADR-0093): the same kinds, and no consumed decorator or plugin the platform does not declare, so the Nuclear of a project never changes with its dialect. A platform plugin the dialect does not bring yet is a warning.",
+    "",
+    "**Example.** `[kinds.widget]` in a backend dialect",
+    "",
+    "**Fix.** declare it in `platform.toml` and implement it in every dialect of the platform, or drop it"
+   ],
+   "keys": [
+    "n0305",
+    "a dialect does not match its platform"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0305",
+    "family": "project",
+    "severity": "error"
+   },
+   "agents": false
+  },
+  {
+   "id": "error:N0306",
+   "type": "diagnostic",
+   "title": "N0306 — kind package without an implementation for the dialect",
+   "summary": "A kind package (`kinds/<name>/`, ADR-0095) enabled in `config.nuc` has no implementation for the project's dialect",
+   "body": [
+    "`N0306` · projects and architecture · error",
+    "",
+    "**What it is.** A kind package (`kinds/<name>/`, ADR-0095) enabled in `config.nuc` has no implementation for the project's dialect",
+    "",
+    "**Why.** A package of extension kinds (kinds/<name>/, ADR-0095) implements some dialects of its platform; enabling it in config.nuc ties the project to those dialects. Build with one of them, or add a folder for this dialect to the package.",
+    "",
+    "**Example.** `plugins(jobs = true)` with `kinds/jobs/fastapi/` only, built with `nestjs` (fix: build with fastapi, or add `kinds/jobs/nestjs/`)"
+   ],
+   "keys": [
+    "n0306",
+    "kind package without an implementation for the dialect"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0306",
+    "family": "project",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:kinds"
+    },
+    {
+     "rel": "see-also",
+     "to": "error:N0304"
+    }
+   ],
+   "tags": [
+    "project",
+    "kinds"
+   ]
+  },
+  {
+   "id": "error:N0307",
+   "type": "diagnostic",
+   "title": "N0307 — contract not available",
+   "summary": "A contract the manifest declares (`contracts(name = \"../path\" | \"https://...\")`, ADR-0098) cannot be read: the backend at that path was never built, a url contract was never fetched, or the JSON is invalid",
+   "body": [
+    "`N0307` · projects and architecture · error",
+    "",
+    "**What it is.** A contract the manifest declares (`contracts(name = \"../path\" | \"https://...\")`, ADR-0098) cannot be read: the backend at that path was never built, a url contract was never fetched, or the JSON is invalid",
+    "",
+    "**Why.** The manifest declares a contract (contracts(name = \"../path\" | \"https://...\")) that cannot be read: build the backend project at that path first, or fetch a url contract with `nuclear contracts update` (it keeps a copy in contracts/<name>/contract.json).",
+    "",
+    "**Example.** `contracts(tasks_api = \"https://api.x\")` without `nuclear contracts update`",
+    "",
+    "**Fix.** build the backend (`nuclear build ../tasks_api`) or run `nuclear contracts update`"
+   ],
+   "keys": [
+    "n0307",
+    "contract not available"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0307",
+    "family": "project",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:contracts"
+    },
+    {
+     "rel": "then",
+     "to": "error:N0116"
+    }
+   ],
+   "tags": [
+    "project",
+    "contracts"
+   ]
+  },
+  {
+   "id": "error:N0308",
+   "type": "diagnostic",
+   "title": "N0308 — a field decorator's rule is not met",
+   "summary": "A field decorator's rule is not met (`[decorators.fields]` of the platform, ADR-0100): a relation field is optional, its type is an entity (a list for `@oneToMany`/`@manyToMany`), `@manyToOne` needs its column `<name>Id`, `inverse` names a field of the related entity, one side of a `@manyToMany` has `@joinTable` and one side of a `@oneToOne` has `@joinColumn`",
+   "body": [
+    "`N0308` · projects and architecture · error",
+    "",
+    "**What it is.** A field decorator's rule is not met (`[decorators.fields]` of the platform, ADR-0100): a relation field is optional, its type is an entity (a list for `@oneToMany`/`@manyToMany`), `@manyToOne` needs its column `<name>Id`, `inverse` names a field of the related entity, one side of a `@manyToMany` has `@joinTable` and one side of a `@oneToOne` has `@joinColumn`",
+    "",
+    "**Why.** A decorator of a field has rules of its platform ([decorators.fields] of platform.toml): the field is optional, its type is a list or not, its type is a declaration with a decorator (an @entity), a sibling field exists (`projectId` for `@manyToOne project`), an argument names a field of the field's type (`inverse`). The message says which rule and the fix.",
+    "",
+    "**Example.** `@manyToOne project: Project` (not optional, no `projectId`)",
+    "",
+    "**Fix.** `@manyToOne project?: Project` + `projectId: int`",
+    "",
+    "**Right.** A relation field is optional, its type is an entity, and a `@manyToOne` keeps its column in a field of its own:",
+    "",
+    "```nuclear",
+    "@entity(\"projects\")",
+    "entity Project()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  @oneToMany(inverse = \"project\")",
+    "  tasks?: Task[]",
+    "",
+    "@entity(\"tasks\")",
+    "entity Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  title: string",
+    "  projectId: int",
+    "  @manyToOne(inverse = \"tasks\")",
+    "  project?: Project",
+    "```"
+   ],
+   "keys": [
+    "n0308",
+    "a field decorator's rule is not met"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0308",
+    "family": "project",
+    "severity": "error",
+    "kinds": [
+     "entity"
+    ]
+   },
+   "links": [
+    {
+     "rel": "kind",
+     "to": "kind:backend.entity"
+    },
+    {
+     "rel": "same-family",
+     "to": "error:N0217"
+    }
+   ],
+   "tags": [
+    "decorators",
+    "relations"
+   ]
+  },
+  {
+   "id": "error:N0309",
+   "type": "diagnostic",
+   "title": "N0309 — not a decorator of the platform",
+   "summary": "A project of a platform writes a decorator in lower case its platform does not declare (`decorators` of `platform.toml`): the dialect would drop it or write it as something else. The message names the closest one, or what replaced a removed one (`[decorators.replaced]`)",
+   "body": [
+    "`N0309` · projects and architecture · error",
+    "",
+    "**What it is.** A project of a platform writes a decorator in lower case its platform does not declare (`decorators` of `platform.toml`): the dialect would drop it or write it as something else. The message names the closest one, or what replaced a removed one (`[decorators.replaced]`)",
+    "",
+    "**Why.** A project of a platform (backend, mobile, web) writes only the decorators its platform declares (`decorators` of platform.toml): one that is not there would be dropped or written as something else by the dialect. The message names the closest one, or what replaced a removed decorator (`@generated` → `@primary(generated = true)`, ADR-0100). Decorators in PascalCase (a converter, a target's own decorator) are not checked.",
+    "",
+    "**Example.** `@generated()` on a backend entity field",
+    "",
+    "**Fix.** `@primary(generated = true)`",
+    "",
+    "**Check.** The decorators of a platform: `nuclear help words --platform <p>`. `@generated()` is now `@primary(generated = true)`."
+   ],
+   "keys": [
+    "n0309",
+    "not a decorator of the platform"
+   ],
+   "sources": [
+    "spec/diagnostics.md",
+    "crates/nuclear-diag/src/lib.rs"
+   ],
+   "meta": {
+    "code": "N0309",
+    "family": "project",
+    "severity": "error"
+   },
+   "links": [
+    {
+     "rel": "same-family",
+     "to": "error:N0217"
+    }
+   ],
+   "tags": [
+    "decorators"
+   ]
+  }
+ ]
+}

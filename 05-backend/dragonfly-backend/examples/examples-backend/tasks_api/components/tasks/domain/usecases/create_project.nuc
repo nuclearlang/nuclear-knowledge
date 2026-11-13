@@ -1,3 +1,0 @@
-usecase CreateProject(projects: ProjectRepository)
-  exec(input: NewProject) Result<Error, Project>
-    Ok(~projects.save(Project(name = input.name)))

@@ -1,0 +1,731 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "05-backend",
+ "about": "The backend platform: its repository, contracts and context",
+ "rows": [
+  {
+   "id": "doc:dragonfly-backend/AGENTS.md#agents-md-dragonfly-backend",
+   "type": "readme",
+   "title": "AGENTS.md — dragonfly-backend",
+   "summary": "The backend platform of Dragonfly: HTTP APIs, databases with relations, migrations and transactions, events, AI agents and graphs, written once in Nuclear and built with either dialect: `fastapi` (Python: FastAPI, SQLAlchemy, Alembic, LangGraph) or `nestjs` (TypeScript: NestJS, Sequelize,…",
+   "body": [
+    "The backend platform of Dragonfly: HTTP APIs, databases with relations, migrations and transactions, events, AI agents and graphs, written once in Nuclear and built with either dialect: `fastapi` (Python: FastAPI, SQLAlchemy, Alembic, LangGraph) or `nestjs` (TypeScript: NestJS, Sequelize, LangChain.js).",
+    "",
+    "This repository is a folder of the NuclearLang working tree (`nuclear/dragonfly-backend`); the platform's rules are the",
+    "working tree's `../AGENTS.md` ([nuclear](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md)) and its state is `../STATUS.md`.",
+    "",
+    "- Context of this repository: [docs/context/dragonfly-backend/CONTEXT.md](docs/context/dragonfly-backend/CONTEXT.md).",
+    "- What is inside: `dialects/backend/` (the platform contract, `fastapi`, `nestjs`), `packages/{dragonfly-py,dragonfly-nest}` (the runtimes), `defs/{python,typescript}/`, `spec/{backend,fastapi,nestjs}.md`, `examples/` (`tasks_api` builds with both dialects), `tools/{fastapi,nestjs}-check`, `docs/`.",
+    "- Checks:",
+    "",
+    "```sh",
+    "(cd .. && cargo test)                 # the examples with both dialects, the goldens",
+    "sh tools/fastapi-check/check.sh       # pyright --strict, pytest, migrations, a live run",
+    "sh tools/nestjs-check/check.sh        # tsc --strict, node:test, migrations, a live run",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/AGENTS.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to dragonfly-backend are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to dragonfly-backend are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/CHANGELOG.md#unreleased",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- HTTP repositories (`Http` connection, bodiless `@get`/`@post`...) in fastapi and nestjs; `@key` for a JSON key that differs from the field; `[[generators]]` for `dragonfly gen` (ADR-0103).",
+    "- `[[generators.usecase]]`: `dragonfly gen usecase` writes a use case over a repository method, its alias in the facade and its route (ADR-0103).",
+    "- The order of a controller's routes no longer matters, in both dialects: a fixed segment wins over a parameter. Before, fastapi added the routes by method name (`GET <prefix>/search` of a generated resource answered 400, taken by `{id}`) and nestjs in the order written (`dragonfly-py` `router_of`, `dragonfly-nest` `configureApp`; `spec/backend.md` §2.7).",
+    "- `[[generators.resource]]`: the repository and the controller are merged (`merge = true`), so an action added to a resource that exists gets the members it lacks (ADR-0105)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/CONTRIBUTING.md#before-a-pull-request",
+   "type": "readme",
+   "title": "Contributing to dragonfly-backend — Before a pull request",
+   "summary": "(cd .. && cargo test) # the examples with both dialects, the goldens sh tools/fastapi-check/check.sh # pyright --strict, pytest, migrations, a live run sh tools/nestjs-check/check.sh # tsc --strict, node:test, migrations, a live run the area, the guide, `docs/context/` for agents and contributors).",
+   "body": [
+    "```sh",
+    "(cd .. && cargo test)                 # the examples with both dialects, the goldens",
+    "sh tools/fastapi-check/check.sh       # pyright --strict, pytest, migrations, a live run",
+    "sh tools/nestjs-check/check.sh        # tsc --strict, node:test, migrations, a live run",
+    "```",
+    "",
+    "- Everything is written in English: code, comments, docs and messages.",
+    "- A change that the user of NuclearLang can see updates its documentation in the same pull request (the spec of",
+    "  the area, the guide, `docs/context/` for agents and contributors).",
+    "- Rules and the reasons behind them: the [nuclear repository's AGENTS.md](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md) and its",
+    "  [decision records](https://github.com/nuclearlang/nuclear/tree/main/docs/adr).",
+    "",
+    "By contributing you agree that your contribution is licensed under the [Apache License 2.0](LICENSE)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/CONTRIBUTING.md#contributing-to-dragonfly-backend",
+   "type": "readme",
+   "title": "Contributing to dragonfly-backend",
+   "summary": "Thank you for helping.",
+   "body": [
+    "Thank you for helping. This repository is part of [NuclearLang](https://github.com/nuclearlang): the language is the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository, and the other repositories live as folders inside a clone of it, each with its",
+    "own git (the tools find each other that way)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/CONTRIBUTING.md#set-up",
+   "type": "readme",
+   "title": "Contributing to dragonfly-backend — Set up",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear git clone https://github.com/nuclearlang/dragonfly-backend (cd tools/node && npm install) # the shared Node tools of the checks python3 -m venv tools/python/.venv && tools/python/.venv/bin/pip install -r tools/python/requirements.txt…",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "git clone https://github.com/nuclearlang/dragonfly-backend",
+    "(cd tools/node && npm install)                    # the shared Node tools of the checks",
+    "python3 -m venv tools/python/.venv && tools/python/.venv/bin/pip install -r tools/python/requirements.txt",
+    "./install.sh",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/README.md#dragonfly-backend",
+   "type": "readme",
+   "title": "Dragonfly backend",
+   "summary": "The backend platform of Dragonfly: HTTP APIs, databases with relations, migrations and transactions, events, AI agents and graphs, written once in Nuclear and built with either dialect: `fastapi` (Python: FastAPI, SQLAlchemy, Alembic, LangGraph) or `nestjs` (TypeScript: NestJS, Sequelize,…",
+   "body": [
+    "The backend platform of Dragonfly: HTTP APIs, databases with relations, migrations and transactions, events, AI agents and graphs, written once in Nuclear and built with either dialect: `fastapi` (Python: FastAPI, SQLAlchemy, Alembic, LangGraph) or `nestjs` (TypeScript: NestJS, Sequelize, LangChain.js).",
+    "",
+    "Start with the guides [docs/dragonfly/python.md](docs/dragonfly/python.md) and [docs/dragonfly/nestjs.md](docs/dragonfly/nestjs.md), and [spec/backend.md](spec/backend.md)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/README.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/README.md#what-is-inside",
+   "type": "readme",
+   "title": "Dragonfly backend — What is inside",
+   "summary": "`dialects/backend/` (the platform contract, `fastapi`, `nestjs`), `packages/{dragonfly-py,dragonfly-nest}` (the runtimes), `defs/{python,typescript}/`, `spec/{backend,fastapi,nestjs}.md`, `examples/` (`tasks_api` builds with both dialects), `tools/{fastapi,nestjs}-check`, `docs/`.",
+   "body": "`dialects/backend/` (the platform contract, `fastapi`, `nestjs`), `packages/{dragonfly-py,dragonfly-nest}` (the runtimes), `defs/{python,typescript}/`, `spec/{backend,fastapi,nestjs}.md`, `examples/` (`tasks_api` builds with both dialects), `tools/{fastapi,nestjs}-check`, `docs/`.",
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/README.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/README.md#working-on-it",
+   "type": "readme",
+   "title": "Dragonfly backend — Working on it",
+   "summary": "It is built by the `nuclear` compiler and the `dragonfly` CLI, so it lives inside a clone of the nuclear repository: git clone https://github.com/nuclearlang/nuclear && cd nuclear git clone https://github.com/nuclearlang/dragonfly-backend (cd tools/node && npm install) # the shared Node tools of…",
+   "body": [
+    "It is built by the `nuclear` compiler and the `dragonfly` CLI, so it lives inside a clone of the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository:",
+    "",
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "git clone https://github.com/nuclearlang/dragonfly-backend",
+    "(cd tools/node && npm install)                    # the shared Node tools of the checks",
+    "python3 -m venv tools/python/.venv && tools/python/.venv/bin/pip install -r tools/python/requirements.txt",
+    "./install.sh",
+    "```",
+    "",
+    "The checks before a change: [CONTRIBUTING.md](CONTRIBUTING.md)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/README.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#checks",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Checks",
+   "summary": "python3 -m venv tools/python/.venv && tools/python/.venv/bin/pip install -r tools/python/requirements.txt tools/python/.venv/bin/pip install -e packages/dragonfly-py --config-settings editable_mode=compat tools/fastapi-check/check.sh # rick_api: build, pyright --strict, pytest, smoke.py; runtime…",
+   "body": [
+    "```sh",
+    "python3 -m venv tools/python/.venv && tools/python/.venv/bin/pip install -r tools/python/requirements.txt",
+    "tools/python/.venv/bin/pip install -e packages/dragonfly-py --config-settings editable_mode=compat",
+    "tools/fastapi-check/check.sh               # rick_api: build, pyright --strict, pytest, smoke.py; runtime tests",
+    "(cd packages/dragonfly-nest && npm install && npx tsc -p tsconfig.json)",
+    "(cd tools/node && npm install && npm install --no-save --install-links ../../packages/dragonfly-nest)",
+    "tools/nestjs-check/check.sh                  # tasks_api: runtime build, tsc --strict, node:test, smoke.mjs; runtime tests",
+    "tools/spec-check/check.py spec/python.md python python",
+    "tools/spec-check/check.py spec/fastapi.md fastapi python",
+    "tools/spec-check/check.py spec/nestjs.md nestjs typescript",
+    "```",
+    "",
+    "Goldens: `examples/examples-python/tour.py`, `examples/examples-nestjs/users.ts` (golden.rs);",
+    "`examples/expected/rick_api/`, `examples/expected/tasks_api/` (projects.rs). User guides: `docs/dragonfly/python.md`,",
+    "`docs/dragonfly/nestjs.md`.",
+    "",
+    "State and pending: [STATUS.md](https://github.com/nuclearlang/nuclear/blob/main/STATUS.md)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#dialects.5dc261",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Dialects",
+   "summary": "\"constructor\"` facades, controllers (route/body/query from `route` + `tinfo.model`; the platform's `@get(\"{id}\")` becomes `@Get(':id')` through `[options] route_param = \":name\"` and `decor.get.path`), LangChain.js / LangGraph.js (`Annotation.Root` states, zod tool schemas), `node:test` tests.",
+   "body": [
+    "\"constructor\"` facades, controllers (route/body/query from `route` + `tinfo.model`; the platform's `@get(\"{id}\")`",
+    "  becomes `@Get(':id')` through `[options] route_param = \":name\"` and `decor.get.path`), LangChain.js /",
+    "  LangGraph.js (`Annotation.Root` states, zod tool schemas), `node:test` tests. Project files: `src/app.module.ts`",
+    "  (a module per component via `components`), `src/main.ts`, `package.json` (`uses`, `plugins.packages`),",
+    "  `tsconfig.json`; `project_import = \"{{relative}}.js\"`. Spec: `spec/nestjs.md`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#dialects.60a137",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Dialects",
+   "summary": "controllers (the runtime's `controller`/`get` decorators add the leading slash to the platform's segments; an invalid body answers 400), SQLAlchemy 2 async repositories (`Repository[E]`, a query per method call via `self_member = \"q.{{name}}\"`), pydantic models, graph states as pydantic models…",
+   "body": [
+    "- **`fastapi`** (Python; `dialects/backend/fastapi/`, extends `python`): FastAPI",
+    "  controllers (the runtime's `controller`/`get` decorators add the leading slash to the platform's segments; an",
+    "  invalid body answers 400), SQLAlchemy 2 async repositories (`Repository[E]`, a query per method call via",
+    "  `self_member = \"q.{{name}}\"`), pydantic models, graph states as pydantic models (`state.field`; a field without a",
+    "  default gets its type's empty value, `templates/state_field.tpl`), LangChain/LangGraph tools, agents and graphs,",
+    "  listeners (in-process `publish` without Kafka; `conftest` creates them), pytest tests written to `tests/` from",
+    "  the platform's `test/`.",
+    "  `builtin_result = false`: Result comes from the runtime. The **`python` dialect** (`dialects/python/`) underneath",
+    "  is the base language in Python 3.12+ typed (emitter options of ADR-0089: `hoist_block_lambdas`, `init_fields`,",
+    "  `doc_inside`, f-strings, `module_separator`, `toplevel_gap`, `type_args_as_args`, `file_prelude`,",
+    "  `snake_case_names`); its Result runtime is `templates/result.tpl`. Specs: `spec/python.md`, `spec/fastapi.md`.",
+    "- **`nestjs`** (TypeScript; `dialects/backend/nestjs/`, extends nodejs → typescript): NestJS 12 ES modules,",
+    "  sequelize-typescript entities, `Repository<E>` with `@InjectModel`, class-validator DTOs, `alias_via ="
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#dragonfly-for-backend-the-platform-and-its-dialects-fastapi-and-nestjs",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs`",
+   "summary": "Future repository `dragonfly-backend` (ADR-0093 amends ADR-0083).",
+   "body": [
+    "Future repository `dragonfly-backend` (ADR-0093 amends ADR-0083). Decisions: ADR-0093 (platforms), ADR-0089 (python",
+    "dialect), ADR-0090 (Python backend), ADR-0091 (NestJS backend), ADR-0092 (plugins), ADR-0100 (data: `@primary(generated)`,",
+    "TypeORM relations, `relations(...)`, `paginate` → `Page<T>`, `@transactional`).",
+    "",
+    "**The platform** (`spec/backend.md`, Nuclear only): components with `data/` (entities, repositories), `domain/`",
+    "(models, use cases), `api/` (controllers), `ai/` (tools, agents, states, graphs), `events/` (listeners) and the",
+    "`appcomponent` facade; `config/project_config.nuc` with the connections; `config.nuc` with `dragonfly(platform =",
+    "\"backend\", dialect = ...)`, `app(...)` and `plugins(...)`; tests in `test/*_test.nuc`; errors as `Result`; the",
+    "standard library of Nuclear (`spec/library.md`). The same `.nuc` builds with every dialect below; the conformance",
+    "test (ADR-0093 §9) builds one example with both. Contract file: `dialects/backend/platform.toml` (phase B1)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#runtimes.21d162",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Runtimes",
+   "summary": "writes a `@manyToOne` set to a row and `$set`s a `@manyToMany` list; only the side with the column declares the foreign key (`constraints: false` on `@HasMany`/`@HasOne`); `joinTable(name, fk, other)` (no timestamps); `Related<T>` types a single relation so the decorator metadata never reads the…",
+   "body": [
+    "writes a `@manyToOne` set to a row and `$set`s a `@manyToMany` list; only the side with the column declares the",
+    "  foreign key (`constraints: false` on `@HasMany`/`@HasOne`); `joinTable(name, fk, other)` (no timestamps);",
+    "  `Related<T>` types a single relation so the decorator metadata never reads the other class (ESM circular imports).",
+    "  Transactions: an `AsyncLocalStorage` that every repository call passes as `{ transaction }`.",
+    "- Both runtimes have the same test: `packages/dragonfly-py/tests/test_data.py`, `packages/dragonfly-nest/test/data.test.ts`.",
+    "",
+    "Regenerate a runtime's definitions after changing its public API."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#runtimes.94e4ae",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Runtimes",
+   "summary": "type, `provide`, `bind`, `reset`), `config` (connections: Postgres, MySQL, MariaDB, SQLite(file), Redis, Kafka(servers, group), OpenAI, Ollama, Embeddings, Chroma(collection, embeddings, url); plain `postgres://` URLs get their async driver in `_with_driver`; `env`), `orm` (Entity, column helpers,…",
+   "body": [
+    "- **`packages/dragonfly-py`** (import `dragonfly`): `result`, `errors` (AppError + HTTP statuses), `inject` (by",
+    "  type, `provide`, `bind`, `reset`), `config` (connections: Postgres, MySQL, MariaDB, SQLite(file), Redis,",
+    "  Kafka(servers, group), OpenAI, Ollama, Embeddings, Chroma(collection, embeddings, url); plain `postgres://` URLs get",
+    "  their async driver in `_with_driver`; `env`), `orm` (Entity, column helpers, `schema_of`), `repository` (CRUD, Query, operators),",
+    "  `web` (controller decorators, `router_of`: Result → HTTP, entity ↔ schema), `app` (`create_app`, lifespan,",
+    "  `connection`), `http` (`Http(base_url)` connection, `HttpRepository`: bodiless `@get`/`@post`... methods, error",
+    "  statuses → `Err`, the answer validated by the declared type; ADR-0103), optional `ai` (Tools, Agent, Graph, `start`/`next`, `Messages`) and `events` (listener, `publish`,",
+    "  cache), `testing` (`running`, `client`, `FakeModel`, `memory_database`), `validators`. Tests:",
+    "  `packages/dragonfly-py/tests`; `dragonfly.migrate` (Alembic: `make` over a scratch SQLite at head, `up`, `down`;",
+    "  `create_app` keeps the config in `app.state` for it). Type definitions `defs/python/`: `tools/defs/python/generate.sh` from",
+    "  `tools/python/.venv` (`pip install -e packages/dragonfly-py --config-settings editable_mode=compat`)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#runtimes.bf7f68",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Runtimes",
+   "summary": "`file` + `createTables`, `env`, `databaseOf`), `repository`, `web` (`ResultInterceptor`, `configureApp`), `http` (`Http`, HTTP repositories; the answer is the raw JSON, not decoded by the model), `app` (`createApp`, `Connections`, `inject`, `connection`, `register`), `migrate` (bin…",
+   "body": [
+    "- **`packages/dragonfly-nest`** (npm `dragonfly-nest`, ESM): `result`, `errors`, `config` (databases with `url` or",
+    "  `file` + `createTables`, `env`, `databaseOf`), `repository`, `web` (`ResultInterceptor`, `configureApp`), `http` (`Http`, HTTP repositories; the answer is the raw JSON, not decoded by the model), `app`",
+    "  (`createApp`, `Connections`, `inject`, `connection`, `register`), `migrate` (bin `dragonfly-nest-migrate`:",
+    "  `schemaOf`, `diff`, `render`, `make`/`up`/`down`; reads `entities` and `config` the app module exports); entry points `dragonfly-nest/events` (Redis,",
+    "  Kafka(servers, group), Listener, `consumer`, `publish`, cache), `dragonfly-nest/ai` (ChatModel/Ollama/OpenAI,",
+    "  Embeddings (`'provider:model'`), Chroma + `ChromaStore` (chromadb's client behind a LangChain `VectorStore`:",
+    "  `@langchain/community` was rejected, its peers conflict with zod 4 and ioredis 6), `vectorStore`, Tools, Agent,",
+    "  Graph, `start`/`next`, `Messages`, `StateOf`, `FakeModel`), `dragonfly-nest/testing` (`startTestApp`,",
+    "  `useConnection`; so a production install without `@nestjs/testing` loads the base). Its own `devDependencies`",
+    "  build it (`npm install` in its folder); an app, and `tools/node`, install it with `npm install --no-save",
+    "  --install-links ../../packages/dragonfly-nest` (a symlink resolves its peers in its own `node_modules`, and two"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#runtimes.cead9c",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Runtimes",
+   "summary": "copies of `@nestjs/common` break `tsc`), so repeat it after rebuilding the runtime.",
+   "body": [
+    "copies of `@nestjs/common` break `tsc`), so repeat it after rebuilding the runtime. Tests: `test/runtime.test.ts`.",
+    "  Type definitions `defs/typescript/`: `tools/defs/typescript/generate.sh` from `tools/node/node_modules`.",
+    "",
+    "Both runtimes serve the contract the transpiler wrote next to the app (`GET /.nuclear/contract.json`,",
+    "`GET /.nuclear/openapi.json`; `_serve_contract` in `app.py`, `serveContract` in `web.ts`; ADR-0098)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md#runtimes.de9f1f",
+   "type": "context",
+   "title": "Dragonfly for backend — the platform and its dialects `fastapi` and `nestjs` — Runtimes",
+   "summary": "`[decorators.args]` and `[decorators.fields]` of `dialects/backend/platform.toml` (merged into both dialects by the loader; the emitter's `check_field_rules` raises N0308 with no decorator name in Rust, comparing Nuclear names so fastapi's snake_case output does not matter).",
+   "body": [
+    "**Data (ADR-0100), how it is built.** The rules of the relation decorators are data of the platform:",
+    "`[decorators.args]` and `[decorators.fields]` of `dialects/backend/platform.toml` (merged into both dialects by the",
+    "loader; the emitter's `check_field_rules` raises N0308 with no decorator name in Rust, comparing Nuclear names so",
+    "fastapi's snake_case output does not matter). Templates read `tinfo.decor` (the related entity's table),",
+    "`tinfo.fields_decor.primary` (its key), `owner` / `owner_decor` (the entity the field is in) and `|unquote`.",
+    "- fastapi: `many_to_one` / `one_to_many` / `many_to_many` / `one_to_one` in `orm.py` (`lazy=\"raise\"`; the foreign key",
+    "  is appended to the table in `Entity.__init_subclass__`; join tables are made when the mappers are configured, so",
+    "  `Database.open` calls `configure_mappers()` and SQLite runs `PRAGMA foreign_keys=ON`); `to_dict` and `EntitySchema`",
+    "  leave unloaded relations out; two entities import each other only under `if TYPE_CHECKING:` (`[kinds.entity]",
+    "  type_imports = true` + the python dialect's `[syntax] type_imports`); `main.py` and `conftest.py` list every entity",
+    "  (`entities=[...]`) so SQLAlchemy knows all tables. Transactions: a `ContextVar` session that `Repository.use()` joins.",
+    "- nestjs: the runtime's `Entity` base keeps the relations given to the constructor (sequelize drops them), `save`"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/contracts.md#1-the-backend-publishes-its-contract",
+   "type": "guide",
+   "title": "Contracts: one backend, its apps generated — 1. The backend publishes its contract",
+   "summary": "Nothing to write.",
+   "body": [
+    "Nothing to write. Building the backend (`nuclear build .`, `dragonfly build`, or the editor when it checks the",
+    "project) writes two files next to the project card:",
+    "",
+    "| File | Holds |",
+    "|---|---|",
+    "| `.nuclear/contract.json` | the controllers and their routes (verb, path, parameters and where each goes, body, answer, error, status), the models those carry (fields, Nuclear types, defaults, JSON names, validation rules, the key field, doc comments) |",
+    "| `.nuclear/openapi.json` | the same as OpenAPI 3.1, for Swagger UI, generators or an HTTP tool |",
+    "",
+    "Both are copied into `build/` and the running API serves them at `GET /.nuclear/contract.json` and",
+    "`GET /.nuclear/openapi.json`. The contract is the same whether the backend is built with `fastapi` or `nestjs`.",
+    "",
+    "```nuclear",
+    "// tasks_api/components/tasks/api/tasks_controller.nuc",
+    "// The CRUD of tasks.",
+    "@controller(\"tasks\")",
+    "controller TasksController(tasks: TasksAppComponent)",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Task>",
+    "    ~tasks.task(id)",
+    "",
+    "  @post()",
+    "  create(input: NewTask) Result<Error, Task>",
+    "    ~tasks.create(input)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/contracts.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/contracts.md#2-the-app-declares-the-backend",
+   "type": "guide",
+   "title": "Contracts: one backend, its apps generated — 2. The app declares the backend",
+   "summary": "One line in the app's `config.nuc`, and a connection with the same name: // tasks_app/config.nuc dragonfly(platform = \"mobile\", dialect = \"flutter\") app(name = \"tasks_app\", version = \"1.0.0+1\") contracts(tasks_api = \"../tasks_api\") // the backend checked out next to the app //…",
+   "body": [
+    "One line in the app's `config.nuc`, and a connection with the same name:",
+    "",
+    "```nuclear",
+    "// tasks_app/config.nuc",
+    "dragonfly(platform = \"mobile\", dialect = \"flutter\")",
+    "app(name = \"tasks_app\", version = \"1.0.0+1\")",
+    "contracts(tasks_api = \"../tasks_api\")              // the backend checked out next to the app",
+    "",
+    "// tasks_app/config/project_config.nuc",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    Http(connectionName = \"tasks_api\", baseUrl = \"http://localhost:3000/\"),",
+    "  ]",
+    "```",
+    "",
+    "**Not a monorepo?** Point at the running API instead and fetch the contract when you want to follow a change:",
+    "",
+    "```nuclear",
+    "contracts(tasks_api = \"https://api.example.com\")",
+    "```",
+    "",
+    "```sh",
+    "nuclear contracts update          # GET https://api.example.com/.nuclear/contract.json → contracts/tasks_api/",
+    "nuclear contracts list            # each contract, its source, the version of the copy",
+    "```",
+    "",
+    "The copy (`contracts/tasks_api/contract.json`) is committed with the app: a build never needs the network, and the",
+    "diff of a commit shows exactly what changed in the API."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/contracts.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/contracts.md#3-what-the-build-generates",
+   "type": "guide",
+   "title": "Contracts: one backend, its apps generated — 3. What the build generates",
+   "summary": "`contracts/tasks_api/` is written at every build (a path) or by `contracts update` (a url); the files say they are generated.",
+   "body": [
+    "`contracts/tasks_api/` is written at every build (a path) or by `contracts update` (a url); the files say they",
+    "are generated. The mobile example `examples/examples-flutter-dialect/tasks_app` gets:",
+    "",
+    "```nuclear",
+    "// contracts/tasks_api/models/task.nuc",
+    "Task",
+    "  @primary",
+    "  id: int",
+    "  title: string",
+    "  done: boolean = false",
+    "  // 1 high, 2 normal, 3 low",
+    "  priority: int = 2",
+    "  createdAt?: DateTime",
+    "",
+    "// contracts/tasks_api/models/new_task.nuc",
+    "NewTask",
+    "  @maxLength(200)",
+    "  @minLength(1)",
+    "  title: string",
+    "  @max(3)",
+    "  @min(1)",
+    "  priority: int = 2",
+    "",
+    "// contracts/tasks_api/tasks_repository.nuc",
+    "@repository(path = \"tasks\", connection = \"tasks_api\")",
+    "repository TasksRepository",
+    "  @get(local = true)",
+    "  all(done?: boolean) Result<TasksApiError, Task[]>",
+    "",
+    "  @get(path = \":id\", local = true)",
+    "  one(id: int) Result<TasksApiError, Task>",
+    "",
+    "  @post",
+    "  create(input: NewTask) Result<TasksApiError, Task>",
+    "```",
+    "",
+    "The rules of `NewTask` came from the backend: a form on it refuses what the API refuses. `Task` has its key, so",
+    "the GETs get `local = true` and `allAsLocal()` / `oneAsLocal()` answer offline. Only what the app's platform",
+    "understands is written (a web app gets no `@primary` and no rules until it has forms and a local database)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/contracts.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/contracts.md#4-the-app-writes-only-its-own-logic",
+   "type": "guide",
+   "title": "Contracts: one backend, its apps generated — 4. The app writes only its own logic",
+   "summary": "usecase PendingTasksUseCase (tasks: TasksRepository) exec() Result<TasksApiError, Task[]> ~tasks.all(done = false) usecase AddTaskUseCase (tasks: TasksRepository) exec(title: string) Result<TasksApiError, Task> ~tasks.create(input = NewTask(title = title)) Rename `done` to `completed` in the…",
+   "body": [
+    "```nuclear",
+    "usecase PendingTasksUseCase",
+    "  (tasks: TasksRepository)",
+    "",
+    "  exec() Result<TasksApiError, Task[]>",
+    "    ~tasks.all(done = false)",
+    "",
+    "usecase AddTaskUseCase",
+    "  (tasks: TasksRepository)",
+    "",
+    "  exec(title: string) Result<TasksApiError, Task>",
+    "    ~tasks.create(input = NewTask(title = title))",
+    "```",
+    "",
+    "Rename `done` to `completed` in the backend, build it, build the app:",
+    "",
+    "```",
+    "error[N0116]: 'done' is not a member of Task",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/contracts.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/contracts.md#5-in-the-editor",
+   "type": "guide",
+   "title": "Contracts: one backend, its apps generated — 5. In the editor",
+   "summary": "The Nuclear HTTP view of the VS Code extension lists every project of the workspace by platform, its components and endpoints (from the contracts), the contracts an app declares with an *Update* action, and OpenAPI documents of APIs that are not Nuclear.",
+   "body": [
+    "The **Nuclear HTTP** view of the VS Code extension lists every project of the workspace by platform, its",
+    "components and endpoints (from the contracts), the contracts an app declares with an *Update* action, and OpenAPI",
+    "documents of APIs that are not Nuclear. Clicking an endpoint opens a request panel with the active environment's",
+    "variables and headers (`.nuclear/http.json`), a sample body built from the model, and the pretty-printed response.",
+    "",
+    "Rules: [projects.md §1.2](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md); plan and decisions: `specs/003-shared-contracts/plan.md`,",
+    "ADR-0098."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/contracts.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/contracts.md#contracts-one-backend-its-apps-generated",
+   "type": "guide",
+   "title": "Contracts: one backend, its apps generated",
+   "summary": "A backend written in Nuclear describes its API once.",
+   "body": [
+    "A backend written in Nuclear describes its API once. Every app that calls it (mobile, web) gets the models and",
+    "the repositories **generated from that description** instead of writing them by hand, and a change in the API is",
+    "caught when the app builds, not on the phone (ADR-0098). Backend and app stay two projects, deployed apart, talking",
+    "over HTTP: what travels is a JSON description, as OpenAPI or a `.proto` file would."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/contracts.md"
+   ],
+   "meta": {
+    "section": "05-backend",
+    "repo": "dragonfly-backend",
+    "dialect": ""
+   }
+  }
+ ]
+}

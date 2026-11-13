@@ -1,0 +1,854 @@
+{
+ "shelf": "platforms",
+ "origin": "generated",
+ "generator": "05-backend-rules",
+ "about": "The backend platform: its rules",
+ "rows": [
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#1-project-plugins",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — Plugins",
+   "summary": "The optional parts of the platform (projects.md §3.3), the same list in every dialect: `sqlite`, `postgres`, `mysql`, `mariadb`, `redis`, `kafka`, `events`, `ai`, `openai`, `ollama`, `chroma`.",
+   "body": [
+    "The optional parts of the platform ([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §3.3), the same list in every dialect:",
+    "`sqlite`, `postgres`, `mysql`, `mariadb`, `redis`, `kafka`, `events`, `ai`, `openai`, `ollama`, `chroma`. Only the",
+    "enabled ones reach the generated project's dependencies. A kind or a name of a plugin not enabled is N0304, with",
+    "the line to add: `tools`, `agent`, `state`, `graph` need `ai`; `listener`, `publish` need `events` (or `kafka`",
+    "for a broker); `cacheGet`, `cacheSet` need `redis`; a database connection needs its plugin."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#1-project.413e30",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 1. Project",
+   "summary": "A backend's build also writes its contract (`.nuclear/contract.json`: controllers, routes, models) and its `/.nuclear/openapi.json`; a mobile or web project generates its models and repositories from it (projects.md §1.2, ADR-0098).",
+   "body": [
+    "A backend's build also writes its **contract** (`.nuclear/contract.json`: controllers, routes, models) and its",
+    "**OpenAPI document** (`.nuclear/openapi.json`), served by the running app at `/.nuclear/contract.json` and",
+    "`/.nuclear/openapi.json`; a mobile or web project generates its models and repositories from it",
+    "([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §1.2, ADR-0098).",
+    "",
+    "```",
+    "tasks_api/",
+    "├── config.nuc                         dragonfly(...), app(...), plugins(...), dependencies(...)",
+    "├── config/project_config.nuc          appConfig: the connections of the app",
+    "├── components/tasks/",
+    "│   ├── tasks_appcomponent.nuc         appcomponent: what the rest of the app sees",
+    "│   ├── config/tasks_config.nuc        config: connections only this component uses",
+    "│   ├── data/entities/*.nuc            entities (tables), by folder",
+    "│   ├── data/repositories/*.nuc        repository",
+    "│   ├── domain/models/*.nuc            models (what the API reads and answers), by folder",
+    "│   ├── domain/usecases/*.nuc          usecase; also service and aggregate",
+    "│   ├── api/*.nuc                      controller",
+    "│   ├── events/*.nuc                   listener",
+    "│   └── ai/*.nuc                       tools, agent, state, graph",
+    "├── shared/                            models, tools... used by several components",
+    "└── test/*_test.nuc                    tests",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#1-project.848269",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 1. Project",
+   "summary": "`agent`, `state` and `graph` are visible.",
+   "body": [
+    "**Architecture rules** (N0301, N0302): from another component only `appcomponent`, `model`, `entity`, `tools`,",
+    "`agent`, `state` and `graph` are visible. A `usecase` is called only from the facade; a `service` from a use case",
+    "or an aggregate; an `aggregate` from a use case; a `repository` from a use case, an aggregate or a `tools`.",
+    "`test/` is exempt."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#1-project.a225d4",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 1. Project",
+   "summary": "`config.nuc` is the only manifest (projects.md §1): the platform and dialect, the app and the plugins it uses, and `dependencies(name = \"version\")` for a package the framework does not bring (a version that starts with `.` or `/` is a folder on disk; its type definitions go in the project's…",
+   "body": [
+    "`config.nuc` is the only manifest ([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §1): the platform and dialect, the app and the",
+    "plugins it uses, and `dependencies(name = \"version\")` for a package the framework does not bring (a version that starts",
+    "with `.` or `/` is a folder on disk; its type definitions go in the project's `defs/`, projects.md §3.2). `nuclear build",
+    ".` (or the `dragonfly` CLI) writes `build/`: the dialect's project, never edited.",
+    "",
+    "```nuclear",
+    "dragonfly(platform = \"backend\", dialect = \"fastapi\")",
+    "app(name = \"tasks_api\", description = \"Tasks and an assistant.\", version = \"0.1.0\")",
+    "plugins(sqlite = true, events = true, ollama = true)",
+    "```",
+    "",
+    "Kinds by folder: the file's folder gives the kind when the declaration does not name it (`data/entities/` →",
+    "entity, `data/repositories/` → repository, `domain/models/` → model, `domain/usecases/` → usecase, `api/` →",
+    "controller, `events/` → listener, `ai/` → the header word). Every kind's dependencies are the typed parameters",
+    "of its header, injected by type (ADR-0043). Names stay Nuclear's (`camelCase`): the dialect writes its own case."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-1-entity.2915be",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.1 Entity",
+   "summary": "`onDelete`: `\"cascade\"`, `\"set null\"`, `\"restrict\"` (default: the database's).",
+   "body": [
+    "`onDelete`: `\"cascade\"`, `\"set null\"`, `\"restrict\"` (default: the database's). A relation field is optional: it is",
+    "there only when a query loads it (`relations(\"tasks\")`, `relations(\"tasks.tags\")`), and an unloaded one is absent from",
+    "the JSON answer, never `null` and never a hidden query. The join column is a field of its own: a row is related",
+    "without loading the other (`Task(title = t, projectId = id)`); a `@manyToMany` list set on a row is written by `save`.",
+    "These rules are checked at compile time (N0308).",
+    "",
+    "```nuclear",
+    "@entity(\"projects\")",
+    "Project()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  @oneToMany(inverse = \"project\")",
+    "  tasks?: Task[]",
+    "",
+    "@entity(\"tasks\")",
+    "Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  title: string",
+    "  @manyToOne(inverse = \"tasks\", onDelete = \"cascade\")",
+    "  project?: Project",
+    "  projectId?: int",
+    "  @manyToMany(inverse = \"tasks\")",
+    "  @joinTable()",
+    "  tags?: Tag[]",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-1-entity.674ea6",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.1 Entity",
+   "summary": "A table.",
+   "body": [
+    "A table. `@entity(\"name\")` names it (default: the class name in snake_case, plural not added). Fields are",
+    "columns: `@primary` (the key; `@primary(generated = true)`: the database gives it, auto increment for an `int`, a",
+    "uuid for a `string`; `@primary(length = 8)`: the app gives a code), `@column(length, unique, nullable, name)`,",
+    "`@created`, `@updated` (timestamps written by the database). `T?` is a nullable column; a default is the",
+    "column's default.",
+    "",
+    "```nuclear",
+    "@entity(\"tasks\")",
+    "Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 200)",
+    "  title: string",
+    "  done: boolean = false",
+    "  // 1 high, 2 normal, 3 low",
+    "  priority: int = 2",
+    "  @created()",
+    "  createdAt?: DateTime",
+    "```",
+    "",
+    "#### Relations (ADR-0100)",
+    "",
+    "Decorators on the relation field; the related entity is the field's type, never repeated:",
+    "",
+    "| Decorator | On | Means |",
+    "|---|---|---|",
+    "| `@manyToOne(inverse, onDelete)` | `x?: T` + a field `xId` | this row points to one row of T by its column `xId` |",
+    "| `@oneToMany(inverse)` | `xs?: T[]` | the rows of T whose `@manyToOne` field `inverse` points here |",
+    "| `@manyToMany(inverse)` + `@joinTable()` on one side | `xs?: T[]` | through the table `<table>_<field>` (columns `<entity>_id`) |",
+    "| `@oneToOne(inverse, onDelete)` + `@joinColumn()` on one side | `x?: T` | the `@joinColumn` side keeps the column `xId` |"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-10-tools",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.10 Tools",
+   "summary": "Functions a model can call.",
+   "body": [
+    "Functions a model can call. A method with a doc comment is a tool: the comment is its description, the",
+    "parameters its schema (types and defaults), the return a `string`. A method without a comment is a helper.",
+    "`tools.tools()` lists them.",
+    "",
+    "```nuclear",
+    "tools TaskTools(tasks: TasksAppComponent)",
+    "  // Creates a task with a title and a priority (1 high, 2 normal, 3 low).",
+    "  addTask(title: string, priority: int = 2) string",
+    "    match ~tasks.create(NewTask(title = title, priority = priority))",
+    "      Ok(task) -> \"created task ${task.id}: ${task.title}\"",
+    "      Err(e) -> e.message",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-11-agent",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.11 Agent",
+   "summary": "A model with tools and a prompt, with memory per conversation: `~agent.ask(text, thread = \"default\")` answers.",
+   "body": [
+    "A model with tools and a prompt, with memory per conversation: `~agent.ask(text, thread = \"default\")` answers.",
+    "Its `tools` dependencies are its tools; `model` names a chat connection (default `\"default\"`).",
+    "",
+    "```nuclear",
+    "agent AssistantAgent(tools: TaskTools)",
+    "  prompt: string = \"You are a task assistant. Use the tools to read, add and complete tasks; never invent ids.\"",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-12-state-and-graph",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.12 State and graph",
+   "summary": "A `state` is the state of a graph (a model; `messages: Messages` keeps a conversation).",
+   "body": [
+    "A `state` is the state of a graph (a model; `messages: Messages` keeps a conversation). A `graph` runs nodes over",
+    "it: each method receives the state (`state.field`) and returns what changes (a map); `@start` marks the first",
+    "node and `@next(\"node\")` the one after it (`\"end\"` ends). `~chatModel()` is the chat connection; `textOf(reply)`",
+    "its text. `~planner.run(input, thread = \"default\")` runs it and gives the final state.",
+    "",
+    "```nuclear",
+    "state PlanState",
+    "  goal: string",
+    "  titles: string[]",
+    "  created: int",
+    "",
+    "@state(PlanState)",
+    "graph Planner(tasks: TasksAppComponent)",
+    "  @start",
+    "  @next(\"save\")",
+    "  split(state: PlanState) <string, any>",
+    "    reply = ~chatModel().invoke(\"Split this goal into at most 5 short tasks, one per line: ${state.goal}\")",
+    "    titles = textOf(reply).split(\"\\n\").map((line) => line.trim()).filter((line) => not line.isEmpty)",
+    "    { \"titles\": titles.take(5) }",
+    "",
+    "  @next(\"end\")",
+    "  save(state: PlanState) <string, any>",
+    "    created = 0",
+    "    for title in state.titles",
+    "      made = ~tasks.create(NewTask(title = title))",
+    "      if made.isOk",
+    "        created += 1",
+    "    { \"created\": created }",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-13-generators.22cc14",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.13 Generators",
+   "summary": "`dragonfly gen resource <component> <Name>` writes the finished, compiling code of a resource (ADR-0103): its models (nested objects become models named `<Name><Key>`; a paged answer gives `<Name>Page`), the repository (`--source rest:<base url>`: an HTTP repository over `Http(baseUrl)`, the app's…",
+   "body": [
+    "`dragonfly gen resource <component> <Name>` writes the finished, compiling code of a resource (ADR-0103): its models",
+    "(nested objects become models named `<Name><Key>`; a paged answer gives `<Name>Page`), the repository (`--source rest:<base url>`: an HTTP repository over `Http(baseUrl)`, the app's connection added when missing; `--source db`: an entity, a `New<Name>` model and a paged query), one use",
+    "case per action (`--actions list,get,search,create,update,delete`), their aliases in the facade, and the controller with the routes; a database resource also gets its tests. The fields",
+    "come from an example answer (`--from-json <file|url>`), a spec (`--from-spec <spec.md>`: its example answer, else its",
+    "`Key | Type` table; a `GET https://...` line gives the API) or `--fields \"id:int name:string\"`. A file that exists is",
+    "never overwritten (the facade, the repository and the controller get only the members they lack, so an action added to a resource that exists is finished); a name another file declares stops it before it writes.",
+    "`dragonfly gen inspect` answers what the project has. A stored resource gets no `search`: which column is searched is",
+    "a decision, so it is a query of the repository wired with `dragonfly gen usecase --calls`. The agent writes only what",
+    "is not standard: a use case with its own rules, a view's details."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-13-generators.74d099",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.13 Generators",
+   "summary": "`dragonfly gen usecase <component> <Name>` wires a use case into its component: its alias in the facade and, with `--route \"POST orders/{id}/cancel\"`, its route in the controller of the route's prefix (`OrdersController`, made when missing; a `{name}` of the path is a parameter of the use case).",
+   "body": [
+    "`dragonfly gen usecase <component> <Name>` wires a use case into its component: its alias in the facade and, with",
+    "`--route \"POST orders/{id}/cancel\"`, its route in the controller of the route's prefix (`OrdersController`, made",
+    "when missing; a `{name}` of the path is a parameter of the use case). The use case is one the project declares (its",
+    "rules are written first; its signature is read, and its route calls it with `~` when its `exec` awaits), or, with",
+    "`--calls <Repository>.<method>`, it is written too: all it does is call that method, which a repository of the",
+    "project declares (an answer that is not a `Result` goes inside an `Ok`).",
+    "",
+    "```sh",
+    "dragonfly gen resource characters Character --from-json https://rickandmortyapi.com/api/character",
+    "dragonfly gen usecase orders CancelOrder --route \"POST orders/{id}/cancel\"       # CancelOrder is in the project",
+    "dragonfly gen usecase catalog PageBooks --calls BookRepository.page --route \"GET shelves/{page}\"",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-14-tests",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.14 Tests",
+   "summary": "In `test/*_test.nuc`: `tests Name` + `@test(\"what it checks\")` methods.",
+   "body": [
+    "In `test/*_test.nuc`: `tests Name` + `@test(\"what it checks\")` methods. Every test runs with the project's",
+    "connections and the databases in memory; `inject<X>()` gives the instances; `expect(condition)` asserts;",
+    "`FakeModel([\"answer\"])` is a chat model with fixed answers.",
+    "",
+    "```nuclear",
+    "tests Tasks",
+    "  @test(\"a repeated title is a conflict\")",
+    "  repeatedTitle() void",
+    "    tasks = inject<TasksAppComponent>()",
+    "    ~tasks.create(NewTask(title = \"call mom\"))",
+    "    again = ~tasks.create(NewTask(title = \"call mom\"))",
+    "    expect(again.error.status == 409)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-2-repository.8f91f3",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.2 Repository",
+   "summary": "The data of one entity: `NameRepository` works on `Name` (or `@repository(Entity)`).",
+   "body": [
+    "The data of one entity: `NameRepository` works on `Name` (or `@repository(Entity)`). It brings `find(id)`",
+    "(`Ok(entity)` / `Err(NotFound)`), `findAll()`, `save(entity)` and `remove(id)`. Each method's lines build ONE",
+    "query, created for that call: `where({...})` (equality, or `gt`, `gte`, `lt`, `lte`, `ne`, `like`, `ilike`,",
+    "`oneOf`, `isNull`, `between`), `orderBy(field, desc = true)`, `limit(n)`, `offset(n)`, `relations(...)` (the",
+    "relations to load); the last line runs it: `getOne()` (`Result`), `getMany()`, `paginate(page, size)` (`Page<T>`:",
+    "`items`, `page` from 1, `size`, `total`, `pages`; the same on the mobile local tables), `count()`, `exists()`,",
+    "`update({...})`, `delete()`. The caller awaits it:",
+    "`~tasks.byTitle(title)`. The same chain works outside the repository: `~tasks.where({ \"title\": t }).exists()`.",
+    "",
+    "```nuclear",
+    "repository TaskRepository",
+    "  byState(done: boolean) Task[]",
+    "    where({ \"done\": done })",
+    "    orderBy(\"priority\")",
+    "    getMany()",
+    "",
+    "  byTitle(title: string) Result<Error, Task>",
+    "    where({ \"title\": title })",
+    "    getOne()",
+    "",
+    "  page(page: int, size: int = 20) Page<Task>",
+    "    orderBy(\"id\")",
+    "    paginate(page, size)",
+    "```",
+    "",
+    "#### An HTTP repository (ADR-0103)"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-2-repository.b1a580",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.2 Repository",
+   "summary": "A repository can also be another API, with the mobile platform's words: `@repository(path = \"...\")` and methods without a body that carry `@get`, `@post`, `@put`, `@patch` or `@delete` (`path = \":id\"`).",
+   "body": [
+    "A repository can also be another API, with the mobile platform's words: `@repository(path = \"...\")` and methods",
+    "without a body that carry `@get`, `@post`, `@put`, `@patch` or `@delete` (`path = \":id\"`). They call the `Http(baseUrl)`",
+    "connection (§2.8; `connection = \"name\"` picks another): `:name` in a path takes the parameter of that name, the",
+    "other parameters go to the query (GET, DELETE) or to the JSON body (POST, PUT, PATCH: a single model parameter is the",
+    "body). The answer is the method's type; an error status is the `Err` of a `Result` (404 `NotFound`, 400/422",
+    "`Invalid`, 401 `Unauthorized`, 403 `Forbidden`, 409 `Conflict`, any other an `Error` with that status).",
+    "",
+    "```nuclear",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  one(id: int) Result<Error, Character>",
+    "",
+    "  @get",
+    "  page(page: int) Result<Error, CharacterPage>",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-3-model",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.3 Model",
+   "summary": "What the API reads and answers, in `domain/models/`.",
+   "body": [
+    "What the API reads and answers, in `domain/models/`. The field decorators of Dragonfly's forms are its validation:",
+    "`@required`, `@minLength(n)`, `@maxLength(n)`, `@min(n)`, `@max(n)`, `@pattern(r\"...\")`, `@email`, `@url`. An",
+    "invalid body answers **400** with the reasons. `NewTask(title = \"x\")` builds one; optional fields (`T?`) may be",
+    "left out.",
+    "",
+    "```nuclear",
+    "NewTask",
+    "  @minLength(1)",
+    "  @maxLength(200)",
+    "  title: string",
+    "  @min(1)",
+    "  @max(3)",
+    "  priority: int = 2",
+    "",
+    "TaskChanges",
+    "  @minLength(1)",
+    "  title?: string",
+    "  done?: boolean",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-4-use-case",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.4 Use case",
+   "summary": "One business operation: `exec` returns `Result<E, T>`.",
+   "body": [
+    "One business operation: `exec` returns `Result<E, T>`. `Error` is the platform's error, with an HTTP status:",
+    "`NotFound` (404), `Invalid` (400), `Unauthorized` (401), `Forbidden` (403), `Conflict` (409). `x = ~repo.find(id)`",
+    "unwraps the `Ok` and returns the `Err` by itself ([nuclear-base.md](https://github.com/nuclearlang/nuclear/blob/main/spec/nuclear-base.md) §3.2).",
+    "",
+    "```nuclear",
+    "usecase CreateTask(tasks: TaskRepository)",
+    "  exec(input: NewTask) Result<Error, Task>",
+    "    taken = ~tasks.where({ \"title\": input.title }).exists()",
+    "    if taken",
+    "      return Err(Conflict(\"there is already a task '${input.title}'\"))",
+    "    task = ~tasks.save(Task(title = input.title, priority = input.priority))",
+    "    ~publish(\"tasks.created\", { \"id\": task.id, \"title\": task.title })",
+    "    Ok(task)",
+    "```",
+    "",
+    "`@transactional` on `exec` (ADR-0100): every repository call inside shares one transaction of the default database;",
+    "an `Err` or an error rolls it back, an `Ok` commits it. A transactional call inside another joins it.",
+    "",
+    "```nuclear",
+    "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository)",
+    "  @transactional",
+    "  exec(id: int, into: int) Result<Error, Moved>",
+    "    ~projects.find(into)",
+    "    moved = ~tasks.move(id, into)",
+    "    ~projects.remove(id)",
+    "    Ok(Moved(count = moved))",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-5-appcomponent",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.5 Appcomponent",
+   "summary": "The facade of a component: aliases to its use cases (nuclear-base.md §4.1.2).",
+   "body": [
+    "The facade of a component: aliases to its use cases ([nuclear-base.md](https://github.com/nuclearlang/nuclear/blob/main/spec/nuclear-base.md) §4.1.2). Other",
+    "components, the controllers, the tools and the listeners use only this.",
+    "",
+    "```nuclear",
+    "appcomponent TasksAppComponent",
+    "  list() = ListTasks.exec",
+    "  task() = GetTask.exec",
+    "  create() = CreateTask.exec",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-6-service-and-aggregate",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.6 Service and aggregate",
+   "summary": "A `service` is logic shared by use cases (an external API, a calculation); an `aggregate` composes several repositories or services for one use case.",
+   "body": [
+    "A `service` is logic shared by use cases (an external API, a calculation); an `aggregate` composes several",
+    "repositories or services for one use case. Both are plain classes with injected headers."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-7-controller",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.7 Controller",
+   "summary": "HTTP routes.",
+   "body": [
+    "HTTP routes. `@controller(\"tasks\")` is the prefix; `@get`, `@post`, `@put`, `@patch`, `@delete` take a path",
+    "relative to it: `@get()` is the prefix itself, `@get(\"{id}\")` binds `{id}` to the parameter `id`, `@post(\"plan\")`",
+    "adds a segment. Paths are segments: no leading slash. A parameter that is a model is the body; a parameter named",
+    "in the path is a path parameter; any other parameter is a query parameter (optional when `T?` or defaulted).",
+    "`@status(201)` changes the success status. A `Result` answer becomes the value or its error's status. The order of",
+    "the routes does not matter: a fixed segment wins over a parameter (`page` is never taken by `{id}`).",
+    "",
+    "```nuclear",
+    "@controller(\"tasks\")",
+    "controller TasksController(tasks: TasksAppComponent)",
+    "  @get()",
+    "  all(done?: boolean) Result<Error, Task[]>",
+    "    ~tasks.list(done)",
+    "",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Task>",
+    "    ~tasks.task(id)",
+    "",
+    "  @post()",
+    "  create(input: NewTask) Result<Error, Task>",
+    "    ~tasks.create(input)",
+    "",
+    "  @patch(\"{id}\")",
+    "  change(id: int, changes: TaskChanges) Result<Error, Task>",
+    "    ~tasks.update(id, changes)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-8-configuration-and-connections.02d05b",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.8 Configuration and connections",
+   "summary": "appConfig ProjectConfig connections: Connection[] = [ SQLite(file = env(\"DATABASE\", \"tasks.sqlite\"), createTables = true), Ollama(model = env(\"CHAT_MODEL\", \"qwen3.5:4b\"), baseUrl = env(\"OLLAMA_URL\", \"http://localhost:11434\")), ] `createTables` is for development and tests.",
+   "body": [
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    SQLite(file = env(\"DATABASE\", \"tasks.sqlite\"), createTables = true),",
+    "    Ollama(model = env(\"CHAT_MODEL\", \"qwen3.5:4b\"), baseUrl = env(\"OLLAMA_URL\", \"http://localhost:11434\")),",
+    "  ]",
+    "```",
+    "",
+    "#### Migrations of the database (ADR-0100 §5)",
+    "",
+    "`createTables` is for development and tests. A database that keeps its data changes by migrations, kept in the",
+    "project's `migrations/` folder (with the sources, not in `build/`):",
+    "",
+    "```sh",
+    "dragonfly migrate make \"notes on tasks\"   # one migration: what the entities changed since the last migration",
+    "dragonfly migrate                         # applies the pending ones to the default database",
+    "dragonfly migrate down                    # reverts the last one applied",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-8-configuration-and-connections.57f491",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.8 Configuration and connections",
+   "summary": "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`, `components/<c>/config/`): opened at start, closed at stop, never opened by hand.",
+   "body": [
+    "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`,",
+    "`components/<c>/config/`): opened at start, closed at stop, never opened by hand. Each has a `name` (default",
+    "`\"default\"`); `connectionName` in a kind picks another. `env(\"VAR\", \"default\")` reads the environment.",
+    "",
+    "| Connection | Plugin | Parameters |",
+    "|---|---|---|",
+    "| `SQLite(file)` | `sqlite` | `file` (`\":memory:\"` in tests), `createTables` |",
+    "| `Postgres(url)` `MySQL(url)` `MariaDB(url)` | `postgres` `mysql` `mariadb` | `url` (`\"postgres://user:pass@host/db\"`, `\"mysql://...\"`, `\"mariadb://...\"`: the dialect adds its driver), `createTables` (creates the entities' tables: development) |",
+    "| `Redis(url)` | `redis` | `url` |",
+    "| `Kafka(servers, group)` | `kafka` | `servers` (`\"a:9092,b:9092\"`), `group` |",
+    "| `Ollama(model, baseUrl)` `OpenAI(model, apiKey)` | `ollama` `openai` (both `ai`) | the chat model; `Embeddings(model)` for vectors (`\"ollama:nomic-embed-text\"`, `\"openai:text-embedding-3-small\"`) |",
+    "| `Http(baseUrl, headers, timeout)` | — | another API, for the HTTP repositories (§2.2): `baseUrl` (`\"https://rickandmortyapi.com/api\"`), `headers` (an API key), `timeout` (seconds) |",
+    "| `Chroma(collection, embeddings, url)` | `chroma` | a vector store on a Chroma server (`url`, default `http://localhost:8000`); `embeddings` names the `Embeddings` connection |"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-8-configuration-and-connections.83e7ed",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.8 Configuration and connections",
+   "summary": "column shows as a drop and an add (`make` warns of every drop), so edit it into a rename to keep the data.",
+   "body": [
+    "- `make` compares the entities with the last migration, never with a database; with no change it writes nothing.",
+    "- A migration is a file of the dialect's migration tool, written once and then the project's: a renamed table or",
+    "  column shows as a drop and an add (`make` warns of every drop), so edit it into a rename to keep the data.",
+    "- A field with a default (`done: boolean = false`) is also the column's SQL default, so adding it to a table with rows",
+    "  works.",
+    "- The migrations belong to the dialect they were made with, like code that uses type definitions (rule 11).",
+    "- A project with migrations leaves `createTables` out of its connection."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#2-kinds-2-9-listener-events-and-cache",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 2.9 Listener, events and cache",
+   "summary": "`~publish(\"topic\", value)` sends an event: in the process (plugin `events`) or to Kafka when a `Kafka` connection exists (plugin `kafka`).",
+   "body": [
+    "`~publish(\"topic\", value)` sends an event: in the process (plugin `events`) or to Kafka when a `Kafka`",
+    "connection exists (plugin `kafka`). A `listener` receives them: each `@consumer(\"topic\")` method gets the",
+    "messages of the topic, parsed as the type of its parameter (a model or a map). The Redis cache: `~cacheGet(key)`,",
+    "`~cacheSet(key, value, seconds = 60)`.",
+    "",
+    "```nuclear",
+    "listener TaskEvents",
+    "  created: string[] = []",
+    "",
+    "  @consumer(\"tasks.created\")",
+    "  onCreated(event: <string, any>) void",
+    "    created.add(event[\"title\"])",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#3-what-the-dialect-decides",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly — 3. What the dialect decides",
+   "summary": "Only how it is written: the language, the framework, the packages, the generated project's files and how to run it.",
+   "body": [
+    "Only how it is written: the language, the framework, the packages, the generated project's files and how to",
+    "run it. Each dialect's spec documents that and nothing else: [fastapi.md](fastapi.md) (`fastapi`),",
+    "[nestjs.md](nestjs.md). One example project is built with every backend dialect from the same `.nuc` files",
+    "(ADR-0093 §9)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/backend.md#the-backend-platform-of-dragonfly",
+   "type": "spec",
+   "title": "The `backend` platform of Dragonfly",
+   "summary": "The `backend` platform of Dragonfly",
+   "body": [
+    "> Inherits every rule of [nuclear-base.md](https://github.com/nuclearlang/nuclear/blob/main/spec/nuclear-base.md) and the standard library ([library.md](https://github.com/nuclearlang/nuclear/blob/main/spec/library.md)).",
+    "> This document defines the backend platform (ADR-0093): HTTP APIs, data, events and AI agents, written in Nuclear",
+    "> only. The same project builds with every backend dialect — `fastapi` (Python: [fastapi.md](fastapi.md),",
+    "> renamed `fastapi` in phase B1) and `nestjs` (TypeScript: [nestjs.md](nestjs.md)) — and its Nuclear never changes",
+    "> between them. Only a use of a dialect's type definitions ties code to that dialect."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/brief/backend.md#kinds-components-c-the-folder-gives-the-kind-of-entity-model-and-state.83279c",
+   "type": "spec",
+   "title": "Platform `backend` brief: Dragonfly backends — Kinds (`components/<c>/`; the folder gives the kind of `entity`, `model` and `state`)",
+   "summary": "Dependencies are constructor parameters, injected by type.",
+   "body": [
+    "| `ai/` | `tools Name(deps)`, `agent Name(tools: T)`, `@state(S) graph Name` | doc comment = tool description; `prompt`, `model`; `@start`, `@next(\"node\")` above the node it leaves |",
+    "| `ai/states/` | state | the graph's state (`messages: Messages`) |",
+    "| `events/` | `listener Name(deps)` | `@consumer(\"topic\")` methods; `~publish(\"topic\", value)` |",
+    "| `config/` | `appConfig` / `config` | `connections: Connection[] = [SQLite(file = \"app.sqlite\"), Postgres(url = env(\"DATABASE_URL\", \"...\")), Redis(...), Kafka(...), Ollama(model = \"...\")]` |",
+    "| `test/` | `tests Name` | `@test(\"...\")` methods, `inject<X>()`, `expect(cond)` |",
+    "",
+    "Dependencies are constructor parameters, injected by type. Repository methods are awaited: `~repo.byName(name)`.",
+    "Only the `appcomponent` calls use cases; only use cases, aggregates and tools call repositories.",
+    "",
+    "```nuclear",
+    "// The characters table.",
+    "@entity(\"characters\")",
+    "Character()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 80, unique = true)",
+    "  name: string",
+    "",
+    "repository CharacterRepository",
+    "  byName(name: string) Result<Error, Character>",
+    "    where({ \"name\": name })",
+    "    getOne()",
+    "",
+    "usecase FindCharacter(characters: CharacterRepository)",
+    "  exec(name: string) Result<Error, Character>",
+    "    ~characters.byName(name)",
+    "",
+    "appcomponent CharactersAppComponent",
+    "  byName() = FindCharacter.exec"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/brief/backend.md#kinds-components-c-the-folder-gives-the-kind-of-entity-model-and-state.9d093e",
+   "type": "spec",
+   "title": "Platform `backend` brief: Dragonfly backends — Kinds (`components/<c>/`; the folder gives the kind of `entity`, `model` and `state`)",
+   "summary": "@controller(\"characters\") controller CharactersController(characters: CharactersAppComponent) @get(\"name/{name}\") one(name: string) Result<Error, Character> ~characters.byName(name) `config.nuc` enables the optional parts: `plugins(sqlite = true, ollama = true)` (sqlite, postgres, mysql, mariadb,…",
+   "body": [
+    "@controller(\"characters\")",
+    "controller CharactersController(characters: CharactersAppComponent)",
+    "  @get(\"name/{name}\")",
+    "  one(name: string) Result<Error, Character>",
+    "    ~characters.byName(name)",
+    "```",
+    "",
+    "`config.nuc` enables the optional parts: `plugins(sqlite = true, ollama = true)` (sqlite, postgres, mysql, mariadb,",
+    "redis, kafka, events, ai, openai, ollama, chroma); a kind or class of one not enabled is N0304 (it says which line to",
+    "add)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/brief/backend.md#kinds-components-c-the-folder-gives-the-kind-of-entity-model-and-state.f68f1f",
+   "type": "spec",
+   "title": "Platform `backend` brief: Dragonfly backends — Kinds (`components/<c>/`; the folder gives the kind of `entity`, `model` and `state`)",
+   "summary": "Kinds (`components/<c>/`; the folder gives the kind of `entity`, `model` and `state`)",
+   "body": [
+    "| Where | Kind | What it is |",
+    "|---|---|---|",
+    "| `data/entities/` | entity | a table: `@entity(\"t\")`, fields with `@primary(generated = true)`, `@column(length = 100, unique = true)`, relations `@manyToOne` (+ `<name>Id`), `@oneToMany`, `@manyToMany` + `@joinTable`, `@oneToOne` + `@joinColumn` (optional fields, loaded by `relations(...)`) |",
+    "| `data/repositories/` | `repository NameRepository` | CRUD (`find`, `findAll`, `save`, `remove`) + methods whose lines build one query: `where({...})`, `orderBy`, `limit`, `relations(\"tasks\")`, then `getOne()` / `getMany()` / `paginate(page, size)` (`Page<T>`) / `count()` / `exists()` |",
+    "| `domain/models/` | model | validated fields: `@minLength(1) name: string`, `@email`, `@min(n)`, `@max(n)`, `@pattern(r\"...\")` |",
+    "| `domain/usecases/` | `usecase Name(deps)` | one `exec(...) Result<Error, T>` (`@transactional`: one transaction, an `Err` rolls it back); errors `NotFound`, `Invalid`, `Conflict`, `Forbidden`, `Unauthorized` |",
+    "| `domain/services/` | `service Name(deps)` | rules several use cases share |",
+    "| `<c>_appcomponent.nuc` | `appcomponent Name` | only aliases, `find() = GetThing.exec`: all the rest of the app sees |",
+    "| `api/` | `@controller(\"tasks\") controller Name(deps)` | `@get(\"{id}\")`, `@post()`, `@status(201)`... (segments, no leading slash); a `Result` answers its value or the error's status |"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/brief/backend.md#platform-backend-brief-dragonfly-backends",
+   "type": "spec",
+   "title": "Platform `backend` brief: Dragonfly backends",
+   "summary": "A backend has only `.nuc` files: HTTP APIs, data, events and AI agents.",
+   "body": [
+    "A backend has only `.nuc` files: HTTP APIs, data, events and AI agents. You write the business logic; the kinds write",
+    "the framework code, the dependencies, the JSON, the validation and the routes. The same Nuclear builds with every",
+    "backend dialect. Full rules: `nuclear help backend`; one kind: `nuclear help <kind> --platform backend`; where each",
+    "file goes: `nuclear help layout --platform backend`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ]
+  },
+  {
+   "id": "spec:dragonfly-backend/spec/brief/backend.md#work-cycle",
+   "type": "spec",
+   "title": "Platform `backend` brief: Dragonfly backends — Work cycle",
+   "summary": "1. Read the project's `config.nuc` (`dragonfly(platform = \"backend\", ...)`, `app(...)`, `plugins(...)`) and the doc comments of the declarations you will use: they say what each one is for.",
+   "body": [
+    "1. Read the project's `config.nuc` (`dragonfly(platform = \"backend\", ...)`, `app(...)`, `plugins(...)`) and the",
+    "   doc comments of the declarations you will use: they say what each one is for.",
+    "2. Write the tests first (`test/*_test.nuc`), then the pieces, one file at a time.",
+    "3. `nuclear check . --json` until `[]`, then `dragonfly test`. Never edit `build/`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ]
+  }
+ ]
+}

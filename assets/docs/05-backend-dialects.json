@@ -1,0 +1,3154 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "05-backend-dialects",
+ "about": "The backend dialects underneath: fastapi and nestjs, their runtimes",
+ "rows": [
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#1-the-project",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — 1. The project",
+   "summary": "tasks_api/ ├── config.nuc dragonfly(platform = \"backend\", dialect = \"nestjs\"), app(...), plugins(...) ├── config/project_config.nuc the connections ├── components/tasks/ data/, domain/, api/, events/, tasks_appcomponent.nuc ├── components/assistant/ ai/ (tools, agent, graph), api/ └── test/ tests…",
+   "body": [
+    "```",
+    "tasks_api/",
+    "├── config.nuc                      dragonfly(platform = \"backend\", dialect = \"nestjs\"), app(...), plugins(...)",
+    "├── config/project_config.nuc       the connections",
+    "├── components/tasks/               data/, domain/, api/, events/, tasks_appcomponent.nuc",
+    "├── components/assistant/           ai/ (tools, agent, graph), api/",
+    "└── test/                           tests in Nuclear (node:test)",
+    "```",
+    "",
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    SQLite(file = env(\"DATABASE\", \"tasks.sqlite\"), createTables = true),",
+    "    Ollama(model = env(\"CHAT_MODEL\", \"qwen3.5:4b\"), baseUrl = env(\"OLLAMA_URL\", \"http://localhost:11434\")),",
+    "  ]",
+    "```",
+    "",
+    "Each component becomes a Nest module; the database goes to `SequelizeModule`, the other connections open at start",
+    "and close at stop."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#2-entity-repository-models",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — 2. Entity, repository, models",
+   "summary": "@entity(\"tasks\") Task() @primary(generated = true) id: int @column(length = 200) title: string done: boolean = false priority: int = 2 @created() createdAt?: DateTime repository TaskRepository byState(done: boolean) Task[] where({ \"done\": done }) orderBy(\"priority\") getMany() The models of…",
+   "body": [
+    "```nuclear",
+    "@entity(\"tasks\")",
+    "Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 200)",
+    "  title: string",
+    "  done: boolean = false",
+    "  priority: int = 2",
+    "  @created()",
+    "  createdAt?: DateTime",
+    "```",
+    "",
+    "```nuclear",
+    "repository TaskRepository",
+    "  byState(done: boolean) Task[]",
+    "    where({ \"done\": done })",
+    "    orderBy(\"priority\")",
+    "    getMany()",
+    "```",
+    "",
+    "The models of `domain/models/` are DTOs; their decorators become class-validator rules:",
+    "",
+    "```nuclear",
+    "NewTask",
+    "  @minLength(1)",
+    "  @maxLength(200)",
+    "  title: string",
+    "  @min(1)",
+    "  @max(3)",
+    "  priority: int = 2",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#2-entity-repository-models-migrations",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — Migrations",
+   "summary": "`createTables = true` makes the tables at start, for development.",
+   "body": [
+    "`createTables = true` makes the tables at start, for development. Once the database keeps data, leave it out and change",
+    "the schema with migrations in the project's `migrations/` folder:",
+    "",
+    "```sh",
+    "dragonfly migrate make \"notes on tasks\"   # what the entities changed since the last migration",
+    "dragonfly migrate                         # applies the pending ones",
+    "dragonfly migrate down                    # reverts the last one",
+    "```",
+    "",
+    "They are Sequelize migrations (`migrations/<time>_<name>.js` over `queryInterface`, `SequelizeMeta` in the database);",
+    "each one also keeps the schema it leaves, which the next `make` compares with. A renamed column shows as a drop and an add (`make` warns): edit the file into a rename to keep the data."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#2-entity-repository-models-relations-pages-and-transactions.24c3e2",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — Relations, pages and transactions",
+   "summary": "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository) @transactional exec(id: int, into: int) Result<Error, Moved> ~projects.find(into) moved = ~tasks.move(id, into) ~projects.remove(id) Ok(Moved(count = moved)) The same Nuclear builds with the other backend dialect, and…",
+   "body": [
+    "```nuclear",
+    "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository)",
+    "  @transactional",
+    "  exec(id: int, into: int) Result<Error, Moved>",
+    "    ~projects.find(into)",
+    "    moved = ~tasks.move(id, into)",
+    "    ~projects.remove(id)",
+    "    Ok(Moved(count = moved))",
+    "```",
+    "",
+    "The same Nuclear builds with the other backend dialect, and `paginate` works the same on the mobile local tables."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#2-entity-repository-models-relations-pages-and-transactions.8e7f8e",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — Relations, pages and transactions",
+   "summary": "Relations are TypeORM's decorators; the related entity is the field's type.",
+   "body": [
+    "Relations are TypeORM's decorators; the related entity is the field's type. A relation field is optional: it is only",
+    "there when a query loads it, so no query is hidden.",
+    "",
+    "```nuclear",
+    "@entity(\"projects\")",
+    "Project()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  @oneToMany(inverse = \"project\")",
+    "  tasks?: Task[]",
+    "",
+    "@entity(\"tasks\")",
+    "Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  title: string",
+    "  @manyToOne(inverse = \"tasks\", onDelete = \"cascade\")",
+    "  project?: Project",
+    "  projectId?: int",
+    "```",
+    "",
+    "`projectId` is the column of `project`: `Task(title = \"paint\", projectId = id)` puts a task in a project without",
+    "loading it. `@manyToMany(inverse = \"tasks\")` with `@joinTable()` on one side makes the join table (`tasks_tags`);",
+    "`@oneToOne` with `@joinColumn()` is the one-to-one. The compiler checks every rule (N0308).",
+    "",
+    "```nuclear",
+    "repository ProjectRepository",
+    "  withTasks(id: int) Result<Error, Project>",
+    "    where({ \"id\": id })",
+    "    relations(\"tasks\")",
+    "    getOne()",
+    "",
+    "repository TaskRepository",
+    "  page(page: int, size: int = 20) Page<Task>",
+    "    orderBy(\"id\")",
+    "    paginate(page, size)",
+    "```",
+    "",
+    "`paginate` answers `Page<Task>`: `items`, `page` (from 1), `size`, `total`, `pages`. A use case whose writes must",
+    "happen together is `@transactional`: an `Err` (or an error) undoes them all."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#3-use-cases-and-events",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — 3. Use cases and events",
+   "summary": "usecase CreateTask(tasks: TaskRepository) exec(input: NewTask) Result<Error, Task> taken = ~tasks.where({ \"title\": input.title }).exists() if taken return Err(Conflict(\"there is already a task '${input.title}'\")) task = ~tasks.save(Task(title = input.title, priority = input.priority))…",
+   "body": [
+    "```nuclear",
+    "usecase CreateTask(tasks: TaskRepository)",
+    "  exec(input: NewTask) Result<Error, Task>",
+    "    taken = ~tasks.where({ \"title\": input.title }).exists()",
+    "    if taken",
+    "      return Err(Conflict(\"there is already a task '${input.title}'\"))",
+    "    task = ~tasks.save(Task(title = input.title, priority = input.priority))",
+    "    ~publish(\"tasks.created\", { \"id\": task.id, \"title\": task.title })",
+    "    Ok(task)",
+    "```",
+    "",
+    "`~publish` sends the event in the same process (plugin `events`) or to Kafka (plugin `kafka` and a `Kafka(...)`",
+    "connection). A `listener` receives it:",
+    "",
+    "```nuclear",
+    "listener TaskEvents",
+    "  created: string[] = []",
+    "",
+    "  @consumer(\"tasks.created\")",
+    "  onCreated(event: <string, any>) void",
+    "    created.add(event[\"title\"])",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#4-the-controller",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — 4. The controller",
+   "summary": "@controller(\"tasks\") controller TasksController(tasks: TasksAppComponent) @get() all(done?: boolean) Result<Error, Task[]> ~tasks.list(done) @get(\"{id}\") one(id: int) Result<Error, Task> ~tasks.task(id) @post() create(input: NewTask) Result<Error, Task> ~tasks.create(input) @Controller('tasks')…",
+   "body": [
+    "```nuclear",
+    "@controller(\"tasks\")",
+    "controller TasksController(tasks: TasksAppComponent)",
+    "  @get()",
+    "  all(done?: boolean) Result<Error, Task[]>",
+    "    ~tasks.list(done)",
+    "",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Task>",
+    "    ~tasks.task(id)",
+    "",
+    "  @post()",
+    "  create(input: NewTask) Result<Error, Task>",
+    "    ~tasks.create(input)",
+    "```",
+    "",
+    "```typescript",
+    "@Controller('tasks')",
+    "export class TasksController {",
+    "  constructor(private readonly tasks: TasksAppComponent) {}",
+    "",
+    "  @Get()",
+    "  async all(@Query('done', new ParseBoolPipe({ optional: true })) done?: boolean): Promise<Result<AppError, Task[]>> {",
+    "    return await this.tasks.list(done);",
+    "  }",
+    "",
+    "  @Get(':id')",
+    "  async one(@Param('id', ParseIntPipe) id: number): Promise<Result<AppError, Task>> {",
+    "    return await this.tasks.task(id);",
+    "  }",
+    "  // ...",
+    "}",
+    "```",
+    "",
+    "Path parameters, query parameters and the body are found from the route and the types; the pipes come out by",
+    "themselves. `Err(NotFound(...))` answers 404, `Conflict` 409, an invalid body 400."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#5-the-assistant-plugin-ai",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — 5. The assistant (plugin `ai`)",
+   "summary": "tools TaskTools(tasks: TasksAppComponent) // Creates a task with a title and a priority (1 high, 2 normal, 3 low).",
+   "body": [
+    "```nuclear",
+    "tools TaskTools(tasks: TasksAppComponent)",
+    "  // Creates a task with a title and a priority (1 high, 2 normal, 3 low).",
+    "  addTask(title: string, priority: int = 2) string",
+    "    match ~tasks.create(NewTask(title = title, priority = priority))",
+    "      Ok(task) -> \"created task ${task.id}: ${task.title}\"",
+    "      Err(e) -> e.message",
+    "",
+    "agent AssistantAgent(tools: TaskTools)",
+    "  prompt: string = \"You are a task assistant. Use the tools to read, add and complete tasks; never invent ids.\"",
+    "```",
+    "",
+    "A `graph` with `@state(PlanState)`, `@start` and `@next(\"node\")` is a LangGraph.js `StateGraph`; `~chatModel()` is",
+    "the model of the config. See `components/assistant/ai/planner.nuc` in the example."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#6-build-run-and-test",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize — 6. Build, run and test",
+   "summary": "dragonfly build # nuclear build .: writes build/ (src/, test/, package.json, tsconfig.json); compiles once installed dragonfly install # npm install with the runtime (copied: build/.npmrc has install-links=true) dragonfly run # npm run dev: http://localhost:3000 (PORT); restarts on every build…",
+   "body": [
+    "```sh",
+    "dragonfly build                    # nuclear build .: writes build/ (src/, test/, package.json, tsconfig.json); compiles once installed",
+    "dragonfly install                  # npm install with the runtime (copied: build/.npmrc has install-links=true)",
+    "dragonfly run                      # npm run dev: http://localhost:3000 (PORT); restarts on every build (node --watch)",
+    "dragonfly test                     # npm test: the tests written in Nuclear",
+    "```",
+    "",
+    "The same by hand, from `build/`: `npm install ~/.local/share/nuclearlang/packages/dragonfly-nest && npm install`,",
+    "`npm run dev`, `npm test`. While `dragonfly run` serves, `dragonfly build` (or saving a `.nuc` in VS Code) restarts the",
+    "server with the new code. ◉ Debug in VS Code (or F5 with `build/tasks_api.code-workspace`) runs the server under",
+    "the node debugger with its source maps: a breakpoint in a `.nuc` stops there.",
+    "",
+    "```sh",
+    "curl -X POST localhost:3000/tasks -H 'content-type: application/json' -d '{\"title\": \"buy milk\"}'",
+    "curl localhost:3000/tasks?done=false",
+    "```",
+    "",
+    "`install-links=true` copies the runtime into `node_modules` (a link would make Node and TypeScript look for its",
+    "NestJS packages next to the runtime, not in the app). The generated `package.json` approves the install script of `sqlite3`, the driver of",
+    "the tests (npm 12 runs only approved scripts)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/nestjs.md#dragonfly-for-nestjs-a-typescript-backend-with-sequelize",
+   "type": "guide",
+   "title": "Dragonfly for NestJS: a TypeScript backend with Sequelize",
+   "summary": "The `nestjs` dialect turns Nuclear into a NestJS 12 backend (ES modules): Sequelize repositories (`@nestjs/sequelize` + `sequelize-typescript`), DTOs validated with class-validator, Kafka events, Redis cache, and passes `tsc --strict`.",
+   "body": [
+    "The `nestjs` dialect turns Nuclear into a **NestJS 12** backend (ES modules): **Sequelize** repositories",
+    "(`@nestjs/sequelize` + `sequelize-typescript`), DTOs validated with **class-validator**, Kafka events, Redis cache, and",
+    "**LangChain.js / LangGraph.js** tools, agents and graphs. The Nest modules are written for you. The generated code",
+    "passes `tsc --strict`. It uses the same kinds and query API as [Dragonfly for Python](python.md), so a project moves",
+    "between the two almost line by line.",
+    "",
+    "This guide follows the example `examples/examples-backend/tasks_api`: a tasks CRUD, an event listener and an assistant",
+    "that reads and changes tasks. The full rules are in [nestjs.md](../../spec/nestjs.md)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#1-the-project.589519",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — 1. The project",
+   "summary": "Other connections: `Postgres(url = ...)`, `MySQL(url = ...)`, `MariaDB(url = ...)`, `Redis(url = ...)`, `Kafka(servers = ..., group = ...)`, `OpenAI(model = ...)`, `Chroma(...)`, each with its plugin.",
+   "body": [
+    "Other connections: `Postgres(url = ...)`, `MySQL(url = ...)`, `MariaDB(url = ...)`, `Redis(url = ...)`, `Kafka(servers = ..., group = ...)`,",
+    "`OpenAI(model = ...)`, `Chroma(...)`, each with its plugin."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#1-the-project.876973",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — 1. The project",
+   "summary": "rick_api/ ├── config.nuc the platform, the dialect, the app and its plugins ├── config/project_config.nuc the connections: database, chat model ├── components/characters/ │ ├── characters_appcomponent.nuc what the rest of the app sees │ ├── data/entities/ tables │ ├── data/repositories/ queries │…",
+   "body": [
+    "```",
+    "rick_api/",
+    "├── config.nuc                      the platform, the dialect, the app and its plugins",
+    "├── config/project_config.nuc       the connections: database, chat model",
+    "├── components/characters/",
+    "│   ├── characters_appcomponent.nuc what the rest of the app sees",
+    "│   ├── data/entities/              tables",
+    "│   ├── data/repositories/          queries",
+    "│   ├── domain/models/              pydantic models (what the API receives)",
+    "│   ├── domain/usecases/            the business rules",
+    "│   ├── api/                        controllers (FastAPI routes)",
+    "│   └── ai/                         tools, agents, graphs",
+    "└── test/                           tests in Nuclear (pytest)",
+    "```",
+    "",
+    "`config.nuc` names the platform and the dialect, the app, and the plugins it uses (only those packages go to",
+    "`pyproject.toml`). Change `dialect` to `nestjs` and the same project comes out as a NestJS service:",
+    "",
+    "```nuclear",
+    "dragonfly(platform = \"backend\", dialect = \"fastapi\")",
+    "app(name = \"rick_api\", description = \"Characters of the show.\", version = \"0.1.0\")",
+    "plugins(sqlite = true, ollama = true)",
+    "```",
+    "",
+    "The connections are declared, not opened by hand:",
+    "",
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    SQLite(file = env(\"DATABASE\", \"rick.sqlite\"), createTables = true),",
+    "    Ollama(model = env(\"CHAT_MODEL\", \"llama3.2\")),",
+    "  ]",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#2-names-stay-nuclear",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — 2. Names stay Nuclear",
+   "summary": "The `.nuc` keeps Nuclear's names (`camelCase` methods and fields).",
+   "body": [
+    "The `.nuc` keeps Nuclear's names (`camelCase` methods and fields). The dialect writes PEP 8 names: `getOne()` becomes",
+    "`get_one()` and `createdAt` becomes `created_at`. Strings and map keys are data and never change."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#3-entity-and-repository",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — 3. Entity and repository",
+   "summary": "@entity(\"characters\") Character() @primary(generated = true) id: int @column(length = 100, unique = true) name: string @column(length = 20) status: string = \"alive\" species?: string A `repository` gets `find`, `findAll`, `save` and `remove` with the kind; queries read like TypeORM: repository…",
+   "body": [
+    "```nuclear",
+    "@entity(\"characters\")",
+    "Character()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 100, unique = true)",
+    "  name: string",
+    "  @column(length = 20)",
+    "  status: string = \"alive\"",
+    "  species?: string",
+    "```",
+    "",
+    "A `repository` gets `find`, `findAll`, `save` and `remove` with the kind; queries read like TypeORM:",
+    "",
+    "```nuclear",
+    "repository CharacterRepository",
+    "  byName(name: string) Result<Error, Character>",
+    "    where({ \"name\": name })",
+    "    getOne()",
+    "```",
+    "",
+    "`getOne()` answers `Err(NotFound(...))` when nothing matches, so the caller never checks for `None`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#3-entity-and-repository-migrations",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — Migrations",
+   "summary": "`createTables = true` makes the tables at start, for development.",
+   "body": [
+    "`createTables = true` makes the tables at start, for development. Once the database keeps data, leave it out and change",
+    "the schema with migrations in the project's `migrations/` folder:",
+    "",
+    "```sh",
+    "dragonfly migrate make \"notes on tasks\"   # what the entities changed since the last migration",
+    "dragonfly migrate                         # applies the pending ones",
+    "dragonfly migrate down                    # reverts the last one",
+    "```",
+    "",
+    "They are Alembic migrations (`migrations/versions/*.py`, `alembic_version` in the database), written in batch mode so",
+    "SQLite runs them too. A renamed column shows as a drop and an add (`make` warns): edit the file into a rename to keep the data."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#3-entity-and-repository-relations-pages-and-transactions.24c3e2",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — Relations, pages and transactions",
+   "summary": "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository) @transactional exec(id: int, into: int) Result<Error, Moved> ~projects.find(into) moved = ~tasks.move(id, into) ~projects.remove(id) Ok(Moved(count = moved)) The same Nuclear builds with the other backend dialect, and…",
+   "body": [
+    "```nuclear",
+    "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository)",
+    "  @transactional",
+    "  exec(id: int, into: int) Result<Error, Moved>",
+    "    ~projects.find(into)",
+    "    moved = ~tasks.move(id, into)",
+    "    ~projects.remove(id)",
+    "    Ok(Moved(count = moved))",
+    "```",
+    "",
+    "The same Nuclear builds with the other backend dialect, and `paginate` works the same on the mobile local tables."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#3-entity-and-repository-relations-pages-and-transactions.8e7f8e",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — Relations, pages and transactions",
+   "summary": "Relations are TypeORM's decorators; the related entity is the field's type.",
+   "body": [
+    "Relations are TypeORM's decorators; the related entity is the field's type. A relation field is optional: it is only",
+    "there when a query loads it, so no query is hidden.",
+    "",
+    "```nuclear",
+    "@entity(\"projects\")",
+    "Project()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  @oneToMany(inverse = \"project\")",
+    "  tasks?: Task[]",
+    "",
+    "@entity(\"tasks\")",
+    "Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  title: string",
+    "  @manyToOne(inverse = \"tasks\", onDelete = \"cascade\")",
+    "  project?: Project",
+    "  projectId?: int",
+    "```",
+    "",
+    "`projectId` is the column of `project`: `Task(title = \"paint\", projectId = id)` puts a task in a project without",
+    "loading it. `@manyToMany(inverse = \"tasks\")` with `@joinTable()` on one side makes the join table (`tasks_tags`);",
+    "`@oneToOne` with `@joinColumn()` is the one-to-one. The compiler checks every rule (N0308).",
+    "",
+    "```nuclear",
+    "repository ProjectRepository",
+    "  withTasks(id: int) Result<Error, Project>",
+    "    where({ \"id\": id })",
+    "    relations(\"tasks\")",
+    "    getOne()",
+    "",
+    "repository TaskRepository",
+    "  page(page: int, size: int = 20) Page<Task>",
+    "    orderBy(\"id\")",
+    "    paginate(page, size)",
+    "```",
+    "",
+    "`paginate` answers `Page<Task>`: `items`, `page` (from 1), `size`, `total`, `pages`. A use case whose writes must",
+    "happen together is `@transactional`: an `Err` (or an error) undoes them all."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#4-use-cases-models-and-the-api",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — 4. Use cases, models and the API",
+   "summary": "Models of `domain/models/` are pydantic models with validation decorators (`@minLength`, `@max`, `@email`...).",
+   "body": [
+    "Models of `domain/models/` are pydantic models with validation decorators (`@minLength`, `@max`, `@email`...). Use",
+    "cases hold the rules and answer a `Result`. A `controller` exposes them, NestJS style:",
+    "",
+    "```nuclear",
+    "@controller(\"characters\")",
+    "controller CharactersController(characters: CharactersAppComponent)",
+    "  @get()",
+    "  alive() Result<Error, Character[]>",
+    "    ~characters.alive()",
+    "",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Character>",
+    "    ~characters.character(id)",
+    "",
+    "  @post()",
+    "  create(input: NewCharacter) Result<Error, Character>",
+    "    ~characters.create(input)",
+    "```",
+    "",
+    "```python",
+    "@controller(\"characters\")",
+    "class CharactersController:",
+    "    def __init__(self, characters: CharactersAppComponent) -> None:",
+    "        self.characters = characters",
+    "",
+    "    @get()",
+    "    async def alive(self) -> Result[AppError, list[Character]]:",
+    "        return await self.characters.alive()",
+    "",
+    "    @get(\"{id}\")",
+    "    async def one(self, id: int) -> Result[AppError, Character]:",
+    "        return await self.characters.character(id)",
+    "    # ...",
+    "```",
+    "",
+    "An `Err(NotFound(...))` becomes a 404, `Conflict` a 409, and an invalid body a 400, with no code in the controller."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#5-ai-tools-agents-and-graphs-plugin-ai",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — 5. AI: tools, agents and graphs (plugin `ai`)",
+   "summary": "A method of `tools` with a doc comment is a tool the model can call (the comment is its description, the parameters its schema); a method without one is a helper: tools CharacterTools(characters: CharacterRepository) // Tells whether a character of the show is alive, by its name.",
+   "body": [
+    "A method of `tools` with a doc comment is a tool the model can call (the comment is its description, the parameters",
+    "its schema); a method without one is a helper:",
+    "",
+    "```nuclear",
+    "tools CharacterTools(characters: CharacterRepository)",
+    "  // Tells whether a character of the show is alive, by its name.",
+    "  status(name: string) string",
+    "    match ~characters.byName(name)",
+    "      Ok(c) -> \"${c.name} is ${c.status}\"",
+    "      Err(_) -> \"nobody is called ${name}\"",
+    "```",
+    "",
+    "An `agent` is a LangChain agent with its tools and a prompt; `~guide.ask(question)` answers:",
+    "",
+    "```nuclear",
+    "agent Guide(tools: CharacterTools)",
+    "  prompt: string = \"You answer questions about Rick and Morty characters. Use the tools; be brief.\"",
+    "```",
+    "",
+    "A `graph` is a LangGraph `StateGraph`: each method is a node, `@start` the first, `@next(\"node\")` the next one:",
+    "",
+    "```nuclear",
+    "@state(ReviewState)",
+    "graph Review(guide: Guide)",
+    "  @start",
+    "  @next(\"judge\")",
+    "  ask(state: ReviewState) <string, string>",
+    "    answer = ~guide.ask(state.question)",
+    "    { \"answer\": answer }",
+    "",
+    "  @next(\"end\")",
+    "  judge(state: ReviewState) <string, string>",
+    "    verdict = if state.answer.length > 0",
+    "      \"answered\"",
+    "    else",
+    "      \"empty\"",
+    "    { \"verdict\": verdict }",
+    "```",
+    "",
+    "Kafka listeners (`listener` + `@consumer(\"topic\")`, `~publish(topic, data)`) need the plugin `kafka`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#6-build-run-and-test",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph — 6. Build, run and test",
+   "summary": "dragonfly build # nuclear build .: writes build/ (the package app/, tests/, pyproject.toml) dragonfly install # a venv in build/ with the runtime and the app's packages dragonfly run # uvicorn app.main:app --reload: http://localhost:8000/docs dragonfly test # pytest: the tests written in Nuclear…",
+   "body": [
+    "```sh",
+    "dragonfly build                    # nuclear build .: writes build/ (the package app/, tests/, pyproject.toml)",
+    "dragonfly install                  # a venv in build/ with the runtime and the app's packages",
+    "dragonfly run                      # uvicorn app.main:app --reload: http://localhost:8000/docs",
+    "dragonfly test                     # pytest: the tests written in Nuclear",
+    "```",
+    "",
+    "The same by hand, from `build/`: `python -m venv .venv`, `pip install ~/.local/share/nuclearlang/packages/dragonfly-py`",
+    "(the runtime, until it is on PyPI), `pip install -e \".[test]\"`, `uvicorn app.main:app --reload`, `pytest`.",
+    "",
+    "In VS Code: while ▷ Serve runs, saving a `.nuc` rebuilds and uvicorn reloads; ◉ Debug (or F5 with",
+    "`build/<name>.code-workspace`) runs the server under debugpy (the Python extension) with the venv of `build/`: a",
+    "breakpoint in a `.nuc` stops there.",
+    "",
+    "With Ollama: `ollama pull llama3.2` first (or set `CHAT_MODEL`). A complete project outside the repository:",
+    "`~/Documents/projects/nuc/python/nuclear_langgraph_agent` (tasks CRUD, an agent with tools and a planner graph)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/docs/dragonfly/python.md#dragonfly-for-python-a-backend-with-fastapi-and-langgraph",
+   "type": "guide",
+   "title": "Dragonfly for Python: a backend with FastAPI and LangGraph",
+   "summary": "The `fastapi` dialect turns Nuclear into a Python 3.12+ backend: FastAPI endpoints, SQLAlchemy 2 async repositories, pydantic models, and LangChain / LangGraph tools, agents and graphs.",
+   "body": [
+    "The `fastapi` dialect turns Nuclear into a Python 3.12+ backend: **FastAPI** endpoints, **SQLAlchemy 2 async**",
+    "repositories, **pydantic** models, and **LangChain / LangGraph** tools, agents and graphs. The generated code passes",
+    "`pyright --strict`. This guide walks through the example `examples/examples-fastapi/rick_api`: characters of a",
+    "show, a REST API and an agent that answers questions with a tool.",
+    "",
+    "The full rules are in [fastapi.md](../../spec/fastapi.md) (the plain Python dialect: [python.md](https://github.com/nuclearlang/nuclear/blob/main/spec/python.md))."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/docs/dragonfly/python.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "python"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/brief/fastapi.md#dialect-fastapi-the-backend-platform-in-python",
+   "type": "spec",
+   "title": "Dialect `fastapi`: the backend platform in Python",
+   "summary": "What this dialect adds to the platform's sheet: the project is generated as FastAPI + SQLAlchemy 2 async + pydantic + LangGraph in `build/` (never edit it).",
+   "body": [
+    "What this dialect adds to the platform's sheet: the project is generated as FastAPI + SQLAlchemy 2 async + pydantic +",
+    "LangGraph in `build/` (never edit it). `dragonfly build`, `dragonfly install` (a virtualenv), `dragonfly run`",
+    "(uvicorn), `dragonfly test` (pytest), `dragonfly migrate` (Alembic). Names are written in snake_case underneath; the",
+    "`.nuc` keeps camelCase and the compiler's messages use it. Full rules: `nuclear help fastapi`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/brief/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/brief/nestjs.md#dialect-nestjs-the-backend-platform-in-typescript",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the backend platform in TypeScript",
+   "summary": "What this dialect adds to the platform's sheet: the project is generated as NestJS 12 (ES modules) + Sequelize + class-validator + LangChain.js in `build/` (never edit it).",
+   "body": [
+    "What this dialect adds to the platform's sheet: the project is generated as NestJS 12 (ES modules) + Sequelize +",
+    "class-validator + LangChain.js in `build/` (never edit it). `dragonfly build`, `dragonfly install` (npm),",
+    "`dragonfly run` (node --watch), `dragonfly test` (node:test), `dragonfly migrate`. Full rules: `nuclear help nestjs`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/brief/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#1-project-plugins-config-nuc",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — Plugins (`config.nuc`)",
+   "summary": "The optional parts are plugins (projects.md §3.3): `plugins(sqlite = true, postgres = true, mysql = true, redis = true, kafka = true, ai = true, openai = true, ollama = true, chroma = true)`.",
+   "body": [
+    "The optional parts are plugins ([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §3.3): `plugins(sqlite = true, postgres = true, mysql =",
+    "true, redis = true, kafka = true, ai = true, openai = true, ollama = true, chroma = true)`. Only the enabled ones go to",
+    "`pyproject.toml`, and the runtime imports them only then (`dragonfly.ai`, `dragonfly.events`). A kind or a name of a",
+    "plugin not enabled is N0304: `tools`, `agent`, `state`, `graph` need `ai`; `listener` needs `kafka`; `Redis` needs",
+    "`redis`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#1-project.27ad0f",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 1. Project",
+   "summary": "Generated once per project: `app/main.py` (the FastAPI `app`: config, component configs, controllers, listeners), `tests/conftest.py` (each test with the connections open, databases in memory) and `pyproject.toml`.",
+   "body": [
+    "Generated once per project: `app/main.py` (the FastAPI `app`: config, component configs, controllers, listeners),",
+    "`tests/conftest.py` (each test with the connections open, databases in memory) and `pyproject.toml`.",
+    "",
+    "**Architecture** (N0301, N0302): a use case is called only by its `appcomponent`; a repository by use cases,",
+    "aggregates and tools; a service by use cases and aggregates. Another component sees only the `appcomponent`,",
+    "models, entities, tools, agents, states and graphs.",
+    "",
+    "**Libraries** (one per need, the most used): FastAPI (HTTP), pydantic (validation), SQLAlchemy 2 async with asyncpg /",
+    "aiomysql / aiosqlite (SQL), redis.asyncio (cache), aiokafka (Kafka), LangChain `init_chat_model` /",
+    "`init_embeddings` (OpenAI and Ollama behind one API), LangGraph (graphs, checkpoints), Chroma (vectors). Their type",
+    "definitions come with the dialect: `nuclear defs search <text> --dialect fastapi`."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#1-project.34b7e1",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 1. Project",
+   "summary": "A folder with `config.nuc` (`dragonfly(platform = \"backend\", dialect = \"fastapi\")`, backend.md §1); `nuclear build .` writes `build/` (the Python package `app/`, `tests/` from the platform's `test/`, `pyproject.toml` with the `app(...)` name, version and description).",
+   "body": [
+    "A folder with `config.nuc` (`dragonfly(platform = \"backend\", dialect = \"fastapi\")`, [backend.md](backend.md) §1);",
+    "`nuclear build .` writes `build/` (the Python package `app/`, `tests/` from the platform's `test/`, `pyproject.toml`",
+    "with the `app(...)` name, version and description). Run it with",
+    "`uvicorn app.main:app` from `build/`; test it with `pytest`.",
+    "",
+    "```",
+    "rick_api/",
+    "├── config.nuc                         dragonfly(platform = \"backend\", dialect = \"fastapi\"), app(...), plugins(...)",
+    "├── config/project_config.nuc          appConfig: the connections of the app",
+    "├── components/characters/",
+    "│   ├── characters_appcomponent.nuc    appcomponent: what the rest of the app sees",
+    "│   ├── config/characters_config.nuc   config: connections only this component uses",
+    "│   ├── data/entities/*.nuc            entities (tables), by folder",
+    "│   ├── data/repositories/*.nuc        repository",
+    "│   ├── domain/models/*.nuc            pydantic models, by folder",
+    "│   ├── domain/usecases/*.nuc          usecase",
+    "│   ├── api/*.nuc                      controller",
+    "│   ├── ai/*.nuc                       tools, agent, graph; ai/states/ = state by folder",
+    "│   └── events/*.nuc                   listener",
+    "├── shared/entities, shared/models     the same kinds, visible to every component",
+    "└── test/*_test.nuc                    tests (pytest, written to tests/), by folder",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-1-entity.35ef9d",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.1 Entity",
+   "summary": "TypeORM's decorators; the related entity is the field's type.",
+   "body": [
+    "TypeORM's decorators; the related entity is the field's type. `@manyToOne x?: T` keeps its column in the field `xId`",
+    "(its own field, set without loading the row); `@oneToMany(inverse)` is the other side; `@manyToMany(inverse)` with",
+    "`@joinTable()` on one side makes the table `<table>_<field>` (columns `<entity>_id`); `@oneToOne` with `@joinColumn()`",
+    "on the side that keeps `xId`. `onDelete`: `\"cascade\"`, `\"set null\"`, `\"restrict\"`. A relation field is optional and",
+    "loaded only when a query asks for it (`relations(\"tasks\")`); an unloaded one is absent from the JSON answer. N0308 when",
+    "a rule is not met. Setting a relation (`Task(projectId = id)`, `task.tags = [a, b]`) and saving writes it.",
+    "",
+    "```nuclear",
+    "@entity(\"projects\")",
+    "entity Project()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  @oneToMany(inverse = \"project\")",
+    "  tasks?: Task[]",
+    "",
+    "@entity(\"tasks\")",
+    "entity Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  title: string",
+    "  @manyToOne(inverse = \"tasks\", onDelete = \"cascade\")",
+    "  project?: Project",
+    "  projectId?: int",
+    "  @manyToMany(inverse = \"tasks\")",
+    "  @joinTable()",
+    "  tags?: Tag[]",
+    "",
+    "@entity(\"tags\")",
+    "entity Tag()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  label: string",
+    "  @manyToMany(inverse = \"tags\")",
+    "  tasks?: Task[]",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import Entity, Mapped, column, many_to_many, many_to_one, one_to_many, primary"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-1-entity.6f2d7e",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.1 Entity",
+   "summary": "class Project(Entity): tablename = \"projects\" id: Mapped[int] = primary(generated=True) name: Mapped[str] = column() tasks: Mapped[list[Task]] = one_to_many(\"Task\", \"project\") class Task(Entity): tablename = \"tasks\" id: Mapped[int] = primary(generated=True) title: Mapped[str] = column() project:…",
+   "body": [
+    "class Project(Entity):",
+    "    __tablename__ = \"projects\"",
+    "",
+    "    id: Mapped[int] = primary(generated=True)",
+    "    name: Mapped[str] = column()",
+    "    tasks: Mapped[list[Task]] = one_to_many(\"Task\", \"project\")",
+    "",
+    "class Task(Entity):",
+    "    __tablename__ = \"tasks\"",
+    "",
+    "    id: Mapped[int] = primary(generated=True)",
+    "    title: Mapped[str] = column()",
+    "    project: Mapped[Project | None] = many_to_one(\"Task\", \"project_id\", \"projects.id\", inverse=\"tasks\", on_delete=\"cascade\")",
+    "    project_id: Mapped[int | None] = column(nullable=True)",
+    "    tags: Mapped[list[Tag]] = many_to_many(\"Task\", \"tags\", \"Tag\", inverse=\"tasks\", join=True)",
+    "",
+    "class Tag(Entity):",
+    "    __tablename__ = \"tags\"",
+    "",
+    "    id: Mapped[int] = primary(generated=True)",
+    "    label: Mapped[str] = column()",
+    "    tasks: Mapped[list[Task]] = many_to_many(\"Tag\", \"tasks\", \"Task\", inverse=\"tags\")",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-1-entity.b82fcc",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.1 Entity",
+   "summary": "A table.",
+   "body": [
+    "A table. In `components/<c>/data/entities/` the kind is given by the folder; elsewhere write `entity`. `@entity(\"table\")` names the table (default: the name in snake_case). Each field is a column: `@primary(generated = true)` (a key the database gives: auto increment for an `int`, a uuid for a `string`), `@primary()` (a key the app gives), `@column(length = 100, unique = true, index = true, nullable = true, name = \"x\")`, `@created()`, `@updated()`; without a decorator it is a column too. Its SQL type comes from the field type; `name?: T` is nullable; a default goes to the column.",
+    "",
+    "```nuclear",
+    "@entity(\"characters\")",
+    "entity Character()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 100, unique = true)",
+    "  name: string",
+    "  @column(length = 20)",
+    "  status: string = \"alive\"",
+    "  species?: string",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import Entity, Mapped, column, primary",
+    "",
+    "class Character(Entity):",
+    "    __tablename__ = \"characters\"",
+    "",
+    "    id: Mapped[int] = primary(generated=True)",
+    "    name: Mapped[str] = column(length=100, unique=True)",
+    "    status: Mapped[str] = column(length=20, default=\"alive\")",
+    "    species: Mapped[str | None] = column(nullable=True)",
+    "```",
+    "",
+    "#### Relations (ADR-0100)"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-10-state-and-graph",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.10 State and graph",
+   "summary": "A LangGraph `StateGraph`: `state` is its state, a pydantic model, so a node reads `state.field`; a field without a default gets its type's empty value (`\"\"`, `0`, `[]`, `None` for `T?`), so a graph can start from a partial state; `messages: Messages` keeps a conversation.",
+   "body": [
+    "A LangGraph `StateGraph`: `state` is its state, a pydantic model, so a node reads `state.field`; a field without a default gets its type's empty value (`\"\"`, `0`, `[]`, `None` for `T?`), so a graph can start from a partial state; `messages: Messages` keeps a conversation. Each method of the `graph` is a node that receives the state and returns what changes; `@start` marks the first one and `@next(\"node\")` the one after it (`\"end\"` ends). A node can also return `Command(goto = \"node\", update = {...})` to choose at run time. `~review.run(state, thread)` runs it.",
+    "",
+    "```nuclear",
+    "state ReviewState",
+    "  question: string",
+    "  answer: string",
+    "",
+    "@state(ReviewState)",
+    "graph Review(guide: Guide)",
+    "  @start",
+    "  @next(\"end\")",
+    "  ask(state: ReviewState) <string, string>",
+    "    { \"answer\": ~guide.ask(state.question) }",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly.ai import Graph, next, start",
+    "from pydantic import BaseModel",
+    "",
+    "class ReviewState(BaseModel):",
+    "    question: str = \"\"",
+    "    answer: str = \"\"",
+    "",
+    "class Review(Graph[ReviewState]):",
+    "    state = ReviewState",
+    "",
+    "    def __init__(self, guide: Guide) -> None:",
+    "        self.guide = guide",
+    "",
+    "    @start",
+    "    @next(\"end\")",
+    "    async def ask(self, state: ReviewState) -> dict[str, str]:",
+    "        return {\"answer\": await self.guide.ask(state.question)}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-11-listener",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.11 Listener",
+   "summary": "A Kafka consumer: each `@consumer(\"topic\")` method receives the messages of the topic, parsed as the type of its parameter (a model).",
+   "body": [
+    "A Kafka consumer: each `@consumer(\"topic\")` method receives the messages of the topic, parsed as the type of its parameter (a model). `~publish(\"topic\", value)` sends one. The Redis cache: `~cacheGet(key)`, `~cacheSet(key, value, seconds = 60)`.",
+    "",
+    "```nuclear",
+    "listener CharacterEvents(characters: CharactersAppComponent)",
+    "  @consumer(\"characters.created\")",
+    "  created(input: NewCharacter) void",
+    "    ~characters.create(input)",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly.events import Listener, consumer",
+    "",
+    "class CharacterEvents(Listener):",
+    "    def __init__(self, characters: CharactersAppComponent) -> None:",
+    "        self.characters = characters",
+    "",
+    "    @consumer(\"characters.created\")",
+    "    async def created(self, input: NewCharacter) -> None:",
+    "        await self.characters.create(input)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-12-tests",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.12 Tests",
+   "summary": "In `test/*_test.nuc` (written to `tests/`, pytest's folder): `tests Name` + `@test(\"what it checks\")` methods → a pytest class.",
+   "body": [
+    "In `test/*_test.nuc` (written to `tests/`, pytest's folder): `tests Name` + `@test(\"what it checks\")` methods → a pytest class. Every test runs with the project's connections, the databases in memory and the project's listeners created (`tests/conftest.py`); `inject<X>()` gives the instances. `expect(condition)` is `assert`. `dragonfly.testing.FakeModel([...])` answers fixed texts.",
+    "",
+    "```nuclear",
+    "tests Characters",
+    "  @test(\"an unknown id is not found\")",
+    "  unknownId() void",
+    "    app = inject<CharactersAppComponent>()",
+    "    missing = ~app.character(99)",
+    "    expect(missing.isErr)",
+    "    expect(missing.error.status == 404)",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import inject",
+    "",
+    "class TestCharacters:",
+    "    async def test_unknown_id(self) -> None:",
+    "        \"an unknown id is not found\"",
+    "        app = inject(CharactersAppComponent)",
+    "        missing = await app.character(99)",
+    "        assert missing.is_err",
+    "        assert missing.error.status == 404",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-2-repository.10e4e8",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.2 Repository",
+   "summary": "@repository(path = \"character\") repository CharacterRepository @get(path = \":id\") one(id: int) Result<Error, Character> from future import annotations from dragonfly import AppError, HttpRepository, Result class CharacterRepository(HttpRepository): path = \"character\" async def one(self, id: int)…",
+   "body": [
+    "```nuclear",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  one(id: int) Result<Error, Character>",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import AppError, HttpRepository, Result",
+    "",
+    "class CharacterRepository(HttpRepository):",
+    "    path = \"character\"",
+    "",
+    "    async def one(self, id: int) -> Result[AppError, Character]:",
+    "        return await self.send(\"GET\", \":id\", { \"id\": id }, Character)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-2-repository.82ae73",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.2 Repository",
+   "summary": "The data of one entity: `NameRepository` works on `Name` (or `@repository(Entity)`).",
+   "body": [
+    "The data of one entity: `NameRepository` works on `Name` (or `@repository(Entity)`). It brings `find(id)` (`Ok(entity)` / `Err(NotFound)`), `findAll()`, `save(entity)` and `remove(id)`. Each method's lines build ONE query, created for that call (`q`): `where({...})` (equality, or `gt`, `gte`, `lt`, `lte`, `ne`, `like`, `ilike`, `oneOf`, `isNull`, `between`), `orderBy(field, desc = true)`, `limit(n)`, `offset(n)`, `relations(\"tasks\", \"tasks.tags\")` (the relations to load); the last line runs it: `getOne()` (`Result`), `getMany()`, `paginate(page, size)` (`Page<T>`: `items`, `page` from 1, `size`, `total`, `pages`), `count()`, `exists()`, `update({...})`, `delete()`. The caller awaits it: `~characters.byName(name)`.",
+    "",
+    "```nuclear",
+    "repository CharacterRepository",
+    "  byName(name: string) Result<Error, Character>",
+    "    where({ \"name\": name })",
+    "    getOne()",
+    "",
+    "  aliveSince(year: int, max: int = 20) Character[]",
+    "    where({ \"status\": \"alive\", \"year\": gte(year) })",
+    "    orderBy(\"name\")",
+    "    limit(max)",
+    "    getMany()",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import AppError, Repository, Result, gte",
+    "from typing import Awaitable",
+    "",
+    "class CharacterRepository(Repository[Character]):",
+    "    def by_name(self, name: str) -> Awaitable[Result[AppError, Character]]:",
+    "        q = self.query()",
+    "        q.where({\"name\": name})",
+    "        return q.get_one()"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-2-repository.fd02a9",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.2 Repository",
+   "summary": "def alive_since(self, year: int, max: int = 20) -> Awaitable[list[Character]]: q = self.query() q.where({\"status\": \"alive\", \"year\": gte(year)}) q.order_by(\"name\") q.limit(max) return q.get_many() A page and a relation: repository ProjectRepository withTasks(id: int) Result<Error, Project> where({…",
+   "body": [
+    "def alive_since(self, year: int, max: int = 20) -> Awaitable[list[Character]]:",
+    "        q = self.query()",
+    "        q.where({\"status\": \"alive\", \"year\": gte(year)})",
+    "        q.order_by(\"name\")",
+    "        q.limit(max)",
+    "        return q.get_many()",
+    "```",
+    "",
+    "A page and a relation:",
+    "",
+    "```nuclear",
+    "repository ProjectRepository",
+    "  withTasks(id: int) Result<Error, Project>",
+    "    where({ \"id\": id })",
+    "    relations(\"tasks.tags\")",
+    "    getOne()",
+    "",
+    "repository TaskRepository",
+    "  page(page: int, size: int = 20) Page<Task>",
+    "    orderBy(\"id\")",
+    "    paginate(page, size)",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import AppError, Page, Repository, Result",
+    "from typing import Awaitable",
+    "",
+    "class ProjectRepository(Repository[Project]):",
+    "    def with_tasks(self, id: int) -> Awaitable[Result[AppError, Project]]:",
+    "        q = self.query()",
+    "        q.where({\"id\": id})",
+    "        q.relations(\"tasks.tags\")",
+    "        return q.get_one()",
+    "",
+    "class TaskRepository(Repository[Task]):",
+    "    def page(self, page: int, size: int = 20) -> Awaitable[Page[Task]]:",
+    "        q = self.query()",
+    "        q.order_by(\"id\")",
+    "        return q.paginate(page, size)",
+    "```",
+    "",
+    "An HTTP repository (another API, ADR-0103; spec/backend.md §2.2): an `HttpRepository` that sends each call through",
+    "the `Http` connection (httpx) and validates the answer against the declared type (pydantic):"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-3-model",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.3 Model",
+   "summary": "What the API reads and answers: a pydantic model (in `domain/models/` by folder).",
+   "body": [
+    "What the API reads and answers: a pydantic model (in `domain/models/` by folder). The same rule decorators as the nestjs dialect and Dragonfly's forms become pydantic constraints: `@required`, `@minLength(n)`, `@maxLength(n)`, `@min(n)`, `@max(n)`, `@pattern(r\"...\")`, `@email`, `@url`. An invalid body is a 422.",
+    "",
+    "```nuclear",
+    "model NewCharacter",
+    "  @minLength(1)",
+    "  @maxLength(100)",
+    "  name: string",
+    "  status: string = \"alive\"",
+    "  @email",
+    "  contact?: string",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from annotated_types import MaxLen, MinLen",
+    "from dragonfly.validators import is_email",
+    "from pydantic import AfterValidator, BaseModel",
+    "from typing import Annotated",
+    "",
+    "class NewCharacter(BaseModel):",
+    "    name: Annotated[str, MinLen(1), MaxLen(100)]",
+    "    status: str = \"alive\"",
+    "    contact: Annotated[str | None, AfterValidator(is_email)] = None",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-4-use-case.c91a25",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.4 Use case",
+   "summary": "One business operation: its dependencies are injected by type; `exec` returns `Result<E, T>`.",
+   "body": [
+    "One business operation: its dependencies are injected by type; `exec` returns `Result<E, T>`. `Error` is `AppError`; the runtime has `NotFound` (404), `Invalid` (400), `Unauthorized` (401), `Forbidden` (403) and `Conflict` (409).",
+    "",
+    "```nuclear",
+    "model NewCharacter",
+    "  name: string",
+    "  status: string = \"alive\"",
+    "",
+    "entity Character()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  status: string",
+    "",
+    "usecase CreateCharacter(characters: CharacterRepository)",
+    "  exec(input: NewCharacter) Result<Error, Character>",
+    "    taken = ~characters.where({ \"name\": input.name }).exists()",
+    "    if taken",
+    "      return Err(Conflict(\"${input.name} already exists\"))",
+    "    Ok(~characters.save(Character(name = input.name, status = input.status)))",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import AppError, Conflict, Entity, Err, Mapped, Ok, Result, column, primary",
+    "from pydantic import BaseModel",
+    "",
+    "class NewCharacter(BaseModel):",
+    "    name: str",
+    "    status: str = \"alive\"",
+    "",
+    "class Character(Entity):",
+    "    __tablename__ = \"character\"",
+    "",
+    "    id: Mapped[int] = primary(generated=True)",
+    "    name: Mapped[str] = column()",
+    "    status: Mapped[str] = column()",
+    "",
+    "class CreateCharacter:",
+    "    def __init__(self, characters: CharacterRepository) -> None:",
+    "        self.characters = characters"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-4-use-case.e519c0",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.4 Use case",
+   "summary": "async def exec(self, input: NewCharacter) -> Result[AppError, Character]: taken = await self.characters.where({\"name\": input.name}).exists() if taken: return Err(Conflict(f\"{input.name} already exists\")) return Ok(await self.characters.save(Character(name=input.name, status=input.status)))…",
+   "body": [
+    "async def exec(self, input: NewCharacter) -> Result[AppError, Character]:",
+    "        taken = await self.characters.where({\"name\": input.name}).exists()",
+    "        if taken:",
+    "            return Err(Conflict(f\"{input.name} already exists\"))",
+    "        return Ok(await self.characters.save(Character(name=input.name, status=input.status)))",
+    "```",
+    "",
+    "`@transactional` on `exec`: every repository call inside shares one transaction of the default database; an `Err`",
+    "or an error rolls it back, an `Ok` commits it.",
+    "",
+    "```nuclear",
+    "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository)",
+    "  @transactional",
+    "  exec(id: int, into: int) Result<Error, int>",
+    "    ~projects.find(into)",
+    "    moved = ~tasks.where({ \"projectId\": id }).update({ \"projectId\": into })",
+    "    ~projects.remove(id)",
+    "    Ok(moved)",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import AppError, Ok, Result, transactional",
+    "",
+    "class CloseProject:",
+    "    def __init__(self, tasks: TaskRepository, projects: ProjectRepository) -> None:",
+    "        self.tasks = tasks",
+    "        self.projects = projects",
+    "",
+    "    @transactional",
+    "    async def exec(self, id: int, into: int) -> Result[AppError, int]:",
+    "        await self.projects.find(into)",
+    "        moved = await self.tasks.where({\"projectId\": id}).update({\"projectId\": into})",
+    "        await self.projects.remove(id)",
+    "        return Ok(moved)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-5-appcomponent",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.5 Appcomponent",
+   "summary": "The facade of a component: aliases to the use cases.",
+   "body": [
+    "The facade of a component: aliases to the use cases. Other components and the controllers use only this.",
+    "",
+    "```nuclear",
+    "appcomponent CharactersAppComponent",
+    "  character() = GetCharacter.exec",
+    "  create() = CreateCharacter.exec",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "class CharactersAppComponent:",
+    "    def character(self):",
+    "        return GetCharacter.exec",
+    "",
+    "    def create(self):",
+    "        return CreateCharacter.exec",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-6-controller",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.6 Controller",
+   "summary": "REST routes over FastAPI, like NestJS: `@controller(\"path\")` and `@get`, `@post` (201), `@put`, `@patch`, `@delete` with the route of the platform (`\"{id}\"`: a path parameter; segments without a leading slash: the runtime's decorators add it).",
+   "body": [
+    "REST routes over FastAPI, like NestJS: `@controller(\"path\")` and `@get`, `@post` (201), `@put`, `@patch`, `@delete` with the route of the platform (`\"{id}\"`: a path parameter; segments without a leading slash: the runtime's decorators add it). A parameter that is a model is the JSON body; an entity is read and answered through its pydantic schema. A `Result` answers its value, or the error's status and message; an invalid body or parameter answers 400 with the reasons.",
+    "",
+    "```nuclear",
+    "@controller(\"characters\")",
+    "controller CharactersController(characters: CharactersAppComponent)",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Character>",
+    "    ~characters.character(id)",
+    "",
+    "  @post()",
+    "  create(input: NewCharacter) Result<Error, Character>",
+    "    ~characters.create(input)",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import AppError, Result, controller, get, post",
+    "",
+    "@controller(\"characters\")",
+    "class CharactersController:",
+    "    def __init__(self, characters: CharactersAppComponent) -> None:",
+    "        self.characters = characters",
+    "",
+    "    @get(\"{id}\")",
+    "    async def one(self, id: int) -> Result[AppError, Character]:",
+    "        return await self.characters.character(id)",
+    "",
+    "    @post()",
+    "    async def create(self, input: NewCharacter) -> Result[AppError, Character]:",
+    "        return await self.characters.create(input)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-7-configuration",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.7 Configuration",
+   "summary": "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`): opened at start and closed at stop.",
+   "body": [
+    "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`): opened at start and closed at stop. Databases: `Postgres`, `MySQL`, `SQLite` (`url` picks the async driver, `createTables = true` creates the tables); `Redis`; `Kafka(servers, group)`; models: `OpenAI(model)`, `Ollama(model, baseUrl)`, `Embeddings(model)`; `Chroma(collection, embeddings, path)`. Each has a `name` (default `\"default\"`). `env(\"VAR\", \"default\")` reads the environment.",
+    "",
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    Postgres(url = env(\"DATABASE_URL\", \"postgres://localhost/rick\")),",
+    "    Redis(url = env(\"REDIS_URL\", \"redis://localhost:6379/0\")),",
+    "    Kafka(servers = env(\"KAFKA\", \"localhost:9092\"), group = \"rick\"),",
+    "    OpenAI(model = \"gpt-4o-mini\"),",
+    "  ]",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly import AppConfig, Connection, Kafka, OpenAI, Postgres, Redis, env",
+    "",
+    "class ProjectConfig(AppConfig):",
+    "    connections: list[Connection] = [",
+    "        Postgres(url=env(\"DATABASE_URL\", \"postgres://localhost/rick\")),",
+    "        Redis(url=env(\"REDIS_URL\", \"redis://localhost:6379/0\")),",
+    "        Kafka(servers=env(\"KAFKA\", \"localhost:9092\"), group=\"rick\"),",
+    "        OpenAI(model=\"gpt-4o-mini\"),",
+    "    ]",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-8-tools",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.8 Tools",
+   "summary": "Each public method with a doc comment is a LangChain tool, and the doc comment is the description the model reads; a method without one is a helper of the others (never offered to the model).",
+   "body": [
+    "Each public method with a doc comment is a LangChain tool, and the doc comment is the description the model reads; a method without one is a helper of the others (never offered to the model). A tool can use the component's repositories.",
+    "",
+    "```nuclear",
+    "tools CharacterTools(characters: CharacterRepository)",
+    "  // Tells whether a character of the show is alive, by its name.",
+    "  status(name: string) string",
+    "    match ~characters.byName(name)",
+    "      Ok(c) -> \"${c.name} is ${c.status}\"",
+    "      Err(_) -> \"nobody is called ${name}\"",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly.ai import Tools",
+    "",
+    "class CharacterTools(Tools):",
+    "    def __init__(self, characters: CharacterRepository) -> None:",
+    "        self.characters = characters",
+    "",
+    "    async def status(self, name: str) -> str:",
+    "        \"\"\"Tells whether a character of the show is alive, by its name.\"\"\"",
+    "        by_name_result = await self.characters.by_name(name)",
+    "        if by_name_result.is_ok:",
+    "            return f\"{by_name_result.value.name} is {by_name_result.value.status}\"",
+    "        else:",
+    "            return f\"nobody is called {name}\"",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-2-9-agent",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 2.9 Agent",
+   "summary": "A model with tools and a system prompt (LangChain `create_agent`, with memory per thread).",
+   "body": [
+    "A model with tools and a system prompt (LangChain `create_agent`, with memory per thread). Its tools are the `tools` it receives; `model` names the chat model connection. `~guide.ask(text, thread = \"user-1\")` answers; `stream(text)` gives the answer piece by piece.",
+    "",
+    "```nuclear",
+    "agent Guide(tools: CharacterTools)",
+    "  model: string = \"default\"",
+    "  prompt: string = \"You answer questions about the characters. Use the tools.\"",
+    "```",
+    "",
+    "```python",
+    "from __future__ import annotations",
+    "",
+    "from dragonfly.ai import Agent",
+    "",
+    "class Guide(Agent):",
+    "    model: str = \"default\"",
+    "    prompt: str = \"You answer questions about the characters. Use the tools.\"",
+    "",
+    "    def __init__(self, tools: CharacterTools) -> None:",
+    "        self.tools = tools",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#2-kinds-migrations",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — Migrations",
+   "summary": "Migrations of the database schema (ADR-0100 §5): Alembic over `migrations/` (`env.py`, `versions/`), made by `dragonfly migrate make` against an empty SQLite at the last migration, in batch mode.",
+   "body": [
+    "Migrations of the database schema (ADR-0100 §5): Alembic over `migrations/` (`env.py`, `versions/`), made by",
+    "`dragonfly migrate make` against an empty SQLite at the last migration, in batch mode. The commands and the rules:",
+    "`spec/backend.md` §2.8."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#3-what-is-not-there-yet",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python — 3. What is not there yet",
+   "summary": "`install`, `run`, `test` and `migrate`).",
+   "body": [
+    "- `dragonfly make` generators for the backend kinds, `dragonfly check` and `watch` (the CLI has `new`, `build`,",
+    "  `install`, `run`, `test` and `migrate`)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/fastapi.md#dialect-fastapi-fastapi-the-backend-platform-in-python",
+   "type": "spec",
+   "title": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python",
+   "summary": "Dialect `fastapi` (→ `fastapi`): the `backend` platform in Python",
+   "body": [
+    "> The Python dialect of the [backend platform](backend.md) (ADR-0093), extending [python.md](https://github.com/nuclearlang/nuclear/blob/main/spec/python.md). The",
+    "> platform's rules, kinds and Nuclear are in `backend.md`; this document holds only how this dialect writes them:",
+    "> REST controllers on **FastAPI**, repositories over tables with **SQLAlchemy 2 async**, **pydantic** models, and",
+    "> **LangChain / LangGraph** tools, agents and graphs. Files: `dialects/backend/fastapi/` (renamed `fastapi` in phase B1,",
+    "> `STATUS.md`); runtime: `packages/dragonfly-py` (import name `dragonfly`)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/fastapi.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "fastapi"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#1-project-plugins-config-nuc",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — Plugins (`config.nuc`)",
+   "summary": "The optional parts are plugins (projects.md §3.3): `plugins(sqlite = true, postgres = true, mysql = true, mariadb = true, redis = true, kafka = true, events = true, ai = true, openai = true, ollama = true)`.",
+   "body": [
+    "The optional parts are plugins ([projects.md](https://github.com/nuclearlang/nuclear/blob/main/spec/projects.md) §3.3): `plugins(sqlite = true, postgres = true, mysql =",
+    "true, mariadb = true, redis = true, kafka = true, events = true, ai = true, openai = true, ollama = true)`. Only the",
+    "enabled ones go to `package.json`, and the runtime loads them only then (`dragonfly-nest/ai`, `dragonfly-nest/events`).",
+    "A kind or a name of a plugin not enabled is N0304: `tools`, `agent`, `state`, `graph` need `ai`; `listener` and",
+    "`publish` need `events` (Kafka with `kafka`)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#1-project.3feb48",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 1. Project",
+   "summary": "Generated once per project: `src/app.module.ts` (one global Nest module per component with its entities, providers and controllers, exporting its appcomponent; the app module with the database and the connections), `src/main.ts`, `package.json` (the drivers of the databases the config uses) and…",
+   "body": [
+    "Generated once per project: `src/app.module.ts` (one global Nest module per component with its entities, providers",
+    "and controllers, exporting its appcomponent; the app module with the database and the connections), `src/main.ts`,",
+    "`package.json` (the drivers of the databases the config uses) and `tsconfig.json`.",
+    "",
+    "**Architecture** (N0301, N0302): a use case is called only by its `appcomponent`; a repository by use cases and",
+    "aggregates; a service by use cases and aggregates. Another component sees only the `appcomponent`, models and",
+    "entities. **Type definitions** of every library come with the dialect (`nuclear defs search <text> --dialect",
+    "nestjs`): an invented class is N0220."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#1-project.4e5ad7",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 1. Project",
+   "summary": "A folder with `config.nuc` (`dragonfly(platform = \"backend\", dialect = \"nestjs\")`, backend.md §1); `nuclear build .` writes `build/`: `src/` (the app), `test/`, `package.json`, `tsconfig.json`.",
+   "body": [
+    "A folder with `config.nuc` (`dragonfly(platform = \"backend\", dialect = \"nestjs\")`, [backend.md](backend.md) §1);",
+    "`nuclear build .` writes `build/`: `src/` (the app), `test/`, `package.json`, `tsconfig.json`. In `build/`: `npm install`, `npm run dev` (port `PORT`, default 3000), `npm test`.",
+    "The output is ES modules (NestJS 12): relative imports name the `.js` file.",
+    "",
+    "```",
+    "tasks_api/",
+    "├── config.nuc                         dragonfly(platform = \"backend\", dialect = \"nestjs\"), app(...), plugins(...)",
+    "├── config/project_config.nuc          appConfig: the database and the other connections",
+    "├── components/tasks/",
+    "│   ├── tasks_appcomponent.nuc         appcomponent: what the rest of the app sees",
+    "│   ├── data/entities/*.nuc            entities (tables), by folder",
+    "│   ├── data/repositories/*.nuc        repository",
+    "│   ├── domain/models/*.nuc            DTOs, by folder",
+    "│   ├── domain/usecases/*.nuc          usecase",
+    "│   └── api/*.nuc                      controller",
+    "├── shared/entities, shared/models     the same kinds, for every component",
+    "└── test/*.nuc                         tests (node:test), by folder",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-1-entity.0cf7e0",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.1 Entity",
+   "summary": "A table (sequelize-typescript).",
+   "body": [
+    "A table (sequelize-typescript). In `components/<c>/data/entities/` the kind is given by the folder; elsewhere write `entity`. `@entity(\"table\")` names the table (default: the name in snake_case); columns are snake_case in the database (`underscored`). Each field is a column: `@primary(generated = true)` (a key the database gives: auto increment for an `int`, a uuid for a `string`), `@primary()` (a key the app gives; `length = 36`), `@column(length = 100, unique = true, name = \"x\")`, `@created()`, `@updated()`; without a decorator it is a column too. The SQL type comes from the field type; `name?: T` allows null; a default is the column's default.",
+    "",
+    "```nuclear",
+    "@entity(\"tasks\")",
+    "entity Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 200, unique = true)",
+    "  title: string",
+    "  done: boolean = false",
+    "  @created()",
+    "  createdAt?: DateTime",
+    "```",
+    "",
+    "```typescript",
+    "import { Entity } from 'dragonfly-nest';",
+    "import { AutoIncrement, Column, CreatedAt, DataType, PrimaryKey, Table } from 'sequelize-typescript';"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-1-entity.8afaa9",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.1 Entity",
+   "summary": "@Table({ tableName: 'tasks', underscored: true, timestamps: false, }) export class Task extends Entity { @PrimaryKey @AutoIncrement @Column(DataType.INTEGER) declare id: number; @Column({ type: DataType.STRING, allowNull: false }) declare title: string; @BelongsTo(() => Project, { foreignKey:…",
+   "body": [
+    "@Table({",
+    "  tableName: 'tasks',",
+    "  underscored: true,",
+    "  timestamps: false,",
+    "})",
+    "export class Task extends Entity {",
+    "  @PrimaryKey",
+    "  @AutoIncrement",
+    "  @Column(DataType.INTEGER)",
+    "  declare id: number;",
+    "  @Column({ type: DataType.STRING, allowNull: false })",
+    "  declare title: string;",
+    "  @BelongsTo(() => Project, { foreignKey: 'projectId', onDelete: 'cascade' })",
+    "  declare project?: Related<Project>;",
+    "  @Column({ type: DataType.INTEGER, allowNull: true })",
+    "  declare projectId?: number;",
+    "  @BelongsToMany(() => Tag, joinTable('tasks_tags', 'task_id', 'tag_id'))",
+    "  declare tags?: Tag[];",
+    "}",
+    "",
+    "@Table({",
+    "  tableName: 'tags',",
+    "  underscored: true,",
+    "  timestamps: false,",
+    "})",
+    "export class Tag extends Entity {",
+    "  @PrimaryKey",
+    "  @AutoIncrement",
+    "  @Column(DataType.INTEGER)",
+    "  declare id: number;",
+    "  @Column({ type: DataType.STRING, allowNull: false })",
+    "  declare label: string;",
+    "  @BelongsToMany(() => Task, joinTable('tasks_tags', 'tag_id', 'task_id'))",
+    "  declare tasks?: Task[];",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-1-entity.9c2629",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.1 Entity",
+   "summary": "@Table({ tableName: 'tasks', underscored: true, timestamps: true, createdAt: 'createdAt', updatedAt: false, }) export class Task extends Entity { @PrimaryKey @AutoIncrement @Column(DataType.INTEGER) declare id: number; @Column({ type: DataType.STRING(200), allowNull: false, unique: true }) declare…",
+   "body": [
+    "@Table({",
+    "  tableName: 'tasks',",
+    "  underscored: true,",
+    "  timestamps: true,",
+    "  createdAt: 'createdAt',",
+    "  updatedAt: false,",
+    "})",
+    "export class Task extends Entity {",
+    "  @PrimaryKey",
+    "  @AutoIncrement",
+    "  @Column(DataType.INTEGER)",
+    "  declare id: number;",
+    "  @Column({ type: DataType.STRING(200), allowNull: false, unique: true })",
+    "  declare title: string;",
+    "  @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })",
+    "  declare done: boolean;",
+    "  @CreatedAt",
+    "  declare createdAt?: Date;",
+    "}",
+    "```",
+    "",
+    "#### Relations (ADR-0100)",
+    "",
+    "TypeORM's decorators; the related entity is the field's type. `@manyToOne x?: T` keeps its column in the field `xId`",
+    "(its own field, set without loading the row); `@oneToMany(inverse)` is the other side; `@manyToMany(inverse)` with",
+    "`@joinTable()` on one side makes the table `<table>_<field>` (columns `<entity>_id`); `@oneToOne` with `@joinColumn()`",
+    "on the side that keeps `xId`. `onDelete`: `\"cascade\"`, `\"set null\"`, `\"restrict\"`. A relation field is optional and",
+    "loaded only when a query asks for it (`relations(\"tasks\")`); an unloaded one is absent from the JSON answer. N0308 when",
+    "a rule is not met. Setting a relation (`Task(projectId = id)`, `task.tags = [a, b]`) and saving writes it.",
+    "",
+    "```nuclear",
+    "@entity(\"projects\")",
+    "entity Project()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  name: string",
+    "  @oneToMany(inverse = \"project\")",
+    "  tasks?: Task[]"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-1-entity.b5cdd1",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.1 Entity",
+   "summary": "@entity(\"tasks\") entity Task() @primary(generated = true) id: int title: string @manyToOne(inverse = \"tasks\", onDelete = \"cascade\") project?: Project projectId?: int @manyToMany(inverse = \"tasks\") @joinTable() tags?: Tag[] @entity(\"tags\") entity Tag() @primary(generated = true) id: int label:…",
+   "body": [
+    "@entity(\"tasks\")",
+    "entity Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  title: string",
+    "  @manyToOne(inverse = \"tasks\", onDelete = \"cascade\")",
+    "  project?: Project",
+    "  projectId?: int",
+    "  @manyToMany(inverse = \"tasks\")",
+    "  @joinTable()",
+    "  tags?: Tag[]",
+    "",
+    "@entity(\"tags\")",
+    "entity Tag()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  label: string",
+    "  @manyToMany(inverse = \"tags\")",
+    "  tasks?: Task[]",
+    "```",
+    "",
+    "```typescript",
+    "import { Entity, Related, joinTable } from 'dragonfly-nest';",
+    "import { AutoIncrement, BelongsTo, BelongsToMany, Column, DataType, HasMany, PrimaryKey, Table } from 'sequelize-typescript';",
+    "",
+    "@Table({",
+    "  tableName: 'projects',",
+    "  underscored: true,",
+    "  timestamps: false,",
+    "})",
+    "export class Project extends Entity {",
+    "  @PrimaryKey",
+    "  @AutoIncrement",
+    "  @Column(DataType.INTEGER)",
+    "  declare id: number;",
+    "  @Column({ type: DataType.STRING, allowNull: false })",
+    "  declare name: string;",
+    "  @HasMany(() => Task, { foreignKey: 'projectId', constraints: false })",
+    "  declare tasks?: Task[];",
+    "}"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-10-agent",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.10 Agent",
+   "summary": "A model with tools and a system prompt (LangChain `createAgent`, with memory per thread).",
+   "body": [
+    "A model with tools and a system prompt (LangChain `createAgent`, with memory per thread). Its tools are the `tools` it receives; `model` names the chat model connection (`Ollama`, `OpenAI`). `~assistant.ask(text, thread)` answers.",
+    "",
+    "```nuclear",
+    "tools TaskTools",
+    "  // Lists the pending tasks.",
+    "  pending() string",
+    "    \"none\"",
+    "",
+    "agent AssistantAgent(tools: TaskTools)",
+    "  prompt: string = \"You are a task assistant. Use the tools.\"",
+    "```",
+    "",
+    "```typescript",
+    "import { StructuredToolInterface } from '@langchain/core/tools';",
+    "import { Injectable } from '@nestjs/common';",
+    "import { Agent, Tools } from 'dragonfly-nest/ai';",
+    "import { tool } from 'langchain';",
+    "import { z } from 'zod';",
+    "",
+    "@Injectable()",
+    "export class TaskTools extends Tools {",
+    "  /** Lists the pending tasks. */",
+    "  pending(): string {",
+    "    return 'none';",
+    "  }",
+    "",
+    "  /** The tools the model can call: the methods with a doc comment. */",
+    "  tools(): StructuredToolInterface[] {",
+    "    return [",
+    "      tool(async () => this.pending(), {",
+    "        name: 'pending',",
+    "        description: 'Lists the pending tasks.',",
+    "        schema: z.object({  }),",
+    "      }),",
+    "    ];",
+    "  }",
+    "}",
+    "",
+    "@Injectable()",
+    "export class AssistantAgent extends Agent {",
+    "  override prompt: string = 'You are a task assistant. Use the tools.';",
+    "",
+    "  constructor(private readonly tools: TaskTools) {",
+    "    super();",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-11-state-and-graph",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.11 State and graph",
+   "summary": "A LangGraph `StateGraph`: `state` is its state (an `Annotation.Root`; `messages: Messages` keeps a conversation).",
+   "body": [
+    "A LangGraph `StateGraph`: `state` is its state (an `Annotation.Root`; `messages: Messages` keeps a conversation). Each method of the `graph` is a node that receives the state and returns what changes; `@start` marks the first one and `@next(\"node\")` the one after it (`\"end\"` ends). `~planner.run(state, thread)` runs it and gives the final state, typed.",
+    "",
+    "```nuclear",
+    "state PlanState",
+    "  goal: string",
+    "  titles: string[]",
+    "",
+    "@state(PlanState)",
+    "graph Planner",
+    "  @start",
+    "  @next(\"end\")",
+    "  split(state: PlanState) <string, any>",
+    "    { \"titles\": state.goal.split(\",\") }",
+    "```",
+    "",
+    "```typescript",
+    "import { Annotation } from '@langchain/langgraph';",
+    "import { Injectable } from '@nestjs/common';",
+    "import { Graph, next, start } from 'dragonfly-nest/ai';",
+    "",
+    "export const PlanState = Annotation.Root({",
+    "  goal: Annotation<string>,",
+    "  titles: Annotation<string[]>,",
+    "});",
+    "export type PlanState = typeof PlanState.State;",
+    "",
+    "@Injectable()",
+    "export class Planner extends Graph<typeof PlanState> {",
+    "  readonly state = PlanState;",
+    "",
+    "  @start",
+    "  @next('end')",
+    "  split(state: PlanState): Record<string, any> {",
+    "    return { 'titles': state.goal.split(',') };",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-12-tests",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.12 Tests",
+   "summary": "In `test/`: `tests Name` + `@test(\"what it checks\")` methods → a `node:test` suite.",
+   "body": [
+    "In `test/`: `tests Name` + `@test(\"what it checks\")` methods → a `node:test` suite. Each test starts the app with the databases in SQLite in memory; `inject<X>()` gives Nest's instances; `expect(condition)` is `assert.ok`. `npm test` compiles and runs them.",
+    "",
+    "```nuclear",
+    "tests Tasks",
+    "  @test(\"an unknown id is not found\")",
+    "  unknownId() void",
+    "    tasks = inject<TasksAppComponent>()",
+    "    missing = ~tasks.task(99)",
+    "    expect(missing.error.status == 404)",
+    "```",
+    "",
+    "```typescript",
+    "import { INestApplication } from '@nestjs/common';",
+    "import { inject } from 'dragonfly-nest';",
+    "import { startTestApp, stopTestApp } from 'dragonfly-nest/testing';",
+    "import { afterEach, beforeEach, describe, it } from 'node:test';",
+    "",
+    "import assert from 'node:assert/strict';",
+    "",
+    "describe('Tasks', () => {",
+    "  let app: INestApplication;",
+    "",
+    "  beforeEach(async () => {",
+    "    app = await startTestApp(AppModule);",
+    "  });",
+    "",
+    "  afterEach(async () => {",
+    "    await stopTestApp(app);",
+    "  });",
+    "",
+    "  it('an unknown id is not found', async () => {",
+    "    const tasks = inject(TasksAppComponent);",
+    "    const missing = await tasks.task(99);",
+    "    assert.ok(missing.error.status === 404);",
+    "  });",
+    "});",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-2-repository.007ef8",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.2 Repository",
+   "summary": "page(page: number, size: number = 20): Promise<Page<Task>> { const q = this.query(); q.orderBy('id'); return q.paginate(page, size); } } An HTTP repository (another API, ADR-0103; spec/backend.md §2.2): an `HttpRepository` that sends each call through the `Http` connection (fetch); the answer is…",
+   "body": [
+    "page(page: number, size: number = 20): Promise<Page<Task>> {",
+    "    const q = this.query();",
+    "    q.orderBy('id');",
+    "    return q.paginate(page, size);",
+    "  }",
+    "}",
+    "```",
+    "",
+    "An HTTP repository (another API, ADR-0103; spec/backend.md §2.2): an `HttpRepository` that sends each call through",
+    "the `Http` connection (fetch); the answer is the JSON as the declared type:",
+    "",
+    "```nuclear",
+    "@repository(path = \"character\")",
+    "repository CharacterRepository",
+    "  @get(path = \":id\")",
+    "  one(id: int) Result<Error, Character>",
+    "```",
+    "",
+    "```typescript",
+    "import { Injectable } from '@nestjs/common';",
+    "import { AppError, HttpRepository, Result } from 'dragonfly-nest';",
+    "",
+    "@Injectable()",
+    "export class CharacterRepository extends HttpRepository {",
+    "  override path = 'character';",
+    "",
+    "  async one(id: number): Promise<Result<AppError, Character>> {",
+    "    return this.send('GET', ':id', { id });",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-2-repository.6a6bb0",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.2 Repository",
+   "summary": "byTitle(title: string): Promise<Result<AppError, Task>> { const q = this.query(); q.where({ 'title': title }); return q.getOne(); } pending(max: number = 20): Promise<Task[]> { const q = this.query(); q.where({ 'done': false, 'priority': lte(2) }); q.orderBy('priority'); q.limit(max); return…",
+   "body": [
+    "byTitle(title: string): Promise<Result<AppError, Task>> {",
+    "    const q = this.query();",
+    "    q.where({ 'title': title });",
+    "    return q.getOne();",
+    "  }",
+    "",
+    "  pending(max: number = 20): Promise<Task[]> {",
+    "    const q = this.query();",
+    "    q.where({ 'done': false, 'priority': lte(2) });",
+    "    q.orderBy('priority');",
+    "    q.limit(max);",
+    "    return q.getMany();",
+    "  }",
+    "}",
+    "```",
+    "",
+    "A page and a relation:",
+    "",
+    "```nuclear",
+    "repository ProjectRepository",
+    "  withTasks(id: int) Result<Error, Project>",
+    "    where({ \"id\": id })",
+    "    relations(\"tasks.tags\")",
+    "    getOne()",
+    "",
+    "repository TaskRepository",
+    "  page(page: int, size: int = 20) Page<Task>",
+    "    orderBy(\"id\")",
+    "    paginate(page, size)",
+    "```",
+    "",
+    "```typescript",
+    "import { Injectable } from '@nestjs/common';",
+    "import { InjectModel } from '@nestjs/sequelize';",
+    "import { AppError, Page, Repository, Result } from 'dragonfly-nest';",
+    "",
+    "@Injectable()",
+    "export class ProjectRepository extends Repository<Project> {",
+    "  constructor(@InjectModel(Project) model: typeof Project) {",
+    "    super(model);",
+    "  }",
+    "",
+    "  withTasks(id: number): Promise<Result<AppError, Project>> {",
+    "    const q = this.query();",
+    "    q.where({ 'id': id });",
+    "    q.relations('tasks.tags');",
+    "    return q.getOne();",
+    "  }",
+    "}",
+    "",
+    "@Injectable()",
+    "export class TaskRepository extends Repository<Task> {",
+    "  constructor(@InjectModel(Task) model: typeof Task) {",
+    "    super(model);",
+    "  }"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-2-repository.f9512c",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.2 Repository",
+   "summary": "The data of one entity: `NameRepository` works on `Name` (or `@repository(Entity)`); Nest injects its Sequelize model.",
+   "body": [
+    "The data of one entity: `NameRepository` works on `Name` (or `@repository(Entity)`); Nest injects its Sequelize model. It brings `find(id)` (`Ok(entity)` / `Err(NotFound)`), `findAll()`, `save(entity)` and `remove(id)`. Each method's lines build ONE query, created for that call (`q`): `where({...})` (equality, or `gt`, `gte`, `lt`, `lte`, `ne`, `like`, `ilike`, `oneOf`, `isNull`, `between`), `orderBy(field, desc = true)`, `limit(n)`, `offset(n)`, `relations(\"tasks\", \"tasks.tags\")` (the relations to load); the last line runs it: `getOne()` (`Result`), `getMany()`, `paginate(page, size)` (`Page<T>`: `items`, `page` from 1, `size`, `total`, `pages`), `count()`, `exists()`, `update({...})`, `delete()`. The caller awaits it: `~tasks.byTitle(title)`.",
+    "",
+    "```nuclear",
+    "repository TaskRepository",
+    "  byTitle(title: string) Result<Error, Task>",
+    "    where({ \"title\": title })",
+    "    getOne()",
+    "",
+    "  pending(max: int = 20) Task[]",
+    "    where({ \"done\": false, \"priority\": lte(2) })",
+    "    orderBy(\"priority\")",
+    "    limit(max)",
+    "    getMany()",
+    "```",
+    "",
+    "```typescript",
+    "import { Injectable } from '@nestjs/common';",
+    "import { InjectModel } from '@nestjs/sequelize';",
+    "import { AppError, Repository, Result, lte } from 'dragonfly-nest';",
+    "",
+    "@Injectable()",
+    "export class TaskRepository extends Repository<Task> {",
+    "  constructor(@InjectModel(Task) model: typeof Task) {",
+    "    super(model);",
+    "  }"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-3-model",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.3 Model",
+   "summary": "What the API reads and answers (a DTO): class-validator checks it (an invalid body is a 400 with the reasons).",
+   "body": [
+    "What the API reads and answers (a DTO): class-validator checks it (an invalid body is a 400 with the reasons). The type gives the basic check (`IsString`, `IsInt`, `IsNumber`, `IsBoolean`, `IsArray`, a nested model); the same decorators as Dragonfly's forms add rules: `@required`, `@email`, `@url`, `@minLength(n)`, `@maxLength(n)`, `@min(n)`, `@max(n)`, `@pattern(r\"...\")`. `NewTask(title = \"x\")` builds one.",
+    "",
+    "```nuclear",
+    "model NewTask",
+    "  @minLength(1)",
+    "  @maxLength(200)",
+    "  title: string",
+    "  @min(1)",
+    "  @max(3)",
+    "  priority: int = 2",
+    "  @email",
+    "  owner?: string",
+    "```",
+    "",
+    "```typescript",
+    "import { IsEmail, IsInt, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';",
+    "",
+    "export class NewTask {",
+    "  @IsString()",
+    "  @MinLength(1)",
+    "  @MaxLength(200)",
+    "  title!: string;",
+    "  @IsInt()",
+    "  @Min(1)",
+    "  @Max(3)",
+    "  priority: number = 2;",
+    "  @IsOptional()",
+    "  @IsString()",
+    "  @IsEmail()",
+    "  owner?: string;",
+    "",
+    "  constructor(values: Partial<NewTask> = {}) {",
+    "    Object.assign(this, values);",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-4-use-case.0551c4",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.4 Use case",
+   "summary": "import { Injectable } from '@nestjs/common'; import { AppError, Ok, Result, transactional } from 'dragonfly-nest'; @Injectable() export class CloseProject { constructor( private readonly tasks: TaskRepository, private readonly projects: ProjectRepository, ) {} @transactional async exec(id: number,…",
+   "body": [
+    "```typescript",
+    "import { Injectable } from '@nestjs/common';",
+    "import { AppError, Ok, Result, transactional } from 'dragonfly-nest';",
+    "",
+    "@Injectable()",
+    "export class CloseProject {",
+    "  constructor(",
+    "    private readonly tasks: TaskRepository,",
+    "    private readonly projects: ProjectRepository,",
+    "  ) {}",
+    "",
+    "  @transactional",
+    "  async exec(id: number, into: number): Promise<Result<AppError, number>> {",
+    "    await this.projects.find(into);",
+    "    const moved = await this.tasks.where({ 'projectId': id }).update({ 'projectId': into });",
+    "    await this.projects.remove(id);",
+    "    return Ok(moved);",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-4-use-case.8434fe",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.4 Use case",
+   "summary": "One business operation (`@Injectable`): its dependencies are constructor parameters, injected by Nest; `exec` returns `Result<E, T>`.",
+   "body": [
+    "One business operation (`@Injectable`): its dependencies are constructor parameters, injected by Nest; `exec` returns `Result<E, T>`. `Error` is `AppError`; the runtime has `NotFound` (404), `Invalid` (400), `Unauthorized` (401), `Forbidden` (403) and `Conflict` (409). `x = ~repo.find(id)` unwraps the `Ok` and returns the `Err` by itself.",
+    "",
+    "```nuclear",
+    "model TaskChanges",
+    "  done?: boolean",
+    "",
+    "entity Task()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  done: boolean = false",
+    "",
+    "repository TaskRepository",
+    "",
+    "usecase CompleteTask(tasks: TaskRepository)",
+    "  exec(id: int, changes: TaskChanges) Result<Error, Task>",
+    "    task = ~tasks.find(id)",
+    "    if changes.done != null",
+    "      task.done = changes.done",
+    "    Ok(~tasks.save(task))",
+    "```",
+    "",
+    "```typescript",
+    "import { Injectable } from '@nestjs/common';",
+    "import { InjectModel } from '@nestjs/sequelize';",
+    "import { IsBoolean, IsOptional } from 'class-validator';",
+    "import { AppError, Entity, Err, Ok, Repository, Result } from 'dragonfly-nest';",
+    "import { AutoIncrement, Column, DataType, PrimaryKey, Table } from 'sequelize-typescript';",
+    "",
+    "export class TaskChanges {",
+    "  @IsOptional()",
+    "  @IsBoolean()",
+    "  done?: boolean;",
+    "",
+    "  constructor(values: Partial<TaskChanges> = {}) {",
+    "    Object.assign(this, values);",
+    "  }",
+    "}"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-4-use-case.c06a7d",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.4 Use case",
+   "summary": "@Table({ tableName: 'task', underscored: true, timestamps: false, }) export class Task extends Entity { @PrimaryKey @AutoIncrement @Column(DataType.INTEGER) declare id: number; @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false }) declare done: boolean; } @Injectable() export…",
+   "body": [
+    "@Table({",
+    "  tableName: 'task',",
+    "  underscored: true,",
+    "  timestamps: false,",
+    "})",
+    "export class Task extends Entity {",
+    "  @PrimaryKey",
+    "  @AutoIncrement",
+    "  @Column(DataType.INTEGER)",
+    "  declare id: number;",
+    "  @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })",
+    "  declare done: boolean;",
+    "}",
+    "",
+    "@Injectable()",
+    "export class TaskRepository extends Repository<Task> {",
+    "  constructor(@InjectModel(Task) model: typeof Task) {",
+    "    super(model);",
+    "  }",
+    "}",
+    "",
+    "@Injectable()",
+    "export class CompleteTask {",
+    "  constructor(private readonly tasks: TaskRepository) {}",
+    "",
+    "  async exec(id: number, changes: TaskChanges): Promise<Result<AppError, Task>> {",
+    "    const taskResult = await this.tasks.find(id);",
+    "    if (taskResult.isErr) return Err(taskResult.error);",
+    "    const task = taskResult.value;",
+    "    if (changes.done != null) {",
+    "      task.done = changes.done;",
+    "    }",
+    "    return Ok(await this.tasks.save(task));",
+    "  }",
+    "}",
+    "```",
+    "",
+    "`@transactional` on `exec`: every repository call inside shares one transaction of the default database; an `Err`",
+    "or an error rolls it back, an `Ok` commits it.",
+    "",
+    "```nuclear",
+    "usecase CloseProject(tasks: TaskRepository, projects: ProjectRepository)",
+    "  @transactional",
+    "  exec(id: int, into: int) Result<Error, int>",
+    "    ~projects.find(into)",
+    "    moved = ~tasks.where({ \"projectId\": id }).update({ \"projectId\": into })",
+    "    ~projects.remove(id)",
+    "    Ok(moved)",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-5-appcomponent",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.5 Appcomponent",
+   "summary": "The facade of a component: aliases to its use cases.",
+   "body": [
+    "The facade of a component: aliases to its use cases. Nest injects each use case in its constructor; other components and the controllers use only this.",
+    "",
+    "```nuclear",
+    "appcomponent TasksAppComponent",
+    "  task() = GetTask.exec",
+    "  complete() = CompleteTask.exec",
+    "```",
+    "",
+    "```typescript",
+    "import { Injectable } from '@nestjs/common';",
+    "",
+    "@Injectable()",
+    "export class TasksAppComponent {",
+    "  task() {",
+    "    return GetTask.exec;",
+    "  }",
+    "",
+    "  complete() {",
+    "    return CompleteTask.exec;",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-6-controller.2b8b55",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.6 Controller",
+   "summary": "REST routes, like NestJS: `@controller(\"tasks\")` and `@get`, `@post` (201), `@put`, `@patch`, `@delete` with Nest's route (`\":id\"`), and `@status(204)`.",
+   "body": [
+    "REST routes, like NestJS: `@controller(\"tasks\")` and `@get`, `@post` (201), `@put`, `@patch`, `@delete` with Nest's route (`\":id\"`), and `@status(204)`. Each parameter is read by itself: one named in the route is `@Param` (an `int` is parsed), a model is the `@Body()`, anything else is `@Query`. A `Result` answers its value, or the error's status and message.",
+    "",
+    "```nuclear",
+    "model TaskChanges",
+    "  done?: boolean",
+    "",
+    "@controller(\"tasks\")",
+    "controller TasksController(tasks: TasksAppComponent)",
+    "  @get(\"{id}\")",
+    "  one(id: int) Result<Error, Task>",
+    "    ~tasks.task(id)",
+    "",
+    "  @patch(\"{id}\")",
+    "  complete(id: int, changes: TaskChanges) Result<Error, Task>",
+    "    ~tasks.complete(id, changes)",
+    "",
+    "  @get()",
+    "  search(text?: string) string",
+    "    text ?? \"\"",
+    "```",
+    "",
+    "```typescript",
+    "import { Body, Controller, Get, Param, ParseIntPipe, Patch, Query } from '@nestjs/common';",
+    "import { IsBoolean, IsOptional } from 'class-validator';",
+    "import { AppError, Result } from 'dragonfly-nest';",
+    "",
+    "export class TaskChanges {",
+    "  @IsOptional()",
+    "  @IsBoolean()",
+    "  done?: boolean;",
+    "",
+    "  constructor(values: Partial<TaskChanges> = {}) {",
+    "    Object.assign(this, values);",
+    "  }",
+    "}",
+    "",
+    "@Controller('tasks')",
+    "export class TasksController {",
+    "  constructor(private readonly tasks: TasksAppComponent) {}",
+    "",
+    "  @Get(':id')",
+    "  async one(@Param('id', ParseIntPipe) id: number): Promise<Result<AppError, Task>> {",
+    "    return await this.tasks.task(id);",
+    "  }"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-6-controller.2d31fa",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.6 Controller",
+   "summary": "@Patch(':id') async complete(@Param('id', ParseIntPipe) id: number, @Body() changes: TaskChanges): Promise<Result<AppError, Task>> { return await this.tasks.complete(id, changes); } @Get() search(@Query('text') text?: string): string { return text ??",
+   "body": [
+    "@Patch(':id')",
+    "  async complete(@Param('id', ParseIntPipe) id: number, @Body() changes: TaskChanges): Promise<Result<AppError, Task>> {",
+    "    return await this.tasks.complete(id, changes);",
+    "  }",
+    "",
+    "  @Get()",
+    "  search(@Query('text') text?: string): string {",
+    "    return text ?? '';",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-7-configuration",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.7 Configuration",
+   "summary": "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`), the platform's (backend.md §2.8).",
+   "body": [
+    "The connections of the app (`appConfig`, `config/project_config.nuc`) and of a component (`config`), the platform's ([backend.md](backend.md) §2.8). Databases: `Postgres(url = ...)`, `MySQL(url = ...)`, `MariaDB(url = ...)`, `SQLite(file = ...)`, each with `createTables = true` to create the tables (development); `Redis(url = ...)` (ioredis), `Kafka(servers = \"a:9092,b:9092\", group = \"app\")` (kafkajs); chat models `Ollama(model = \"qwen3.5:4b\", baseUrl = ...)`, `OpenAI(model = \"gpt-4o-mini\")` (LangChain `initChatModel`); `Embeddings(model = \"ollama:nomic-embed-text\")` and `Chroma(collection = ..., url = ...)` (chromadb's client behind a LangChain `VectorStore`). The database goes to `SequelizeModule`; the other connections are opened at start and closed at stop; `package.json` lists only the drivers the config uses. `env(\"VAR\", \"default\")` reads the environment.",
+    "",
+    "```nuclear",
+    "appConfig ProjectConfig",
+    "  connections: Connection[] = [",
+    "    Postgres(url = env(\"DATABASE_URL\", \"postgres://localhost/tasks\")),",
+    "  ]",
+    "```",
+    "",
+    "```typescript",
+    "import { AppConfig, Connection, Postgres, env } from 'dragonfly-nest';",
+    "",
+    "export class ProjectConfig extends AppConfig {",
+    "  readonly connections: Connection[] = [new Postgres({ url: env('DATABASE_URL', 'postgres://localhost/tasks') })];",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-8-listener",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.8 Listener",
+   "summary": "A Kafka consumer: each `@consumer(\"topic\")` method receives the messages of the topic, as the type of its parameter (a model).",
+   "body": [
+    "A Kafka consumer: each `@consumer(\"topic\")` method receives the messages of the topic, as the type of its parameter (a model). `~publish(\"topic\", value)` sends one; without a `Kafka` connection it reaches the listeners of the same process (development, tests). The topics a listener consumes are created if they do not exist. The Redis cache: `~cacheGet(key)`, `~cacheSet(key, value, 60)`.",
+    "",
+    "```nuclear",
+    "listener TaskEvents",
+    "  created: string[] = []",
+    "",
+    "  @consumer(\"tasks.created\")",
+    "  onCreated(event: <string, any>) void",
+    "    created.add(event[\"title\"])",
+    "```",
+    "",
+    "```typescript",
+    "import { Injectable } from '@nestjs/common';",
+    "import { Listener, consumer } from 'dragonfly-nest/events';",
+    "",
+    "@Injectable()",
+    "export class TaskEvents extends Listener {",
+    "  created: string[] = [];",
+    "",
+    "  @consumer('tasks.created')",
+    "  onCreated(event: Record<string, any>): void {",
+    "    this.created.push(event['title']);",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-9-tools.3972d2",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.9 Tools",
+   "summary": "Each method with a doc comment is a LangChain tool: the doc comment is the description the model reads and the parameters become its zod schema; a method without one is a helper of the others (never offered to the model).",
+   "body": [
+    "Each method with a doc comment is a LangChain tool: the doc comment is the description the model reads and the parameters become its zod schema; a method without one is a helper of the others (never offered to the model).",
+    "",
+    "```nuclear",
+    "tools TaskTools",
+    "  // Creates a task with a title and a priority (1 high, 2 normal, 3 low).",
+    "  addTask(title: string, priority: int = 2) string",
+    "    \"created ${title} (${priority})\"",
+    "",
+    "  label(title: string) string",
+    "    title.upper()",
+    "```",
+    "",
+    "```typescript",
+    "import { StructuredToolInterface } from '@langchain/core/tools';",
+    "import { Injectable } from '@nestjs/common';",
+    "import { Tools } from 'dragonfly-nest/ai';",
+    "import { tool } from 'langchain';",
+    "import { z } from 'zod';",
+    "",
+    "@Injectable()",
+    "export class TaskTools extends Tools {",
+    "  /** Creates a task with a title and a priority (1 high, 2 normal, 3 low). */",
+    "  addTask(title: string, priority: number = 2): string {",
+    "    return `created ${title} (${priority})`;",
+    "  }",
+    "",
+    "  label(title: string): string {",
+    "    return title.toUpperCase();",
+    "  }"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-2-9-tools.5df93d",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 2.9 Tools",
+   "summary": "/ The tools the model can call: the methods with a doc comment.",
+   "body": [
+    "/** The tools the model can call: the methods with a doc comment. */",
+    "  tools(): StructuredToolInterface[] {",
+    "    return [",
+    "      tool(async ({ title, priority }) => this.addTask(title, priority), {",
+    "        name: 'addTask',",
+    "        description: 'Creates a task with a title and a priority (1 high, 2 normal, 3 low).',",
+    "        schema: z.object({ title: z.string(), priority: z.number().int().optional() }),",
+    "      }),",
+    "    ];",
+    "  }",
+    "}",
+    "```"
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#2-kinds-migrations",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — Migrations",
+   "summary": "Migrations of the database schema (ADR-0100 §5): `migrations/<time>_<name>.js` over Sequelize's `queryInterface`, diffed by `dragonfly-nest-migrate` from the entities and the `schema` the last migration exports; `SequelizeMeta`.",
+   "body": [
+    "Migrations of the database schema (ADR-0100 §5): `migrations/<time>_<name>.js` over Sequelize's `queryInterface`,",
+    "diffed by `dragonfly-nest-migrate` from the entities and the `schema` the last migration exports; `SequelizeMeta`. The",
+    "commands and the rules: `spec/backend.md` §2.8."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#3-what-is-not-there-yet",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript — 3. What is not there yet",
+   "summary": "`install`, `run`, `test` and `migrate`).",
+   "body": [
+    "- `dragonfly make` generators for the backend kinds, `dragonfly check` and `watch` (the CLI has `new`, `build`,",
+    "  `install`, `run`, `test` and `migrate`)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  },
+  {
+   "id": "doc:dragonfly-backend/spec/nestjs.md#dialect-nestjs-the-backend-platform-in-typescript",
+   "type": "spec",
+   "title": "Dialect `nestjs`: the `backend` platform in TypeScript",
+   "summary": "Dialect `nestjs`: the `backend` platform in TypeScript",
+   "body": [
+    "> The TypeScript dialect of the [backend platform](backend.md) (ADR-0093), extending [nodejs](https://github.com/nuclearlang/nuclear/blob/main/spec/nodejs.md) →",
+    "> [typescript](https://github.com/nuclearlang/nuclear/blob/main/spec/typescript.md). The platform's rules, kinds and Nuclear are in `backend.md`; this document holds only",
+    "> how this dialect writes them: **NestJS 12** (ES modules) controllers, repositories over tables with **Sequelize**",
+    "> (`@nestjs/sequelize` + `sequelize-typescript`), DTOs validated with **class-validator**, **Kafka** listeners and the",
+    "> **Redis** cache, **LangChain.js / LangGraph.js** tools, agents and graphs, and the Nest modules written for you.",
+    "> Files: `dialects/backend/nestjs/`; runtime: `packages/dragonfly-nest` (npm `dragonfly-nest`)."
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "agents": false,
+   "sources": [
+    "dragonfly-backend/spec/nestjs.md"
+   ],
+   "meta": {
+    "section": "05-backend-dialects",
+    "repo": "dragonfly-backend",
+    "dialect": "nestjs"
+   }
+  }
+ ]
+}

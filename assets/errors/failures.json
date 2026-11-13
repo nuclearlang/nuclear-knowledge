@@ -1,0 +1,794 @@
+{
+ "shelf": "errors",
+ "origin": "curated",
+ "about": "What fails around the code: the tools, the services, the tests and the pipeline. Each row says how to recognise the failure, its cause and the next step. `family` is the kind the diagnoser gives it: transient, environment, code, test or spec.",
+ "rows": [
+  {
+   "id": "failure:a-command-is-not-found",
+   "type": "failure",
+   "title": "Failure: `nuclear`, `dragonfly` or `nuclear-loop`: command not found",
+   "summary": "The tool is not installed, or it is not on the PATH of the program that ran it (an editor started from the desktop does not have `~/.local/bin`). Install with the installer or `./install.sh`, and check with `dragonfly doctor`.",
+   "body": [
+    "**Looks like.** `nuclear: command not found`, `dragonfly is not installed (run the NuclearLang installer)`, exit code 127.",
+    "",
+    "**Cause.** The binaries live in `~/.local/bin`. A terminal has that folder on its PATH; a desktop program may not.",
+    "",
+    "**Next step.** `which nuclear dragonfly nuclear-loop`; install (`curl -fsSL https://nuclearlang.github.io/install.sh | sh`, or `./install.sh` in the source tree); add `~/.local/bin` to the PATH; `dragonfly doctor` lists what else is missing. The Loop adds the installers' folders by itself."
+   ],
+   "keys": [
+    "command not found",
+    "is not installed",
+    "not installed",
+    "exit 127"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.doctor"
+    },
+    {
+     "rel": "faq",
+     "to": "faq:install"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:the-installed-tools-are-old"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-installed-tools-are-old",
+   "type": "failure",
+   "title": "Failure: the installed tools are older than the source tree",
+   "summary": "A command, a kind or a diagnostic that exists in the sources is unknown to the installed binary, or the editor reports an error the terminal does not: the installed copy is stale. Run `./install.sh` again after changing the compiler, a dialect or the CLI.",
+   "body": [
+    "**Looks like.** `dragonfly: unknown command`, a kind the docs describe is `N0201`, the editor and `nuclear check` disagree, a Python package of a folder dependency behaves like an old version.",
+    "",
+    "**Cause.** `nuclear`, `dragonfly`, the language server and the editors' bundled copies are installed copies; a project's folder dependency is installed into its `build/.venv`.",
+    "",
+    "**Next step.** `./install.sh` (it rebuilds and reinstalls everything); in a project, `dragonfly install` reinstalls folder dependencies. Restart the editor to load the new server."
+   ],
+   "keys": [
+    "unknown command",
+    "stale",
+    "outdated",
+    "old version"
+   ],
+   "links": [
+    {
+     "rel": "see-also",
+     "to": "failure:a-command-is-not-found"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.install"
+    }
+   ],
+   "sources": [
+    "AGENTS.md#Most used commands"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-graph-is-not-running",
+   "type": "failure",
+   "title": "Failure: the Nuclear Smart Graph is not reachable",
+   "summary": "A search, an ingest or an agent's recall cannot connect to `127.0.0.1:7878`: the graph's server is not running. Start its service again (`nuclear-loop setup --status` says what is down); an agent that cannot reach it goes on without knowledge and says so in its trace.",
+   "body": [
+    "**Looks like.** `the graph is not running at http://127.0.0.1:7878`, `the Nuclear Smart Graph is not reachable`, `ECONNREFUSED 127.0.0.1:7878`, `connection refused`.",
+    "",
+    "**Cause.** `nuclear-graph serve` is not running, or it listens on another port (`NUCLEAR_GRAPH_PORT`, `NUCLEAR_GRAPH_URL`). Its embeddings also need Ollama with the model `embeddinggemma`.",
+    "",
+    "**Next step.** `nuclear-loop setup --status`; then restart the service: `systemctl --user restart nuclear-graph` on Linux, `launchctl kickstart -k gui/$UID/io.github.nuclearlang.graph` on macOS, or the settings page of VS Code (`Ctrl+Alt+S`). A machine never set up: `nuclear-loop setup`. By hand: `nuclear-graph serve &`. Then `nuclear-graph stats` (the rows of each shelf and the revision). It is a passing failure: a run retries it by itself."
+   ],
+   "keys": [
+    "graph is not running",
+    "not reachable",
+    "7878",
+    "connection refused",
+    "econnrefused"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.serve"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.stats"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:no-access-to-the-graph"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:a-model-is-missing"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:set-up-the-ai-services"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/README.md#Install"
+   ],
+   "meta": {
+    "family": "transient",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:no-access-to-the-graph",
+   "type": "failure",
+   "title": "Failure: a program has no access to the graph (401, 403)",
+   "summary": "The graph answers 401 (no token) or 403 (the token lacks a scope): no program reads it until you allow it. Give the client access with `nuclear-graph connect <client> --scopes read,write`, or allow its pending request.",
+   "body": [
+    "**Looks like.** `'mcp' has no access to the Nuclear Smart Graph: run nuclear-graph connect mcp`, `401 a token is needed`, `403 client 'x' has no 'write' scope`.",
+    "",
+    "**Cause.** Each client has its own token, kept in your keyring, with scopes: `read` (search, prompts), `write` (remember, examples), `admin` (ingest: only the owner).",
+    "",
+    "**Next step.** `nuclear-graph connect nuclear-developer --scopes read,write` (the local agents), `nuclear-graph connect mcp --scopes read,write` (the MCP server); `nuclear-graph requests` shows who asked; `nuclear-graph allow <request>`. Restart the client so it reads its token."
+   ],
+   "keys": [
+    "no access",
+    "401",
+    "403",
+    "token is needed",
+    "has no access"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.connect"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-graph.allow"
+    },
+    {
+     "rel": "faq",
+     "to": "faq:privacy"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/README.md#Who may read it"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-developer-is-not-running",
+   "type": "failure",
+   "title": "Failure: the Nuclear Developer is not running",
+   "summary": "A stage of the Loop, the chat or an MCP tool cannot reach the local agents at `127.0.0.1:7879`. Start their service again (`nuclear-loop setup --status` says what is down); a run checks it before it starts and retries a passing failure with growing waits.",
+   "body": [
+    "**Looks like.** `the local developer is not running at http://127.0.0.1:7879`, `fetch failed`, a run that stops at its preflight step.",
+    "",
+    "**Next step.** `nuclear-loop setup --status`; then `systemctl --user restart nuclear-developer` on Linux (`journalctl --user -u nuclear-developer -n 50` says why it stopped), `launchctl kickstart -k gui/$UID/io.github.nuclearlang.developer` on macOS, or the settings page of VS Code. A machine never set up: `nuclear-loop setup`. By hand: `nuclear-developer &`; another port: `NUCLEAR_DEVELOPER_PORT`, `NUCLEAR_DEVELOPER_URL`. Then `nuclear-loop retry <run>`: the steps that passed are kept."
+   ],
+   "keys": [
+    "developer is not running",
+    "7879",
+    "fetch failed"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-loop.retry"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:nuclear-developer"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:a-model-is-missing"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:set-up-the-ai-services"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+   ],
+   "meta": {
+    "family": "transient",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:a-service-started-by-hand-holds-its-port",
+   "type": "failure",
+   "title": "Failure: the set-up stops because a service started by hand answers on its port",
+   "summary": "The set-up of the AI services stops at *Start the Smart Graph* (or *the Nuclear Developer*) with `a ... started by hand already answers at ...`: a graph or a Developer started in a terminal holds the port, so the system's service cannot take it. Stop that process with the command the message gives and try the step again.",
+   "body": [
+    "**Looks like.** `a Nuclear Smart Graph started by hand already answers at http://127.0.0.1:7878/v1/health: stop it (pkill -f 'nuclear-graph serve') and run the set-up again, so the service of this system takes its place`.",
+    "",
+    "**Cause.** Before the set-up existed the services were started with `nuclear-graph serve &` and `nuclear-developer &`. Such a process keeps running old code and is gone after a restart of the machine; the set-up does not kill a process it did not start.",
+    "",
+    "**Next step.** `pkill -f 'nuclear-graph serve'` (the graph) or `pkill -f 'uvicorn app.main:app'` (the Developer); then *Try again* in the wizard, or `nuclear-loop setup --profile <the same> --yes`. A service the editor started (the settings page's *Start*) stops when the editor closes."
+   ],
+   "keys": [
+    "started by hand",
+    "already answers",
+    "holds the port",
+    "pkill",
+    "7878",
+    "7879"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:set-up-the-ai-services"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:ai-setup"
+    }
+   ],
+   "sources": [
+    "docs/ai/setup.md#7. When a step fails"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:a-model-is-missing",
+   "type": "failure",
+   "title": "Failure: Ollama is not running, or a model is not installed",
+   "summary": "The local agents and the graph's embeddings run on Ollama. When Ollama is down, a model was never pulled, or another program holds the model, calls fail or wait: start Ollama and let the set-up download the models of the machine's profile.",
+   "body": [
+    "**Looks like.** `model 'qwen2.5-coder:3b' not found`, a call that never answers and is cut (*stalled*), `connection refused` on port 11434.",
+    "",
+    "**Next step.** `ollama serve`; `nuclear-loop setup --status` names the models of the profile that are missing, and `nuclear-loop setup` downloads them (by hand: `ollama pull <model>`); `ollama ps` shows which model is loaded and by whom. On a machine with little memory, two programs that load different models make each other wait: let one finish."
+   ],
+   "keys": [
+    "ollama",
+    "model not found",
+    "11434",
+    "stalled"
+   ],
+   "links": [
+    {
+     "rel": "faq",
+     "to": "faq:local-models"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:a-call-timed-out"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:ai-setup"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/README.md#Run it"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:a-call-timed-out",
+   "type": "failure",
+   "title": "Failure: a call timed out, or answered 429, 502, 503 or 504",
+   "summary": "A service was busy or starting. It is a passing failure: the caller retries it with growing waits (five tries by default). When it keeps failing, the service it names is down: start it.",
+   "body": [
+    "**Looks like.** `timed out`, `timeout`, `temporarily unavailable`, a status 408, 425, 429, 502, 503 or 504.",
+    "",
+    "**Next step.** Nothing at first: the Loop retries with exponential backoff (`.nuclear/loop.json`, `retry`). Still failing: see which service the message names (the Developer, the graph, Ollama) and start it; then `nuclear-loop retry <run>`. A compiler error or a failing test is never retried blindly."
+   ],
+   "keys": [
+    "timed out",
+    "timeout",
+    "429",
+    "502",
+    "503",
+    "504",
+    "temporarily unavailable"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-loop.retry"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:the-developer-is-not-running"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:the-graph-is-not-running"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ],
+   "meta": {
+    "family": "transient",
+    "severity": "warning"
+   }
+  },
+  {
+   "id": "failure:not-inside-a-project",
+   "type": "failure",
+   "title": "Failure: the folder is not a Dragonfly project",
+   "summary": "A `dragonfly` or `nuclear-loop` command finds no `config.nuc` (or `main.nuc`) in the folder or above it. Run it inside a project, or create one with `dragonfly new <name> -p <platform>`.",
+   "body": [
+    "**Looks like.** `no main.nuc or config.nuc in <folder> or above`, `<folder> is not inside a Dragonfly project (no config.nuc)`.",
+    "",
+    "**Next step.** `cd` into the project (the folder that has `config.nuc`), or `--project <dir>`; a new one: `dragonfly new <name> -p backend|mobile|web`."
+   ],
+   "keys": [
+    "no config.nuc",
+    "not inside a dragonfly project",
+    "no main.nuc"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.new"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:config"
+    },
+    {
+     "rel": "see-also",
+     "to": "error:N0303"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:a-package-is-missing",
+   "type": "failure",
+   "title": "Failure: a package of the generated project is missing",
+   "summary": "The build ran but the runtime or a package was never installed, or a plugin was enabled after the last install: `ModuleNotFoundError`, `Cannot find module`. Run `dragonfly install` (and `dragonfly build` first when `config.nuc` changed).",
+   "body": [
+    "**Looks like.** `ModuleNotFoundError: No module named ...`, `Cannot find module ...`, `No such file or directory: .venv`.",
+    "",
+    "**Cause.** `build/` carries only the packages of the enabled plugins; they are installed by `dragonfly install`, not by the build.",
+    "",
+    "**Next step.** `dragonfly build && dragonfly install`. For a mobile app that does not build after many changes: `dragonfly repair`. Never install a package by hand inside `build/`: add it in `config.nuc` (`plugins(...)`, `dependencies(...)`)."
+   ],
+   "keys": [
+    "modulenotfounderror",
+    "cannot find module",
+    "no module named",
+    "no such file or directory"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.install"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.repair"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:plugins"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:a-test-fails",
+   "type": "failure",
+   "title": "Failure: a test fails",
+   "summary": "`dragonfly test` reports a failed test. Read it at its `.nuc` lines with `dragonfly explain`, decide whether the code or the test is wrong, fix that file and run again. A test is never deleted or weakened to pass.",
+   "body": [
+    "**Looks like.** `FAILED`, `AssertionError`, `1 failed`, `tests failed`.",
+    "",
+    "**Most common causes.**",
+    "",
+    "- The test reads rows it never created: the database starts empty in every test.",
+    "- The code answers another status or value than the criterion says.",
+    "- The test kept a `Result` and compared it with a value (`found == 1` instead of `found.value == 1`).",
+    "- A call without `~`.",
+    "",
+    "**Next step.** `playbook:fix-a-failing-test`. In the Loop this is the *Verification* stage: three rounds, then the diagnoser explains what is left."
+   ],
+   "keys": [
+    "failed",
+    "assertionerror",
+    "tests failed",
+    "test failed"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:fix-a-failing-test"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.explain"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:test-reads-an-empty-database"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:result-read-as-its-value"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ],
+   "meta": {
+    "family": "test",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-plan-has-no-pieces",
+   "type": "failure",
+   "title": "Failure: the plan has no pieces",
+   "summary": "The local planner could not split the spec: it names nothing to build in the platform's words. Name every piece in the spec (a model `Character`, a repository `CharacterRepository`, a use case `ListCharacters`, an appcomponent, a controller), or let a frontier model lead, then restart from the plan.",
+   "body": [
+    "**Looks like.** `0 pieces`, `no pieces`, `the plan does not cover the spec`.",
+    "",
+    "**Cause.** A spec in plain words (\"an author has a name; POST /authors adds one\") needs someone to decide the names and the files; the local planner splits what a spec says, it does not design.",
+    "",
+    "**Next step.** One sentence per declaration, with its kind word and its name; or give the resource's data (a `GET <url>` line, an example answer) so the generators write it; or `--lead claude`. Then `nuclear-loop retry <run> --from plan`."
+   ],
+   "keys": [
+    "0 pieces",
+    "no pieces",
+    "plan does not cover the spec"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:decompose-a-spec"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:escalate"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:agent-reasoning"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:a-test-names-a-class-nobody-planned"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ],
+   "meta": {
+    "family": "spec",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:a-test-names-a-class-nobody-planned",
+   "type": "failure",
+   "title": "Failure: a test or a piece uses a class that is not in the plan",
+   "summary": "The compiler reports `N0220` for a class of the project that no file declares, and the plan never had it: the plan does not cover the spec. Repairing the file goes in circles; the plan needs the missing piece.",
+   "body": [
+    "**Looks like.** `N0220 'CharactersAppComponent'` on an `inject<...>()`, together with `X is not in the plan`.",
+    "",
+    "**Cause.** The planner made fewer pieces than the feature needs (one entity for a spec that needs a facade and a use case), or the tester copied an example with classes of another project.",
+    "",
+    "**Next step.** Name the missing declaration in the spec, or let a frontier model plan; restart from the plan. It is a failure of the spec, not of the code."
+   ],
+   "keys": [
+    "is not in the plan",
+    "not in the plan"
+   ],
+   "links": [
+    {
+     "rel": "code",
+     "to": "error:N0220"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:the-plan-has-no-pieces"
+    },
+    {
+     "rel": "pitfall",
+     "to": "pitfall:test-injects-an-unknown-class"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ],
+   "meta": {
+    "family": "spec",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-generator-refuses",
+   "type": "failure",
+   "title": "Failure: `dragonfly gen` refuses to write",
+   "summary": "Before writing anything a generator refuses: a field type nobody declared, a name another file already declares, a source the platform has no pieces for, or a use case to wire that the project does not declare. It says which; nothing was written.",
+   "body": [
+    "**Looks like.** `Character is already declared in <file>: remove or rename it, or generate another name`, `the type Origin is not declared`, `a database resource takes columns of basic types; a relation to Author is written by hand`.",
+    "",
+    "**Next step.**",
+    "",
+    "- A name already declared: the resource exists (`dragonfly gen inspect`); use it, choose another name, or remove the leftover file of an earlier attempt.",
+    "- A type not declared: generate that model first, or let `--from-json` find the nested models.",
+    "- A relation in a database resource: generate the resource with its basic columns, then add the relation by hand (`@manyToOne` and its `<name>Id` column).",
+    "- A source the platform lacks: mobile and web read APIs (`--source rest`); a database resource is for the backend.",
+    "- `<Name> is not declared` (`gen usecase`): write the use case first, at the place the message gives, then run the command again to wire it; or pass `--calls <Repository>.<method>` when all it does is call a repository.",
+    "- `the route names {x}, which the use case does not take`: a `{name}` of `--route` must be a parameter of the use case's `exec`.",
+    "- `the <platform> platform has no routes`: `--route` is for the backend; on mobile and web a screen calls the facade's alias.",
+    "- See first what it would write: `--dry-run`."
+   ],
+   "keys": [
+    "already declared",
+    "is not declared",
+    "refuses"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.resource"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.inspect"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:generators"
+    }
+   ],
+   "sources": [
+    "docs/adr/0103-generators.md#Decision"
+   ],
+   "meta": {
+    "family": "code",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-generated-code-is-rejected",
+   "type": "failure",
+   "title": "Failure: the target's analyzer rejects the generated code",
+   "summary": "`nuclear check` reports nothing but the target's analyzer or the run complains inside `build/`. Never fix it there. The usual cause is a value without a type in the `.nuc`; otherwise it is a bug of the dialect to report.",
+   "body": [
+    "**Looks like.** An error whose file is under `build/`, from the target's analyzer or at run time.",
+    "",
+    "**Next step.** `dragonfly explain` gives the `.nuc` lines. Declare the type of the value at that line (`items: string[] = ...`); check that the call is awaited; rebuild. Still wrong with correct Nuclear: it is the dialect's bug; report the `.nuc` and the generated lines."
+   ],
+   "keys": [
+    "build/",
+    "generated code error"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.explain"
+    },
+    {
+     "rel": "limit",
+     "to": "limit:untyped-values"
+    },
+    {
+     "rel": "faq",
+     "to": "faq:generated-code"
+    }
+   ],
+   "sources": [
+    "docs/context/nuclear/limits.md#Behaviour limits"
+   ],
+   "meta": {
+    "family": "code",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:a-request-is-invalid",
+   "type": "failure",
+   "title": "Failure: the API answers 400, 404, 409 or 422",
+   "summary": "A backend written in Nuclear answers the status of its `Result` error: 422 an invalid body (a model's rule), 400 `Invalid`, 401 `Unauthorized`, 403 `Forbidden`, 404 `NotFound`, 409 `Conflict`. It is the code working: send a valid request or expect that status in the test.",
+   "body": [
+    "- 422: a field breaks a rule decorator of the model (`@minLength`, `@email`...). The answer names the field.",
+    "- 404: `find(id)` or `getOne()` found no row and the use case returned `NotFound`.",
+    "- 409: the use case returned `Conflict` (a repeated unique value).",
+    "",
+    "In a test: `expect(found.error.status == 404)`."
+   ],
+   "keys": [
+    "422",
+    "404",
+    "409",
+    "400",
+    "unprocessable"
+   ],
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.model"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ],
+   "meta": {
+    "family": "test",
+    "severity": "warning"
+   }
+  },
+  {
+   "id": "failure:the-disk-is-full",
+   "type": "failure",
+   "title": "Failure: no space left on the device",
+   "summary": "A run, a build or the evaluation stops because the temporary folder or the disk is full. Builds of example projects and Flutter leave large temporary folders: free the space and retry from the failed step.",
+   "body": [
+    "**Looks like.** `No space left on device`, a run whose files are cut short.",
+    "",
+    "**Next step.** `df -h /tmp ~`; remove scratch projects and old temporary build folders; `nuclear-loop retry <run>`. A run checks the free disk before it starts."
+   ],
+   "keys": [
+    "no space left",
+    "disk full"
+   ],
+   "links": [
+    {
+     "rel": "tool",
+     "to": "tool:nuclear-loop.retry"
+    }
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-knowledge-base-is-stale",
+   "type": "failure",
+   "title": "Failure: `nuclear-graph knowledge check` fails",
+   "summary": "The knowledge base is behind the working tree: a generated asset is not what the tree gives now, a hand-written row's source changed, a row is invalid, or the graph holds an older revision. Build, review, check and ingest.",
+   "body": [
+    "- `stale: assets/<shelf>/<file>.json ...` → `nuclear-graph knowledge build`.",
+    "- `review: <id> was written from <source>, which changed` → read the change; update the row or `nuclear-graph knowledge review <id>`.",
+    "- `<shelf>/<id>: links to <other>, which no row has` → fix the link or add the row.",
+    "- `the graph holds revision N and the knowledge base is revision M` → `nuclear-graph ingest`.",
+    "- `<file>: no section of sections.toml claims it` → give the new document a section in `sections.toml`."
+   ],
+   "keys": [
+    "knowledge check",
+    "stale",
+    "revision"
+   ],
+   "agents": false,
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:update-the-knowledge-base"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:knowledge-versions"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/knowledge.py"
+   ],
+   "meta": {
+    "family": "environment",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-request-names-no-declaration",
+   "type": "failure",
+   "title": "Failure: the request names nothing the project declares",
+   "summary": "Which declaration is it? A change, a rename or a fix of something that exists must name it as the project declares it (`Order`, `CancelOrder`): none of the project's names is written in the request. `dragonfly gen inspect` lists them.",
+   "body": [
+    "**Looks like.** The analysis of a run stops with this question; no file was written.",
+    "",
+    "**Cause.** The strategy of the request (`strategy:member`, `strategy:refactor-rename`, `strategy:data-migration`...) starts in the file that declares what changes, and the request names no declaration of the project: the name is misspelled, is a field or a method (only declarations are looked up), or is not in this project.",
+    "",
+    "**Next step.** Write the declaration's name in the request as the project writes it, then run it again. A field or a method is renamed by hand: the compiler then names every use."
+   ],
+   "keys": [
+    "which declaration is it",
+    "names no declaration"
+   ],
+   "links": [
+    {
+     "rel": "strategy",
+     "to": "strategy:member"
+    },
+    {
+     "rel": "strategy",
+     "to": "strategy:refactor-rename"
+    },
+    {
+     "rel": "tool",
+     "to": "tool:dragonfly.gen.inspect"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/analyst.nuc"
+   ],
+   "meta": {
+    "family": "spec",
+    "severity": "error"
+   }
+  },
+  {
+   "id": "failure:the-request-lacks-a-fact",
+   "type": "failure",
+   "title": "Failure: the request lacks a fact its strategy cannot start without",
+   "summary": "A run stops at its analysis when the request does not say something nobody may guess: the fields of a resource, the url of an API, the two names of a rename, what should happen instead. The step lists the questions; answer them in the spec and run it again.",
+   "body": [
+    "**Looks like.** `the request does not say: ...` at the Analysis step of the Specification stage; nothing was generated or written.",
+    "",
+    "**Cause.** Each strategy names the facts it needs (`data.needs` of its row). The analyst looks for each one in the request (a `Key | Type` table, `name:type` pairs, an example answer, a url, `should`...) and asks for the ones it does not find. Agents never invent a field, a rule or a name.",
+    "",
+    "**Next step.** Add the answer to the spec's description, then `nuclear-loop retry <run> --from spec`. The strategy is wrong for the request: name the right one in the spec (`- Strategy: usecase`)."
+   ],
+   "keys": [
+    "the request does not say",
+    "ask the user"
+   ],
+   "links": [
+    {
+     "rel": "agent",
+     "to": "agent:planner"
+    },
+    {
+     "rel": "see-also",
+     "to": "failure:the-plan-has-no-pieces"
+    },
+    {
+     "rel": "strategy",
+     "to": "strategy:resource-db"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/analyst.nuc"
+   ],
+   "meta": {
+    "family": "spec",
+    "severity": "error"
+   }
+  }
+ ]
+}

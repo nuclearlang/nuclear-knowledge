@@ -1,0 +1,1967 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "01-introduction",
+ "about": "What NuclearLang and Dragonfly are",
+ "rows": [
+  {
+   "id": "doc:AGENTS.md#agents-md-nuclearlang-platform-l0",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0)",
+   "summary": "NuclearLang is a minimal base language for AI agents and people.",
+   "body": [
+    "NuclearLang is a minimal base language for AI agents and people. A Rust transpiler turns `.nuc` into other",
+    "technologies through **declarative dialects** (TOML + templates loaded at run time), one way only",
+    "(`.nuc` → `.ts` / `.dart` / `.py`). **Dragonfly** is the framework: three **platforms** (`web`, `mobile`,",
+    "`backend`), each written once in Nuclear and transpiled by the **dialects** grouped under it (`backend/fastapi`,",
+    "`backend/nestjs`, `mobile/flutter`; `web/react` later). Product: [docs/context/product/prd.md](docs/context/product/prd.md)."
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#golden-rule",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Golden rule",
+   "summary": "generated code as fast as an expert's, instant transpilation, minimal readable Nuclear.",
+   "body": [
+    "**Performance, speed and readability of the syntax**, for the base language and EVERY dialect (ADR-0038):",
+    "generated code as fast as an expert's, instant transpilation, minimal readable Nuclear."
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#hard-rules.2bc431",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Hard rules",
+   "summary": "report) ends with a Log line and current lists; half-done work is recorded the moment it is left.",
+   "body": [
+    "report) ends with a Log line and current lists; half-done work is recorded the moment it is left. Hooks in",
+    "   `.claude/settings.json` check it.",
+    "7. The working tree is the `nuclear` repository with the other repositories as folders inside it (plan 006):",
+    "   `dragonfly/` (the CLI), `dragonfly-{mobile,backend,web}/`, `nuclear-{vscode,jetbrains,zed}/`, `nuclear-graph/`,",
+    "   `nuclear-developer/` (and `nuclear-developer/data/`, the knowledge base `nuclear-knowledge`); each has its own git",
+    "   and is ignored by the root's. If `ast.rs` or a public API of `crates/` changes, build `dragonfly/` too",
+    "   (`cargo build --manifest-path dragonfly/Cargo.toml`); the LSP is `crates/nuclear-lsp`. No commits unless the user",
+    "   asks; commits only in the user's name.",
+    "8. `CodeBuilder/` is teaching material only: never in specs, context or code.",
+    "9. Node.js/Express is postponed by the user: do not touch it until asked.",
+    "10. **Quality first: always the right solution, even when it costs more** (decided by the user, 2026-11-03). No",
+    "    shortcut that bends a rule, leaves a known gap or moves work to the user (e.g. asking the `.nuc` to break",
+    "    Nuclear's naming so a dialect is easier): build the generic mechanism instead. If the right way is unclear or",
+    "    too big, stop and ask; never ship the shortcut as a \"decision\"."
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#hard-rules.2ec7a9",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Hard rules",
+   "summary": "asked for as a generic one); a package belongs to one platform, and one implemented for some of its dialects ties the project to them, like type definitions.",
+   "body": [
+    "asked for as a generic one); a package belongs to one platform, and one implemented for some of its dialects ties",
+    "    the project to them, like type definitions. The editor shows where every kind comes from and lists only the",
+    "    kinds of the project's platform."
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#hard-rules.591f63",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Hard rules",
+   "summary": "1. English everywhere (ADR-0082): code, comments, diagnostics, CLI output, dialects, examples, docs, ADRs.",
+   "body": [
+    "1. **English everywhere** (ADR-0082): code, comments, diagnostics, CLI output, dialects, examples, docs,",
+    "   ADRs. Exceptions: localization data and unicode tests. **The chat with the user is always in Spanish.**",
+    "2. **The parser does not change per dialect.** Framework words, shortcuts and imports live in `dialects/`.",
+    "   Rust decides *what* is emitted; the dialect decides *how*.",
+    "3. `spec/nuclear-base.md` holds only final rules and only Nuclear. Each dialect's spec holds its rules and",
+    "   the real Nuclear → target equivalences (checked by `tools/spec-check`, 0 problems). No questions, history",
+    "   or \"pending\" in specs: doubts go to the chat; decisions become ADRs.",
+    "4. Every new diagnostic code is documented in `spec/diagnostics.md`; every dialect word in its `docs.toml`.",
+    "5. Done = tests + clippy green, docs updated in the same change, `STATUS.md` updated",
+    "   ([docs/context/workflow.md](docs/context/workflow.md)), **and the knowledge base in step with it** (ADR-0104):",
+    "   `nuclear-graph knowledge build`, a row written for what is new and has no structured source (a capability, a limit,",
+    "   a failure, a procedure), `nuclear-graph knowledge check` clean, `nuclear-graph ingest`. The end-of-turn hook runs the",
+    "   check. Golden output changed → `UPDATE_GOLDEN=1` + review.",
+    "6. **`STATUS.md` is the only list of state and pending work** for the whole platform. Every task (also a"
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#hard-rules.7efae1",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Hard rules",
+   "summary": "11. Three platforms; the dialects only change the language underneath (decided by the user, 2026-11-04, ADR-0093).",
+   "body": [
+    "11. **Three platforms; the dialects only change the language underneath** (decided by the user, 2026-11-04,",
+    "    ADR-0093). Dragonfly has exactly three platforms: `web`, `mobile` and `backend`. A platform is what the user",
+    "    and the agent write: its kinds, decorators, folders, `config.nuc`, plugins and tests, in Nuclear, identical",
+    "    for every dialect of that platform. A dialect (`backend/fastapi`, `backend/nestjs`, `mobile/flutter`...) is",
+    "    only the language and framework the code comes out in. **The Nuclear code of a project never changes when",
+    "    its dialect changes**; the one exception is code that uses a dialect's type definitions (`numpy` exists only",
+    "    in Python), which is allowed and ties that code to that dialect. Kinds and features may differ between",
+    "    platforms, never between the dialects of one platform. The standard library is Nuclear's own",
+    "    (ADR-0094, `spec/library.md`): every dialect translates it; a target's library name (`push`, `len`,",
+    "    `toUpperCase`) in platform code, specs, docs or examples is a bug. A platform's spec names no dialect. **Kinds are Nuclear's libraries** (ADR-0095): the native kinds",
+    "    of a platform live in its contract; extension kinds are packages a project or the community writes on top of a",
+    "    dialect with TOML, templates and a runtime only, never touching the compiler (a missing template capability is"
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#most-used-commands",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Most used commands",
+   "summary": "cargo test && cargo clippy --all-targets UPDATE_GOLDEN=1 cargo test cargo run -q -p nuclear-cli -- build <file.nuc> --dialect flutter ./install.sh # the user runs the installed binaries; re-run after changes",
+   "body": [
+    "```sh",
+    "cargo test && cargo clippy --all-targets",
+    "UPDATE_GOLDEN=1 cargo test",
+    "cargo run -q -p nuclear-cli -- build <file.nuc> --dialect flutter",
+    "./install.sh                       # the user runs the installed binaries; re-run after changes",
+    "```"
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#where-things-are-open-only-what-the-task-needs.2d564a",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Where things are (open only what the task needs)",
+   "summary": "Where things are (open only what the task needs)",
+   "body": [
+    "| Area (future repository, ADR-0083) | Folders | Start here |",
+    "|---|---|---|",
+    "| System: layers, repositories, data flow | — | [docs/context/architecture.md](docs/context/architecture.md) |",
+    "| Commands, versions, SDK paths | — | [docs/context/tech.md](docs/context/tech.md) |",
+    "| `nuclear`: language, compiler, `nuclear` CLI, LSP, language dialects | `crates/` `languages/` `dialects/{typescript,dart,python,nodejs}` `defs/` `tools/` `examples/` `spec/` | [docs/context/nuclear/CONTEXT.md](docs/context/nuclear/CONTEXT.md) |",
+    "| `dragonfly`: platforms, philosophy, the `dragonfly` CLI | `dragonfly/docs/context/dragonfly/` (the library: `spec/library.md` here) | [docs/context/dragonfly/CONTEXT.md](https://github.com/nuclearlang/dragonfly/blob/main/docs/context/dragonfly/CONTEXT.md) |",
+    "| `dragonfly-mobile`: the mobile platform; dialect `flutter` + Dart runtime | `dragonfly-mobile/` (its own repository inside this one, plan 006): `dialects/mobile/flutter/` `packages/{dragonfly,dragonfly_genkit}/` `spec/{mobile,flutter,dragonfly}.md` | [dragonfly-mobile/docs/context/dragonfly-mobile/CONTEXT.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/docs/context/dragonfly-mobile/CONTEXT.md) |"
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#where-things-are-open-only-what-the-task-needs.64e2da",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Where things are (open only what the task needs)",
+   "summary": "Full map and loading protocol: docs/context/README.md.",
+   "body": [
+    "| AI: the Smart Graph (the library every agent reads, ADR-0104) + the MCP server; the local 3B agents | `nuclear-graph/`, `nuclear-developer/`, `nuclear-developer/data/` (the knowledge base: `assets/` by shelf, built by `nuclear-graph knowledge build`, checked by `knowledge check`) (each its own repository inside this one; ADR-0102); the Loop tool is in `nuclear-vscode/` | [nuclear-graph/README.md](nuclear-graph/README.md), [nuclear-developer/README.md](nuclear-developer/README.md), [nuclear-developer/data/README.md](nuclear-developer/data/README.md) |",
+    "| Website | the `website` repository (Nuclear, Dragonfly web; today `~/Documents/projects/nuc/react/nuclearlang_website`) | [docs/context/website/CONTEXT.md](https://github.com/nuclearlang/website/blob/main/docs/context/website/CONTEXT.md) |",
+    "| Why a rule exists | — | [docs/adr/README.md](docs/adr/README.md) |",
+    "| What is done / pending | — | [STATUS.md](STATUS.md) |",
+    "",
+    "Full map and loading protocol: [docs/context/README.md](docs/context/README.md). Read top-down: this file →",
+    "one `CONTEXT.md` → only the L3 file whose `read-when` matches."
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:AGENTS.md#where-things-are-open-only-what-the-task-needs.d7fee5",
+   "type": "readme",
+   "title": "AGENTS.md — NuclearLang platform (L0) — Where things are (open only what the task needs)",
+   "summary": "Where things are (open only what the task needs)",
+   "body": [
+    "| `dragonfly-backend`: the backend platform; dialects `fastapi` (Python) and `nestjs` (TypeScript), their runtimes | `dragonfly-backend/` (its own repository inside this one, plan 006): `dialects/backend/{fastapi,nestjs}/` `packages/{dragonfly-py,dragonfly-nest}/` `defs/{python,typescript}/` `spec/{backend,fastapi,nestjs}.md` | [dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md](https://github.com/nuclearlang/dragonfly-backend/blob/main/docs/context/dragonfly-backend/CONTEXT.md) |",
+    "| `dragonfly-web`: the web platform; dialect `react` + TypeScript runtime | `dragonfly-web/` (its own repository inside this one, plan 006): `dialects/web/react/` `packages/dragonfly-web/` `spec/{web,react}.md` | [dragonfly-web/docs/context/dragonfly-web/CONTEXT.md](https://github.com/nuclearlang/dragonfly-web/blob/main/docs/context/dragonfly-web/CONTEXT.md) |",
+    "| `dragonfly` CLI | `dragonfly/` (its own repository inside this one: `dragonfly/` crate, `docs/dragonfly/{README,kinds,tutorial}.md`, `docs/context/{dragonfly,cli}/`) | [docs/context/cli/CONTEXT.md](https://github.com/nuclearlang/dragonfly/blob/main/docs/context/cli/CONTEXT.md) |",
+    "| LSP and editor extensions | `crates/nuclear-lsp`, `nuclear-vscode/` (with `theme/`), `nuclear-jetbrains/`, `nuclear-zed/` (each its own repository inside this one) | [docs/context/editors/CONTEXT.md](docs/context/editors/CONTEXT.md) |"
+   ],
+   "sources": [
+    "AGENTS.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to nuclear are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to nuclear are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "sources": [
+    "CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:CHANGELOG.md#unreleased.582f46",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": "- ADR-0106: the AI services come with the installer. Every release archive carries the code of the Smart Graph and the Nuclear Developer with its knowledge base (`ai/`, `tools/release/stage.sh`); the installers end with their set-up (`nuclear-loop setup`: a profile for the machine, the services at every login), bring a machine already set up to date without questions, and take `--no-ai` and `--profile <id>` (`-NoAi`, `-AiProfile` on Windows); `--uninstall` removes the services; `./install.sh --ai` is the same set-up over the working tree. `docs/ai/setup.md`; the release workflow clones the three AI repositories.",
+   "sources": [
+    "CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:CHANGELOG.md#unreleased.ef2693",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- ADR-0104: the Smart Graph is a library of typed, linked, versioned rows; the definition of done includes the knowledge base (`nuclear-graph knowledge build | check`, `ingest`) and the end-of-turn hook (`tools/context/check.sh stop`) runs the check.",
+    "- `[[generators]]` and `[gen]` in a platform's contract (`Dialect.generators`, `gen_values`); a facade alias named like its use case's field gets the field `<name>Instance` (ADR-0103).",
+    "- `nuclear_transpile::map::shape`: a declaration of a project as its source writes it (its file, its header's parameters, each method's parameters, return type and whether it awaits), which `dragonfly gen usecase` reads; the `usecase` generator and whole-member merges in `spec/dialects.md` (ADR-0103).",
+    "- `docs/ai/mcp.md`: the MCP server's page (how to add it to each client, the order a model works in, every tool by group, what to do when one fails); the Loop page links to it.",
+    "- ADR-0105: a strategy for each kind of request (a whole system, one screen, a rename, a failing test...), as rows of the Smart Graph that the analyst and the Loop follow; `docs/ai/loop.md` (the strategy of a request) and `docs/ai/mcp.md` (`graph_strategy`); the skill names it."
+   ],
+   "sources": [
+    "CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:CONTRIBUTING.md#before-a-pull-request",
+   "type": "readme",
+   "title": "Contributing to nuclear — Before a pull request",
+   "summary": "cargo test && cargo clippy --all-targets python3 tools/spec-check/check.py spec/typescript.md typescript typescript # also dart, python sh tools/stdlib-check.sh # needs tsc, dart and python UPDATE_GOLDEN=1 cargo test # when the output changes on purpose the area, the guide, `docs/context/` for…",
+   "body": [
+    "```sh",
+    "cargo test && cargo clippy --all-targets",
+    "python3 tools/spec-check/check.py spec/typescript.md typescript typescript   # also dart, python",
+    "sh tools/stdlib-check.sh                                                    # needs tsc, dart and python",
+    "UPDATE_GOLDEN=1 cargo test                                                  # when the output changes on purpose",
+    "```",
+    "",
+    "- Everything is written in English: code, comments, docs and messages.",
+    "- A change that the user of NuclearLang can see updates its documentation in the same pull request (the spec of",
+    "  the area, the guide, `docs/context/` for agents and contributors).",
+    "- Rules and the reasons behind them: the [nuclear repository's AGENTS.md](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md) and its",
+    "  [decision records](https://github.com/nuclearlang/nuclear/tree/main/docs/adr).",
+    "",
+    "By contributing you agree that your contribution is licensed under the [Apache License 2.0](LICENSE)."
+   ],
+   "sources": [
+    "CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:CONTRIBUTING.md#contributing-to-nuclear",
+   "type": "readme",
+   "title": "Contributing to nuclear",
+   "summary": "Thank you for helping.",
+   "body": [
+    "Thank you for helping. This repository is part of [NuclearLang](https://github.com/nuclearlang): the language is the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository, and the other repositories live as folders inside a clone of it, each with its",
+    "own git (the tools find each other that way)."
+   ],
+   "sources": [
+    "CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:CONTRIBUTING.md#set-up",
+   "type": "readme",
+   "title": "Contributing to nuclear — Set up",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear ./install.sh",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "# the platforms and editors you work on, inside it (README.md, \"The repositories\")",
+    "./install.sh",
+    "```"
+   ],
+   "sources": [
+    "CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#documentation-website",
+   "type": "readme",
+   "title": "NuclearLang — Documentation website",
+   "summary": "The documentation site is its own repository, `website`, written in Nuclear with Dragonfly web: it reads the `.md` files of this repository and of the platform repositories at build time (`node tools/content.mjs`, then `dragonfly build`).",
+   "body": [
+    "The documentation site is its own repository, `website`, written in Nuclear with Dragonfly web: it reads the `.md`",
+    "files of this repository and of the platform repositories at build time (`node tools/content.mjs`, then `dragonfly",
+    "build`). Its README tells how to run it."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#installation",
+   "type": "readme",
+   "title": "NuclearLang — Installation",
+   "summary": "One command, no Rust needed (the release of your system from GitHub, checked by SHA-256, into your user folders; ADR-0101): curl -fsSL https://nuclearlang.github.io/install.sh | sh # Linux and macOS (--version <v>, --uninstall) irm https://nuclearlang.github.io/install.ps1 | iex # Windows…",
+   "body": [
+    "One command, no Rust needed (the release of your system from GitHub, checked by SHA-256, into your user folders; ADR-0101):",
+    "",
+    "```sh",
+    "curl -fsSL https://nuclearlang.github.io/install.sh | sh        # Linux and macOS (--version <v>, --uninstall)",
+    "irm https://nuclearlang.github.io/install.ps1 | iex             # Windows (PowerShell)",
+    "```",
+    "",
+    "The installers are `tools/release/install.sh` and `install.ps1`; `tools/release/package.sh [target]` makes the",
+    "archives they download and `.github/workflows/release.yml` publishes them on a tag `v<version>`.",
+    "",
+    "From the source tree:",
+    "",
+    "```sh",
+    "./install.sh                 # builds and installs nuclear, dragonfly and nuclear-lsp in ~/.local/bin + the VS Code and Zed extensions",
+    "./install.sh --no-vscode     # without the VS Code extension (--no-zed: without the Zed one)",
+    "./install.sh --uninstall     # uninstalls",
+    "PREFIX=/usr/local ./install.sh",
+    "```",
+    "",
+    "It needs Rust (`cargo`); for Flutter apps, Flutter (`FLUTTER` or `FLUTTER_ROOT` if it is not on the PATH). The",
+    "dialects, type definitions, specs and the dragonfly package go to `~/.local/share/nuclearlang` (`NUCLEAR_HOME`",
+    "chooses another folder)."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#nuclearlang",
+   "type": "readme",
+   "title": "NuclearLang",
+   "summary": "A minimal base language, made so agents (Claude, Codex, OpenCode...) and people write it fast, that transpiles to other technologies through dialects.",
+   "body": [
+    "A minimal base language, made so agents (Claude, Codex, OpenCode...) and people write it fast, that",
+    "transpiles to other technologies through **dialects**."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#roadmap-new-projects",
+   "type": "readme",
+   "title": "NuclearLang — New projects",
+   "summary": "spec, defs, generators, tests) and it can connect with the Flutter MCP and others.",
+   "body": [
+    "- **Nuclear and Dragonfly MCP:** an agent uses everything the `nuclear` and `dragonfly` CLIs do (build, check,",
+    "  spec, defs, generators, tests) and it can connect with the Flutter MCP and others. It extends point 9."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#roadmap-to-do.bbc537",
+   "type": "readme",
+   "title": "NuclearLang — To do",
+   "summary": "generates, rules and diagrams of each reserved word, type, kind, decorator and modifier (`languages/docs.toml`, `dialects/<d>/docs.toml`), and doc comments with `@param`, `@return`, `@example`... that also come out in the generated code (JSDoc, `///`).",
+   "body": [
+    "**Extension / editor** (`nuclear-lsp` and the editor repositories)",
+    "- ✅ Documentation in the editor (ADR-0079): hover and completion with the definition, examples, what it",
+    "  generates, rules and diagrams of each reserved word, type, kind, decorator and modifier (`languages/docs.toml`,",
+    "  `dialects/<d>/docs.toml`), and doc comments with `@param`, `@return`, `@example`... that also come out in the",
+    "  generated code (JSDoc, `///`). Missing: a warning when a `@param` names a parameter that does not exist.",
+    "- Flutter: an assistant to create interfaces, with the Material palette.",
+    "- A UI to create and edit the AI context documentation of Claude, Codex, Gemini and opencode.",
+    "- A scaffold of that documentation by layers, taking Claude Code's structure as the reference:",
+    "  - `CLAUDE.md` / `CLAUDE.local.md`: project vision, stack, conventions and architecture.",
+    "  - `.mcp.json`: MCP integrations.",
+    "  - `.claude/settings.json` / `settings.local.json`: permissions, model and hooks.",
+    "  - `rules/`: one `.md` per topic (style, testing, API), which can apply to concrete paths.",
+    "  - `commands/`: own commands for repeatable flows.",
+    "  - `skills/<name>/SKILL.md`: loaded only when the task needs them.",
+    "  - `agents/`: subagents with a role, their own context and their tools.",
+    "  - `hooks/`: scripts before or after using a tool (validate, format, block)."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#roadmap-to-do.bd6c84",
+   "type": "readme",
+   "title": "NuclearLang — To do",
+   "summary": "and edit).",
+   "body": [
+    "- The UI's layers work as an assistant connected to the AI and as an editor of AI context markdown files (create",
+    "  and edit).",
+    "- A map of layers: the agent reads only the layer it needs, not the whole context, to save tokens."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#roadmap-to-do.feee01",
+   "type": "readme",
+   "title": "NuclearLang — To do",
+   "summary": "project's pubspec in Nuclear) and generates its definitions in `~/.cache/nuclearlang/defs` (ADR-0065–0067).",
+   "body": [
+    "**CLI**",
+    "- ✅ Type definitions of a project's packages: `dragonfly flutter add <package>` adds it to `config.nuc` (the",
+    "  project's pubspec in Nuclear) and generates its definitions in `~/.cache/nuclearlang/defs` (ADR-0065–0067).",
+    "  Missing: the same command for the other dialects (`typescript`: npm).",
+    "- ✅ `config.nuc` without empty sections (ADR-0070) and assets by convention (ADR-0071): fonts in",
+    "  `assets/fonts/<Family>/` (weight and style from the name), shaders in `assets/shaders/`, the rest of `assets/`",
+    "  as it is; nothing to configure.",
+    "- A command to create the AI context documentation (templates) from the language's definitions, its purpose and",
+    "  its philosophy. It asks for the minimum: the *what for* and the *why* of the project, not the *how*."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#roadmap.51a046",
+   "type": "readme",
+   "title": "NuclearLang — Roadmap",
+   "summary": "dialects installable from a repository (`specs/002-dialects-with-agents/plan.md`) 11. Postponed: each project's own kinds and decorators 12. Documentation website (the `website` repository, in Nuclear) and language reference ✅ · missing: create the GitHub repository and turn on Pages 13. Layered…",
+   "body": [
+    "dialects installable from a repository (`specs/002-dialects-with-agents/plan.md`)",
+    "11. Postponed: each project's own kinds and decorators",
+    "12. Documentation website (the `website` repository, in Nuclear) and language reference ✅ · missing: create the",
+    "    GitHub repository and turn on Pages",
+    "13. Layered context documentation (`AGENTS.md`, `docs/context/`, ADRs, `STATUS.md`) ✅ · all documentation in",
+    "    English ✅ · repository split (ADR-0083) ← planned"
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#roadmap.7b8d09",
+   "type": "readme",
+   "title": "NuclearLang — Roadmap",
+   "summary": "1. Base language (spec + grammar) ✅ 2. Lexer, parser, AST, resolver and emitter ✅ 3. Declarative dialects in files, with shortcuts, kinds and automatic imports ✅ 4. Dialects `typescript`, `nodejs`, `nestjs`, `dart`, `flutter`, `python`, `fastapi` ✅ 5. CLI `nuclear build`, `check`, `dialect`,…",
+   "body": [
+    "1. **Base language** (spec + grammar) ✅",
+    "2. Lexer, parser, AST, resolver and emitter ✅",
+    "3. Declarative dialects in files, with shortcuts, kinds and automatic imports ✅",
+    "4. Dialects `typescript`, `nodejs`, `nestjs`, `dart`, `flutter`, `python`, `fastapi` ✅",
+    "5. CLI `nuclear build`, `check`, `dialect`, `spec` ✅ · `nuclear fmt` ← next",
+    "6. Language Server (LSP), VS Code extension, JetBrains plugin and Zed extension (`crates/nuclear-lsp`, repositories `nuclear-vscode`, `nuclear-jetbrains`, `nuclear-zed`) ✅ · missing: split a",
+    "   base extension for every dialect and one per framework (Dragonfly for Flutter), ADR-0077",
+    "7. Multi-file projects (`spec/projects.md`) ✅ · components without an explicit facade (spec §1, principle 6)",
+    "8. The Dragonfly framework for Flutter: dialect, `dragonfly` package and `dragonfly` CLI ✅ · Dragonfly devices",
+    "   (window and terminal) ✅ · missing: an own engine without a browser for machines with little memory",
+    "9. MCP server so an agent creates new dialects (ruby, go...) · `react` dialect",
+    "10. New dialects created by agents (Claude, Codex, OpenCode) with rules, process and restrictions",
+    "    (`spec/dialects.md` §8, tutorial `docs/dialects/create-with-agent.md`) ✅ · missing: `nuclear dialect",
+    "    new|test`, skill + `AGENTS.md`, Dragonfly independent of the language (`dragonfly crystal/amber new`) and"
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#status.219998",
+   "type": "readme",
+   "title": "NuclearLang — Status",
+   "summary": "With the `flutter` dialect every widget and class of Flutter and of the Dart libraries (`dart:async`, `dart:convert`, `dart:io`...) can be used, besides `bloc`/`flutter_bloc`, `dio`, `get_it` and `json_annotation`: the imports are added automatically.",
+   "body": [
+    "With the `flutter` dialect every widget and class of Flutter and of the Dart libraries (`dart:async`,",
+    "`dart:convert`, `dart:io`...) can be used, besides `bloc`/`flutter_bloc`, `dio`, `get_it` and `json_annotation`:",
+    "the imports are added automatically. Everything comes from the **type definitions** (`defs/`, like TypeScript's",
+    "`.d.ts`), generated from the SDK with `tools/defs`. `nuclear defs show Scaffold --dialect flutter` shows the API",
+    "of any class in Nuclear notation."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#status.4fa4fb",
+   "type": "readme",
+   "title": "NuclearLang — Status",
+   "summary": "Status",
+   "body": [
+    "| Document | What it contains |",
+    "|---|---|",
+    "| [docs/dragonfly/tutorial.md](https://github.com/nuclearlang/dragonfly/blob/main/docs/dragonfly/tutorial.md) | **Start here:** a Flutter app from scratch with `dragonfly`, step by step (`nuclear help tutorial`) |",
+    "| [docs/language/](docs/language/README.md) | The language guide by chapters, with the real TS and Dart outputs (`nuclear help guide`) |",
+    "| [docs/language/reference.md](docs/language/reference.md) | Language reference: the whole base on one page, in tables (`nuclear help reference`) |",
+    "| [spec/nuclear-base.md](spec/nuclear-base.md) | Rules of the base language (every dialect inherits them) |",
+    "| [spec/typescript.md](spec/typescript.md), [nodejs](spec/nodejs.md), [nestjs](https://github.com/nuclearlang/dragonfly-backend/blob/main/spec/nestjs.md), [dart](spec/dart.md), [flutter](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md), [python](spec/python.md), [fastapi](https://github.com/nuclearlang/dragonfly-backend/blob/main/spec/fastapi.md) | Spec of each dialect: what it adds to the base, how it translates it and the equivalences of the examples |",
+    "| [spec/dialects.md](spec/dialects.md) | The standard dialect format: golden rule, templates, shortcuts, kinds, validation, how to create one with an agent |"
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#status.7609a8",
+   "type": "readme",
+   "title": "NuclearLang — Status",
+   "summary": "The base transpiler works: lexer, parser, AST, resolver and emitter in Rust (`crates/`), driven by declarative dialects (TOML files in `dialects/`).",
+   "body": [
+    "The base transpiler works: lexer, parser, AST, resolver and emitter in Rust (`crates/`), driven by **declarative",
+    "dialects** (TOML files in `dialects/`). Shipped dialects: `typescript`, `nodejs`, `nestjs`, `dart`, `flutter`, `python` and `fastapi` (Dragonfly for Python:",
+    "FastAPI, SQLAlchemy, pydantic, LangChain, LangGraph).",
+    "",
+    "```sh",
+    "cargo test                                                                  # tests",
+    "cargo run -q -p nuclear-cli -- build examples/examples-nodejs/chat.nuc --dialect nodejs    # transpile",
+    "cargo run -q -p nuclear-cli -- build examples/examples-flutter-dialect/flutter_app.nuc --dialect flutter",
+    "cargo run -q -p nuclear-cli -- check examples/examples-nodejs/chat.nuc --dialect nodejs --json   # errors for agents",
+    "cargo run -q -p nuclear-cli -- dialect list                                                # available dialects",
+    "cargo run -q -p nuclear-cli -- dialect check flutter                                       # validate a dialect",
+    "cargo run -q -p nuclear-cli -- spec --dialect flutter                                      # spec for agents: base + dart + flutter",
+    "FLUTTER=~/develop/flutter/bin/flutter tools/analyze-flutter.sh              # validate the output with Flutter",
+    "```"
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#status.7faeb6",
+   "type": "readme",
+   "title": "NuclearLang — Status",
+   "summary": "Status",
+   "body": [
+    "| [spec/grammar.ebnf](spec/grammar.ebnf) | Formal grammar |",
+    "| [spec/decisions.md](spec/decisions.md) | Index of the decision records |",
+    "| [spec/diagnostics.md](spec/diagnostics.md) | Error codes |",
+    "| [spec/reserved-words.md](spec/reserved-words.md) | Reserved words per language and how Nuclear reaches each one |",
+    "| [dialects/](dialects) | The shipped dialects |",
+    "| [docs/architecture.md](docs/architecture.md) | How the transpiler works |",
+    "| [docs/aprende/desde-codebuilder.md](docs/aprende/desde-codebuilder.md) | Teaching material (in Spanish): compiler concepts explained from CodeBuilder (not a basis of the design) |",
+    "| [examples/](examples) | `.nuc` examples with their expected output (`.ts`, `.dart`); `widgets_tour.nuc` walks through Flutter patterns |",
+    "| [defs/](defs) | The type definitions repository: `defs/dart/{dart,flutter,dragonfly,flutter_bloc,bloc,dio,get_it,go_router,connectivity_plus,flutter_secure_storage,json_annotation}/<version>/` |",
+    "| [tools/defs/](tools/defs/README.md) | Generator of the type definitions of Dart, Flutter and pub.dev packages |"
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#status.870d35",
+   "type": "readme",
+   "title": "NuclearLang — Status",
+   "summary": "Status",
+   "body": [
+    "| [spec/projects.md](spec/projects.md) | Multi-file projects: `nuclear.toml`, imports between files, `[project]`, architecture rules |",
+    "| [spec/flutter.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/flutter.md) | The flutter dialect (Dragonfly): project structure, architecture, kinds (repository, usecase, appcomponent, statemanager, component, guard, tests...), screens and routes (`@screen`), global events, session, ACL, the `dragonfly` CLI and the editors |",
+    "| [dragonfly](https://github.com/nuclearlang/dragonfly) | The `dragonfly` CLI (its own repository): `new`, generators (`g c`, `g s`...), `code`, `watch`, `build`, `run`, `test` |",
+    "| [AGENTS.md](AGENTS.md), [docs/context/](docs/context/README.md), [STATUS.md](STATUS.md), [docs/adr/](docs/adr/README.md), [specs/](specs/README.md) | Context for agents and contributors (layered), project status, decision records, feature plans |",
+    "| [spec/dragonfly.md](https://github.com/nuclearlang/dragonfly-mobile/blob/main/spec/dragonfly.md) | The Dart package `dragonfly` the generated code uses (it can also be used by hand) |",
+    "| [packages/dragonfly/](https://github.com/nuclearlang/dragonfly-mobile/blob/main/packages/dragonfly/README.md) | Dragonfly's Dart runtime |",
+    "| [spec/definitions.md](spec/definitions.md) | Type definitions (like `.d.ts`): the `defs/` repository, format, import priority, `nuclear defs` |"
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#the-repositories.351987",
+   "type": "readme",
+   "title": "NuclearLang — The repositories",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear for r in dragonfly dragonfly-mobile dragonfly-backend dragonfly-web nuclear-vscode nuclear-jetbrains nuclear-zed; do git clone https://github.com/nuclearlang/$r done ./install.sh How to contribute: CONTRIBUTING.md.",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "for r in dragonfly dragonfly-mobile dragonfly-backend dragonfly-web nuclear-vscode nuclear-jetbrains nuclear-zed; do",
+    "  git clone https://github.com/nuclearlang/$r",
+    "done",
+    "./install.sh",
+    "```",
+    "",
+    "How to contribute: [CONTRIBUTING.md](CONTRIBUTING.md). License: [Apache-2.0](LICENSE)."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#the-repositories.6aeab7",
+   "type": "readme",
+   "title": "NuclearLang — The repositories",
+   "summary": "NuclearLang is split into repositories of the nuclearlang organization, each with its own release cycle: To work on them, clone this repository and the others inside it (each folder is its own git, ignored by this one):",
+   "body": [
+    "NuclearLang is split into repositories of the [nuclearlang](https://github.com/nuclearlang) organization, each with",
+    "its own release cycle:",
+    "",
+    "| Repository | What it is |",
+    "|---|---|",
+    "| [nuclear](https://github.com/nuclearlang/nuclear) (this one) | the language: compiler, `nuclear` CLI, language server, the language dialects (TypeScript, Dart, Python), specs |",
+    "| [dragonfly](https://github.com/nuclearlang/dragonfly) | Dragonfly, the framework: the `dragonfly` CLI and the platforms' philosophy |",
+    "| [dragonfly-mobile](https://github.com/nuclearlang/dragonfly-mobile) | the mobile platform: dialect `flutter`, the Dart runtime |",
+    "| [dragonfly-backend](https://github.com/nuclearlang/dragonfly-backend) | the backend platform: dialects `fastapi` and `nestjs`, their runtimes |",
+    "| [dragonfly-web](https://github.com/nuclearlang/dragonfly-web) | the web platform: dialect `react`, its runtime |",
+    "| [nuclear-vscode](https://github.com/nuclearlang/nuclear-vscode), [nuclear-jetbrains](https://github.com/nuclearlang/nuclear-jetbrains), [nuclear-zed](https://github.com/nuclearlang/nuclear-zed) | the editor extensions |",
+    "| [website](https://github.com/nuclearlang/website) | the documentation site, written in Nuclear |",
+    "",
+    "To work on them, clone this repository and the others inside it (each folder is its own git, ignored by this one):"
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:README.md#vision",
+   "type": "readme",
+   "title": "NuclearLang — Vision",
+   "summary": "NuclearLang avoids writing unnecessary code or text, to spend as few tokens as possible, and it tries to be extremely easy to use, write and read.",
+   "body": [
+    "NuclearLang avoids writing unnecessary code or text, to spend as few tokens as possible, and it tries to be",
+    "extremely easy to use, write and read. NuclearLang avoids at all costs the text that has nothing to do with the",
+    "program's logic: it exists to write the program's logic in the easiest way and with the least text possible, and",
+    "everything else, which from the point of view of a program's logic is unnecessary, is left to the transpilers.",
+    "This helps agents not having to think about unnecessary context: only what matters, the logic of a product.",
+    "",
+    "```",
+    "             ┌──────────── typescript dialect ──► .ts",
+    " file.nuc ───┤──────────── nestjs dialect ──────► .ts (modules, controllers...)",
+    "  (base)     ├──────────── react dialect ───────► .ts (React)",
+    "             ├──────────── fastapi dialect ─────► .py (FastAPI)",
+    "             └──────────── flutter dialect ─────► .dart",
+    "```",
+    "",
+    "As in an ORM (Sequelize with MySQL, Postgres or SQLite): the user writes one single form and each **adapter**",
+    "(dialect) knows how to translate it to its technology."
+   ],
+   "sources": [
+    "README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/architecture.md#1-stages",
+   "type": "doc",
+   "title": "Transpiler architecture — 1. Stages",
+   "summary": ".nuc text dialects/<name>/*.toml │ 1. LEXER text → tokens │ │ 2. PARSER tokens → AST │ loaded at run time │ 3. RESOLVER block scopes, undefined │ (inheritance, collisions, validation) │ names, implicit this, ▼ │ const/let, async, returns ◄── Dialect: kinds, shortcuts, auto-imports │ 4. EMITTER AST…",
+   "body": [
+    "```",
+    " .nuc text                                    dialects/<name>/*.toml",
+    "    │  1. LEXER      text   → tokens                 │",
+    "    │  2. PARSER     tokens → AST                    │  loaded at run time",
+    "    │  3. RESOLVER   block scopes, undefined         │  (inheritance, collisions, validation)",
+    "    │                names, implicit this,           ▼",
+    "    │                const/let, async, returns ◄── Dialect: kinds, shortcuts, auto-imports",
+    "    │  4. EMITTER    AST → dialect templates   ◄── [syntax] [types] [operators]",
+    "    ▼",
+    " .ts / .dart / ... text",
+    "```",
+    "",
+    "Each stage knows only the previous one. Diagnostics accumulate in all of them and come out as text or JSON."
+   ],
+   "sources": [
+    "docs/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/architecture.md#2-design-rules",
+   "type": "doc",
+   "title": "Transpiler architecture — 2. Design rules",
+   "summary": "1. The lexer produces indentation as tokens.",
+   "body": [
+    "1. **The lexer produces indentation as tokens.** `INDENT`/`DEDENT` let the parser work as if there were braces.",
+    "   Inside `( ) [ ] { }` they are not emitted (line continuation).",
+    "2. **The AST has no format.** No `;`, no spaces, no braces. Each node keeps its `Span` (position in the file)",
+    "   for errors and for the LSP.",
+    "3. **The parser is generic.** It knows nothing about Flutter or NestJS. A dialect's words (`stateless`,",
+    "   `extension`, `static`...) arrive as data in the declaration's header and the dialect validates them.",
+    "4. **The transpiler knows no target language.** TypeScript and Dart are dialects like any other: files with",
+    "   templates. The Rust code decides *what* to emit (a constant, a `this`, an `await`); the dialect decides *how*",
+    "   it is written.",
+    "5. **Data before code.** Dialects, shortcuts and automatic imports live in TOML files read at run time. The same",
+    "   files feed the CLI, the LSP and the future MCP server."
+   ],
+   "sources": [
+    "docs/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/architecture.md#3-dialects",
+   "type": "doc",
+   "title": "Transpiler architecture — 3. Dialects",
+   "summary": "A dialect is a folder `dialects/<name>/` with TOML files (full format in spec/dialects.md).",
+   "body": [
+    "A dialect is a folder `dialects/<name>/` with TOML files (full format in [spec/dialects.md](../spec/dialects.md)).",
+    "Dialects inherit:",
+    "",
+    "```",
+    "typescript ──► nodejs ──► nestjs",
+    "dart ───────► flutter",
+    "```",
+    "",
+    "- **Target** (`typescript`, `dart`): templates for each construct of the base language, types, operators,",
+    "  options and reserved words.",
+    "- **Framework** (`nodejs`, `nestjs`, `flutter`): kinds (`stateless`, `controller`), `use` shortcuts, automatic",
+    "  imports and function shortcuts.",
+    "- **Project**: any developer extends a framework with their own shortcuts and kinds.",
+    "",
+    "The loader merges the files, applies inheritance and validates: shortcut collisions, similar names, unknown",
+    "template variables and missing templates. `nuclear spec` publishes the whole contract (which templates exist and",
+    "which variables each one receives) so an agent can write a new dialect."
+   ],
+   "sources": [
+    "docs/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/architecture.md#4-organization-in-rust.44d0bf",
+   "type": "doc",
+   "title": "Transpiler architecture — 4. Organization in Rust",
+   "summary": "(`emit::code_words`: without comments nor the text of strings, with their interpolations).",
+   "body": [
+    "**Imports:** the emitter first writes the code and then decides the imports from the words of that code",
+    "(`emit::code_words`: without comments nor the text of strings, with their interpolations). So a name a template",
+    "writes is imported, and one that is only in a comment or in a decorator that is not written is not. In a project",
+    "the same holds across files and for the files of `[project.files]`.",
+    "",
+    "**Tests:** each `examples/**/x.nuc` has its expected output (`x.ts`, `x.dart`). A test transpiles the `.nuc`",
+    "with its dialect and compares with that file (*golden tests*); `UPDATE_GOLDEN=1` regenerates them.",
+    "`tools/analyze-flutter.sh` also compiles the Flutter examples with the real SDK (`flutter analyze`). There is",
+    "also one test per language rule (`crates/nuclear-transpile/tests/rules.rs`) and per dialect validation rule",
+    "(`crates/nuclear-dialect/tests/loader.rs`)."
+   ],
+   "sources": [
+    "docs/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/architecture.md#4-organization-in-rust.65da28",
+   "type": "doc",
+   "title": "Transpiler architecture — 4. Organization in Rust",
+   "summary": "nuclearlang/ ├── Cargo.toml # workspace ├── languages/nuclear.toml # reserved words of the base language ├── dialects/ # the language dialects: typescript, nodejs, dart, python ├── defs/ # type definitions (like .d.ts): defs/<language>/<package>/<version>/ ├── crates/ │ ├── nuclear-diag/ #…",
+   "body": [
+    "```",
+    "nuclearlang/",
+    "├── Cargo.toml                 # workspace",
+    "├── languages/nuclear.toml     # reserved words of the base language",
+    "├── dialects/                  # the language dialects: typescript, nodejs, dart, python",
+    "├── defs/                      # type definitions (like .d.ts): defs/<language>/<package>/<version>/",
+    "├── crates/",
+    "│   ├── nuclear-diag/          # diagnostics: codes, positions, text and JSON",
+    "│   ├── nuclear-syntax/        # lexer, AST, parser and formatter",
+    "│   ├── nuclear-dialect/       # template engine, contract, dialect loading and validation",
+    "│   ├── nuclear-transpile/     # resolver + dialect-driven emitter; projects (project.rs); API for CLI and LSP",
+    "│   ├── nuclear-cli/           # the `nuclear` binary (build, check, fmt, spec, defs, help)",
+    "│   └── nuclear-lsp/           # the language server",
+    "├── spec/                      # base language, grammar, library, dialects, diagnostics",
+    "├── examples/                  # each .nuc with its expected output; examples/projects/, stdlib/",
+    "├── tools/                     # spec checks, type-definition generators, release (installers, archives)",
+    "├── install.sh                 # installs nuclear, dragonfly and nuclear-lsp in ~/.local (files in share/nuclearlang)",
+    "│",
+    "│  the other repositories, each a folder with its own git (plan 006):",
+    "├── dragonfly/                 # the `dragonfly` CLI and the platforms' philosophy"
+   ],
+   "sources": [
+    "docs/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/architecture.md#4-organization-in-rust.6f495e",
+   "type": "doc",
+   "title": "Transpiler architecture — 4. Organization in Rust",
+   "summary": "├── dragonfly-mobile/ # the mobile platform: dialect flutter, the Dart runtime ├── dragonfly-backend/ # the backend platform: dialects fastapi and nestjs, their runtimes ├── dragonfly-web/ # the web platform: dialect react, its runtime ├── nuclear-vscode/ # the VS Code extension (and the shared…",
+   "body": [
+    "├── dragonfly-mobile/          # the mobile platform: dialect flutter, the Dart runtime",
+    "├── dragonfly-backend/         # the backend platform: dialects fastapi and nestjs, their runtimes",
+    "├── dragonfly-web/             # the web platform: dialect react, its runtime",
+    "├── nuclear-vscode/            # the VS Code extension (and the shared theme)",
+    "├── nuclear-jetbrains/         # the Android Studio / IntelliJ plugin",
+    "└── nuclear-zed/               # the Zed extension",
+    "```",
+    "",
+    "| Crate | Input → output |",
+    "|---|---|",
+    "| `nuclear-syntax` | text → `Lexed` (tokens) → `Parsed` (AST + diagnostics) |",
+    "| `nuclear-dialect` | `dialects/<name>/*.toml` + `defs/` packages → `Dialect` + `Report` (diagnostics per file). `Dialect.typedefs` gives the full API of the libraries (lazy read of `api.json`) |",
+    "| `nuclear-transpile` | text + `Dialect` → `Output` (code + diagnostics + Dart → Nuclear line map for debuggers). `check()` for the LSP. `project::build(folder, manifest, dialect)` → one file per `.nuc` + project files (spec/projects.md) |"
+   ],
+   "sources": [
+    "docs/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/architecture.md#transpiler-architecture",
+   "type": "doc",
+   "title": "Transpiler architecture",
+   "summary": "Transpiler architecture",
+   "body": [
+    "> The context documentation for contributors and agents (layers, repositories, every component) is in",
+    "> [docs/context/](context/README.md); this page is the overview for readers of the website."
+   ],
+   "sources": [
+    "docs/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/README.md#context-documentation-map.9daee8",
+   "type": "readme",
+   "title": "Context documentation map",
+   "summary": "limits.md L3 known limitations and what Nuclear cannot express yet ../../dragonfly/docs/context/dragonfly/CONTEXT.md L2 the three platforms (web, mobile, backend), dialects, the philosophy ../../dragonfly-mobile/docs/context/dragonfly-mobile/CONTEXT.md L2 the mobile platform (in dragonfly-mobile/,…",
+   "body": [
+    "limits.md                          L3  known limitations and what Nuclear cannot express yet",
+    "  ../../dragonfly/docs/context/dragonfly/CONTEXT.md  L2  the three platforms (web, mobile, backend), dialects, the philosophy",
+    "  ../../dragonfly-mobile/docs/context/dragonfly-mobile/CONTEXT.md  L2  the mobile platform (in dragonfly-mobile/, plan 006)",
+    "    project.md                         L3  project layout, config.nuc, assets, architecture rules",
+    "    kinds.md                           L3  every kind and decorator of the platform, as Flutter writes them",
+    "    runtime.md                         L3  the `dragonfly` Dart package services (events, session, logs...)",
+    "    security.md                        L3  security and performance rules to warn about",
+    "  ../../dragonfly-backend/docs/context/dragonfly-backend/CONTEXT.md  L2  the backend platform (in dragonfly-backend/, plan 006)",
+    "  ../../dragonfly-web/docs/context/dragonfly-web/CONTEXT.md  L2  the web platform (in dragonfly-web/, plan 006)",
+    "  ../../dragonfly/docs/context/cli/CONTEXT.md  L2  the `dragonfly` CLI (in dragonfly/)",
+    "    build.md                           L3  build pipeline, markers, repair, line map",
+    "    devices.md                         L3  Dragonfly devices (window and terminal)",
+    "    packages.md                        L3  config.nuc sync, third-party definitions, assets"
+   ],
+   "sources": [
+    "docs/context/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/README.md#context-documentation-map.b760e0",
+   "type": "readme",
+   "title": "Context documentation map",
+   "summary": "landing.md L3 landing page, colors, help editors/CONTEXT.md L2 LSP server and the editor extensions lsp.md L3 server modules and decisions ../../nuclear-vscode/docs/context/editors/vscode.md L3 VS Code extension: Dragonfly run/debug/device ../../nuclear-vscode/docs/context/editors/theme.md L3…",
+   "body": [
+    "landing.md                         L3  landing page, colors, help",
+    "  editors/CONTEXT.md                   L2  LSP server and the editor extensions",
+    "    lsp.md                             L3  server modules and decisions",
+    "    ../../nuclear-vscode/docs/context/editors/vscode.md     L3  VS Code extension: Dragonfly run/debug/device",
+    "    ../../nuclear-vscode/docs/context/editors/theme.md      L3  Chernobyl theme, icons, code metrics",
+    "    ../../nuclear-jetbrains/docs/context/editors/jetbrains.md  L3  Android Studio / IntelliJ plugin",
+    "    ../../nuclear-zed/docs/context/editors/zed.md           L3  Zed extension",
+    "  the website repository's docs/context/website/CONTEXT.md  L2  documentation website",
+    "docs/adr/                              --  decision records: open one only to learn WHY",
+    "spec/                                  L3  user-facing specs (also the website and `nuclear help`)",
+    "specs/NNN-feature/plan.md              L4  feature plans (spec → plan → tasks)",
+    "docs/language/, docs/dragonfly/        L3  user guide and tutorial",
+    "```"
+   ],
+   "sources": [
+    "docs/context/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/README.md#context-documentation-map.cd33bc",
+   "type": "readme",
+   "title": "Context documentation map",
+   "summary": "Layered context for people and agents (ADR-0084).",
+   "body": [
+    "Layered context for people and agents (ADR-0084). Read from the top and open only the link that answers",
+    "your question: a typical task needs L0 + one L2 + one or two L3 files."
+   ],
+   "sources": [
+    "docs/context/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/README.md#context-documentation-map.e50c33",
+   "type": "readme",
+   "title": "Context documentation map",
+   "summary": "AGENTS.md L0 router + hard rules (always loaded; CLAUDE.md imports it) STATUS.md L0 state: done, half done, untested, pending, log (always loaded) docs/context/ README.md L1 this map product/prd.md L1 what the platform is, for whom, requirements (FR/NFR) architecture.md L1 layers, repositories,…",
+   "body": [
+    "```",
+    "AGENTS.md                              L0  router + hard rules (always loaded; CLAUDE.md imports it)",
+    "STATUS.md                              L0  state: done, half done, untested, pending, log (always loaded)",
+    "docs/context/",
+    "  README.md                            L1  this map",
+    "  product/prd.md                       L1  what the platform is, for whom, requirements (FR/NFR)",
+    "  architecture.md                      L1  layers, repositories, data flow, boundaries",
+    "  tech.md                              L1  stack, versions, machine paths, commands",
+    "  workflow.md                          L1  sessions, ownership, definition of done, the user",
+    "  nuclear/CONTEXT.md                   L2  language, compiler, `nuclear` CLI, LSP, language dialects, the standard library",
+    "    syntax.md                          L3  lexer and parser rules (indentation, comments, blocks)",
+    "    emitter.md                         L3  how the emitter turns the AST into target code",
+    "    result.md                          L3  Result<E, T>, propagation, aliases",
+    "    dialect-format.md                  L3  dialect files: kinds, options, templates, docs.toml",
+    "    type-definitions.md                L3  defs/ packages, priority, generator",
+    "    projects.md                        L3  multi-file projects, [project], [architecture]",
+    "    testing.md                         L3  golden, rules, loader, projects tests; target validation"
+   ],
+   "sources": [
+    "docs/context/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/README.md#loading-protocol",
+   "type": "readme",
+   "title": "Context documentation map — Loading protocol",
+   "summary": "1. L0 is always in context.",
+   "body": [
+    "1. L0 is always in context. It says which L2 owns each folder.",
+    "2. Open the L2 `CONTEXT.md` of the area you touch. It lists its L3 files with a `read-when` line.",
+    "3. Open an L3 file or a spec only when its `read-when` matches the task.",
+    "4. Open an ADR only to learn why a rule exists or before proposing a change to it.",
+    "5. Never read a whole folder \"to be safe\"."
+   ],
+   "sources": [
+    "docs/context/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/README.md#writing-rules",
+   "type": "readme",
+   "title": "Context documentation map — Writing rules",
+   "summary": "worth its tokens).",
+   "body": [
+    "- Every L1–L3 file starts with front-matter: `layer`, `component`, `read-when` (one line: when the file is",
+    "  worth its tokens).",
+    "- Size caps: L0 ≤ 100 lines, L2 ≤ 150 lines, L3 as long as the topic needs. When an L2 grows past its cap,",
+    "  move a section into a new L3 and leave a one-line link.",
+    "- One fact lives in one file; other files link to it. Specs hold the language and dialect rules; context",
+    "  files hold how the code is built and why; `STATUS.md` holds state; ADRs hold decisions.",
+    "- English only (ADR-0082).",
+    "- After the repository split (ADR-0083) each `docs/context/<repo>/` moves into that repository and its",
+    "  `CONTEXT.md` becomes the core of that repository's `AGENTS.md`."
+   ],
+   "sources": [
+    "docs/context/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#1-layers-of-the-platform.31285e",
+   "type": "context",
+   "title": "Architecture — 1. Layers of the platform",
+   "summary": "dialects │ language: typescript, dart, python (+ nodejs) │ │ platforms (Dragonfly, ADR-0093): mobile/flutter · backend/ │ │ {fastapi, nestjs} · web (to do) runtimes: packages/ │ └──────────────────────────────────────────────────────────────┘",
+   "body": [
+    "dialects    │ language: typescript, dart, python (+ nodejs)                │",
+    "              │ platforms (Dragonfly, ADR-0093): mobile/flutter · backend/   │",
+    "              │ {fastapi, nestjs} · web (to do)   runtimes: packages/        │",
+    "              └──────────────────────────────────────────────────────────────┘",
+    "```"
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#1-layers-of-the-platform.b7b258",
+   "type": "context",
+   "title": "Architecture — 1. Layers of the platform",
+   "summary": "┌──────────────────────────────────────────────────────────────┐ editors │ nuclear-vscode · nuclear-jetbrains · nuclear-zed │ run the LSP binary │ dragonfly-flutter-vscode · dragonfly-flutter-jetbrains │ (framework extras) └───────────────▲──────────────────────────────▲──────────────┘ │ LSP…",
+   "body": [
+    "```",
+    "              ┌──────────────────────────────────────────────────────────────┐",
+    "  editors     │ nuclear-vscode · nuclear-jetbrains · nuclear-zed            │  run the LSP binary",
+    "              │ dragonfly-flutter-vscode · dragonfly-flutter-jetbrains      │  (framework extras)",
+    "              └───────────────▲──────────────────────────────▲──────────────┘",
+    "                              │ LSP protocol                  │ runs",
+    "              ┌───────────────┴───────────┐   ┌──────────────┴──────────────┐",
+    "  tools       │ nuclear-lsp (server)      │   │ dragonfly CLI               │",
+    "              │ nuclear CLI               │   │ (new, build, run, devices)  │",
+    "              └───────────────▲───────────┘   └──────────────▲──────────────┘",
+    "                              │ Rust API (crates)              │",
+    "              ┌───────────────┴────────────────────────────────┴─────────────┐",
+    "  compiler    │ nuclear-syntax → nuclear-transpile (resolver, emitter,       │",
+    "              │ projects) ← nuclear-dialect (loader, templates, defs)        │",
+    "              │ nuclear-diag (diagnostics everywhere)                        │",
+    "              └───────────────▲──────────────────────────────────────────────┘",
+    "                              │ data (TOML + templates + defs JSON)",
+    "              ┌───────────────┴──────────────────────────────────────────────┐"
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#2-compiler-pipeline",
+   "type": "context",
+   "title": "Architecture — 2. Compiler pipeline",
+   "summary": ".nuc text dialects/<name>/*.toml (+ defs/) │ 1 LEXER text → tokens (INDENT/DEDENT) │ loaded at run time: │ 2 PARSER tokens → AST (no format) │ inheritance, merge, validation │ 3 RESOLVER block scope, undefined names, ▼ │ implicit this, const/let, async ◄── Dialect: kinds, shortcuts, auto-imports │…",
+   "body": [
+    "```",
+    " .nuc text                                   dialects/<name>/*.toml (+ defs/)",
+    "   │ 1 LEXER     text → tokens (INDENT/DEDENT)        │ loaded at run time:",
+    "   │ 2 PARSER    tokens → AST (no format)             │ inheritance, merge, validation",
+    "   │ 3 RESOLVER  block scope, undefined names,        ▼",
+    "   │             implicit this, const/let, async ◄── Dialect: kinds, shortcuts, auto-imports",
+    "   │ 4 EMITTER   AST → dialect templates        ◄── [syntax] [types] [operators] [options]",
+    "   ▼",
+    " .ts / .dart text  (+ line map target → .nuc for debuggers)",
+    "```",
+    "",
+    "Each stage knows only the previous one. Diagnostics accumulate in all of them (text or JSON)."
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#3-design-rules",
+   "type": "context",
+   "title": "Architecture — 3. Design rules",
+   "summary": "1. The lexer turns indentation into tokens; inside `( ) [ ] { }` it emits none (line continuation).",
+   "body": [
+    "1. The lexer turns indentation into tokens; inside `( ) [ ] { }` it emits none (line continuation).",
+    "2. The AST has no format; every node keeps its `Span` for errors and the LSP.",
+    "3. The parser is generic: dialect words (`stateless`, `static`) arrive as data in a declaration header.",
+    "4. The transpiler knows no target language: TypeScript and Dart are dialects like any other.",
+    "5. Data before code: dialects, shortcuts and imports are files read at run time; the same files feed the",
+    "   CLI, the LSP and the future MCP server.",
+    "6. Imports are decided after emitting, from the words of the generated code (`emit::code_words`)."
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#4-repositories-adr-0083-and-current-folders.37da5a",
+   "type": "context",
+   "title": "Architecture — 4. Repositories (ADR-0083) and current folders",
+   "summary": "The working tree is the `nuclear` repository with every other repository as a folder inside it, each with its own git (plan 006):",
+   "body": [
+    "The working tree is the `nuclear` repository with every other repository as a folder inside it, each with its own",
+    "git (plan 006):"
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#4-repositories-adr-0083-and-current-folders.601c98",
+   "type": "context",
+   "title": "Architecture — 4. Repositories (ADR-0083) and current folders",
+   "summary": "Boundaries that hold after the split: marker and prefix commands, settings and debug types with their dialect.",
+   "body": [
+    "Boundaries that hold after the split:",
+    "- Extensions talk to `nuclear-lsp` only through the LSP protocol (plus the documented `nuclear/*` requests).",
+    "- Framework extensions never register the language or the LSP; they activate on their dialect's project",
+    "  marker and prefix commands, settings and debug types with their dialect.",
+    "- The `dragonfly` CLI uses `nuclear-transpile::project` and `nuclear-dialect::Loader` as a library; what it",
+    "  needs from a platform comes from the dialect (`[toolchain]`, planned; today `\"flutter\"` is hard-coded).",
+    "- Website content stays with the code it documents; the site copies it at build time."
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#4-repositories-adr-0083-and-current-folders.854bf3",
+   "type": "context",
+   "title": "Architecture — 4. Repositories (ADR-0083) and current folders",
+   "summary": "4. Repositories (ADR-0083) and current folders",
+   "body": [
+    "| `dragonfly-web` | in `dragonfly-web/` (moved, plan 006): `dialects/web/react/`, `packages/dragonfly-web/`, `defs/typescript/{react,react_router,vitest,testing_library_react,dragonfly-web}`, `tools/react-check/`, `spec/{web,react}.md`, `docs/dragonfly/react.md`, `examples/examples-web/` | [dragonfly-web](https://github.com/nuclearlang/dragonfly-web/blob/main/docs/context/dragonfly-web/CONTEXT.md) |",
+    "| `dragonfly-flutter-vscode`, `dragonfly-flutter-jetbrains` | Dragonfly parts of `nuclear-vscode/src/{extension,debug,device}.ts`, `nuclear-jetbrains/.../NuclearDragonfly.java`, `NuclearDebug.java` | [editors](editors/CONTEXT.md) |",
+    "| `website` | its own repository (`~/Documents/projects/nuc/react/nuclearlang_website`) | [website](https://github.com/nuclearlang/website/blob/main/docs/context/website/CONTEXT.md) |"
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#4-repositories-adr-0083-and-current-folders.bfe286",
+   "type": "context",
+   "title": "Architecture — 4. Repositories (ADR-0083) and current folders",
+   "summary": "4. Repositories (ADR-0083) and current folders",
+   "body": [
+    "| Future repository | Current folders | L2 context |",
+    "|---|---|---|",
+    "| `nuclear` | `crates/`, `languages/`, `dialects/{typescript,dart,python,nodejs}`, `defs/{dart/dart@*,python/python@*,typescript/typescript@*}`, `tools/{defs,spec-check,stdlib-check.sh,context}`, `spec/` (base, library, dialects, grammar, diagnostics), `docs/language/`, `examples/` (non-Dragonfly, `stdlib/`), `install.sh`, `crates/nuclear-lsp/` | [nuclear](nuclear/CONTEXT.md) |",
+    "| `nuclear-vscode`, `nuclear-jetbrains`, `nuclear-zed` | `nuclear-vscode/` (with `theme/`, `vendor/`, `scripts/`), `nuclear-jetbrains/`, `nuclear-zed/` | [editors](editors/CONTEXT.md) |",
+    "| `dragonfly` | `dragonfly/`: the CLI crate, `docs/dragonfly/{README,kinds,tutorial}.md`, `docs/context/{dragonfly,cli}/` | [dragonfly](https://github.com/nuclearlang/dragonfly/blob/main/docs/context/dragonfly/CONTEXT.md), [cli](https://github.com/nuclearlang/dragonfly/blob/main/docs/context/cli/CONTEXT.md) |"
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#4-repositories-adr-0083-and-current-folders.c0d025",
+   "type": "context",
+   "title": "Architecture — 4. Repositories (ADR-0083) and current folders",
+   "summary": "4. Repositories (ADR-0083) and current folders",
+   "body": [
+    "| `dragonfly-mobile` | in `dragonfly-mobile/` (moved, plan 006): `dialects/mobile/flutter/` (→ `dialects/mobile/flutter/`), `packages/{dragonfly,dragonfly_genkit}/`, `defs/dart/{flutter,bloc,dio,genkit,...}`, `spec/{mobile,flutter,dragonfly}.md`, `docs/dragonfly/{tutorial,genkit}.md`, `examples/examples-flutter-dialect/`, `tools/analyze-flutter.sh` | [dragonfly-mobile](https://github.com/nuclearlang/dragonfly-mobile/blob/main/docs/context/dragonfly-mobile/CONTEXT.md) |",
+    "| `dragonfly-backend` | in `dragonfly-backend/` (moved, plan 006): `dialects/{langgraph,nestjs}/` (→ `dialects/backend/{fastapi,nestjs}/`), `packages/{dragonfly-py,dragonfly-nest}/`, `defs/{python,typescript}/` (packages), `tools/defs/{python,typescript}/`, `tools/{python,node}/`, `tools/{langgraph,nestjs}-check/`, `spec/{backend,langgraph,nestjs}.md`, `docs/dragonfly/{python,nestjs}.md`, `examples/examples-{langgraph,nestjs}/` | [dragonfly-backend](https://github.com/nuclearlang/dragonfly-backend/blob/main/docs/context/dragonfly-backend/CONTEXT.md) |"
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/architecture.md#5-crates",
+   "type": "context",
+   "title": "Architecture — 5. Crates",
+   "summary": "5. Crates",
+   "body": [
+    "| Crate | Input → output |",
+    "|---|---|",
+    "| `nuclear-diag` | `Diagnostic`, `SourceFile`, codes N00xx (syntax), N01xx (resolver), N02xx (dialect), N03xx (project); text and JSON |",
+    "| `nuclear-syntax` | text → `Lexed` (tokens) → `Parsed` (AST + diagnostics); `DocComment` |",
+    "| `nuclear-dialect` | `dialects/<name>/*.toml` + `defs/` packages → `Dialect` + `Report`; templates, contract, `Dialect.typedefs` (lazy `api.json`) |",
+    "| `nuclear-transpile` | text + `Dialect` → `Output` (code + diagnostics + line map); `check()` for the LSP; `project::build` |",
+    "| `nuclear-cli` | the `nuclear` binary: build, check, tokens, ast, spec, dialect, defs, help (embedded docs) |",
+    "| `nuclear-lsp` | the language server binary |"
+   ],
+   "sources": [
+    "docs/context/architecture.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/product/prd.md#1-vision",
+   "type": "context",
+   "title": "Product requirements — NuclearLang platform — 1. Vision",
+   "summary": "NuclearLang is a minimal base language built for AI agents and the people who work with them: the fastest language to write and read, with the fewest tokens.",
+   "body": [
+    "NuclearLang is a minimal base language built for AI agents and the people who work with them: the",
+    "fastest language to write and read, with the fewest tokens. It is not compiled to machine code: a",
+    "transpiler written in Rust turns `.nuc` into the code of another technology through **declarative",
+    "dialects** (TOML + templates loaded at run time). One way only: `.nuc` → `.ts` / `.dart` / ...; it never",
+    "reads target code.",
+    "",
+    "**Dragonfly** is the framework built into each dialect. Writing an app on a platform usually means",
+    "choosing and wiring N packages (state, JSON, DI, http, routing, i18n, tests). With Dragonfly the dialect",
+    "already brings that architecture: in Nuclear you write only the business logic and the transpiler",
+    "generates the rest. The philosophy is common; each platform applies it its own way, because platforms",
+    "are incompatible (a Flutter `stateless` widget does not exist in a NestJS backend).",
+    "",
+    "Open source platform, in the spirit of Rust, Deno, Gleam and Bun."
+   ],
+   "sources": [
+    "docs/context/product/prd.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/product/prd.md#2-users",
+   "type": "context",
+   "title": "Product requirements — NuclearLang platform — 2. Users",
+   "summary": "2. Users",
+   "body": [
+    "| User | Needs |",
+    "|---|---|",
+    "| AI coding agents (Claude, Codex, OpenCode) | few tokens, one way to write each thing, clear diagnostics with fixes, a spec they can follow, type definitions to avoid hallucinated APIs |",
+    "| Developers of apps (Flutter first) | write business logic only; a project that builds, tests and runs with one CLI; editor support like the native one |",
+    "| Dialect authors | add a target or framework without touching Rust: data files, templates, a contract, tests |"
+   ],
+   "sources": [
+    "docs/context/product/prd.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/product/prd.md#3-golden-rule-governs-every-requirement",
+   "type": "context",
+   "title": "Product requirements — NuclearLang platform — 3. Golden rule (governs every requirement)",
+   "summary": "in the target, instant transpilation (read only what is needed), minimal and readable Nuclear.",
+   "body": [
+    "**Performance, speed and readability of the syntax** (ADR-0038): generated code as fast as an expert's",
+    "in the target, instant transpilation (read only what is needed), minimal and readable Nuclear. A rule, kind",
+    "or shortcut that breaks one of the three is rejected."
+   ],
+   "sources": [
+    "docs/context/product/prd.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/product/prd.md#4-functional-requirements.871617",
+   "type": "context",
+   "title": "Product requirements — NuclearLang platform — 4. Functional requirements",
+   "summary": "4. Functional requirements",
+   "body": [
+    "| FR-10 | `dragonfly` CLI: new, make, build, run, test, watch, repair, explain, devices, packages | done (Flutter only) |",
+    "| FR-11 | Debug `.nuc` through the target debugger (line map) | done in VS Code; JetBrains partial |",
+    "| FR-12 | Dialects created by agents (`dialect new/test`, skills, AGENTS.md) | planned (`specs/002-dialects-with-agents/plan.md`) |",
+    "| FR-13 | Agent support: brief spec, eval suite, hooks, defs validation | planned (`specs/001-agent-support/plan.md`) |",
+    "| FR-14 | More dialects: NestJS/Node (postponed by the user), React, Rust | planned |",
+    "| FR-15 | `nuclear fmt`, MCP server | planned |"
+   ],
+   "sources": [
+    "docs/context/product/prd.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/product/prd.md#4-functional-requirements.b9eb27",
+   "type": "context",
+   "title": "Product requirements — NuclearLang platform — 4. Functional requirements",
+   "summary": "4. Functional requirements",
+   "body": [
+    "| ID | Requirement | Status |",
+    "|---|---|---|",
+    "| FR-01 | Base language: header + block, 2-space indentation, values everywhere (`if`/`match`), modules, inheritance, generics, `Result<E, T>` with automatic propagation, aliases, destructuring, generators, cascades | done (`spec/nuclear-base.md`) |",
+    "| FR-02 | Transpile a single file to TypeScript and to Dart | done |",
+    "| FR-03 | Dialects as data: inheritance, templates, kinds, decorators, options, keywords, contract (`nuclear spec`) | done (`spec/dialects.md`) |",
+    "| FR-04 | Type definitions per package and version (like `.d.ts`): auto-imports, overrides, inherited members, API for LSP and agents | done for Dart/Flutter; TypeScript pending |",
+    "| FR-05 | Multi-file projects: one build, cross-file imports, architecture rules (linter) | done (`spec/projects.md`) |",
+    "| FR-06 | Diagnostics with codes, positions, fixes; text and JSON | done (`spec/diagnostics.md`) |",
+    "| FR-07 | LSP: diagnostics, completion, hover, signature help, rename, metrics, docs from doc comments and `docs.toml` | done |",
+    "| FR-08 | Editor extensions: VS Code, JetBrains, Zed (base) + per-framework extensions (run, debug, devices) | base done; split per framework pending |",
+    "| FR-09 | Dragonfly for Flutter: kinds (model, repository, usecase, screen, statemanager, form...), runtime package, generated tests | done |"
+   ],
+   "sources": [
+    "docs/context/product/prd.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/product/prd.md#5-non-functional-requirements",
+   "type": "context",
+   "title": "Product requirements — NuclearLang platform — 5. Non-functional requirements",
+   "summary": "5. Non-functional requirements",
+   "body": [
+    "| ID | Requirement |",
+    "|---|---|",
+    "| NFR-01 | Generated code passes the target's analyzer without warnings (`flutter analyze` with `flutter_lints`, `tsc --strict`) |",
+    "| NFR-02 | A no-change `dragonfly build` takes ~40 ms; a project build ~20 ms in release |",
+    "| NFR-03 | The parser never changes per dialect; Rust decides *what* is emitted, the dialect *how* |",
+    "| NFR-04 | Everything in English (code, docs, diagnostics); Spanish only as website translation and localization data |",
+    "| NFR-05 | Every diagnostic code documented; every dialect word documented for the editor |",
+    "| NFR-06 | Errors over magic: no inferred parameters, no hoisting; explicit beats implicit when in doubt |"
+   ],
+   "sources": [
+    "docs/context/product/prd.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/product/prd.md#6-non-goals",
+   "type": "context",
+   "title": "Product requirements — NuclearLang platform — 6. Non-goals",
+   "summary": "6. Non-goals",
+   "body": [
+    "- Reading or converting target code into Nuclear.",
+    "- Records, operator overloading, Dart 3 pattern `switch` (not expressible yet; see `nuclear/limits.md`).",
+    "- Replacing the platform's own tools: Flutter's CLI still builds and runs; Dragonfly drives it."
+   ],
+   "sources": [
+    "docs/context/product/prd.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/tech.md#commands.1f3c59",
+   "type": "context",
+   "title": "Technology and commands — Commands",
+   "summary": "nuclear fmt <file|folder>... [--check] # canonical layout (crates/nuclear-syntax/src/fmt.rs); a test keeps the repo formatted nuclear help [<topic>|<command>] # embedded docs (TOPICS in crates/nuclear-cli/src/main.rs) dragonfly-mobile/tools/analyze-flutter.sh [file.nuc...] # Flutter examples →…",
+   "body": [
+    "nuclear fmt <file|folder>... [--check]       # canonical layout (crates/nuclear-syntax/src/fmt.rs); a test keeps the repo formatted",
+    "nuclear help [<topic>|<command>]             # embedded docs (TOPICS in crates/nuclear-cli/src/main.rs)",
+    "dragonfly-mobile/tools/analyze-flutter.sh [file.nuc...]       # Flutter examples → flutter analyze (flutter_lints, 0 warnings)",
+    "tools/spec-check/check.py spec/<d>.md <dialect> <language> [--fix]   # spec equivalences = real output",
+    "dragonfly-mobile/tools/spec-check-dragonfly.py --fix          # project blocks of spec/flutter.md",
+    "dragonfly-backend/tools/nestjs-check/check.sh  # NestJS: tasks_api built, tsc --strict, node:test, HTTP smoke (tools/node)",
+    "tools/defs/typescript/generate.sh            # defs/typescript/ from the .d.ts in tools/node",
+    "dragonfly-web/tools/react-check/check.sh     # React: characters web app built, tsc --strict, vitest, vite build (tools/node)",
+    "dragonfly-backend/tools/fastapi-check/check.sh  # Python: rick_api built, pyright --strict, pytest, end to end (tools/python/.venv)",
+    "tools/defs/python/generate.sh                # defs/python/ from the installed Python packages",
+    "FLUTTER_ROOT=~/develop/flutter tools/defs/generate.sh                # regenerate defs/dart/* (~45 s)",
+    "nuclear-vscode/node_modules/.bin/tsc --strict --noEmit --target es2022 --lib es2022,dom x.ts"
+   ],
+   "sources": [
+    "docs/context/tech.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/tech.md#commands.4c198b",
+   "type": "context",
+   "title": "Technology and commands — Commands",
+   "summary": "(cd packages/dragonfly && flutter test && flutter analyze) # runtime package (58 tests) (cd cli && cargo test && cargo clippy --all-targets) # dragonfly CLI (cd editors && cargo test && cargo clippy --all-targets) # LSP (cd ~/Documents/projects/nuc/react/nuclearlang_website && node…",
+   "body": [
+    "(cd packages/dragonfly && flutter test && flutter analyze)            # runtime package (58 tests)",
+    "(cd cli && cargo test && cargo clippy --all-targets)                  # dragonfly CLI",
+    "(cd editors && cargo test && cargo clippy --all-targets)              # LSP",
+    "(cd ~/Documents/projects/nuc/react/nuclearlang_website && node tools/content.mjs && dragonfly build)   # the website",
+    "echo '{\"session_id\":\"t\"}' | tools/context/check.sh session|stop      # context hooks by hand",
+    "```",
+    "",
+    "Search paths: dialects from `--dialect-path`, `NUCLEAR_DIALECT_PATH`, `./dialects` and the repository's;",
+    "definitions from `--defs-path`, `NUCLEAR_DEFS_PATH` and the `defs/` next to each dialects folder",
+    "(`Loader::repository()`, so the LSP finds them unchanged)."
+   ],
+   "sources": [
+    "docs/context/tech.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/tech.md#commands.68f7eb",
+   "type": "context",
+   "title": "Technology and commands — Commands",
+   "summary": "cargo test # all crates (191 tests); compiles in debug cargo clippy --all-targets cargo build --release # before using target/release/nuclear by hand UPDATE_GOLDEN=1 cargo test # regenerate golden files, then review the diff cargo run -q -p nuclear-cli -- build <file.nuc> --dialect flutter [-o…",
+   "body": [
+    "```sh",
+    "cargo test                                   # all crates (191 tests); compiles in debug",
+    "cargo clippy --all-targets",
+    "cargo build --release                        # before using target/release/nuclear by hand",
+    "UPDATE_GOLDEN=1 cargo test                   # regenerate golden files, then review the diff",
+    "cargo run -q -p nuclear-cli -- build <file.nuc> --dialect flutter [-o out.dart]",
+    "cargo run -q -p nuclear-cli -- check <file.nuc|folder> --dialect nodejs --json",
+    "cargo run -q -p nuclear-cli -- tokens|ast <file.nuc>",
+    "cargo run -q -p nuclear-cli -- dialect list | dialect check <name>",
+    "cargo run -q -p nuclear-cli -- spec [--dialect flutter]     # spec for agents: base + chain specs + contract",
+    "cargo run -q -p nuclear-cli -- spec --brief --dialect flutter   # the short sheet for agents (spec/brief/)",
+    "nuclear agent init [--dialect d]             # AGENTS.md, CLAUDE.md, Cursor rule, Claude Code hook in a project",
+    "TSC=<path to tsc> tools/stdlib-check.sh [area]   # examples/stdlib/ run in TypeScript and Dart (same output)",
+    "tools/agent-eval/run.py --mode baseline|agent [--only id,...]   # agent evaluation (the user's Claude quota)",
+    "cargo run -q -p nuclear-cli -- defs list|show Text[.member]|search button --dialect flutter [--inherited|--json]",
+    "cargo run -q -p nuclear-cli -- build <folder-with-nuclear.toml> [-o out]"
+   ],
+   "sources": [
+    "docs/context/tech.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/tech.md#machine-paths.557acc",
+   "type": "context",
+   "title": "Technology and commands — Machine paths",
+   "summary": "systemd user units `nuclear-graph` and `nuclear-developer` (`systemctl --user restart nuclear-developer` after a change to its code; `journalctl --user -u nuclear-developer -n 50`).",
+   "body": [
+    "systemd user units `nuclear-graph` and `nuclear-developer` (`systemctl --user restart nuclear-developer` after a",
+    "  change to its code; `journalctl --user -u nuclear-developer -n 50`). `nuclear-loop setup --status`.",
+    "- Project definitions cache: `~/.cache/nuclearlang/defs` (`nuclear_dialect::defs_cache_dir`).",
+    "- User's test project: `~/Documents/projects/nuc/flutter/rick_and_morty`.",
+    "- There is no global `tsc`: `nuclear-vscode/node_modules/.bin/tsc`."
+   ],
+   "sources": [
+    "docs/context/tech.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/tech.md#machine-paths.ad5da2",
+   "type": "context",
+   "title": "Technology and commands — Machine paths",
+   "summary": "regenerate only dragonfly without moving the others, run `bin/defs.dart` with `FV=3.47.7` (the `pub dragonfly` line of `tools/defs/generate.sh`).",
+   "body": [
+    "- Flutter SDK: `~/develop/flutter` (3.47.8, on the PATH). Type definitions are still `flutter@3.47.7`; to",
+    "  regenerate only dragonfly without moving the others, run `bin/defs.dart` with `FV=3.47.7` (the `pub",
+    "  dragonfly` line of `tools/defs/generate.sh`). Older docs say `~/development/flutter`: outdated.",
+    "- Installation: `./install.sh` → `~/.local/bin/{nuclear,dragonfly,nuclear-lsp}`, files in",
+    "  `~/.local/share/nuclearlang` (`nuclear_dialect::install_dir`, `NUCLEAR_HOME`). Re-run after every change",
+    "  the user should get. `cargo install` puts binaries in `~/.cargo/bin`, which is not on the user's PATH.",
+    "  The layout is `tools/release/stage.sh`, shared with the release archives (`tools/release/package.sh [target]` →",
+    "  `dist/`) that the public installers `tools/release/install.sh` / `install.ps1` download (ADR-0101,",
+    "  `.github/workflows/release.yml`). Test an installer with a fake `HOME` and `NUCLEAR_DOWNLOAD=<local http server of",
+    "  dist/>`; never run `--uninstall` without the fake `HOME`.",
+    "- The AI services (ADR-0106): the installation carries their code in `ai/` (from source: links to the tree's",
+    "  `nuclear-graph/` and `nuclear-developer/`); `nuclear-loop setup` (or `./install.sh --ai`, or the editor's wizard)",
+    "  installs and starts them. The machine's choice is `~/.config/nuclearlang/ai.env`; on Linux the services are the"
+   ],
+   "sources": [
+    "docs/context/tech.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/tech.md#stack",
+   "type": "context",
+   "title": "Technology and commands — Stack",
+   "summary": "Stack",
+   "body": [
+    "| Part | Technology |",
+    "|---|---|",
+    "| Compiler, CLIs, LSP | Rust (Cargo workspaces; `rustfmt.toml` max_width 120, the same in every workspace) |",
+    "| Dialects | TOML + Mustache-subset templates (`crates/nuclear-dialect/src/template.rs`) |",
+    "| Type definitions generator | Dart with `package:analyzer` (`tools/defs`) |",
+    "| Dragonfly runtime | Dart/Flutter package `packages/dragonfly` (bloc, fpdart, go_router, dio, get_it, json_serializable) |",
+    "| VS Code extension | TypeScript (Node 24 globals: WebSocket) |",
+    "| JetBrains plugin | Java, built with `javac` against `$IDE_HOME` (no Gradle) |",
+    "| Zed extension | Rust → wasm32-wasip2, `zed_extension_api` 0.7, tree-sitter token grammar |",
+    "| Website | Nuclear + Dragonfly web (react), its own repository |"
+   ],
+   "sources": [
+    "docs/context/tech.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/workflow.md#definition-of-done.6dbe07",
+   "type": "context",
+   "title": "Workflow — Definition of done",
+   "summary": "1. `cargo test` and `cargo clippy --all-targets` are green (also `cargo test --manifest-path dragonfly/Cargo.toml` if the CLI was touched).",
+   "body": [
+    "1. `cargo test` and `cargo clippy --all-targets` are green (also `cargo test --manifest-path dragonfly/Cargo.toml` if the CLI was touched). If the",
+    "   output changed: `UPDATE_GOLDEN=1 cargo test` and the diff reviewed.",
+    "2. Every new diagnostic code is in `spec/diagnostics.md` (test `every_code_is_documented`); every new dialect",
+    "   word has editor docs in its `docs.toml` (test `every_dialect_word_has_editor_docs`).",
+    "3. Documentation updated in the same change:",
+    "   - the spec of the area (`spec/<dialect>.md`, `projects.md`, `definitions.md`, `dialects.md`,",
+    "     `diagnostics.md`) — final rules only, no history, no questions;",
+    "   - a new ADR in `docs/adr/` if the user decided something new;",
+    "   - the context tree: the L2/L3 files of the area (`docs/context/...`) and `AGENTS.md` if a hard rule or the",
+    "     map changed;",
+    "   - user docs: `docs/dragonfly/tutorial.md`, `docs/language/`, `README.md` (roadmap), the `README.md` of",
+    "     `tools/`; skeletons and examples (`dragonfly/dragonfly/src/scaffold.rs`, `examples/`);",
+    "   - `nuclear help` embeds the docs: re-run `./install.sh`.",
+    "4. `STATUS.md`: one Log line and its lists current (resolved items deleted, half-done work recorded the",
+    "   moment it is left).",
+    "5. If a public API of `crates/` or the dialect format changed, `dragonfly/` is built too (its own workspace) and the",
+    "   LSP's tests run (`cargo test -p nuclear-lsp`)."
+   ],
+   "sources": [
+    "docs/context/workflow.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/workflow.md#definition-of-done.e40cd6",
+   "type": "context",
+   "title": "Workflow — Definition of done",
+   "summary": "6. The knowledge base of the Smart Graph is in step with the change (ADR-0104; the end-of-turn hook runs the check): command, an MCP tool, a route, a version, an example, a document's section) are generated again; capability or a limit (`capabilities`), a failure or a pitfall (`errors`), a…",
+   "body": [
+    "6. The knowledge base of the Smart Graph is in step with the change (ADR-0104; the end-of-turn hook runs the check):",
+    "   - `nuclear-graph knowledge build`: the rows that have a structured source (a diagnostic, a kind or decorator, a",
+    "     command, an MCP tool, a route, a version, an example, a document's section) are generated again;",
+    "   - what is new and has no structured source gets its row written by hand in `nuclear-developer/data/assets/`: a",
+    "     capability or a limit (`capabilities`), a failure or a pitfall (`errors`), a procedure, a role or a skill",
+    "     (`playbooks`), an idea (`concepts`); a new diagnostic's relations and right example go in",
+    "     `assets/errors/diagnostics.overlay.json`;",
+    "   - each `review:` line it prints names a hand-written row whose source changed: update the row, or confirm it with",
+    "     `nuclear-graph knowledge review <id>`;",
+    "   - the question the change answers is added to `questions.toml`;",
+    "   - `nuclear-graph knowledge check` is clean, `nuclear-graph ingest` teaches the graph the new revision and",
+    "     `nuclear-graph knowledge ask` finds every question's row."
+   ],
+   "sources": [
+    "docs/context/workflow.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/workflow.md#definition-of-done.fa034a",
+   "type": "context",
+   "title": "Workflow — Definition of done",
+   "summary": "A change is finished only when all of these hold:",
+   "body": "A change is finished only when all of these hold:",
+   "sources": [
+    "docs/context/workflow.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/workflow.md#sessions-and-ownership",
+   "type": "context",
+   "title": "Workflow — Sessions and ownership",
+   "summary": "Several Claude sessions work in parallel; each owns a part and the others ask it for changes by message (`ListAgents` + `SendMessage`).",
+   "body": [
+    "Several Claude sessions work in parallel; each owns a part and the others ask it for changes by message",
+    "(`ListAgents` + `SendMessage`). When the owner is not active and the user asks, another session may change",
+    "that part and updates its context.",
+    "",
+    "| Part | Owner |",
+    "|---|---|",
+    "| the `nuclear` repository (the root: `crates/` with `nuclear-lsp`, `dialects/`, `spec/`, `docs/`, `defs/`, `examples/`, `tools/`, `install.sh`) | transpiler session |",
+    "| `dragonfly/`, `dragonfly-{mobile,backend,web}/` (own git each) | the platform sessions |",
+    "| `nuclear-{vscode,jetbrains,zed}/` (own git each) | the editors session |",
+    "",
+    "- No commits unless the user asks (a peer session relaying it is not enough); commits only in the user's name, with",
+    "  no co-author line. Every repository has its own git, ignored by the root's.",
+    "- After any change to the server or the extensions: bump the version and install (see `editors/CONTEXT.md`).",
+    "- `CodeBuilder/` is teaching material only; analogies with it go in the chat or `docs/aprende/`, never in",
+    "  specs, context or code."
+   ],
+   "sources": [
+    "docs/context/workflow.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/workflow.md#spec-rules",
+   "type": "context",
+   "title": "Workflow — Spec rules",
+   "summary": "equivalences of the base examples (few-shot for agents).",
+   "body": [
+    "- `spec/nuclear-base.md` holds only final rules and only Nuclear: no dialect, no target language.",
+    "- Each dialect's rules go in `spec/<dialect>.md`, which inherits the base and holds the **Nuclear → target",
+    "  equivalences of the base examples** (few-shot for agents). They must be the real transpiler output:",
+    "  `tools/spec-check/check.py spec/<d>.md <dialect> <language>` must give 0 problems.",
+    "- Doubts are asked in the chat and written in the spec once the user decides.",
+    "- New syntax: decide with the user how it is written; then spec + grammar + parser + emitter + contract + tests."
+   ],
+   "sources": [
+    "docs/context/workflow.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/workflow.md#the-user",
+   "type": "context",
+   "title": "Workflow — The user",
+   "summary": "PHP developer, author of CodeBuilder, new to Rust and compilers.",
+   "body": [
+    "PHP developer, author of CodeBuilder, new to Rust and compilers. Writes in Spanish: **the chat is always in",
+    "Spanish**, step by step with concrete examples from the project (CodeBuilder analogies allowed in the chat).",
+    "Thinks of Nuclear like Elixir (modules, everything is a value, `if`/`match` return) and prefers clear errors",
+    "to \"magic\" inference. Wants vivid, bright syntax colors.",
+    "",
+    "Frequent mistakes in the Nuclear the user writes: comment lines without ` * ` (N0021), `title: x` in arguments",
+    "(must be `title = x`), `!` before a value (must be `not`; `x!` after a value exists), `const` and `new` (do not",
+    "exist), indentation that is not 2 spaces."
+   ],
+   "sources": [
+    "docs/context/workflow.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:github-profile/profile/README.md#nuclearlang.2e8516",
+   "type": "readme",
+   "title": "NuclearLang",
+   "summary": "curl -fsSL https://nuclearlang.github.io/install.sh | sh # Linux, macOS irm https://nuclearlang.github.io/install.ps1 | iex # Windows Licensed under Apache-2.0.",
+   "body": [
+    "```sh",
+    "curl -fsSL https://nuclearlang.github.io/install.sh | sh     # Linux, macOS",
+    "irm https://nuclearlang.github.io/install.ps1 | iex          # Windows",
+    "```",
+    "",
+    "Licensed under Apache-2.0."
+   ],
+   "sources": [
+    "github-profile/profile/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "github-profile",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:github-profile/profile/README.md#nuclearlang.a6e2e2",
+   "type": "readme",
+   "title": "NuclearLang",
+   "summary": "A minimal language, made so AI agents and people write only the logic of a program, transpiled to TypeScript, Dart and Python through declarative dialects.",
+   "body": [
+    "A minimal language, made so AI agents and people write only the logic of a program, transpiled to TypeScript, Dart",
+    "and Python through declarative dialects. **Dragonfly** is its framework: one Nuclear codebase for three platforms."
+   ],
+   "sources": [
+    "github-profile/profile/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "github-profile",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:github-profile/profile/README.md#nuclearlang.e4a86e",
+   "type": "readme",
+   "title": "NuclearLang",
+   "summary": "NuclearLang",
+   "body": [
+    "| Repository | What it is |",
+    "|---|---|",
+    "| [nuclear](https://github.com/nuclearlang/nuclear) | the language: compiler, `nuclear` CLI, language server, the language dialects, specs |",
+    "| [dragonfly](https://github.com/nuclearlang/dragonfly) | Dragonfly: the `dragonfly` CLI and the platforms' philosophy |",
+    "| [dragonfly-mobile](https://github.com/nuclearlang/dragonfly-mobile) | mobile apps: dialect `flutter` |",
+    "| [dragonfly-backend](https://github.com/nuclearlang/dragonfly-backend) | backends: dialects `fastapi` (Python) and `nestjs` (TypeScript) |",
+    "| [dragonfly-web](https://github.com/nuclearlang/dragonfly-web) | web apps: dialect `react` |",
+    "| [nuclear-vscode](https://github.com/nuclearlang/nuclear-vscode) · [nuclear-jetbrains](https://github.com/nuclearlang/nuclear-jetbrains) · [nuclear-zed](https://github.com/nuclearlang/nuclear-zed) | editor extensions |",
+    "| [nuclear-graph](https://github.com/nuclearlang/nuclear-graph) | the Nuclear Smart Graph: the private knowledge base (RAG) and the MCP server |",
+    "| [nuclear-developer](https://github.com/nuclearlang/nuclear-developer) | the local 3B agents (coder, tester, security, planner), written in Nuclear |",
+    "| [nuclear-knowledge](https://github.com/nuclearlang/nuclear-knowledge) | the whole knowledge base in one folder, what the agents read |",
+    "| [website](https://github.com/nuclearlang/website) | the documentation site, written in Nuclear |"
+   ],
+   "sources": [
+    "github-profile/profile/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "github-profile",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:specs/README.md#feature-specs-l4.c5f11e",
+   "type": "readme",
+   "title": "Feature specs (L4)",
+   "summary": "One folder per feature: `NNN-slug/`.",
+   "body": [
+    "One folder per feature: `NNN-slug/`. A feature starts as `plan.md` (goal, diagnosis, features with a \"done\"",
+    "criterion, work order, decisions pending for the user) and, when it starts, gets `tasks.md` (an ordered,",
+    "test-first checklist). The rules it produces end up in `spec/` and the decisions in `docs/adr/`; the plan",
+    "records how the work is split, not the final rules.",
+    "",
+    "| Spec | Status |",
+    "|---|---|",
+    "| [001-agent-support](001-agent-support/plan.md) | ready, not started (3 questions for the user in §6) |",
+    "| [002-dialects-with-agents](002-dialects-with-agents/plan.md) | decided, not started |",
+    "| [003-shared-contracts](003-shared-contracts/plan.md) | step 3 of the competitiveness plan; delivered 2026-11-06 (ADR-0098) |",
+    "| [004-backend-parity](004-backend-parity/plan.md) | step 4 of the competitiveness plan; plan with examples, not started (ADR first for the data parts) |",
+    "| [005-language-1-0](005-language-1-0/plan.md) | step 6 of the competitiveness plan; plan with examples, not started |",
+    "| [006-public-repositories](006-public-repositories/plan.md) | step 1 of the competitiveness plan: the organization `nuclearlang` and the split into public repositories; not started |",
+    "| [007-lora-nuclear-coder](007-lora-nuclear-coder/plan.md) | asked by the user 2026-11-11: what a LoRA of the local coder needs; plan, not started (dataset source, base model license and GPU to decide) |"
+   ],
+   "sources": [
+    "specs/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:specs/README.md#feature-specs-l4.e91fce",
+   "type": "readme",
+   "title": "Feature specs (L4)",
+   "summary": "Status and progress live in `STATUS.md`; this table only points to the folders.",
+   "body": "Status and progress live in `STATUS.md`; this table only points to the folders.",
+   "sources": [
+    "specs/README.md"
+   ],
+   "meta": {
+    "section": "01-introduction",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  }
+ ]
+}

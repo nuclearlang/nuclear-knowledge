@@ -1,4 +1,0 @@
-// What the summarize flow answers: the model fills it (structured output).
-Summary
-  title: string
-  points: string[]

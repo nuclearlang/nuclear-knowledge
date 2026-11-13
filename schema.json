@@ -1,0 +1,238 @@
+{
+ "schema": 1,
+ "row": {
+  "id": "`<prefix>:<name>`, unique in the whole base and stable: links and direct lookups use it",
+  "type": "one of its shelf's types",
+  "title": "what the row is, in a line (the title the embedding model reads)",
+  "summary": "the answer in one or two sentences (embedded with the start of the body)",
+  "body": "the whole card, markdown, as a text or a list of lines; Nuclear only when `agents` is true",
+  "keys": "exact names in lower case (a code, a command, a kind): a query that writes one finds the row",
+  "asks": "questions the row answers, as a person writes them: each one is a search vector of its own",
+  "tags": "free words to filter by",
+  "platforms": "backend, mobile, web; left out = every platform",
+  "agents": "false = only frontier models and people read it (target languages, dialect internals)",
+  "links": "typed edges to other rows: [{rel, to}]; a link to a row that does not exist fails the build",
+  "sources": "the files (or `file#Heading`) the row was written from: when one changes, the row is reviewed",
+  "meta": "the shelf's own filter fields",
+  "data": "machine-readable fields of the type (a command's usage; a strategy's signals, stages and needs)"
+ },
+ "common_metadata": [
+  "card",
+  "facet",
+  "type",
+  "title",
+  "agents",
+  "platforms",
+  "keys",
+  "tags",
+  "links",
+  "origin",
+  "source",
+  "hash"
+ ],
+ "shelves": {
+  "concepts": {
+   "answers": "What is it, why does it exist, how does it work?",
+   "holds": "The purpose of NuclearLang and Dragonfly, the ideas behind them, the parts of the ecosystem, the theory a reader needs and the questions people ask.",
+   "types": [
+    "purpose",
+    "concept",
+    "theory",
+    "architecture",
+    "comparison",
+    "faq",
+    "term"
+   ],
+   "prefixes": [
+    "concept",
+    "faq",
+    "term"
+   ],
+   "meta": [
+    "topic"
+   ]
+  },
+  "language": {
+   "answers": "How is it written in Nuclear?",
+   "holds": "The base language: its guide and rules section by section, and every member of the standard library.",
+   "types": [
+    "guide",
+    "rule",
+    "library",
+    "reference"
+   ],
+   "prefixes": [
+    "lang",
+    "lib"
+   ],
+   "meta": [
+    "base"
+   ]
+  },
+  "platforms": {
+   "answers": "What does a platform have, and where does each thing go?",
+   "holds": "The three platforms of Dragonfly: their kinds, decorators, layout, plugins and rules.",
+   "types": [
+    "platform",
+    "kind",
+    "decorator",
+    "layout",
+    "plugin",
+    "spec"
+   ],
+   "prefixes": [
+    "platform",
+    "kind",
+    "decorator",
+    "layout",
+    "plugin",
+    "spec"
+   ],
+   "meta": [
+    "kind",
+    "name"
+   ]
+  },
+  "tools": {
+   "answers": "What can run, and how is it called?",
+   "holds": "Every tool of the ecosystem: the commands of the four CLIs, the MCP tools, the HTTP routes, the generators, the stages of the Loop, the local agents, the editors' commands and each component's version.",
+   "types": [
+    "cli",
+    "mcp",
+    "http",
+    "generator",
+    "stage",
+    "agent",
+    "editor",
+    "service",
+    "component"
+   ],
+   "prefixes": [
+    "tool",
+    "mcp",
+    "http",
+    "generator",
+    "stage",
+    "agent",
+    "editor",
+    "service",
+    "component"
+   ],
+   "meta": [
+    "tool",
+    "name",
+    "writes",
+    "version"
+   ]
+  },
+  "errors": {
+   "answers": "What went wrong, and how is it fixed?",
+   "holds": "Every diagnostic of the compiler, the habits of other languages, the failures of the tools and the services, and the mistakes small models repeat; each one linked to the ones it comes with.",
+   "types": [
+    "diagnostic",
+    "habit",
+    "failure",
+    "pitfall"
+   ],
+   "prefixes": [
+    "error",
+    "habit",
+    "failure",
+    "pitfall"
+   ],
+   "meta": [
+    "code",
+    "family",
+    "severity",
+    "kinds"
+   ]
+  },
+  "capabilities": {
+   "answers": "Can it be done, by NuclearLang or by this agent?",
+   "holds": "What the ecosystem can do, what it cannot do yet, its limits, and the limits of the local agents: when a task is beyond them and who takes it.",
+   "types": [
+    "can",
+    "cannot",
+    "limit",
+    "agent-limit"
+   ],
+   "prefixes": [
+    "can",
+    "cannot",
+    "limit"
+   ],
+   "meta": [
+    "area",
+    "status",
+    "triggers"
+   ]
+  },
+  "playbooks": {
+   "answers": "How is this task done, step by step, and by whom?",
+   "holds": "The strategy of each kind of request (a whole system, one screen, a rename, a failing test...): how it is recognised and its plan, with the tool of every step; the procedures of each use case; the roles of the developer (developer, tester, security, devops...) and their skills.",
+   "types": [
+    "strategy",
+    "playbook",
+    "role",
+    "skill"
+   ],
+   "prefixes": [
+    "strategy",
+    "playbook",
+    "role",
+    "skill"
+   ],
+   "meta": [
+    "use_case",
+    "role",
+    "family",
+    "scope",
+    "triggers"
+   ]
+  },
+  "examples": {
+   "answers": "What does the code look like?",
+   "holds": "Validated Nuclear: every file of the example projects by kind and platform, and solved tasks.",
+   "types": [
+    "file",
+    "solved"
+   ],
+   "prefixes": [
+    "example",
+    "solved"
+   ],
+   "meta": [
+    "kind",
+    "name",
+    "project",
+    "validated"
+   ]
+  },
+  "docs": {
+   "answers": "What does the full document say?",
+   "holds": "The long form, section by section: the dialects underneath, the target languages, the runtimes, every decision (ADR), the context files, the guides, the changelogs and the state of the project.",
+   "types": [
+    "spec",
+    "adr",
+    "context",
+    "guide",
+    "readme",
+    "changelog",
+    "status",
+    "doc"
+   ],
+   "prefixes": [
+    "doc"
+   ],
+   "meta": [
+    "section",
+    "repo",
+    "dialect"
+   ]
+  }
+ },
+ "runtime_collections": [
+  "prompts",
+  "memory"
+ ]
+}

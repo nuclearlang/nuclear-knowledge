@@ -1,3 +1,0 @@
-usecase AliveCharacters(characters: CharacterRepository)
-  exec() Result<Error, Character[]>
-    Ok(~characters.alive())

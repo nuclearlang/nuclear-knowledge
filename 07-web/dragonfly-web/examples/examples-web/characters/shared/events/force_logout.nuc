@@ -1,3 +1,0 @@
-// The backend asks to close the session.
-event ForceLogout
-  reason?: string

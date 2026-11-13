@@ -1,0 +1,254 @@
+{
+ "shelf": "tools",
+ "origin": "generated",
+ "generator": "stages",
+ "about": "The stages of the Nuclear Loop (nuclear-vscode/src/loopEngine.ts).",
+ "rows": [
+  {
+   "id": "stage:artifacts",
+   "type": "stage",
+   "title": "Stage 8 of the Loop: Artifacts",
+   "summary": "The project is built and its output kept with the run (generated code, contract, OpenAPI).",
+   "body": [
+    "The project is built and its output kept with the run (generated code, contract, OpenAPI).",
+    "",
+    "Who takes part: shell. The stage after it: `deploy`."
+   ],
+   "keys": [
+    "artifacts stage",
+    "stage artifacts"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:deploy"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "artifacts"
+   }
+  },
+  {
+   "id": "stage:code",
+   "type": "stage",
+   "title": "Stage 5 of the Loop: Code",
+   "summary": "The local coder (qwen2.5-coder:3b) writes each piece with the Smart Graph and repairs it with the compiler; Claude only fixes what it could not.",
+   "body": [
+    "The local coder (qwen2.5-coder:3b) writes each piece with the Smart Graph and repairs it with the compiler; Claude only fixes what it could not. Ends with nuclear check of the whole project, the tests included.",
+    "",
+    "Who takes part: coder, tester, graph, claude, shell. The stage after it: `verify`."
+   ],
+   "keys": [
+    "code stage",
+    "stage code"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:verify"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "code"
+   }
+  },
+  {
+   "id": "stage:deploy",
+   "type": "stage",
+   "title": "Stage 9 of the Loop: Deploy",
+   "summary": "Seeds, integration tests and the local deploy of .nuclear/loop.json; the same commands the exported CI runs on a server.",
+   "body": [
+    "Seeds, integration tests and the local deploy of .nuclear/loop.json; the same commands the exported CI runs on a server.",
+    "",
+    "Who takes part: shell. It is the last stage."
+   ],
+   "keys": [
+    "deploy stage",
+    "stage deploy"
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "deploy"
+   }
+  },
+  {
+   "id": "stage:generate",
+   "type": "stage",
+   "title": "Stage 2 of the Loop: Generate",
+   "summary": "dragonfly gen writes what follows from the data, already compiling: for each resource of the spec (its GET <url> lines, or its Resources) the models, the repository, a use case per action, the facade, the controller or the screen, the tests.",
+   "body": [
+    "dragonfly gen writes what follows from the data, already compiling: for each resource of the spec (its GET <url> lines, or its Resources) the models, the repository, a use case per action, the facade, the controller or the screen, the tests. The agents write only what is left.",
+    "",
+    "Who takes part: shell. The stage after it: `plan`."
+   ],
+   "keys": [
+    "generate stage",
+    "stage generate"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:plan"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "generate"
+   }
+  },
+  {
+   "id": "stage:plan",
+   "type": "stage",
+   "title": "Stage 3 of the Loop: Plan",
+   "summary": "The work split into pieces of one file each, in the order they can be written.",
+   "body": [
+    "The work split into pieces of one file each, in the order they can be written. Claude plans when it leads; otherwise the local planner (gemma4:e2b) does.",
+    "",
+    "Who takes part: claude, planner, graph. The stage after it: `test`."
+   ],
+   "keys": [
+    "plan stage",
+    "stage plan"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:test"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "plan"
+   }
+  },
+  {
+   "id": "stage:security",
+   "type": "stage",
+   "title": "Stage 7 of the Loop: Security",
+   "summary": "The local reviewer reads each new file against the platform's security rules; the project's security commands run.",
+   "body": [
+    "The local reviewer reads each new file against the platform's security rules; the project's security commands run.",
+    "",
+    "Who takes part: security, shell. The stage after it: `artifacts`."
+   ],
+   "keys": [
+    "security stage",
+    "stage security"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:artifacts"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "security"
+   }
+  },
+  {
+   "id": "stage:spec",
+   "type": "stage",
+   "title": "Stage 1 of the Loop: Specification",
+   "summary": "The spec you wrote or imported, with its acceptance criteria and the context the agents get, written to specs/<id>/spec.md.",
+   "body": [
+    "The spec you wrote or imported, with its acceptance criteria and the context the agents get, written to specs/<id>/spec.md. Then its analysis: which kind of request it is (a whole system, one screen, a rename, a failing test...) and the strategy the run follows: the stages that run, what the generators write, the facts it lacks.",
+    "",
+    "Who takes part: you, planner. The stage after it: `generate`."
+   ],
+   "keys": [
+    "specification stage",
+    "stage spec"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:generate"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "spec"
+   }
+  },
+  {
+   "id": "stage:test",
+   "type": "stage",
+   "title": "Stage 4 of the Loop: Tests first",
+   "summary": "Before any code, the local tester writes the tests from the acceptance criteria, the planned pieces and the project map (.nuclear/map.md): what the code must do, in Nuclear.",
+   "body": [
+    "Before any code, the local tester writes the tests from the acceptance criteria, the planned pieces and the project map (.nuclear/map.md): what the code must do, in Nuclear.",
+    "",
+    "Who takes part: tester, graph. The stage after it: `code`."
+   ],
+   "keys": [
+    "tests first stage",
+    "stage test"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:code"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "test"
+   }
+  },
+  {
+   "id": "stage:verify",
+   "type": "stage",
+   "title": "Stage 6 of the Loop: Verification",
+   "summary": "The project is built and every test runs.",
+   "body": [
+    "The project is built and every test runs. A failing test goes back to the coder told in Nuclear (dragonfly explain: the message, a hint and the .nuc lines), then the tests run again (at most 3 rounds); Claude takes what is left when it leads.",
+    "",
+    "Who takes part: shell, coder, tester, claude. The stage after it: `security`."
+   ],
+   "keys": [
+    "verification stage",
+    "stage verify"
+   ],
+   "links": [
+    {
+     "rel": "next",
+     "to": "stage:security"
+    }
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopEngine.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "verify"
+   }
+  }
+ ]
+}

@@ -1,0 +1,2110 @@
+{
+ "shelf": "docs",
+ "origin": "generated",
+ "generator": "09-editors",
+ "about": "The editors: the language server, VS Code, Android Studio, Zed",
+ "rows": [
+  {
+   "id": "doc:docs/context/editors/CONTEXT.md#editors-lsp-server-and-extensions",
+   "type": "context",
+   "title": "Editors — LSP server and extensions",
+   "summary": "The editor tooling, split by repository (plan 006): the server is `crates/nuclear-lsp` of the `nuclear` repository (its workspace, its tests); the extensions are `nuclear-vscode/` (with the shared `theme/`, the grammar and the icons the other two read), `nuclear-jetbrains/` and `nuclear-zed/`,…",
+   "body": [
+    "The editor tooling, split by repository (plan 006): the server is `crates/nuclear-lsp` of the `nuclear` repository",
+    "(its workspace, its tests); the extensions are `nuclear-vscode/` (with the shared `theme/`, the grammar and the",
+    "icons the other two read), `nuclear-jetbrains/` and `nuclear-zed/`, each its own git inside the working tree; the",
+    "Dragonfly parts move later to `dragonfly-flutter-vscode` / `dragonfly-flutter-jetbrains` (ADR-0083). Extensions run",
+    "`nuclear-lsp` as an external binary and talk to it only through LSP (+ `nuclear/*` requests). Installed version:",
+    "**0.48.0** (all three; the Loop in VS Code and Android Studio only, ADR-0102). No commits unless the user asks."
+   ],
+   "sources": [
+    "docs/context/editors/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/CONTEXT.md#l3-files",
+   "type": "context",
+   "title": "Editors — LSP server and extensions — L3 files",
+   "summary": "User docs: `spec/flutter.md` §11.1 (VS Code), §11.2 (Android Studio), §11.3 (Zed), `nuclear-vscode/README.md`.",
+   "body": [
+    "| File | read-when |",
+    "|---|---|",
+    "| [lsp.md](lsp.md) | server modules, completion/hover/type inference, projects in the LSP, docs, packaging |",
+    "| [vscode.md](https://github.com/nuclearlang/nuclear-vscode/blob/main/docs/context/nuclear-vscode.md) | VS Code client: Dragonfly run/debug/save, `.nuc` debugging, the Dragonfly device, processes |",
+    "| [jetbrains.md](https://github.com/nuclearlang/nuclear-jetbrains/blob/main/docs/context/nuclear-jetbrains.md) | Android Studio / IntelliJ plugin |",
+    "| [zed.md](https://github.com/nuclearlang/nuclear-zed/blob/main/docs/context/nuclear-zed.md) | Zed extension and what Zed cannot do |",
+    "| [theme.md](https://github.com/nuclearlang/nuclear-vscode/blob/main/docs/context/nuclear-vscode/theme.md) | Chernobyl theme, icons, code metrics, testing a theme |",
+    "",
+    "User docs: `spec/flutter.md` §11.1 (VS Code), §11.2 (Android Studio), §11.3 (Zed), `nuclear-vscode/README.md`."
+   ],
+   "sources": [
+    "docs/context/editors/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/CONTEXT.md#notes-from-the-platform-session-2026-11-04-adr-0093.938cd2",
+   "type": "context",
+   "title": "Editors — LSP server and extensions — Notes from the platform session (2026-11-04, ADR-0093)",
+   "summary": "by the VS Code status bar.",
+   "body": [
+    "by the VS Code status bar. The JetBrains and Zed clients do not read the card yet (same server, so the",
+    "  diagnostics are right).",
+    "- 2026-11-05 (phase B2): `Manifest` gained `version` and `description` (from `app(...)`); `editors` builds unchanged.",
+    "- 2026-11-05 (phase C, ADR-0094): `Dialect` gained `library` (`[library.<base>]`), `function_helpers` and",
+    "  `syntax_helpers`; `nuclear_dialect::library` holds the vocabulary (`MEMBERS`, `BASES`, `OBJECTS`, `WRONG`): completion",
+    "  on a value of a base type can list its members from there (the emitter's receiver typing, `static_type`, is private",
+    "  to `nuclear-transpile`; an open request if the LSP wants it). New codes N0114, N0115. `editors` builds unchanged."
+   ],
+   "sources": [
+    "docs/context/editors/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/CONTEXT.md#notes-from-the-platform-session-2026-11-04-adr-0093.d1a4ea",
+   "type": "context",
+   "title": "Editors — LSP server and extensions — Notes from the platform session (2026-11-04, ADR-0093)",
+   "summary": "packages), show in completion and hover where a kind comes from (native of `backend`, or package `jobs 1.2.0` for `fastapi`) with the package's `docs.toml`, and report a kind of a package made for another platform or not implemented for the project's dialect, with the fix.",
+   "body": [
+    "packages), show in completion and hover where a kind comes from (native of `backend`, or package `jobs 1.2.0`",
+    "  for `fastapi`) with the package's `docs.toml`, and report a kind of a package made for another platform or not",
+    "  implemented for the project's dialect, with the fix. Today `d.kinds` is flat and `Entry.origin.dialect` only names",
+    "  the dialect file that defined a kind (a project dialect's kinds look native); the loader will expose each kind's",
+    "  source in phase E of the platforms refactor (`STATUS.md`): until then nothing to do in the editors beyond the",
+    "  `config.nuc` branch above.",
+    "- 2026-11-05 (phase E, first part): the loader now gives `Dialect.kind_sources` (`KindSource::{Language,",
+    "  Platform(name), Package { name, version, dialects }}`), `Dialect.packages`, `package_gaps` and reads a package's",
+    "  `docs.toml` first (`extra_docs`); `Loader.packages` must be set to `<project>/kinds` and `<install>/kinds` (as",
+    "  `crates/nuclear-cli/src/main.rs` `loader()` does) for the LSP to see them. DONE 2026-11-05 (platform session,",
+    "  asked by the user): `project::find` reads `config.nuc`, `dialects::load` takes the project root (kind packages),",
+    "  hover/completion show the kind's source, every dialect is bundled, the project card `.nuclear/project.json`",
+    "  (`nuclear_transpile::project::{METADATA_FILE, metadata, write_metadata}`) is written by `Project::build` and read"
+   ],
+   "sources": [
+    "docs/context/editors/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/CONTEXT.md#notes-from-the-platform-session-2026-11-04-adr-0093.efda6c",
+   "type": "context",
+   "title": "Editors — LSP server and extensions — Notes from the platform session (2026-11-04, ADR-0093)",
+   "summary": "`config.nuc` (`dragonfly(platform = ..., dialect = ...)`, `app(name = ...)`) and `Manifest::find` tries it before the `[project] marker` fallback.",
+   "body": [
+    "- `nuclear_transpile::project::Manifest` has `platform: Option<String>`; `Manifest::read(root)` now also reads",
+    "  `config.nuc` (`dragonfly(platform = ..., dialect = ...)`, `app(name = ...)`) and `Manifest::find` tries it before",
+    "  the `[project] marker` fallback. `lsp/src/project.rs` replicates the old `find`: add the `config.nuc` branch (or",
+    "  call `Manifest::find`) so backend projects (`fastapi`, `nestjs`) are found; flutter apps keep working through the",
+    "  marker. `project::output_dir(&manifest, &dialect)` gives the output folder (`Manifest.out` is empty for",
+    "  `config.nuc` manifests).",
+    "- Dialects moved to `dialects/mobile/flutter/`, `dialects/backend/{fastapi,nestjs}/` (`langgraph` renamed `fastapi`);",
+    "  `Loader::load(\"flutter\")` finds them unchanged, `Loader::available()` lists them; `Dialect.platform` says the",
+    "  platform. `platform.toml` in a platform folder is the contract (N0305). Mention `fastapi` wherever the extensions",
+    "  listed `langgraph`.",
+    "- **Kinds have a source (ADR-0095 §7, asked by the user 2026-11-05).** Kinds are Nuclear's libraries: native kinds",
+    "  (the platform contract) and extension kinds in packages, one platform per package, enabled by `plugins(...)` in",
+    "  `config.nuc`. The LSP must tell them apart: list for a project only the kinds of its platform (native + enabled"
+   ],
+   "sources": [
+    "docs/context/editors/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/CONTEXT.md#rules.3c86b1",
+   "type": "context",
+   "title": "Editors — LSP server and extensions — Rules",
+   "summary": "5. Themes and icons are generated for the three extensions by `nuclear-vscode/theme/` (a sibling not checked out is skipped): edit `palette.json`, `build.mjs` or `icons.mjs`, never the output JSON/XML/SVG.",
+   "body": [
+    "5. Themes and icons are generated for the three extensions by `nuclear-vscode/theme/` (a sibling not checked out is",
+    "   skipped): edit `palette.json`, `build.mjs` or `icons.mjs`, never the output JSON/XML/SVG.",
+    "6. Framework extensions must not collide: only the base registers the language, grammar and LSP; framework",
+    "   ones activate on their dialect's `[project] marker` and prefix everything with their dialect (ADR-0083)."
+   ],
+   "sources": [
+    "docs/context/editors/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/CONTEXT.md#rules.4042b0",
+   "type": "context",
+   "title": "Editors — LSP server and extensions — Rules",
+   "summary": "1. The server uses the other crates of the workspace; a missing parser/transpiler feature is built there with the rest of the `nuclear` repository's rules.",
+   "body": [
+    "1. The server uses the other crates of the workspace; a missing parser/transpiler feature is built there with the",
+    "   rest of the `nuclear` repository's rules.",
+    "2. APIs used: `nuclear_syntax::{parse, lex, ast, token, DocComment}`, `nuclear_transpile::{check, transpile,",
+    "   project}`, `nuclear_dialect::{Loader, Dialect, defs (TypeDefs, Decl, Member, Constructor, Param, render*),",
+    "   base_doc}`, `nuclear_diag`. If they change, `cargo build -p nuclear-lsp` catches it.",
+    "3. Done = `cargo test -p nuclear-lsp` (14 unit + 35 server) + `cargo clippy --all-targets`; `npm run theme` in",
+    "   `nuclear-vscode/` if the palette changed; `npm run compile` there if the client changed; `nuclear-jetbrains/build.sh`",
+    "   if the plugin changed.",
+    "4. **Always release after a change** of server, client, themes or bundled dialects/defs, without asking: bump",
+    "   the version (minor for features, patch for fixes) in `nuclear-vscode/package.json`,",
+    "   `nuclear-jetbrains/resources/META-INF/plugin.xml`, `nuclear-zed/extension.toml` and the `README.md` examples; then",
+    "   `cd nuclear-vscode && npm run package`, `nuclear-jetbrains/build.sh`, `nuclear-zed/build.sh` (Zed's version",
+    "   follows VS Code's), `./install.sh`. Tell the user to quit VS Code completely (*File → Exit*) and install the zip in Android",
+    "   Studio. `../install.sh` installs the newest `.vsix` (`sort -V`)."
+   ],
+   "sources": [
+    "docs/context/editors/CONTEXT.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/lsp.md#decisions.5ddb05",
+   "type": "context",
+   "title": "The LSP server (`crates/nuclear-lsp`, future `nuclear-lsp`) — Decisions",
+   "summary": "`../defs` in `server/defs/`; both scripts end with `nuclear-lsp --check-bundle`, which loads each bundled dialect (fails on any diagnostic, e.g.",
+   "body": [
+    "`../defs` in `server/defs/`; both scripts end with `nuclear-lsp --check-bundle`, which loads each bundled dialect",
+    "  (fails on any diagnostic, e.g. N0213). The server also searches `nuclear_dialect::install_dir()` (the",
+    "  `install.sh` copy, used by Zed's `~/.local/bin/nuclear-lsp`)."
+   ],
+   "sources": [
+    "docs/context/editors/lsp.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/lsp.md#decisions.8aca90",
+   "type": "context",
+   "title": "The LSP server (`crates/nuclear-lsp`, future `nuclear-lsp`) — Decisions",
+   "summary": "has `kinds/`; `nuclear.dialect` only applies to files outside a project.",
+   "body": [
+    "has `kinds/`; `nuclear.dialect` only applies to files outside a project. `Project::build` writes the project card",
+    "  `.nuclear/project.json` (`project::write_metadata`, spec/projects.md §1.1) for the clients. Hover and completion",
+    "  of a kind say its source (`features::kind_source`: language, native of the platform, package). Built from disk on",
+    "  first open and on every save (~20 ms in release for the 26-file example), cached per root. A file equal to disk takes the project's diagnostics (N0301/N0302/N0303, imports, other files'",
+    "  names) and `nuclear/transpile` returns its project output; with unsaved changes it is checked alone (no N0106",
+    "  for names the project knows). Other files' names: completion, hover (\"Declared in …\"), go to definition; their",
+    "  members (`Object::Project`) and named params of `Class(`.",
+    "- Decorators: completion after `@` and hover; inside `@screen(...)` its arguments and object fields (required",
+    "  first) from `decorator_args`, detected by text (`decorator_context`).",
+    "- Docs (ADR-0079): hover of kinds/decorators/words from `Dialect::doc` + dialect data; keywords, `Result/Ok/Err`",
+    "  and base types from `base_doc`; doc comments in hover, completion (`documentation`, deprecated tag) and",
+    "  signature help (each `@param` next to its argument).",
+    "- Bundles: the `.vsix` and zip include `nuclear-lsp`, every dialect of the repository in `server/dialects/` and"
+   ],
+   "sources": [
+    "docs/context/editors/lsp.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/lsp.md#decisions.e188c7",
+   "type": "context",
+   "title": "The LSP server (`crates/nuclear-lsp`, future `nuclear-lsp`) — Decisions",
+   "summary": "EOF; VS Code stops it 5 min after the last `.nuc` closes.",
+   "body": [
+    "- Synchronous server, only `serde_json`; full re-analysis per change (`.nuc` files are small). It exits on stdin",
+    "  EOF; VS Code stops it 5 min after the last `.nuc` closes.",
+    "- Semantic tokens: LSP standard + modifier `kind` (dialect kinds) and `deprecated`. Named arguments colored as",
+    "  parameters (italic), not properties.",
+    "- Types of `x` in `x.` are known only from written text or construction: annotation, typed parameter,",
+    "  `x = Class()`, `Class.named()`/`Class.static()` (its return, `Binding.inferred`), module field, inherited member",
+    "  of an external base (`Binding.bases` + kinds' `inherits`). Unknown → nothing offered. Generics substituted",
+    "  along the chain (`Cubit<int>` → `BlocBase<int>` → `state: int`).",
+    "- Free names: sorted lowercase index (binary search, max 300, `isIncomplete`); first `api.json` read ~16 ms, each",
+    "  completion < 1 ms in release.",
+    "- External class hover: `render` without header comments (shown below as doc, package, library), cut at 40",
+    "  lines (`nuclear defs show` gives all).",
+    "- Projects: root is the closest folder with `nuclear.toml`, `config.nuc` naming `dragonfly(platform, dialect)` or",
+    "  `main.nuc` (same order as `Manifest::find`); the project's dialect is loaded with the kind packages of",
+    "  `<project>/kinds` and `<install>/kinds` (`dialects::load`), cached by name, or by `name@root` when the project"
+   ],
+   "sources": [
+    "docs/context/editors/lsp.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/lsp.md#modules.30b843",
+   "type": "context",
+   "title": "The LSP server (`crates/nuclear-lsp`, future `nuclear-lsp`) — Modules",
+   "summary": "Modules",
+   "body": [
+    "| File | What it does |",
+    "|---|---|",
+    "| `src/rpc.rs` | JSON-RPC over stdio (`Content-Length`) |",
+    "| `src/text.rs` | byte offsets ↔ LSP positions (line + UTF-16 column) |",
+    "| `src/index.rs` | walks the AST: declarations (`Binding`) and uses (`Occurrence`) with semantic token and target; block scope; deferred `Enum.item` and named arguments; `doc_comment` |",
+    "| `src/features.rs` | semantic tokens, hover, completion, signature, definition, references, rename, outline, folding, quick fixes (any `data.fix` of a diagnostic), `on_type_formatting` |",
+    "| `src/server.rs` | state (open documents, dialect), dispatch, diagnostics, `nuclear/transpile`, code lens and metrics commands |",
+    "| `src/metrics.rs` | code metrics (copy of CodeMetrics/tsmetrics-core) |",
+    "| `src/typedefs.rs` | `Dialect.typedefs`: prefix index of public names and extensions per type, `split`, `instance_members` (own, inherited, extensions, generics substituted), `static_items`, `static_call_type` |",
+    "| `src/project.rs` | multi-file projects: root (`nuclear.toml` or the dialect marker via `Manifest::find`), `Project::build`, `visible` (test/ isolated), `knows`, `default_kind` (copied), `with_project_defs` (`build/defs.lock`, roots `<project>/defs` + cache; warnings in config.nuc for missing packages), rebuild when `defs.lock` changes |",
+    "| `src/dialects.rs` | dialect search paths, keyword help, `builtin_doc` |"
+   ],
+   "sources": [
+    "docs/context/editors/lsp.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/lsp.md#modules.8895c1",
+   "type": "context",
+   "title": "The LSP server (`crates/nuclear-lsp`, future `nuclear-lsp`) — Modules",
+   "summary": "Modules",
+   "body": "| `tests/server.rs` | end-to-end with `examples/` (including \"no prefix of any example panics\"; `project_packages_bring_their_definitions`) |",
+   "sources": [
+    "docs/context/editors/lsp.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/editors/lsp.md#pending-in-status-md",
+   "type": "context",
+   "title": "The LSP server (`crates/nuclear-lsp`, future `nuclear-lsp`) — Pending (in `STATUS.md`)",
+   "summary": "Types of chained expressions and calls (`a.b.`, `inject<X>().`, `Ok(c) -> c.`), generic substitution in shown signatures, project rules with unsaved changes, `nuclear fmt`.",
+   "body": [
+    "Types of chained expressions and calls (`a.b.`, `inject<X>().`, `Ok(c) -> c.`), generic substitution in shown",
+    "signatures, project rules with unsaved changes, `nuclear fmt`."
+   ],
+   "sources": [
+    "docs/context/editors/lsp.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to nuclear-jetbrains are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to nuclear-jetbrains are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "sources": [
+    "nuclear-jetbrains/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/CHANGELOG.md#unreleased",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- 0.46.0: the version of the three extensions (the Loop's analysis step is in `nuclear-loop`, ADR-0105).",
+    "- 0.48.0: the version of the three extensions (the set-up of the AI services is `nuclear-loop setup`, ADR-0106)."
+   ],
+   "sources": [
+    "nuclear-jetbrains/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/CONTRIBUTING.md#before-a-pull-request",
+   "type": "readme",
+   "title": "Contributing to nuclear-jetbrains — Before a pull request",
+   "summary": "IDE_HOME=/opt/android-studio ./build.sh # needs nuclear-vscode beside it (theme, grammar) the area, the guide, `docs/context/` for agents and contributors).",
+   "body": [
+    "```sh",
+    "IDE_HOME=/opt/android-studio ./build.sh   # needs nuclear-vscode beside it (theme, grammar)",
+    "```",
+    "",
+    "- Everything is written in English: code, comments, docs and messages.",
+    "- A change that the user of NuclearLang can see updates its documentation in the same pull request (the spec of",
+    "  the area, the guide, `docs/context/` for agents and contributors).",
+    "- Rules and the reasons behind them: the [nuclear repository's AGENTS.md](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md) and its",
+    "  [decision records](https://github.com/nuclearlang/nuclear/tree/main/docs/adr).",
+    "",
+    "By contributing you agree that your contribution is licensed under the [Apache License 2.0](LICENSE)."
+   ],
+   "sources": [
+    "nuclear-jetbrains/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/CONTRIBUTING.md#contributing-to-nuclear-jetbrains",
+   "type": "readme",
+   "title": "Contributing to nuclear-jetbrains",
+   "summary": "Thank you for helping.",
+   "body": [
+    "Thank you for helping. This repository is part of [NuclearLang](https://github.com/nuclearlang): the language is the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository, and the other repositories live as folders inside a clone of it, each with its",
+    "own git (the tools find each other that way)."
+   ],
+   "sources": [
+    "nuclear-jetbrains/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/CONTRIBUTING.md#set-up",
+   "type": "readme",
+   "title": "Contributing to nuclear-jetbrains — Set up",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear git clone https://github.com/nuclearlang/nuclear-jetbrains git clone https://github.com/nuclearlang/nuclear-vscode ./install.sh",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "git clone https://github.com/nuclearlang/nuclear-jetbrains",
+    "git clone https://github.com/nuclearlang/nuclear-vscode",
+    "./install.sh",
+    "```"
+   ],
+   "sources": [
+    "nuclear-jetbrains/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/README.md#nuclearlang-for-android-studio-intellij",
+   "type": "readme",
+   "title": "NuclearLang for Android Studio / IntelliJ",
+   "summary": "The NuclearLang plugin for JetBrains IDEs: the language server (`nuclear-lsp`, from the `nuclear` repository), the TextMate grammar and the Chernobyl themes of `nuclear-vscode`.",
+   "body": [
+    "The NuclearLang plugin for JetBrains IDEs: the language server (`nuclear-lsp`, from the `nuclear` repository), the TextMate grammar and the Chernobyl themes of `nuclear-vscode`.",
+    "",
+    "```sh",
+    "cd nuclear-jetbrains          # beside nuclear-vscode, inside the nuclear working tree",
+    "IDE_HOME=/opt/android-studio ./build.sh     # → build/nuclearlang-0.37.0.zip",
+    "```",
+    "",
+    "Install: *Settings → Plugins → ⚙ → Install Plugin from Disk…* → the zip. Then: *Settings → Appearance → Theme* →",
+    "**Chernobyl** (it includes the editor's color scheme). Settings in *Settings → Tools → NuclearLang* (dialect and",
+    "server path).",
+    "",
+    "A Dragonfly project: *File → Open* → the project folder. The first time, the plugin adds the app (`build/app`) as",
+    "a module and offers *Reopen Project*; on reopening, the Flutter plugin gives the device picker, the `main.dart`",
+    "configuration, Run / Debug, hot reload and DevTools. Opening the project runs `dragonfly build`, and **Ctrl+S on a",
+    "`.nuc`** transpiles and does a *Hot Reload* of the running app.",
+    "",
+    "It uses the platform's native LSP API (`com.intellij.modules.lsp`, present in Android Studio 2026.2) and the",
+    "TextMate plugin bundled with the IDE for the grammar. It is compiled with `javac` against the installed IDE's jars:",
+    "no Gradle needed. If you only want the color scheme: *Settings → Editor → Color Scheme → ⚙ → Import* →",
+    "`jetbrains/Chernobyl.icls`."
+   ],
+   "sources": [
+    "nuclear-jetbrains/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/docs/context/editors/jetbrains.md#jetbrains-plugin-nuclear-jetbrains.025af3",
+   "type": "context",
+   "title": "JetBrains plugin (`nuclear-jetbrains`)",
+   "summary": "JetBrains plugin (`nuclear-jetbrains`)",
+   "body": [
+    "| File | What it does |",
+    "|---|---|",
+    "| `src/…` base | `LspServerSupportProvider`, server descriptor, TextMate bundle, file icon (`NuclearFileIconProvider` + `$Psi` IconProvider `first` + `$Tree` decorator `last`: they beat icon plugins like Atom Material Icons, which maps `.nuc` to Nuclide), settings; metrics (`NuclearCodeMetrics`, `NuclearCodeLensSupport`, `NuclearCodeMetricsMarkers`, `NuclearCodeMetricsConfigurable`, toggles); `NuclearCommentEnter` (Enter adds ` * `) |",
+    "| `NuclearDragonfly.java` | Dragonfly projects (reads `build/<name>.code-workspace`): `Startup` runs `dragonfly build` and, if the app is not a module, loads `build/app/<name>_flutter_app.iml` and offers *Reopen Project*; `OnSave` → build + `Flutter.Toolbar.ReloadAllAction`; `BeforeRun` (ExecutionListener) → `dragonfly build` with modal progress, `repair` if it failed with code ≠ 2; `processTerminated` ≠ 0 without `TERMINATION_REQUESTED` or a compile error after reload → `repairAndRestart` (at most once per 5 min); `Hot reload was rejected` → `Flutter.Toolbar.RestartAllAction` |"
+   ],
+   "sources": [
+    "nuclear-jetbrains/docs/context/editors/jetbrains.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/docs/context/editors/jetbrains.md#jetbrains-plugin-nuclear-jetbrains.6884b1",
+   "type": "context",
+   "title": "JetBrains plugin (`nuclear-jetbrains`)",
+   "summary": "JetBrains plugin (`nuclear-jetbrains`)",
+   "body": "| `NuclearHttp.java` | the *Nuclear HTTP* tool window (0.30, ADR-0098; the VS Code view in Swing): `findProjects` walks the project folder for `.nuclear/project.json` + `contract.json`, `endpointsOf` (backend `controllers` as routes, mobile/web `repositories` as calls), `declaredContracts` from `config.nuc`, environments in `<project>/.nuclear/http.json`, OpenAPI documents (`loadOpenApi`); `Panel` = tree (`ColoredTreeCellRenderer`, Chernobyl colors per verb/platform/project/component) + request panel (`java.net.http`, pretty JSON with Gson, copy as curl); title actions select environment / add OpenAPI / update contracts (`~/.local/bin/nuclear contracts update`, a notification) / refresh; `Open` action with Alt+Shift+H (`keyboard-shortcut` in plugin.xml). Not loaded in a running IDE |",
+   "sources": [
+    "nuclear-jetbrains/docs/context/editors/jetbrains.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/docs/context/editors/jetbrains.md#jetbrains-plugin-nuclear-jetbrains.848dad",
+   "type": "context",
+   "title": "JetBrains plugin (`nuclear-jetbrains`)",
+   "summary": "`language-configuration.json` without `onEnterRules`.",
+   "body": [
+    "| `NuclearLoop.java` | the *Nuclear Loop* tool window (0.39, ADR-0102), bottom, `Alt+Shift+P`: per project (`NuclearHttp.findProjects`) its specs (`specs/*/spec.md`) and runs (`.nuclear/loop/runs/*.json`, newest first) → stages → steps (actor, summary, status colors; the selected step's trace, input, code and output below; a step's file opens); title actions New Spec (writes the markdown shape `parseSpecMarkdown` reads), Run the Spec with the local agents or Claude leading, Server Stages, Export CI, Stop, Refresh — each runs `nuclear-loop` in the project and streams its output, the tree re-reads the run every 1.5 s keeping the selection. Not loaded in a running IDE |",
+    "| `NuclearDebug.java` | `.nuc` debugging: `BreakpointType` (`nuclear-line`) with `Dart` mirrors, `Breakpoints`, `MapWatcher`, `Sessions` (pause → `.nuc` with `EXECUTIONPOINT_ATTRIBUTES`), `OutputErrors` (console → `dragonfly explain --json` → red line + tool window *Nuclear Error*). Mixed stepping is not done here |",
+    "",
+    "- `build.sh` packages the grammar without the `@example` patterns (JetBrains cannot dim by context) and the",
+    "  `language-configuration.json` without `onEnterRules`.",
+    "- The IDE manages `flutter run` and the LSP processes itself."
+   ],
+   "sources": [
+    "nuclear-jetbrains/docs/context/editors/jetbrains.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-jetbrains/docs/context/editors/jetbrains.md#jetbrains-plugin-nuclear-jetbrains.dcfddc",
+   "type": "context",
+   "title": "JetBrains plugin (`nuclear-jetbrains`)",
+   "summary": "Built with `jetbrains/build.sh` (`javac` against `$IDE_HOME`, no Gradle) into a zip; installed unpacked in `~/.local/share/Google/AndroidStudio2026.2.1/nuclearlang`.",
+   "body": [
+    "Built with `jetbrains/build.sh` (`javac` against `$IDE_HOME`, no Gradle) into a zip; installed unpacked in",
+    "`~/.local/share/Google/AndroidStudio2026.2.1/nuclearlang`. Compiled against Android Studio 2026.2; never loaded",
+    "in a running IDE."
+   ],
+   "sources": [
+    "nuclear-jetbrains/docs/context/editors/jetbrains.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-jetbrains",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/AGENTS.md#agents-md-nuclear-vscode",
+   "type": "readme",
+   "title": "AGENTS.md — nuclear-vscode",
+   "summary": "The NuclearLang extension for VS Code: the language server, semantic highlighting, code metrics, the Nuclear workspace, Dragonfly run, debug and devices, the HTTP tool, and the Chernobyl themes.",
+   "body": [
+    "The NuclearLang extension for VS Code: the language server, semantic highlighting, code metrics, the Nuclear workspace, Dragonfly run, debug and devices, the HTTP tool, and the Chernobyl themes. Its `theme/` also generates the themes and icons of the JetBrains and Zed extensions.",
+    "",
+    "This repository is a folder of the NuclearLang working tree (`nuclear/nuclear-vscode`); the platform's rules are the",
+    "working tree's `../AGENTS.md` ([nuclear](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md)) and its state is `../STATUS.md`.",
+    "",
+    "- Context of this repository: [docs/context/editors/vscode.md](docs/context/editors/vscode.md).",
+    "- What is inside: `src/` (the client), `syntaxes/`, `themes/`, `icons/`, `theme/` (the palette and the generators), `vendor/` (Atom Material icons, MIT), `scripts/bundle-server.mjs` (bundles `nuclear-lsp` and the dialects), `docs/context/editors/`.",
+    "- Checks:",
+    "",
+    "```sh",
+    "npm install && npm run compile",
+    "npm run theme                         # the themes and icons (also of the sibling extensions)",
+    "npm run package                       # the .vsix, with the server and every dialect",
+    "(cd .. && cargo test -p nuclear-lsp)  # the server",
+    "```"
+   ],
+   "sources": [
+    "nuclear-vscode/AGENTS.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to nuclear-vscode are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to nuclear-vscode are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "sources": [
+    "nuclear-vscode/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/CHANGELOG.md#unreleased.532daa",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- 0.45.0: every call to the local agents carries the project's folder (`root`), so an agent reads by itself the files that declare the names of its task (the Loop and the chat); the Plan step says how many things of the spec are beyond the platform or the local agents (the planner's `limits`) and shows the plan as a tree; *Tests first* is skipped when the generators wrote every file of the run (ADR-0104).",
+    "- 0.44.0: the Loop's *Generate* stage (before Plan) runs `dragonfly gen` for the spec's resources; its files are undone like the agents' (ADR-0103).",
+    "- 0.46.0: the Loop follows the strategy of the request (ADR-0105): the *Specification* stage ends with the analysis (`/developer/analyze`), which decides the stages that run, adds the generator calls it read in plain words to *Generate*, gives *Plan* the pieces the tools found (a rename's files are written as the tool gave them), stops the run with the questions when the request lacks a fact, and after *Code* wires each use case with `dragonfly gen usecase`; for a bug, *Verification* repairs the file the failure names and never the test; a spec may name its strategy (`- Strategy:`)."
+   ],
+   "sources": [
+    "nuclear-vscode/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/CHANGELOG.md#unreleased.5a3670",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- 0.47.0: right-click menu in the Nuclear workspace file tree: New File/Folder, Rename and Delete (to the trash), and *New with Dragonfly* (`dragonfly make`/`gen`) limited to what the clicked folder and the platform allow; build/, node_modules/ and the files that make a project are protected.",
+    "- 0.48.0: the set-up of the AI services (ADR-0106). *Nuclear: Set Up the AI Services* is a wizard in four steps: this machine (processor, memory, GPU, disk) and where the agents run (here, or remote agents only); the profile (`lite`, `medium`, `hard`: what each downloads, the memory it wants, what works and what does not, one suggested for the machine); what it needs (NuclearLang, uv, Ollama: found by itself once installed, or installed in a terminal); the installation with its progress and *Try again*. Offered once on a machine never set up; *Set-up…* in *Settings and integrations*, whose Start and Restart now go through the system's services. `nuclear-loop setup [--profile <id>] [--yes] | --status | --remove` is the same set-up in a terminal. The services start at every login (systemd user units, launch agents, the Startup folder). The Loop's and the editor's default models are the ones of the machine's profile (`~/.config/nuclearlang/ai.env`)."
+   ],
+   "sources": [
+    "nuclear-vscode/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/CONTRIBUTING.md#build.153450",
+   "type": "readme",
+   "title": "Contributing to the NuclearLang VS Code extension — Build",
+   "summary": "The themes and icons of the three extensions come from `theme/` (`npm run theme`; `theme/README.md`); the server tests run in the nuclear repository (`cargo test -p nuclear-lsp`).",
+   "body": [
+    "The themes and icons of the three extensions come from `theme/` (`npm run theme`; `theme/README.md`); the server",
+    "tests run in the nuclear repository (`cargo test -p nuclear-lsp`)."
+   ],
+   "sources": [
+    "nuclear-vscode/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/CONTRIBUTING.md#build.69a906",
+   "type": "readme",
+   "title": "Contributing to the NuclearLang VS Code extension — Build",
+   "summary": "npm install npm run package # → nuclearlang-<version>.vsix (server, dialects and defs/dart) code --install-extension nuclearlang-<version>.vsix To develop: open this folder in VS Code and press F5. Without a packaged binary, the extension uses `../target/release/nuclear-lsp`.",
+   "body": [
+    "```sh",
+    "# inside the nuclear working tree: nuclear/nuclear-vscode (the server is built from ../crates/nuclear-lsp)",
+    "npm install",
+    "npm run package                # → nuclearlang-<version>.vsix (server, dialects and defs/dart)",
+    "code --install-extension nuclearlang-<version>.vsix",
+    "```",
+    "",
+    "To develop: open this folder in VS Code and press F5. Without a packaged binary, the extension uses",
+    "`../target/release/nuclear-lsp`. Then: *Preferences: Color Theme* → **Chernobyl**.",
+    "",
+    "A Dragonfly project works like a Flutter project, opened with `dragonfly code` or as a folder (`code .`): the",
+    "extension reads `build/<project>.code-workspace`. There is a device picker (Flutter extension), the ▷ button of a",
+    "`.nuc` has **Run** and **Debug**, and F5 works without `launch.json`: the three run `dragonfly build` and launch",
+    "the `<project> (debug)` config. **Ctrl+S on a `.nuc`** with the app running transpiles and hot reloads. If the",
+    "Flutter app is created with the window already open, the extension offers *Reload Window* so the devices appear.",
+    "`./install.sh` of the nuclear repository installs the newest `.vsix` of this folder.",
+    "",
+    "Settings: `nuclear.dialect` (`flutter` | `base`), `nuclear.dialectPaths`, `nuclear.server.path`,",
+    "`nuclear.trace.server`. The active dialect shows in the status bar; a click changes it."
+   ],
+   "sources": [
+    "nuclear-vscode/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#dialects",
+   "type": "readme",
+   "title": "NuclearLang — Dialects",
+   "summary": "typescript ─► nodejs ─► nestjs dart ───────► flutter The extension brings every dialect of the repository (`flutter`, `fastapi`, `nestjs`, `dart`, `python`, `typescript`) with their type definitions.",
+   "body": [
+    "```",
+    "typescript ─► nodejs ─► nestjs",
+    "dart ───────► flutter",
+    "```",
+    "",
+    "| Dialect | Target | What it adds |",
+    "|---|---|---|",
+    "| `dart` | Dart | kinds `extension`, `mixin`, `data`; `Result<E, T>` with fpdart |",
+    "| `flutter` | Dart + Flutter | `stateless`, `stateful` and the Dragonfly framework: `@screen` (routes, providers, session, ACL), `repository`, `usecase`, `statemanager`, `event`, `component`, `guard` and tests in Nuclear |",
+    "| `typescript` | TypeScript | the base language over strict TS |",
+    "| `nodejs` | TypeScript for Node.js | Node APIs |",
+    "| `nestjs` | NestJS | kinds `controller` and `service` |",
+    "",
+    "The extension brings every dialect of the repository (`flutter`, `fastapi`, `nestjs`, `dart`, `python`,",
+    "`typescript`) with their type definitions. A project is checked with the dialect its manifest names (`config.nuc`",
+    "with `dragonfly(platform, dialect)`, or `nuclear.toml`): a backend project never sees Flutter's kinds, and the",
+    "status bar shows its platform and dialect (`backend · fastapi`), read from the project card `.nuclear/project.json`",
+    "the server writes. `nuclear.dialect` only applies to `.nuc` files outside a project. To use a dialect of your own,",
+    "add its folder in the `nuclear.dialectPaths` setting; the `<workspace>/dialects` folder is always searched."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#how-it-works",
+   "type": "readme",
+   "title": "NuclearLang — How it works",
+   "summary": "A dialect is a declarative folder (TOML + templates) loaded at run time.",
+   "body": [
+    "A **dialect** is a declarative folder (TOML + templates) loaded at run time. It defines:",
+    "",
+    "- the **kinds**: header words like `stateless`, `stateful`, `repository` or `controller`, which generate their",
+    "  framework's structure;",
+    "- the decorators, the architecture rules and the structure of projects;",
+    "- how each construct is written in the target language.",
+    "",
+    "Rust decides *what* is emitted and the dialect decides *how* it is written. To support a new framework you create a",
+    "dialect, without touching the compiler.",
+    "",
+    "The **type definitions** (`defs/`, generated from the SDK, like `.d.ts`) describe each class of Dart, Flutter and",
+    "packages like bloc, dio and go_router. With them the imports are written by themselves, `@override` goes where it",
+    "belongs and the editor completes members and arguments."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#nuclearlang",
+   "type": "readme",
+   "title": "NuclearLang",
+   "summary": "written in Rust turns it into real code of other technologies, like Dart/Flutter or TypeScript.",
+   "body": [
+    "**NuclearLang** (`.nuc`) is a minimal language, made to be written by AI agents and read by people. A transpiler",
+    "written in Rust turns it into real code of other technologies, like Dart/Flutter or TypeScript. This extension",
+    "brings the language server (`nuclear-lsp`), every dialect (flutter, fastapi, nestjs, dart, python, typescript), their type definitions and the",
+    "**Chernobyl** theme."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#philosophy",
+   "type": "readme",
+   "title": "NuclearLang — Philosophy",
+   "summary": "only if it meets the three: Principles: 1. The easiest to write.",
+   "body": [
+    "**Golden rule:** performance, speed and readability. Each rule of the language and of each dialect is accepted",
+    "only if it meets the three:",
+    "",
+    "- **Performance:** the generated code runs as fast as an expert's hand-written code.",
+    "- **Speed:** transpiling is immediate, because only what is needed is read.",
+    "- **Readability:** Nuclear code is minimal and is understood effortlessly.",
+    "",
+    "Principles:",
+    "",
+    "1. **The easiest to write.** No `;`, no `{ }` for blocks, no mandatory `return`, `new` or `this.`, no manual",
+    "   `async`. Blocks are marked with a 2-space indentation.",
+    "2. **One single way to do each thing.** So an agent never hesitates between two equivalent syntaxes.",
+    "3. **Familiar before novel.** Types, `=>`, decorators and generics are written as in TypeScript.",
+    "4. **Everything is a value**, as in Elixir: `if` and `match` return, and a function's last line is its result.",
+    "5. **Clear errors before magic.** No hidden inference: every diagnostic has a code (`N0106`), a position and,",
+    "   when possible, a suggested fix.",
+    "6. **The language does not change per dialect.** A dialect adds meaning, not grammar."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#settings",
+   "type": "readme",
+   "title": "NuclearLang — Settings",
+   "summary": "Commands (category Nuclear): Show the Nuclear Workspace, Go to Project Tab, Open a Project as a Tab, Dialect, Show Generated Code, Restart Language Server and the metrics ones.",
+   "body": [
+    "| Setting | What it does |",
+    "|---|---|",
+    "| `nuclear.buildOnSave` | saving a `.nuc` of a backend or web project runs `dragonfly build` (the server or page reloads by itself); on by default |",
+    "| `nuclear.dialect` | the dialect of files outside a project (`flutter` by default; `base` checks only the base language) |",
+    "| `nuclear.dialectPaths` | extra folders with dialects |",
+    "| `nuclear.server.path` | another `nuclear-lsp` binary (empty: the one the extension brings) |",
+    "| `nuclear.workspace.welcome` | the welcome page of the Nuclear workspace at startup (default on) |",
+    "| `nuclear.codemetrics.*` | costs and thresholds of the metrics |",
+    "",
+    "Commands (category **Nuclear**): **Show the Nuclear Workspace**, **Go to Project Tab**, **Open a Project as a Tab**,",
+    "**Open a Tool**, **Welcome Page**, **Add the Active Project to the VS Code Workspace**, **Run**, **Debug**, **Select",
+    "Dialect**, **Show Generated Code**, **Restart Language Server** and the metrics ones."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.0fb68b",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "F10/F11/Shift+F11 by Nuclear line, variable values in the `.nuc`, the *Nuclear Call Stack* view and *Go to the Same Line in the generated code*, under the Dart debugger (mobile; also Dart errors on their `.nuc` line), node (nestjs, with source maps), debugpy (fastapi) and Chrome (react, also on…",
+   "body": [
+    "F10/F11/Shift+F11 by Nuclear line, variable values in the `.nuc`, the *Nuclear Call Stack* view and *Go to the",
+    "  Same Line in the generated code*, under the Dart debugger (mobile; also Dart errors on their `.nuc` line), node",
+    "  (nestjs, with source maps), debugpy (fastapi) and Chrome (react, also on the web device). ◉ Debug or F5 with",
+    "  `build/<project>.code-workspace`, which `dragonfly build` writes for every platform with its tasks and launch.",
+    "- **Backend and web apps reload on save:** saving a `.nuc` runs `dragonfly build` and the running server or page",
+    "  takes it (uvicorn `--reload`, `node --watch`, Vite); `nuclear.buildOnSave`.",
+    "- **The web device** (▭ Device of a web project): the app beside the code at the size of a desktop, a laptop, a",
+    "  tablet or a phone (user agent, touch, rotation, any size), with an address bar, Chrome's DevTools of the page, the",
+    "  color scheme, network throttling, no cache, the page's **Console** and **Network**, screenshots and ◉ Debug.",
+    "- **The Nuclear workspace** (activity bar, `Ctrl+Alt+N`): one container where everything of Nuclear meets. A vertical",
+    "  strip of tabs beside a pane; every tab is a workspace of its own and switching swaps the editor area. The projects",
+    "  at the top (`Ctrl+1` … `Ctrl+9`; open another as a tab with `Ctrl+Alt+O`, without touching the VS Code workspace;"
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.3fbe82",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "strategy, ADR-0105), which decides the stages that run, what the generators write and what is asked of you first; resources the spec names, also in plain words, so the agents write only what is left; *Plan* shows the work as parts, tasks and pieces and says what of the spec is beyond the platform…",
+   "body": [
+    "**analysis**: which kind of request the spec is (a whole system, one screen, a rename, a failing test...: its",
+    "  strategy, ADR-0105), which decides the stages that run, what the generators write and what is asked of you first;",
+    "  *Generate* runs `dragonfly gen` for the",
+    "  resources the spec names, also in plain words, so the agents write only what is left; *Plan* shows the work as parts, tasks and pieces",
+    "  and says what of the spec is beyond the platform or the local agents; *Tests first* is skipped when the generators",
+    "  wrote every file), then the steps of a stage, then what each agent did (its trace, its code, its output). Every",
+    "  call to an agent carries the project's folder, so the agent reads by itself the files its task names. The commands of each stage are",
+    "  `.nuclear/loop.json`; *Export CI* writes them for GitHub Actions, GitLab CI or Bitbucket Pipelines. Needs the",
+    "  [Nuclear Smart Graph](https://github.com/nuclearlang/nuclear-graph) and the",
+    "  [Nuclear Developer](https://github.com/nuclearlang/nuclear-developer) running. The same engine runs without the",
+    "  editor as `nuclear-loop` (`run` a spec file, `ci` the server stages, `export`, `runs`), installed by `./install.sh`.",
+    "- **Nuclear agent** (`Ctrl+Alt+A`): a chat with the local agents of the",
+    "  [Nuclear Developer](https://github.com/nuclearlang/nuclear-developer), like the chats of Claude or Cursor, over the"
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.4c708c",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "one stops answering.",
+   "body": [
+    "one stops answering. Every integration is configured in *Settings and integrations* with its default.",
+    "- **When a run fails**: a call to the local agents that fails for a passing reason (the service starting, busy, a",
+    "  5xx) is retried by itself with exponential backoff and jitter (*Settings*: tries, first wait, longest wait); each",
+    "  retry is written in the step's trace. When a stage fails, the local **diagnoser** tells why (the kind of failure by",
+    "  rules, the evidence from the compiler or `dragonfly doctor`, the next step), shown on the run and in the chat;",
+    "  *↻ Retry* goes on from the step that failed (on the run and on the failed step itself), keeping every step that",
+    "  passed; *Restart <stage>* runs the whole stage again (`nuclear-loop retry <run> [--from <stage>]` without the editor).",
+    "- **Nuclear HTTP** (`Ctrl+Alt+H`): a workspace like Bruno. Its pane is the endpoints tree of every project by platform,",
+    "  project and component (from the contract the compiler writes, `.nuclear/contract.json`), the contracts an app",
+    "  declares with *↓ Update* (`nuclear contracts update`), OpenAPI documents of APIs that are not Nuclear, and the",
+    "  environment (`.nuclear/http.json`: variables, headers, base urls). A component is an editor tab and each endpoint a",
+    "  tab inside it: path and query parameters, headers, a sample body from the model, the pretty-printed response and",
+    "  *copy as curl*."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.53bb47",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "active project and on your machine.",
+   "body": [
+    "active project and on your machine. Ask anything about the project: the local assistant answers from the project's",
+    "  map (`.nuclear/map.md`) and the Smart Graph. Give an order with `/task <what to do>`: the local agents plan it, write",
+    "  the tests first, then the code, run the tests and the security review, and their journal is the answer (*Open the",
+    "  journal of the run*). The templates above the input are built from the project's own components and use cases;",
+    "  every session is kept in the project (`.nuclear/chat/<id>.json`) and listed on the left.",
+    "- **Set up the AI services** (*Nuclear: Set Up the AI Services*; offered once on a machine never set up; *Set-up…* in",
+    "  *Settings and integrations*): a wizard in four steps. It reads the machine (processor, memory, GPU, free disk) and",
+    "  asks where the agents run: on this machine, or remote agents only. It offers three sets of local models, `lite`,",
+    "  `medium` and `hard`, each with what it downloads, the memory it wants, what works with it and what does not; the",
+    "  one that fits the machine is suggested, the tight ones and the ones that do not fit are marked, and the choice is",
+    "  the user's. It finds what the services need (NuclearLang, uv, Ollama) by itself once installed, or installs it in a",
+    "  terminal. Then it installs the Smart Graph, the Nuclear Developer, the models and the knowledge base, with the"
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.5579bd",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "emulators, tiled side by side, each with its own size, identity, app and session; ▷ Run, ◉ Debug and ▭ Device ask which device to run on (Dragonfly, new, or any Flutter device); a run never replaces a running device.",
+   "body": [
+    "- **Devices** (`Ctrl+Alt+V`): the open Dragonfly devices and *+ New device*: as many as you want at once, like",
+    "  emulators, tiled side by side, each with its own size, identity, app and session; ▷ Run, ◉ Debug and ▭ Device ask",
+    "  which device to run on (Dragonfly, new, or any Flutter device); a run never replaces a running device. Closing a",
+    "  device tab only hides it (the app goes on); ✕ in the Devices workspace ends it now; a device nobody looks at for 30",
+    "  minutes ends by itself and a watchdog frees orphan processes. They belong to the mobile workspaces.",
+    "- **Show Generated Code:** shows beside it the Dart or TypeScript the file generates.",
+    "- **Complexity metrics** per function, like CodeMetrics.",
+    "- **Chernobyl and Chernobyl Soft themes**, with file icons."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.63ef2b",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "platform glyph + dialect badge): the pane shows its files with the Chernobyl icon theme, and the actions of its platform are the editor title bar's toolbar (mobile: run, debug, hot reload, device, build, test, check; backend: serve, debug, test, build, check, API; web: serve, device, debug,…",
+   "body": [
+    "platform glyph + dialect badge): the pane shows its files with the Chernobyl icon theme, and **the actions of its",
+    "  platform are the editor title bar's toolbar** (mobile: run, debug, hot reload, device, build, test, check; backend:",
+    "  serve, debug, test, build, check, API; web: serve, device, debug, reload, build, test, check; `Ctrl+Alt+R/G/L/B/T/C`). Run, Debug and Device of a",
+    "  mobile project opened as a tab first add its folder to the VS Code workspace (the Dart extension runs Flutter only",
+    "  there): one reload, then the action continues. The tools at the bottom",
+    "  (`Ctrl+Alt+<letter>`). Clicking a tab or an action shows the shortcut that does the same. A welcome page",
+    "  (`Ctrl+Alt+W`, and at startup when no editor is open) lists the projects, the tools and the keys.",
+    "- **Loop** (`Ctrl+Alt+P`): spec-driven work as a pipeline. The first page is the spec: what you want (a feature, a",
+    "  refactor, a bug, tests, a security review, documentation, a diagram), written here or imported from Jira or a GitHub",
+    "  issue, its acceptance criteria, the context files the agents get (suggested from the project and your skills) and",
+    "  who leads (Claude with the local Nuclear Developer, or the local agents only). A run is drawn like a GitHub pipeline",
+    "  that zooms like a C4 diagram: the stages (spec, generate, plan, code, tests, security, artifacts, deploy; the *Specification* ends with the"
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.71be3d",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "progress of each step and *Try again* from the one that failed, and leaves both services starting at every login.",
+   "body": [
+    "progress of each step and *Try again* from the one that failed, and leaves both services starting at every login.",
+    "  The same set-up in a terminal: `nuclear-loop setup`",
+    "  ([Set up the AI services](https://github.com/nuclearlang/nuclear/blob/main/docs/ai/setup.md)).",
+    "- **Settings and integrations** (`Ctrl+Alt+S`): every setting of the AI loop in one page, kept as the editor's",
+    "  `nuclear.ai.*` settings: the services (Smart Graph, Nuclear Developer, Ollama) with their state and *Start* /",
+    "  *Restart* with the chosen models; the local models (installed ones with their size, a warning over the 3B rule,",
+    "  *Pull*); the Nuclear MCP server added to Claude Code, Codex or Cursor in one click; the connections (the graph's",
+    "  clients and pending access requests with *Allow* / *Deny* / *Revoke*, Jira, GitHub); Claude's model and the retry",
+    "  policy. A project's `.nuclear/loop.json` still wins for its own pipeline.",
+    "- **Work that does not stop, and notifications**: a Loop run or a chat question belongs to the extension, not to its",
+    "  page: switch tools or close the page and it keeps working. When it ends (a chat answered, a run passed or failed) a",
+    "  notification says so (*Open* goes to that run or session) unless you are looking at it; the Nuclear icon of the",
+    "  activity bar shows a badge with the unread ones, each tool's tab its count, and the tool's pane lists them."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.d1a3b4",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "to override, decorators and the arguments of `@screen`.",
+   "body": [
+    "- **Live diagnostics**, with the same codes as the transpiler, and quick fixes.",
+    "- **Semantic highlighting:** kinds, modules, enums, parameters and library names (deprecated ones struck through).",
+    "- **Completion:** members of external classes (`Colors.`, `x.`), named arguments (required ones first), methods",
+    "  to override, decorators and the arguments of `@screen`.",
+    "- **Hover and signature help** from the type definitions, with a link to Flutter's API.",
+    "- **Go to definition, references, rename, outline and folding.**",
+    "- **Multi-file projects** (`nuclear.toml`, or a folder with `main.nuc` in a Dragonfly project): the names of the",
+    "  other files are visible and the architecture rules apply.",
+    "- **A Dragonfly project like a Flutter project**, opened with `dragonfly code` or as a folder (`code .`): the",
+    "  Flutter extension's device picker, a ▷ Run / Debug button and F5 on a `.nuc` (transpiles and launches the app",
+    "  with the `<project> (debug)` configuration of `build/<project>.code-workspace`), and **hot reload on saving a",
+    "  `.nuc`** while the app runs. If the Flutter app is created with the window already open, the extension offers to",
+    "  reload the window so the devices appear.",
+    "- **Debugging the `.nuc`** on every platform: breakpoints in the `.nuc`, the pause highlighted in the `.nuc`,"
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-the-extension-brings.dc55f4",
+   "type": "readme",
+   "title": "NuclearLang — What the extension brings",
+   "summary": "it read); a context meter shows how full the local model's window is (`nuclear.ai.contextTokens`) and tells you to start a new session when it is near; ↑ / ↓ in the input go through the questions you asked before; a question that failed has *↻ Retry*, an order that failed *↻ Retry from the step…",
+   "body": [
+    "- **The chat in detail**: what the agent did is folded in grey under each answer (its steps, how long, how many tokens",
+    "  it read); a context meter shows how full the local model's window is (`nuclear.ai.contextTokens`) and tells you to",
+    "  start a new session when it is near; ↑ / ↓ in the input go through the questions you asked before; a question that",
+    "  failed has *↻ Retry*, an order that failed *↻ Retry from the step that failed*.",
+    "- **A run survives the editor**: every run writes a trace log (`.nuclear/loop/runs/<id>.log`), a heartbeat and a ledger",
+    "  of the files it writes. Close or crash VS Code in the middle of a run and, when it opens again, the run is found",
+    "  interrupted: what its unfinished step wrote is undone and it goes on from that step by itself (a notification says",
+    "  so; `nuclear.ai.resumeInterrupted`). A call nothing is working on (the Developer silent, Ollama holding no model) is",
+    "  cut and retried; a command that hangs is killed; two windows never run the same run.",
+    "- **Every connection is checked**: each run starts with *Check the connections* (the Developer, the Smart Graph,",
+    "  Ollama and the models it needs, Claude Code when it leads, free disk), each chat question checks what it needs, and",
+    "  every few minutes every integration is checked again (Claude Code, Codex, OpenCode, GitHub, Jira): a notification when"
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#what-we-do",
+   "type": "readme",
+   "title": "NuclearLang — What we do",
+   "summary": "You write the idea once in Nuclear and the transpiler generates the code an expert in the target would write: imports, `@override`, `async`, constructors, `const`/`final` and the formatting.",
+   "body": [
+    "You write the idea once in Nuclear and the transpiler generates the code an expert in the target would write:",
+    "imports, `@override`, `async`, constructors, `const`/`final` and the formatting. It goes one way only",
+    "(`.nuc` → `.dart` / `.ts`): it neither reads nor changes code of the target language.",
+    "",
+    "```nuclear",
+    "stateful Counter",
+    "  count: int = 0",
+    "",
+    "  increment() void",
+    "    setState()",
+    "      count = count + 1",
+    "",
+    "  build(context: BuildContext) Widget",
+    "    Scaffold(",
+    "      body = Center(child = Text('Clicks: ${count}')),",
+    "      floatingActionButton = FloatingActionButton(",
+    "        onPressed = increment,",
+    "        child = Icon(Icons.add),",
+    "      ),",
+    "    )",
+    "```",
+    "",
+    "generates this Dart (the transpiler's real output):"
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/README.md#why",
+   "type": "readme",
+   "title": "NuclearLang — Why",
+   "summary": "AI agents write better when there is less to write and one single way to do it.",
+   "body": [
+    "AI agents write better when there is less to write and one single way to do it. Nuclear removes the noise of the",
+    "target language (imports, boilerplate, `super.key`, `setState(() { })`) without losing performance. What is left",
+    "is the logic, shorter to read and to review. The same `.nuc` can target another technology by changing the",
+    "dialect."
+   ],
+   "sources": [
+    "nuclear-vscode/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/THIRD-PARTY.md#third-party-content",
+   "type": "doc",
+   "title": "Third-party content",
+   "summary": "`icon-themes/atom/` contains the icons and file associations of Atom Material Icons (https://github.com/AtomMaterialUI/a-file-icon-vscode), MIT License, Copyright (c) 2015-2024 Elior \"Mallowigi\" Boukhobza and Philipp \"PKief\" Kief.",
+   "body": [
+    "`icon-themes/atom/` contains the icons and file associations of **Atom Material Icons**",
+    "(https://github.com/AtomMaterialUI/a-file-icon-vscode), MIT License, Copyright (c) 2015-2024 Elior \"Mallowigi\"",
+    "Boukhobza and Philipp \"PKief\" Kief. The full license is in `icon-themes/atom/LICENSE.md`.",
+    "The Chernobyl icon themes add the NuclearLang icons and recolor the generic folder.",
+    "",
+    "The code metrics (`lsp/src/metrics.rs` of nuclear-lsp, the \"Code Metrics\" settings and the details list) are a",
+    "port of **CodeMetrics** (https://github.com/kisstkondoros/codemetrics) and its library **tsmetrics-core**: the",
+    "same settings, default costs and messages. MIT License, Copyright (c) Tamás Kiss."
+   ],
+   "sources": [
+    "nuclear-vscode/THIRD-PARTY.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/theme.md#chernobyl-theme-nuclear-vscode-theme",
+   "type": "context",
+   "title": "Theme, icons and code metrics — Chernobyl theme (`nuclear-vscode/theme/`)",
+   "summary": "generated `nuclear-example.tmLanguage.json`), `icons.mjs`; `vendor/atom-material-icons/` (MIT) is the icon base (`theme/vendor-atom-icons.mjs` updates it).",
+   "body": [
+    "- `palette.json` (`variants`: Chernobyl, Chernobyl Soft), `build.mjs` (themes for VS Code, JetBrains, Zed; the",
+    "  generated `nuclear-example.tmLanguage.json`), `icons.mjs`; `vendor/atom-material-icons/` (MIT) is the icon base",
+    "  (`theme/vendor-atom-icons.mjs` updates it).",
+    "- Chernobyl Soft (the user's variant): slate background, burnt-yellow UI accents and vivid syntax (classes",
+    "  violet, variables pink, keywords orange, functions mint green, library functions and operators cyan, enums lemon",
+    "  yellow, strings lime). No italics. The user wants vivid, bright colors.",
+    "- Semantic token colors: `semanticTokenColors` (VS Code), `DEFAULT_*` keys (JetBrains).",
+    "- Comments: doc tags at the start of a comment line (`@tag` → `storage.type.class.jsdoc.nuclear`, `@param` name →",
+    "  `variable.other.jsdoc.nuclear`) with roles `docTag`/`docParam`, dimmed (`mix(..., background, 0.55)`): everything",
+    "  in a comment looks like a comment. `@example` code (more space after `*` than the tag) is `comment.example.nuclear`",
+    "  + `source.nuclear.example`; any theme paints it as a comment and Chernobyl dims it with `comment.example.<scope>`.",
+    "- Testing a changed theme: VS Code caches the active theme (`colorThemeData` in",
+    "  `~/.config/Code/User/globalStorage/state.vscdb`); *Reload Window* does not refresh it. Quit VS Code completely",
+    "  (*File → Exit*) or render a preview with the real tokens (grammar + server)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/theme.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/theme.md#code-metrics",
+   "type": "context",
+   "title": "Theme, icons and code metrics — Code metrics",
+   "summary": "Faithful copy of the CodeMetrics extension (the user asked \"copy the same messages\"): same setting names, default costs and English texts; Nuclear nodes mapped to the original TypeScript nodes (`match` = Switch statement, lambda = Arrow function, `and`/`or` = Binary expression; `if`/`else if`…",
+   "body": [
+    "Faithful copy of the CodeMetrics extension (the user asked \"copy the same messages\"): same setting names,",
+    "default costs and English texts; Nuclear nodes mapped to the original TypeScript nodes (`match` = Switch",
+    "statement, lambda = Arrow function, `and`/`or` = Binary expression; `if`/`else if` counts like nested TS `if`s).",
+    "Computed in the server; clients show the list (`nuclear.showCodeMetricsCodeLensInfo`) and colors",
+    "(`nuclear/codeMetrics`, or command `nuclear.codeMetrics` in JetBrains). Editor settings are generated from the",
+    "server (`scripts/codemetrics-settings.mjs` from `nuclear-lsp --codemetrics-defaults`): never edit",
+    "`nuclear.codemetrics.*` by hand."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/theme.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/theme.md#nuclear-http-tree-colors",
+   "type": "context",
+   "title": "Theme, icons and code metrics — Nuclear HTTP tree colors",
+   "summary": "`theme/build.mjs` sets `nuclearHttp.get/post/put/patch/delete/platform/project/component` from the palette (type, function, warning, number, error, primary, enumMember, property), so the tree of `vscode/src/http.ts` follows each variant; `vscode/package.json` contributes the same ids with neutral…",
+   "body": [
+    "`theme/build.mjs` sets `nuclearHttp.get/post/put/patch/delete/platform/project/component` from the palette (type,",
+    "function, warning, number, error, primary, enumMember, property), so the tree of `vscode/src/http.ts` follows each",
+    "variant; `vscode/package.json` contributes the same ids with neutral dark/light defaults for other themes."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/theme.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#other-files",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — Other files",
+   "summary": "`syntaxes/nuclear.tmLanguage.json` (TextMate grammar, also used by JetBrains and the website copy); `syntaxes/nuclear-example.tmLanguage.json` GENERATED (`comment.example.` scopes for `@example` code); `language-configuration.json` (comments, pairs, `offSide` folding, `onEnterRules` for ` * `).",
+   "body": [
+    "`syntaxes/nuclear.tmLanguage.json` (TextMate grammar, also used by JetBrains and the website copy);",
+    "`syntaxes/nuclear-example.tmLanguage.json` GENERATED (`comment.example.` scopes for `@example` code);",
+    "`language-configuration.json` (comments, pairs, `offSide` folding, `onEnterRules` for ` * `)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#processes-0-27",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — Processes (0.27)",
+   "summary": "Nothing stays alive when VS Code closes: `marker(key)` = `dragonfly_device_<extension host pid>_<key>` in `--web-launch-url`; `reap(mark, wait?)` (detached sh: waits for `wait` to die, `pkill -TERM -f`, 3 s, `-KILL`; no Windows version) runs on activate and in `closeRunning`.",
+   "body": [
+    "Nothing stays alive when VS Code closes: `marker(key)` = `__dragonfly_device_<extension host pid>_<key>__` in",
+    "`--web-launch-url`; `reap(mark, wait?)` (detached sh: waits for `wait` to die, `pkill -TERM -f`, 3 s, `-KILL`; no",
+    "Windows version) runs on activate and in `closeRunning`. A relaunch from `repairAndRelaunch` is a new launch",
+    "(`dragonflyToolArgs`). Panel closed 5 min → `stopDebugging` (except `external`)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-aisetup-ts-src-aisetup-json-src-setuppanel-ts-the-set-up-of-the-ai-services.5768b8",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/aiSetup.ts`, `src/aiSetup.json`, `src/setupPanel.ts` — the set-up of the AI services (ADR-0106)",
+   "summary": "the machine (`hardware`), says how a profile sits on it (`fit`, `recommend`), finds what is installed (`requirements`, `status`), and gives the ordered `steps(profile, root)`: the graph's tool (`uv tool install`, editable when the folder is a git checkout), the Developer (`dragonfly install` with…",
+   "body": [
+    "- `aiSetup.ts` has no editor in it: `nuclear-loop setup` (`loopCli.ts`) and the wizard are its two fronts. It reads",
+    "  the machine (`hardware`), says how a profile sits on it (`fit`, `recommend`), finds what is installed",
+    "  (`requirements`, `status`), and gives the ordered `steps(profile, root)`: the graph's tool (`uv tool install`,",
+    "  editable when the folder is a git checkout), the Developer (`dragonfly install` with a Python 3.12+ that uv finds",
+    "  or brings, and the `nuclear-developer` launcher), the models (Ollama's `/api/pull`, with its progress), the graph's",
+    "  service, the knowledge base (`connect` twice, `ingest`), the Developer's service. Every step can run again.",
+    "- `aiSetup.json` is the data: the requirements (their command, their installer per system, their page) and the",
+    "  profiles (models, download, memory, what works, what does not). Changing a profile is changing this file and",
+    "  measuring it (`nuclear-developer/eval/run.py`); `test/setup.test.ts` holds its shape.",
+    "- The machine's choice is `machineFile()` (`~/.config/nuclearlang/ai.env`): `readMachine` gives the Loop",
+    "  (`defaultConfig`) and the editor (`aiSettings`) their default models; a model set in the editor's settings wins and",
+    "  is written there when the settings page restarts a service.",
+    "- `serviceFiles(platform)` are the files that start the services at login (systemd user units, launch agents, a"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-aisetup-ts-src-aisetup-json-src-setuppanel-ts-the-set-up-of-the-ai-services.7af168",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/aiSetup.ts`, `src/aiSetup.json`, `src/setupPanel.ts` — the set-up of the AI services (ADR-0106)",
+   "summary": "Startup script); `restartService` goes through the system's manager, and the settings page uses it before starting a process of its own.",
+   "body": [
+    "Startup script); `restartService` goes through the system's manager, and the settings page uses it before starting",
+    "  a process of its own. `remove()` is `nuclear-loop setup --remove`.",
+    "- `setupPanel.ts` is the page: four steps drawn from one state message; it polls `check` every three seconds on the",
+    "  requirements step; an installer runs in a terminal (`createTerminal` + `sendText`), never hidden.",
+    "  `SetupPanel.offer` asks once on a machine with no machine file.",
+    "- The services' folder is `aiRoot()`: `<installation>/ai`, or `NUCLEAR_AI_ROOT`."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-chatpanel-ts-the-nuclear-agent-tool-adr-0102-16",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/chatPanel.ts` — the Nuclear agent tool (ADR-0102 §16)",
+   "summary": "The tool `agent` of the strip (`Ctrl+Alt+A`): a chat with the local agents.",
+   "body": [
+    "The tool `agent` of the strip (`Ctrl+Alt+A`): a chat with the local agents. A message goes to `POST",
+    "/developer/chat` (`message`, `platform`, `map` = `.nuclear/map.md` clipped to 12 000 characters, `history` = the last",
+    "8 messages, `historyOf`); `/task <text>` builds a local-led `Spec` (`criteriaOf`) and runs a `LoopEngine` in place,",
+    "drawing each step as it ends and answering with the run's `notes` and its journal. Sessions: `.nuclear/chat/<id>.json`",
+    "(`listSessions`, `saveSession`; a job is `ask` or `drive`, saved by `append` even with the page closed). Each answer keeps",
+    "`steps`, `seconds`, `tokens` (the assistant's `context` trace, `tokensOf` = characters / 4), drawn folded in grey; the",
+    "context meter (`nuclear.ai.contextTokens`); `askedOf` for ↑ / ↓; *↻ Retry* of a failed question (`ask` message) or of a",
+    "failed order from its failed step. Templates: `templatesOf(map, platform)` from the map's components, use cases and",
+    "controllers/screens. The page renders the answers' markdown itself (code blocks, inline code, bold, lists)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-debug-ts-debugging-nuc-adr-0068-0076-every-dialect-since-0-37.a41edd",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/debug.ts` — debugging `.nuc` (ADR-0068, 0076; every dialect since 0.37)",
+   "summary": "Since 0.37 the same mirrors and paused-line display work for every dialect: the line map is `<app>/.nuclear/lines.json` (written by every `nuclear build` of a project; `.dart_tool/nuclear_lines.json` for a mobile app's `dragonfly build`), the tracker is registered for `DEBUG_TYPES` (dart, node,…",
+   "body": [
+    "Since 0.37 the same mirrors and paused-line display work for every dialect: the line map is",
+    "`<app>/.nuclear/lines.json` (written by every `nuclear build` of a project; `.dart_tool/nuclear_lines.json` for a",
+    "mobile app's `dragonfly build`), the tracker is registered for `DEBUG_TYPES` (dart, node, pwa-node, chrome,",
+    "pwa-chrome, msedge, debugpy, python), each `.nuc` breakpoint is mirrored with the project of its own file",
+    "(`find(dir)`), and the run-time error explanations stay Dart-only. `extension.ts` reads any `(debug)` launch of",
+    "`build/<name>.code-workspace` (the CLI writes debugpy for fastapi, node with source maps for nestjs, chrome for",
+    "react: `dragonfly/dragonfly/src/vscode.rs` `write_platform`); `runPlatformApp` builds and starts it (a react app's dev",
+    "server first, in its terminal); saving a `.nuc` of a backend or web project runs `dragonfly build`",
+    "(`nuclear.buildOnSave`), and the server or page reloads by itself."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-debug-ts-debugging-nuc-adr-0068-0076-every-dialect-since-0-37.c672fa",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/debug.ts` — debugging `.nuc` (ADR-0068, 0076; every dialect since 0.37)",
+   "summary": "Line map `build/app/.dart_tool/nuclear_lines.json` (`toDart`/`toNuc`): mirror breakpoints in the `.dart` (ids in `mirrors`, places in `workspaceState` to delete those VS Code restores); `dart` tracker: `stopped` → `stackTrace` → `.nuc` highlighted (`showPaused`, in the group left of the paused…",
+   "body": [
+    "Line map `build/app/.dart_tool/nuclear_lines.json` (`toDart`/`toNuc`): mirror breakpoints in the `.dart` (ids in",
+    "`mirrors`, places in `workspaceState` to delete those VS Code restores); `dart` tracker: `stopped` →",
+    "`stackTrace` → `.nuc` highlighted (`showPaused`, in the group left of the paused `.dart`); exception or error",
+    "block in `output` → `dragonfly explain --json` → diagnostic `dragonfly-runtime` + webview *Nuclear: runtime",
+    "error*. `built()` after each build. Settings `nuclear.debug.followInNuclear` / `explainErrors`. Mixed debugging:",
+    "`nucStep` (F10/F11/Shift+F11 when `nuclear.pausedInNuc && (editorLangId == nuclear || nuclear.nucStepping)`;",
+    "repeats `next`/`stepIn` while the `.nuc` line and stack depth do not change, cap 200), `showValues`, `hover`",
+    "(`EvaluatableExpressionProvider`), view `nuclear.callStack`, `nuclear.debug.otherSide`, `openPlace`.",
+    "Untested with a device."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-device-ts-dragonfly-device-adr-0074-several-at-once-since-0-33-adr-0099.38004d",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/device.ts` — Dragonfly device (ADR-0074; several at once since 0.33, ADR-0099)",
+   "summary": "evices shown or hidden, new, *Other Flutter device…* via `flutter.selectDevice`, or the Devices workspace), `Workspace.mobileRoot` (the Devices pane runs a mobile project only), `watchSessions` finds the panel by `running.key`, `DevicePanel.show(context, preset?)` always opens one more (title…",
+   "body": "evices shown or hidden, new, *Other Flutter device…* via `flutter.selectDevice`, or the Devices workspace), `Workspace.mobileRoot` (the Devices pane runs a mobile project only), `watchSessions` finds the panel by `running.key`, `DevicePanel.show(context, preset?)` always opens one more (title `Dragonfly device N`, a `preset` message selects the device), `devices()`/`devicesChanged`/`revealDevice` feed the workspace. `findDragonfly(root?)` / `runApp(noDebug, deviceId, extra, root)` in `extension.ts` take the project's root (a tab of the workspace), `dragonflyOf(file)` walks up for the hot reload on save. Then, per panel:",
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-device-ts-dragonfly-device-adr-0074-several-at-once-since-0-33-adr-0099.710c2e",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/device.ts` — Dragonfly device (ADR-0074; several at once since 0.33, ADR-0099)",
+   "summary": "`Page.startScreencast` (also on `Page.loadEventFired`) at `r.density` = the physical pixels the panel shows the screen at (the webview reports `shot` = CSS width × zoom × `devicePixelRatio` in the `size` message; `sized` sets `density = max(dpr, shot / width)` capped at 4 and only ever raises it,…",
+   "body": [
+    "`Page.startScreencast` (also on `Page.loadEventFired`) at `r.density` = the physical pixels the panel shows the screen at (the webview reports `shot` = CSS width × zoom × `devicePixelRatio` in the `size` message; `sized` sets `density = max(dpr, shot / width)` capped at 4 and only ever raises it, re-emulating), falling back to `captureScale(p)` before the first measurement; jpeg 100. So a frame matches the device's on-screen pixels 1:1 and nothing is upscaled (the old 2x cap, and even full-`dpr`, blurred phones zoomed on a HiDPI screen). `closeBrowser` at the end; input via",
+    "`Input.dispatchTouchEvent`/`MouseEvent`/`KeyEvent`. Reconnects (`cdp.onclose`, 10 tries); re-emulates when a",
+    "frame's size differs (every 2 s at most). Panel width saved per screen width (`nuclear.device.widths`, default",
+    "20 % between 340 and 540). *Fit* up to zoom 1.5. `lockDeviceGroup`. `web-server` rejected (no breakpoints)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-device-ts-dragonfly-device-adr-0074-several-at-once-since-0-33-adr-0099.d65d6e",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/device.ts` — Dragonfly device (ADR-0074; several at once since 0.33, ADR-0099)",
+   "summary": "Several devices: `panels` (a `Set<DevicePanel>`, each with its own `running`, `lastView` and `id`), the launch config carries `dragonflyPanel` (the panel to run on: `nuclear.runOnDevice(panelId?, root?)`; without it `DevicePanel.idle()`, a free panel, or a new one: a running device is never…",
+   "body": "Several devices: `panels` (a `Set<DevicePanel>`, each with its own `running`, `lastView` and `id`), the launch config carries `dragonflyPanel` (the panel to run on: `nuclear.runOnDevice(panelId?, root?)`; without it `DevicePanel.idle()`, a free panel, or a new one: a running device is never replaced), `parked` + `DevicePanel.park()`/`unpark()` (`nuclear.parkDevices`/`unparkDevices`, called by `Workspace.switchTabs`: `switchTabs` parks on every workspace switch and unparks after reopening the code, so a device always gets a fresh locked editor group beside the code (the right, like Android Studio) and is never merged into the code's group; parked apps keep running and get panels again in a mobile workspace or the Devices tool; a parked app whose session ends is cleaned by `endRunning`), `Running` lives on its own (`panel` optional, `title`, `lastUsed`, `ended`; `alive()` = panels' apps + `parked`): a disposed panel parks its app, `endRunning` ends one (session, cdp, browser, `reap`), `closeDevice(id)` (`nuclear.closeDevice`, the pane's ✕), `revealDevice` adopts a hidden one (`hidden:<key>` ids), `watchdog()` every `WATCH_MS` (idle `IDLE_LIMIT` → end; `pgrep -af` by marker → `reap` of keys no app owns), `freeNumber()` titles, the launch config `name` = the device's title, `nuclear.runOnDevice(panelId, root, noDebug)`; `Workspace.pickDevice(p, mode)` (▷ Run / ◉ Debug / ▭ Device: d",
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-device-ts-dragonfly-device-adr-0074-several-at-once-since-0-33-adr-0099.f78cc9",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/device.ts` — Dragonfly device (ADR-0074; several at once since 0.33, ADR-0099)",
+   "summary": "Flutter custom device `dragonfly` only for VS Code (`ensureDevice`: `dragonfly flutter custom-devices add --json` with `FLUTTER_CUSTOM_DEVICES=true`; adds to the user's `dart.env` `FLUTTER_CUSTOM_DEVICES=true` and `CHROME_EXECUTABLE` if needed; `_dart.reloadExtension`; a `configurationDefaults` of…",
+   "body": [
+    "Flutter custom device `dragonfly` only for VS Code (`ensureDevice`: `dragonfly flutter custom-devices add --json`",
+    "with `FLUTTER_CUSTOM_DEVICES=true`; adds to the user's `dart.env` `FLUTTER_CUSTOM_DEVICES=true` and",
+    "`CHROME_EXECUTABLE` if needed; `_dart.reloadExtension`; a `configurationDefaults` of `dart.env` does NOT reach the",
+    "Dart extension). `launchProvider` (`resolveDebugConfiguration` of `dart`; a `-d` in `toolArgs` does NOT work):",
+    "`deviceId: 'chrome'` + `--web-port`, `--web-browser-debug-port`, `--web-browser-flag=--headless=new`,",
+    "`--enable-unsafe-swiftshader`, `--web-launch-url http://127.0.0.1:<port>/assets/__dragonfly_device__` (an empty",
+    "404; `about:blank` does not work). `attach` (own CDP over Node 24's WebSocket): `emulate` (metrics, touch, user",
+    "agent; first time `Page.navigate` already emulated, later `Page.reload` only if the platform changes),"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-extension-ts-client-and-dragonfly-projects",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/extension.ts` — client and Dragonfly projects",
+   "summary": "Starts the server, status bar with the project's platform and dialect (from `.nuclear/project.json`, `projectCard`; a file outside a project shows `nuclear.dialect` with the picker), view of generated code.",
+   "body": [
+    "Starts the server, status bar with the project's platform and dialect (from `.nuclear/project.json`, `projectCard`;",
+    "a file outside a project shows `nuclear.dialect` with the picker), view of generated code. Dragonfly projects",
+    "(`findDragonfly` reads `build/<name>.code-workspace`, also with only the folder open, `code .`):",
+    "",
+    "- ▷ Run/Debug (`editor/title/run`, context `nuclear.canRun`) and F5 without launch.json (debugger `dragonfly` →",
+    "  config `dart`), both with `dragonfly build` first (queue `buildQueue`, panel *Dragonfly*).",
+    "- Ctrl+S on a `.nuc` → build + `flutter.hotReload` if there is a `dart` session; *Reload Window* is offered when",
+    "  the app appears with the window open (the Dart extension ignores new apps inside `build/`).",
+    "- Repair (only when something fails): build exit ≠ 0 and ≠ 2 → `dragonfly repair`; `watchSession`",
+    "  (DebugAdapterTracker of `dart`) marks `flutter.appStarted` and user stops, reads output (`Hot reload was",
+    "  rejected` → `flutter.hotRestart`; compile error → `repairAndRelaunch`); ended without starting and without",
+    "  Stop → repair + relaunch. Once per launch (`dragonflyRepaired`).",
+    "- `watchIdle`: stops the LSP 5 min after the last `.nuc` closes."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-http-ts-src-httppanel-ts-nuclear-http-0-29-adr-0098-a-workspace-since-0-33-a.096147",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/http.ts`, `src/httpPanel.ts` — Nuclear HTTP (0.29, ADR-0098; a workspace since 0.33, ADR-0099)",
+   "summary": "`HttpModel` (`activateHttp(context)` returns it): `findProjects` walks the workspace folders (depth 4, skipping build/node_modules/...) for `.nuclear/project.json` and reads `.nuclear/contract.json` next to it (written by `project::write_metadata`, so the LSP's `Project::build` produces it);…",
+   "body": [
+    "`HttpModel` (`activateHttp(context)` returns it): `findProjects` walks the workspace folders (depth 4, skipping",
+    "build/node_modules/...) for `.nuclear/project.json` and reads `.nuclear/contract.json` next to it (written by",
+    "`project::write_metadata`, so the LSP's `Project::build` produces it); `tree()` gives `TreeNode`s (platform → project →",
+    "Contracts [↓ update buttons] / component → endpoint; \"OpenAPI documents\" [+] from the active environment's `openapi`",
+    "list, grouped by tag) that the workspace webview draws; environments in `<first workspace folder>/.nuclear/http.json`",
+    "(else `globalStorageUri/http.json`; `active`, `environments.<name>.{vars, headers, baseUrls, openapi}`; `{{var}}`",
+    "resolved by the extension host). Commands `nuclear.http.{refresh,selectEnvironment,editEnvironments,addOpenApi,open}`",
+    "and `nuclear.contracts.update (root?, name?)` (runs `~/.local/bin/nuclear contracts update` in the project, output",
+    "channel *Nuclear HTTP*). `ComponentPanel` (`httpPanel.ts`): one webview panel per `componentKey(endpoint)`",
+    "(`project::component`), with an inner tab per endpoint (method, url, path/query params, headers, body with a sample",
+    "from the contract's model, send with `fetch` and a 30 s timeout, response pretty-printed, copy as curl); the webview",
+    "posts its whole state (`tabs`, `active`) on every change and the model keeps it in `memory` by key, so `restore(keys)`"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-http-ts-src-httppanel-ts-nuclear-http-0-29-adr-0098-a-workspace-since-0-33-a.ef54d5",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/http.ts`, `src/httpPanel.ts` — Nuclear HTTP (0.29, ADR-0098; a workspace since 0.33, ADR-0099)",
+   "summary": "rebuilds the panels when the HTTP workspace is entered again (`model.reopen` = the keys open when it was left).",
+   "body": [
+    "rebuilds the panels when the HTTP workspace is entered again (`model.reopen` = the keys open when it was left).",
+    "Watches `**/.nuclear/*.json`. Verbs and sections use theme colors contributed by the extension (`colors` in",
+    "package.json: `nuclearHttp.get/post/put/patch/delete/platform/project/component`, dark and light defaults; a theme",
+    "may override them; CSS `var(--vscode-nuclearHttp-get)`). The container icon is `icons/nuclear.svg`, the trefoil glyph",
+    "as a `currentColor` mask generated by `theme/icons.mjs` (the activity bar paints every icon in the theme's color: a",
+    "colored logo is not possible there). Not run in a VS Code window yet."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.086121",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/loopEngine.ts`, `src/loopPanel.ts` — the Loop tool (ADR-0102)",
+   "summary": "`generate` calls join the spec's in `generateStage` through `gen()`, its `pieces` are the plan when the tools gave them and a piece with `code` is written as it is, `wire()` runs `dragonfly gen usecase` for each use case the coder wrote, `verifyStage` repairs the file a failure names for `mode:…",
+   "body": [
+    "`generate` calls join the spec's in `generateStage` through `gen()`, its `pieces` are the plan when the tools gave them",
+    "and a piece with `code` is written as it is, `wire()` runs `dragonfly gen usecase` for each use case the coder wrote,",
+    "`verifyStage` repairs the file a failure names for `mode: fix`, never a test; `Spec.strategy` is the spec's `- Strategy:`",
+    "line) and saves `.nuclear/loop/runs/<id>.json` on every step (`change` event);",
+    "`specs/<id>/spec.md` is written by the spec stage. Agents: the Nuclear Developer over HTTP (`developerUrl`), Claude",
+    "through `claude -p --output-format stream-json` with the Nuclear MCP (`graphCommand mcp`, `--strict-mcp-config`,",
+    "`--tools` limited to the stage's built-ins): every tool call is a step, `developer_*` calls drawn as the local agent.",
+    "Code stage: each piece by the coder (Claude takes the ones it leaves with errors and keeps the fix as a graph",
+    "example), then `commands.check`; a project error gets one local repair per file (`repairProject`), then Claude.",
+    "Commands are data: `.nuclear/loop.json` (`defaultConfig(platform)`), exported by `ciFile()` to GitHub Actions, GitLab",
+    "CI or Bitbucket Pipelines (the deterministic stages). Sources: `jiraIssue`/`jiraMine` (REST v3, ADF to text; the",
+    "site, email and API token in VS Code secret storage `nuclear.loop.jira`), `githubIssue` (`gh issue view`);"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.19c4c5",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/loopEngine.ts`, `src/loopPanel.ts` — the Loop tool (ADR-0102)",
+   "summary": "`criteriaOf` reads the list under \"Acceptance criteria\".",
+   "body": [
+    "`criteriaOf` reads the list under \"Acceptance criteria\". `suggestContext` ranks the project's and the user's `.md`",
+    "(agent instructions first, then specs, context, ADRs, skills, agent definitions) by the words of the spec.",
+    "`loopPanel.ts` draws it: the runs, the spec form (use case → spec written or imported → context → who leads, with an",
+    "optional plan preview by the local planner), and a run as a C4-like pipeline: level 1 the stages, a click zooms",
+    "(`transform-origin` at the clicked node) into a stage's steps, another into a step (trace, code, output, input);",
+    "`Escape` zooms out.",
+    "",
+    "`src/loopCli.ts` is `nuclear-loop` (`npm run loop` → `out/nuclear-loop.js`, also part of `compile`; `stage.sh` puts",
+    "it in the installation's `bin/` with a `node` wrapper): `run [spec.md] [--lead]` (`parseSpecMarkdown`, the inverse of",
+    "`specMarkdown`; no file = the spec changed last; the project is the closest folder up with `config.nuc`), `ci",
+    "[stage...]` (`ciCommands`, the same grouping `ciFile` exports), `export <provider>`, `runs`. The JetBrains tool window",
+    "drives the Loop through it (no Zed: the Loop is for VS Code and Android Studio only, decided by the user)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.87118a",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/loopEngine.ts`, `src/loopPanel.ts` — the Loop tool (ADR-0102)",
+   "summary": "A tool of the workspace strip (`Ctrl+Alt+P`, id `loop`), one full-screen webview like Devices and HTTP.",
+   "body": [
+    "A tool of the workspace strip (`Ctrl+Alt+P`, id `loop`), one full-screen webview like Devices and HTTP.",
+    "`loopEngine.ts` has no VS Code import (a node script drives it; `npm test` runs `test/loop.test.ts` with node:test):",
+    "retries (`backoff`: exponential with full jitter, capped, `Retry-After` wins; `transientStatus`; `config.retry`),",
+    "`start(from?)` resumes a failed run from its first failed stage (earlier attempt in `run.previous`, `restoreWritten`",
+    "reads the files back), `diagnose()` asks `/developer/diagnose` when a stage fails (`run.diagnosis`); `Spec`, `Run`, `Stage`, `Step` (each with an",
+    "`Actor`: you, claude, planner, coder, tester, security, shell, graph), `LoopEngine.start()` runs spec → generate →",
+    "plan → tests first → code → verify → security → artifacts → deploy (generate, ADR-0103: `specResources` — the spec's",
+    "`## Resources` or its `GET <url>` lines — through `dragonfly gen resource ... --from-spec`, the changed files found by",
+    "`nucFiles` snapshots and put in the write ledger, `Step.files`; the planner gets `generatedNote()` and",
+    "`withoutGenerated` drops a piece that repeats one; the strategy of the request, ADR-0105: `analyze()` is the last",
+    "step of the spec stage and asks `/developer/analyze`, `Run.analysis` — its `stages` skip the others in `stages()`, its"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopsafety-ts-src-connections-ts-fail-safe-runs-and-checked-connections-adr",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/loopSafety.ts`, `src/connections.ts` — fail-safe runs and checked connections (ADR-0102 §§21–22)",
+   "summary": "`loopSafety.ts` (no VS Code import): `atomicWrite`, `trace`/`readTrace` (JSON lines), `owner`/`alive`/`orphaned` (`BEAT_MS` 10 s, `STALE_MS` 45 s), `rollback` of the ledger (`Run.writes`), `checkConnections` (services, models, tools' `--version`, `freeMb`), `ollamaBusy` (`/api/ps`).",
+   "body": [
+    "`loopSafety.ts` (no VS Code import): `atomicWrite`, `trace`/`readTrace` (JSON lines), `owner`/`alive`/`orphaned`",
+    "(`BEAT_MS` 10 s, `STALE_MS` 45 s), `rollback` of the ledger (`Run.writes`), `checkConnections` (services, models,",
+    "tools' `--version`, `freeMb`), `ollamaBusy` (`/api/ps`). In `loopEngine.ts`: `start` refuses a run another live",
+    "process owns, recovers an orphaned one, beats, runs `preflight` before the first stage it runs; `writeFile` keeps the",
+    "ledger; `watched` cuts a call (`StallError`) on `callTimeoutMs` or `stallSeconds` without the Developer or a model;",
+    "commands get `commandTimeoutMs` (`TIMED_OUT`, the process group killed); `recoverRun`/`recoverRuns`. In loopPanel.ts:",
+    "`driveRun` (module-level), `resumeOrphans` (activation). `connections.ts`: `checkAll` (also Codex, OpenCode, GitHub,",
+    "Jira), `checkForChat`, `watchConnections` (every `checkEveryMinutes`, a notice of kind `settings` on a change)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-notifications-ts-notifications-of-the-local-agents-adr-0102-19",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/notifications.ts` — notifications of the local agents (ADR-0102 §19)",
+   "summary": "`notices` (one store): `add` (a toast with *Open* unless the tool is on screen), `watch(tool, visible)` from the panels' `onDidChangeViewState`, `unread(tool)`, `open` (set by the workspace: `openNotice` → the tool on the run / session).",
+   "body": [
+    "`notices` (one store): `add` (a toast with *Open* unless the tool is on screen), `watch(tool, visible)` from the panels'",
+    "`onDidChangeViewState`, `unread(tool)`, `open` (set by the workspace: `openNotice` → the tool on the run / session).",
+    "The workspace sets `WebviewView.badge` (the Nuclear icon in the activity bar), a count on each tool's tab and the list",
+    "in the tool's pane. The Loop's engines (`engines` in loopPanel.ts) and the chat's jobs (`jobs` in chatPanel.ts) are",
+    "module-level: a page is only a view, so closing it or switching tools leaves the work running."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-settingspanel-ts-src-aisettings-ts-src-localmodels-ts-settings-and-integrati",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/settingsPanel.ts`, `src/aiSettings.ts`, `src/localModels.ts` — Settings and integrations…",
+   "summary": "The tool `settings` (`Ctrl+Alt+S`).",
+   "body": [
+    "The tool `settings` (`Ctrl+Alt+S`). `aiSettings()` reads `nuclear.ai.*` (package.json `contributes.configuration`);",
+    "`machineConfig()` is passed to `readConfig(root, platform, machine)` (defaults < settings < the project's",
+    "`.nuclear/loop.json`); `serviceEnv()` is the environment the graph and the Developer are started with (`CODER_MODEL`,",
+    "`ASSISTANT_MODEL`, `OLLAMA_URL`, `NUCLEAR_GRAPH_EMBED`, ports). The page: services (health urls; *Start*/*Restart*",
+    "spawns `nuclear-graph serve` / `nuclear-developer`, owned processes stopped on deactivate), models (Ollama",
+    "`/api/tags`, `billionsOf` with the effective size of `eNb` tags, `MAX_BILLIONS` 3.5, *Pull* as a task), MCP (`claude",
+    "mcp get|add --scope user`, `codex mcp list|add`, `~/.cursor/mcp.json` merged), connections (`nuclear-graph",
+    "requests|allow|deny|revoke|connect mcp`, Jira in the secret storage via `jiraAuth`, `gh auth status`), pipeline."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-webdevice-ts-src-websession-ts-src-cdp-ts-the-web-device-0-37",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/webDevice.ts`, `src/webSession.ts`, `src/cdp.ts` — the web device (0.37)",
+   "summary": "The web platform's device: ▭ Device / ◉ Debug / ↻ Reload of a web project (`nuclear.webDevice.{open,debug,reload}`, one panel per project, beside the code).",
+   "body": [
+    "The web platform's device: ▭ Device / ◉ Debug / ↻ Reload of a web project (`nuclear.webDevice.{open,debug,reload}`, one",
+    "panel per project, beside the code). `webSession.ts` has no VS Code: it runs the app's Vite (`build/app/node_modules/",
+    ".bin/vite`, free port, `127.0.0.1`) and a headless Chromium (`browserExecutable()`: `CHROME_EXECUTABLE`, Chrome,",
+    "Chromium, Brave, Edge, Vivaldi) with its own profile, drives the page over CDP (`cdp.ts`, shared with `device.ts`):",
+    "`Emulation.setDeviceMetricsOverride` / touch / user agent per `WEB_PRESETS` (desktop, laptops, tablets, phones),",
+    "`setEmulatedMedia` (`prefers-color-scheme`), `Network.emulateNetworkConditions` (`THROTTLES`), `setCacheDisabled`,",
+    "the screencast at the panel's density (zoom × devicePixelRatio), input (mouse on desktop presets, touch otherwise),",
+    "history, `captureScreenshot`, the DevTools frontend url; it reports `Runtime.consoleAPICalled`, `exceptionThrown`,",
+    "`Log.entryAdded` and the `Network.*` events. `webDevice.ts` is the panel (address bar, device bar, Console / Network",
+    "dock) and its commands; ◉ Debug starts a `chrome` attach session on the device's CDP port with `webRoot` = the app, so",
+    "`debug.ts` mirrors `.nuc` breakpoints into the generated `.ts`. It can be tested without VS Code: bundle a script that",
+    "imports `webSession.ts` with esbuild and run it with node against a built app (done 2026-11-10 against the website)."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-workspace-ts-the-nuclear-workspace-0-31-0-33-adr-0099.00793f",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/workspace.ts` — the Nuclear workspace (0.31–0.33, ADR-0099)",
+   "summary": "with the root, reload → `flutter.hotReload`, device → `nuclear.runOnDevice(undefined, root)`, api → the HTTP tool; the rest in a terminal named `<project> · <action>` with `TERMINAL_COMMANDS`), then the file tree (lazy `list` → `entries`; `Icons.entriesOf` skips `.git` and plain `files.exclude`…",
+   "body": [
+    "- a project: its files; `PLATFORM_ACTIONS[platform]` are the `editor/title` buttons of `package.json` (commands `nuclear.action.<id>`, shown by the context key `nuclear.platform` that `refresh()` sets; `action(id)`; a mobile run/debug/device of a root outside the workspace folders saves `PendingAction` in global state, adds the folder and reloads; `activateWorkspace` resumes it: mobile run/debug → `nuclear.run`/`nuclear.debug`",
+    "  with the root, reload → `flutter.hotReload`, device → `nuclear.runOnDevice(undefined, root)`, api → the HTTP tool;",
+    "  the rest in a terminal named `<project> · <action>` with `TERMINAL_COMMANDS`), then the file tree (lazy `list` →",
+    "  `entries`; `Icons.entriesOf` skips `.git` and plain `files.exclude` names, folders first, each entry with its icon",
+    "  of the Chernobyl icon theme — `icon-themes/<slug>-icon-theme.json`, the user's variant: `fileNames` → longest",
+    "  `fileExtensions` → `file`; `folderNames[Expanded]` → `folder[Expanded]`; webview uris, `localResourceRoots` icons +",
+    "  icon-themes; `open` → `vscode.open`; a `FileSystemWatcher` on the root posts `refreshDir`);",
+    "- `tool:http`: the env bar (change / edit / ↻) and `HttpModel.tree()` drawn with chevrons, inline `GLYPHS` and the",
+    "  `nuclearHttp.*` colors (collapsed ids kept in the webview); an endpoint → `nuclear.http.open`, a node button →",
+    "  `updateContracts` / `addOpenApi`;"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-workspace-ts-the-nuclear-workspace-0-31-0-33-adr-0099.3abde1",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/workspace.ts` — the Nuclear workspace (0.31–0.33, ADR-0099)",
+   "summary": "Container `nuclear` (activity bar) = webview view `nuclear.workspace` (`Workspace`, a `WebviewViewProvider`, `retainContextWhenHidden`), the only view.",
+   "body": [
+    "Container `nuclear` (activity bar) = webview view `nuclear.workspace` (`Workspace`, a `WebviewViewProvider`,",
+    "`retainContextWhenHidden`), the only view. The webview draws the strip (project tabs with the platform glyph",
+    "`icons/platform-<platform>.svg` + the dialect's Atom Material icon as a badge (`DIALECT_ICONS`) and their number, `+`,",
+    "the `TOOLS` at the bottom) beside a pane that depends on the active tab (`activeKey()`: a project root or",
+    "`tool:<id>`, `workspaceState` `nuclear.workspace.active`; `LAST_PROJECT` is the project the tools act on):"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-workspace-ts-the-nuclear-workspace-0-31-0-33-adr-0099.3f306f",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/workspace.ts` — the Nuclear workspace (0.31–0.33, ADR-0099)",
+   "summary": "`src/workspace.ts` — the Nuclear workspace (0.31–0.33, ADR-0099)",
+   "body": [
+    "- `tool:devices`: `devices()` of `device.ts` (title, status dot) with *▷ run* (`nuclear.runOnDevice(id, root)`) and",
+    "  *+ New device* (a `PRESETS` quick pick → `nuclear.openDevice(preset)`);",
+    "- the other tools: a template line; `ToolPanel` opens their page."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-workspace-ts-the-nuclear-workspace-0-31-0-33-adr-0099.b38589",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/workspace.ts` — the Nuclear workspace (0.31–0.33, ADR-0099)",
+   "summary": "Projects = `findProjects()` (workspace folders) + the roots saved in `globalState` `nuclear.workspace.projects` (opened with `openProject`, read by `projectAt`: the card, else `config.nuc`/`nuclear.toml` by regex).",
+   "body": [
+    "Projects = `findProjects()` (workspace folders) + the roots saved in `globalState` `nuclear.workspace.projects`",
+    "(opened with `openProject`, read by `projectAt`: the card, else `config.nuc`/`nuclear.toml` by regex). `go(key)` calls",
+    "`switchTabs(from, to)`: the open `TabInputText` tabs of the tab left go to `workspaceState` `nuclear.workspace.tabs`",
+    "(path, column, active), every tab but the device webviews (`viewType` ends with `dragonflyDevice`) is closed",
+    "(`tabGroups.close`; a kept dirty editor cancels), and the entered tab's editors come back (text files, or",
+    "`ComponentPanel.restore` for HTTP, or the template page). Clicking a tab or an action posts a toast with its shortcut.",
+    "Commands `nuclear.workspace.{show,project,openProject,tool,action,welcome,addToVsCode}` (project/tool/action without",
+    "arguments show a quick pick); keybindings in package.json (`ctrl+1..9`, `ctrl+alt+n/o/w`, tools `ctrl+alt+h/v/d/m/a/s`,",
+    "actions `ctrl+alt+r/g/l/b/t/c` on `nuclear.action.*`, `serve` on `ctrl+alt+r` for backend/web). `WelcomePanel` (singleton, column one; re-rendered on",
+    "`Workspace.onDidChange`; opened on activation when `nuclear.workspace.welcome` and every tab group is empty;",
+    "`onStartupFinished` activation). Not run in a VS Code window yet."
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/theme/README.md#code-colors",
+   "type": "readme",
+   "title": "The Chernobyl themes — Code colors",
+   "summary": "Each variant can have its own code palette (`syntax` inside the variant, over the common `syntax`).",
+   "body": [
+    "Each variant can have its own code palette (`syntax` inside the variant, over the common `syntax`).",
+    "",
+    "| Role | Chernobyl | Chernobyl Soft | Example |",
+    "|---|---|---|---|",
+    "| Normal text, punctuation, `${ }` | `#D9E4D2` | `#ECECEC` | `( ) , :` |",
+    "| Variable, property, parameter | `#D9E4D2` / `#FF8A3D` | `#FF6AC1` pink | `list`, `characters`, `title =` |",
+    "| Reserved word, kind, modifier | `#A7FF00` | `#FFAA00` orange | `if`, `return`, `stateless` |",
+    "| Number, escape | `#FFB347` | `#FF9F5A` | `42`, `\\n` |",
+    "| Type, widget | `#64FF00` | `#C39BFF` violet | `Scaffold`, `Status` |",
+    "| Enum item, `true`/`false`/`null` | `#9CF0C8` | `#F4FF7A` lemon yellow | `alive`, `true` |",
+    "| Own function | `#2FE0F0` | `#4DFFB4` mint green | `load()`, `getCharacter` |",
+    "| Library function, operator, decorator | `#2FE0F0` / `#8FD400` | `#00E5FF` cyan | `runApp`, `setState`, `=`, `@Get` |",
+    "| String | `#FFD600` | `#B7F55A` lime green | `'Hello'` |",
+    "| Comment | `#5F6E5F` italic | `#9AA4B8` | `// …` |",
+    "",
+    "Chernobyl Soft uses no italics."
+   ],
+   "sources": [
+    "nuclear-vscode/theme/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/theme/README.md#icons",
+   "type": "readme",
+   "title": "The Chernobyl themes — Icons",
+   "summary": "`node theme/icons.mjs` generates: burnt yellow in Soft).",
+   "body": [
+    "`node theme/icons.mjs` generates:",
+    "",
+    "- The `.nuc` icon: a flat single-color trefoil on a 24 grid, like the icons of icon themes (yellow in Chernobyl,",
+    "  burnt yellow in Soft). The detailed trefoil (a yellow disc with a shadow) is only the logo of the extension and",
+    "  the plugin. In Android Studio the trefoil beats icon plugins like Atom Material Icons (which maps `.nuc` to",
+    "  Nuclide).",
+    "- The VS Code icon themes **Chernobyl Icons** and **Chernobyl Soft Icons**: every icon and association of **Atom",
+    "  Material Icons** (MIT; Flutter, Dart, `pubspec.yaml`, folders `android/`, `lib/`...) plus the trefoil for `.nuc`",
+    "  and the generic folder in the variant's color.",
+    "",
+    "Atom Material is copied in `vendor/atom-material-icons/` (`node theme/vendor-atom-icons.mjs` updates it from the",
+    "installed extension). Credits in `vscode/THIRD-PARTY.md`."
+   ],
+   "sources": [
+    "nuclear-vscode/theme/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/theme/README.md#the-chernobyl-themes",
+   "type": "readme",
+   "title": "The Chernobyl themes",
+   "summary": "A single source: `theme/palette.json`, with one entry per variant in `variants` (interface and, if the variant defines it, its code palette).",
+   "body": [
+    "A single source: `theme/palette.json`, with one entry per variant in `variants` (interface and, if the variant",
+    "defines it, its code palette). `node theme/build.mjs` generates, for each variant:",
+    "",
+    "- `vscode/themes/<variant>-color-theme.json` (interface + TextMate + semantic tokens)",
+    "- `jetbrains/resources/themes/<Variant>.theme.json` (interface)",
+    "- `jetbrains/resources/themes/<Variant>.xml` and `jetbrains/<Variant>.icls` (editor)",
+    "",
+    "| Variant | Background | Interface accents |",
+    "|---|---|---|",
+    "| Chernobyl | `#0B0F0B` almost black | radioactive green `#A7FF00` |",
+    "| Chernobyl Soft | `#151D1A` greenish slate (lighter) | burnt yellow `#E0A526` |"
+   ],
+   "sources": [
+    "nuclear-vscode/theme/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/CHANGELOG.md#changelog",
+   "type": "changelog",
+   "title": "Changelog",
+   "summary": "All notable changes to nuclear-zed are written here; versions follow Semantic Versioning.",
+   "body": "All notable changes to nuclear-zed are written here; versions follow [Semantic Versioning](https://semver.org).",
+   "sources": [
+    "nuclear-zed/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/CHANGELOG.md#unreleased",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": [
+    "- First public version.",
+    "- 0.46.0: the version of the three extensions (the Loop's analysis step is in `nuclear-loop`, ADR-0105).",
+    "- 0.48.0: the version of the three extensions (the set-up of the AI services is `nuclear-loop setup`, ADR-0106)."
+   ],
+   "sources": [
+    "nuclear-zed/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/CONTRIBUTING.md#before-a-pull-request",
+   "type": "readme",
+   "title": "Contributing to nuclear-zed — Before a pull request",
+   "summary": "./build.sh # needs rustup target wasm32-wasip2 and nuclear-vscode beside it (the icons) the area, the guide, `docs/context/` for agents and contributors).",
+   "body": [
+    "```sh",
+    "./build.sh       # needs rustup target wasm32-wasip2 and nuclear-vscode beside it (the icons)",
+    "```",
+    "",
+    "- Everything is written in English: code, comments, docs and messages.",
+    "- A change that the user of NuclearLang can see updates its documentation in the same pull request (the spec of",
+    "  the area, the guide, `docs/context/` for agents and contributors).",
+    "- Rules and the reasons behind them: the [nuclear repository's AGENTS.md](https://github.com/nuclearlang/nuclear/blob/main/AGENTS.md) and its",
+    "  [decision records](https://github.com/nuclearlang/nuclear/tree/main/docs/adr).",
+    "",
+    "By contributing you agree that your contribution is licensed under the [Apache License 2.0](LICENSE)."
+   ],
+   "sources": [
+    "nuclear-zed/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/CONTRIBUTING.md#contributing-to-nuclear-zed",
+   "type": "readme",
+   "title": "Contributing to nuclear-zed",
+   "summary": "Thank you for helping.",
+   "body": [
+    "Thank you for helping. This repository is part of [NuclearLang](https://github.com/nuclearlang): the language is the",
+    "[nuclear](https://github.com/nuclearlang/nuclear) repository, and the other repositories live as folders inside a clone of it, each with its",
+    "own git (the tools find each other that way)."
+   ],
+   "sources": [
+    "nuclear-zed/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/CONTRIBUTING.md#set-up",
+   "type": "readme",
+   "title": "Contributing to nuclear-zed — Set up",
+   "summary": "git clone https://github.com/nuclearlang/nuclear && cd nuclear git clone https://github.com/nuclearlang/nuclear-zed git clone https://github.com/nuclearlang/nuclear-vscode ./install.sh",
+   "body": [
+    "```sh",
+    "git clone https://github.com/nuclearlang/nuclear && cd nuclear",
+    "git clone https://github.com/nuclearlang/nuclear-zed",
+    "git clone https://github.com/nuclearlang/nuclear-vscode",
+    "./install.sh",
+    "```"
+   ],
+   "sources": [
+    "nuclear-zed/CONTRIBUTING.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/README.md#nuclearlang-for-zed.23de38",
+   "type": "readme",
+   "title": "NuclearLang for Zed",
+   "summary": "operators and nested brackets).",
+   "body": [
+    "- `zed/grammar/`: a tree-sitter grammar of tokens (comments, strings with `${}`, numbers, decorators, words,",
+    "  operators and nested brackets). It never fails on half-written code; the meaning of each name comes from the",
+    "  server's semantic tokens. Zed reads grammars from a commit: `build.sh` commits in `zed/grammar/`'s own git and",
+    "  writes its `rev` in `extension.toml`.",
+    "- `zed/languages/nuclear/`: `config.toml` (the same indentation rules as VS Code; Enter in a `//` continues with",
+    "  ` * `), `highlights.scm`, `brackets.scm`, `overrides.scm`, `semantic_token_rules.json` (kinds, library",
+    "  functions, deprecated struck through), `tasks.json` (Dragonfly) and `runnables.scm` (▷ on `main()` and on each",
+    "  test).",
+    "- `zed/src/lib.rs`: starts the server and passes it `lsp.nuclear-lsp.settings`.",
+    "- `zed/themes/chernobyl.json` is generated by `theme/build.mjs`; `zed/icon_themes/` and `zed/icons/` are",
+    "  generated by `zed/scripts/icons.mjs` from the VS Code icon themes.",
+    "",
+    "Settings, tasks and what Zed does not allow: `spec/flutter.md` §11.3."
+   ],
+   "sources": [
+    "nuclear-zed/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/README.md#nuclearlang-for-zed.ea2113",
+   "type": "readme",
+   "title": "NuclearLang for Zed",
+   "summary": "The NuclearLang extension for Zed: a tree-sitter grammar (`grammar/`), the Chernobyl theme and icons, and the language server `nuclear-lsp` (installed by the `nuclear` repository's installer).",
+   "body": [
+    "The NuclearLang extension for Zed: a tree-sitter grammar (`grammar/`), the Chernobyl theme and icons, and the language server `nuclear-lsp` (installed by the `nuclear` repository's installer).",
+    "",
+    "```sh",
+    "./build.sh                # grammar + extension (wasm32-wasip2) → ~/.local/share/zed/extensions/installed/nuclearlang",
+    "```",
+    "",
+    "`./install.sh` builds and installs it if Zed is installed (it needs `rustup target add wasm32-wasip2`; the grammar",
+    "is regenerated with `tree-sitter`, `cargo install tree-sitter-cli`, only if `grammar.js` changes). Zed reloads it",
+    "by itself. The server is `~/.local/bin/nuclear-lsp` (installed by `./install.sh` with the dialects)."
+   ],
+   "sources": [
+    "nuclear-zed/README.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/docs/context/editors/zed.md#zed-extension-nuclear-zed-spec-flutter-md-11-3.161301",
+   "type": "context",
+   "title": "Zed extension (`nuclear-zed`, `spec/flutter.md` §11.3)",
+   "summary": "writes the `rev` into `extension.toml`).",
+   "body": [
+    "- `grammar/`: tree-sitter grammar of TOKENS, own git (Zed reads grammars from a commit; `build.sh` commits it and",
+    "  writes the `rev` into `extension.toml`).",
+    "- `languages/nuclear/`: `config.toml` (VS Code's indentation rules, `documentation_comment` for ` * `),",
+    "  `highlights.scm` (in Zed the later pattern wins), `brackets.scm`, `overrides.scm`, `semantic_token_rules.json`",
+    "  (`kind`, `defaultLibrary`, `deprecated`), `tasks.json` (Dragonfly run/build/watch/test/repair, device,",
+    "  terminal device), `runnables.scm` (▷ on `main(` → `dragonfly-main`; on `@test/@widget/@states(\"name\")` →",
+    "  `dragonfly-test` with `$ZED_CUSTOM_test_name`).",
+    "- `src/lib.rs`: wasm32-wasip2, `zed_extension_api` 0.7; `nuclear-lsp` from `lsp.nuclear-lsp.binary.path`, the",
+    "  PATH or `~/.local/bin` (installed by `install.sh`; finds dialects and defs in `share/nuclearlang`); `settings` →",
+    "  `{ nuclear: ... }`.",
+    "- `themes/chernobyl.json` GENERATED by `theme/build.mjs`; `icon_themes/` + `icons/` GENERATED by",
+    "  `zed/scripts/icons.mjs` from `vscode/icon-themes`.",
+    "- `zed/build.sh` builds and installs into `~/.local/share/zed/extensions/installed/nuclearlang` (Zed reloads it);",
+    "  `install.sh` runs it when Zed exists (`--no-zed`).",
+    "- The server answers `nuclear.showCodeMetricsCodeLensInfo` with `window/showMessage` only for clients whose",
+    "  `clientInfo.name` starts with `Zed`."
+   ],
+   "sources": [
+    "nuclear-zed/docs/context/editors/zed.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-zed/docs/context/editors/zed.md#zed-extension-nuclear-zed-spec-flutter-md-11-3.7e5457",
+   "type": "context",
+   "title": "Zed extension (`nuclear-zed`, `spec/flutter.md` §11.3)",
+   "summary": "Zed extension (`nuclear-zed`, `spec/flutter.md` §11.3)",
+   "body": "- Zed does not allow: the device, `.nuc` debugging, build on save.",
+   "sources": [
+    "nuclear-zed/docs/context/editors/zed.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-zed",
+    "dialect": ""
+   }
+  }
+ ]
+}

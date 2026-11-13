@@ -1,0 +1,925 @@
+{
+ "shelf": "errors",
+ "origin": "curated",
+ "about": "The mistakes small models repeat when they write Nuclear: each one cost a failed task in the evaluation. A row says the mistake, the right form and the kinds it applies to (`kinds`), so a coder reads the ones of the kind it is about to write.",
+ "rows": [
+  {
+   "id": "pitfall:decorator-after-its-field",
+   "type": "pitfall",
+   "title": "Pitfall: a decorator written after or beside its field",
+   "summary": "A decorator goes on the line right ABOVE the field or method it applies to, never after it and never on the same line. Written after, the compiler says `'@column' has no member below it` (`N0013`).",
+   "body": [
+    "```nuclear",
+    "@entity(\"authors\")",
+    "entity Author()",
+    "  @primary(generated = true)",
+    "  id: int",
+    "  @column(length = 80, unique = true)",
+    "  name: string",
+    "```",
+    "",
+    "The same for a model's rules (`@minLength(2)` above `name: string`), a controller's routes (`@get(\"{id}\")` above its method) and a test (`@test(\"...\")` above its method)."
+   ],
+   "keys": [
+    "decorator after",
+    "has no member below it"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0013"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.entity"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "code": "N0013",
+    "kinds": [
+     "entity",
+     "model",
+     "controller",
+     "tests",
+     "repository",
+     "graph",
+     "statemanager"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:appcomponent-only-aliases",
+   "type": "pitfall",
+   "title": "Pitfall: an application component with signatures or bodies",
+   "summary": "An `appcomponent` is only aliases to use cases: `name() = UseCase.exec`. Never a method signature, a body or constructor parameters. A signature alone is `N0221`.",
+   "body": [
+    "```nuclear",
+    "// What the rest of the app sees of authors.",
+    "appcomponent AuthorsAppComponent",
+    "  add() = AddAuthor.exec",
+    "  byName() = FindAuthor.exec",
+    "```",
+    "",
+    "The alias takes the parameters and the result of the use case's `exec` by itself. On mobile and web the facade is `appcomponent BooksComponent`, written the same way."
+   ],
+   "keys": [
+    "appcomponent alias",
+    "facade alias"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0221"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.appcomponent"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "code": "N0221",
+    "kinds": [
+     "appcomponent"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:missing-kind-word",
+   "type": "pitfall",
+   "title": "Pitfall: the kind word left out of the header",
+   "summary": "A declaration starts with its kind: `usecase FindBook(...)`, `repository BookRepository`, `controller BooksController(...)`, `listener BookEvents(...)`. Only where the folder gives the kind (models, state models) may the word be left out; when in doubt, write it.",
+   "body": [
+    "```nuclear",
+    "repository BookRepository",
+    "  byAuthor(author: string) Book[]",
+    "    where({ \"author\": author })",
+    "    orderBy(\"title\")",
+    "    getMany()",
+    "```",
+    "",
+    "Without its word the declaration is a plain module and nothing of its kind is generated for it. The task's own words are the kind: \"a use case X\" is `usecase X`, \"an application component X\" is `appcomponent X`."
+   ],
+   "keys": [
+    "kind word",
+    "header word"
+   ],
+   "links": [
+    {
+     "rel": "concept",
+     "to": "concept:kinds"
+    },
+    {
+     "rel": "see-also",
+     "to": "error:N0201"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "kinds": [
+     "usecase",
+     "repository",
+     "controller",
+     "listener",
+     "service",
+     "appcomponent",
+     "tools",
+     "agent",
+     "graph"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:copying-the-files-it-uses",
+   "type": "pitfall",
+   "title": "Pitfall: writing again the declarations the task only uses",
+   "summary": "Write only what the task declares. The files it depends on already exist: copying an entity, a repository or an example's other declarations into the new file declares them twice (`N0102`, `N0303`).",
+   "body": [
+    "A task \"a use case `BooksOfAuthor(books: BookRepository)`\" is one declaration, the use case. `BookRepository` and `Book` are given as context so their names and members are known; they are not written again."
+   ],
+   "keys": [
+    "declared twice",
+    "copy the context"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0102"
+    },
+    {
+     "rel": "in-a-project",
+     "to": "error:N0303"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "scope",
+    "code": "N0102",
+    "kinds": [
+     "usecase",
+     "controller",
+     "appcomponent",
+     "tests",
+     "statemanager",
+     "stateless"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:values-not-as-written",
+   "type": "pitfall",
+   "title": "Pitfall: a name, path or value changed from what the task says",
+   "summary": "Every name, decorator, path and value the task gives appears in the answer exactly as written. \"Over the API's `books` path\" is `@repository(path = \"books\")`; \"at most 200 characters\" is `@column(length = 200)`; a method the task calls `byAuthor` is not renamed.",
+   "body": [
+    "A small model tends to tidy names (`getByAuthor`), to drop an option (`unique`) or to move a value to a comment. The acceptance checks look for the exact text, and so do the other pieces that call it."
+   ],
+   "keys": [
+    "exact names"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "scope",
+    "kinds": [
+     "entity",
+     "model",
+     "repository",
+     "usecase",
+     "controller",
+     "appcomponent"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:several-declarations-one-file",
+   "type": "pitfall",
+   "title": "Pitfall: only the first of several declarations written",
+   "summary": "When the task names several declarations for one file (two models, a `state` and its `graph`), every one is written, one after another, each with its own doc comment.",
+   "body": [
+    "```nuclear",
+    "// What a new book carries.",
+    "model NewBook",
+    "  @minLength(1)",
+    "  title: string",
+    "  author: string",
+    "",
+    "// The fields of a book that may change.",
+    "model BookChanges",
+    "  title?: string",
+    "  available?: boolean",
+    "```"
+   ],
+   "keys": [
+    "several declarations"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "scope",
+    "kinds": [
+     "model",
+     "state",
+     "graph"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:library-names-of-other-languages",
+   "type": "pitfall",
+   "title": "Pitfall: the library names of TypeScript, Dart or Python",
+   "summary": "The standard library is Nuclear's: `length` (a property), `add`, `addAll`, `remove`, `upper()`, `lower()`, `trim()`, `join`, `split`, `map`, `filter`, and `x in xs` for membership. `push`, `append`, `len(x)`, `toUpperCase`, `contains`, `includes` are `N0114`.",
+   "body": [
+    "```nuclear",
+    "initials(names: string[]) string",
+    "  letters: string[] = []",
+    "  for name in names",
+    "    if name.length > 0",
+    "      letters.add(name.substring(0, 1).upper())",
+    "  letters.join(\".\")",
+    "```",
+    "",
+    "The compiler's message gives the Nuclear name, and `nuclear fix` writes it."
+   ],
+   "keys": [
+    "wrong library name"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0114"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:standard-library"
+    },
+    {
+     "rel": "members",
+     "to": "lib:list"
+    },
+    {
+     "rel": "members",
+     "to": "lib:string"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md",
+    "spec/library.md#Rules"
+   ],
+   "meta": {
+    "family": "library",
+    "code": "N0114",
+    "kinds": [
+     "usecase",
+     "service",
+     "tools",
+     "graph",
+     "aggregate",
+     "tests"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:replace-changes-only-the-first",
+   "type": "pitfall",
+   "title": "Pitfall: `replace` where every occurrence must change",
+   "summary": "`replace(from, to)` changes only the first occurrence; `replaceAll(from, to)` changes every one.",
+   "body": [
+    "```nuclear",
+    "digits(phone: string) string",
+    "  phone.replaceAll(\" \", \"\").replaceAll(\"-\", \"\")",
+    "```"
+   ],
+   "keys": [
+    "replace",
+    "replaceall"
+   ],
+   "links": [
+    {
+     "rel": "members",
+     "to": "lib:string"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "library",
+    "kinds": [
+     "usecase",
+     "service",
+     "tools"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:a-call-without-its-await",
+   "type": "pitfall",
+   "title": "Pitfall: an asynchronous call used without `~`",
+   "summary": "A call to a repository, a use case, a facade's alias, an agent or a model is asynchronous: write `~` before it, once, and keep its value. Without it the value is not there yet (`N0222`).",
+   "body": [
+    "```nuclear",
+    "usecase AvailableBooks(books: BookRepository)",
+    "  exec(author: string) Result<Error, Book[]>",
+    "    found = ~books.byAuthor(author)",
+    "    Ok(found.filter((b) => b.available))",
+    "```",
+    "",
+    "A member right after the call needs parentheses: `(~books.byAuthor(author)).length`."
+   ],
+   "keys": [
+    "missing await",
+    "without ~"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0222"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    }
+   ],
+   "sources": [
+    "spec/diagnostics.md"
+   ],
+   "meta": {
+    "family": "async",
+    "code": "N0222",
+    "kinds": [
+     "usecase",
+     "controller",
+     "tests",
+     "tools",
+     "graph",
+     "statemanager",
+     "listener"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:result-read-as-its-value",
+   "type": "pitfall",
+   "title": "Pitfall: a kept `Result` read as if it were its value",
+   "summary": "In a test (or any function that does not return a `Result`), `found = ~books.byId(1)` keeps the `Result`: read `found.isOk`, `found.value` and `found.error`, not `found.title` or `found.length`.",
+   "body": [
+    "```nuclear",
+    "tests Books",
+    "  @test(\"finds the books of an author\")",
+    "  byAuthor() void",
+    "    books = inject<BooksAppComponent>()",
+    "    ~books.create(NewBook(title = \"Dune\", author = \"Herbert\", year = 1965))",
+    "    found = ~books.booksOf(\"Herbert\")",
+    "    expect(found.isOk)",
+    "    expect(found.value.length == 1)",
+    "```"
+   ],
+   "keys": [
+    "result value",
+    "found.value"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0114"
+    },
+    {
+     "rel": "concept",
+     "to": "concept:result"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+   ],
+   "meta": {
+    "family": "result",
+    "code": "N0114",
+    "kinds": [
+     "tests"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:test-reads-an-empty-database",
+   "type": "pitfall",
+   "title": "Pitfall: a test that reads rows it never created",
+   "summary": "The databases are in memory and start empty in every test. A test first creates the rows it reads, through the code that adds them or `~repository.save(Entity(...))`, and only then checks.",
+   "body": [
+    "A test that calls `~books.booksOf(\"Herbert\")` and expects one book, without creating it first, fails with an empty list. Nothing of one test reaches the next."
+   ],
+   "keys": [
+    "empty database",
+    "empty list in test"
+   ],
+   "links": [
+    {
+     "rel": "playbook",
+     "to": "playbook:write-tests"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-test-fails"
+    }
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+   ],
+   "meta": {
+    "family": "test",
+    "kinds": [
+     "tests"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:test-injects-an-unknown-class",
+   "type": "pitfall",
+   "title": "Pitfall: a test that injects a class the task does not name",
+   "summary": "Use only the declarations the task names. Never `inject<X>()` a class it does not list: copying a test of a close example brings classes of another project (`N0220`). When the task declares only models, build them and check their fields.",
+   "body": [
+    "```nuclear",
+    "tests BookModels",
+    "  @test(\"a new book keeps its title\")",
+    "  keepsItsTitle() void",
+    "    book = NewBook(title = \"Dune\", author = \"Herbert\", year = 1965)",
+    "    expect(book.title == \"Dune\")",
+    "```"
+   ],
+   "keys": [
+    "inject unknown class"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0220"
+    },
+    {
+     "rel": "failure",
+     "to": "failure:a-test-names-a-class-nobody-planned"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+   ],
+   "meta": {
+    "family": "test",
+    "code": "N0220",
+    "kinds": [
+     "tests"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:query-operators-are-functions",
+   "type": "pitfall",
+   "title": "Pitfall: a repository query that compares with a map of operators",
+   "summary": "A repository query compares with functions: `where({ \"year\": gte(year) })`, never `{ \"year\": { \"gte\": year } }`. The functions: `gt`, `gte`, `lt`, `lte`, `ne`, `like`, `ilike`, `oneOf`, `isNull`, `between`.",
+   "body": [
+    "```nuclear",
+    "repository BookRepository",
+    "  availableSince(year: int, max: int = 20) Book[]",
+    "    where({ \"available\": true, \"year\": gte(year) })",
+    "    orderBy(\"year\", desc = true)",
+    "    limit(max)",
+    "    getMany()",
+    "```",
+    "",
+    "A method's lines build one query; the last line runs it (`getOne()`, `getMany()`, `paginate(page, size)`, `count()`, `exists()`)."
+   ],
+   "keys": [
+    "gte",
+    "where operators",
+    "query operators"
+   ],
+   "links": [
+    {
+     "rel": "kind",
+     "to": "kind:backend.repository"
+    }
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "kinds": [
+     "repository"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:mobile-repository-request",
+   "type": "pitfall",
+   "title": "Pitfall: an HTTP repository method with a body",
+   "summary": "A repository over an API declares each request as a method WITHOUT a body, under `@repository(path = \"books\")`, with `@get(path = \":id\")` (or `@post`, `@put`, `@patch`, `@delete`) above it. The framework makes the call.",
+   "body": [
+    "```nuclear",
+    "@repository(path = \"books\")",
+    "repository BookRepository",
+    "  @get",
+    "  all() Result<BookError, Book[]>",
+    "",
+    "  @get(path = \":id\")",
+    "  one(id: int) Result<BookError, Book>",
+    "```",
+    "",
+    "`:id` takes the parameter `id`; the other parameters go to the query or the body."
+   ],
+   "keys": [
+    "http repository"
+   ],
+   "links": [
+    {
+     "rel": "can",
+     "to": "can:call-an-api"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:mobile.repository"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "kinds": [
+     "repository"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:state-model-shape",
+   "type": "pitfall",
+   "title": "Pitfall: a state model written as fields, or with its manager in the same file",
+   "summary": "A state model is its name and ONE line with its states in parentheses; a boolean is a state without data. Nothing else goes in its file: no `statemanager`, no decorators, no methods.",
+   "body": [
+    "```nuclear",
+    "OrdersState",
+    "  (loaded: Order[], error: OrderError, loading: boolean)",
+    "```",
+    "",
+    "That is the whole file. Each name in the parentheses is a state of the screen with the type of its data. The state manager that emits them is another file, in `managers/`, and another task."
+   ],
+   "keys": [
+    "state model shape"
+   ],
+   "links": [
+    {
+     "rel": "theory",
+     "to": "concept:state-management"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:mobile.statemodel"
+    },
+    {
+     "rel": "its-manager",
+     "to": "pitfall:state-manager-shape"
+    }
+   ],
+   "platforms": [
+    "mobile",
+    "web"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "kinds": [
+     "statemodel"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:graph-node-shape",
+   "type": "pitfall",
+   "title": "Pitfall: a graph node that does not end with its changes",
+   "summary": "In a `graph`, each node is a method that receives the state and whose LAST line is the map of what it changes, with the state's own field names as keys. `@next(\"other\")` above a node names the node that runs AFTER it; the last node has `@next(\"end\")`; the first has `@start`. A node never calls `run`.",
+   "body": [
+    "```nuclear",
+    "// What a translation keeps between its steps.",
+    "state TranslateState",
+    "  text: string",
+    "  rough: string",
+    "  clean: string",
+    "",
+    "// Translates a text in two steps.",
+    "@state(TranslateState)",
+    "graph Translate(helper: Helper)",
+    "  @start",
+    "  @next(\"tidy\")",
+    "  first(state: TranslateState) <string, any>",
+    "    { \"rough\": ~helper.ask(state.text) }",
+    "",
+    "  @next(\"end\")",
+    "  tidy(state: TranslateState) <string, any>",
+    "    { \"clean\": ~helper.ask(\"Tidy: ${state.rough}\") }",
+    "```",
+    "",
+    "- `first` is the first node (`@start`) and goes to `tidy` (`@next(\"tidy\")` is above `first`).",
+    "- `tidy` is the last node: `@next(\"end\")`.",
+    "- A node changes fields of the state by their own names (`rough`, `clean`); it invents no other key.",
+    "- When the task names the state and the graph, both are written in the file, the state first.",
+    "",
+    "A graph of ONE node: that node is the first and the last, so it has both decorators and no other node is written:",
+    "",
+    "```nuclear",
+    "state EchoState",
+    "  input: string",
+    "  output: string",
+    "",
+    "@state(EchoState)",
+    "graph Echo(helper: Helper)",
+    "  @start",
+    "  @next(\"end\")",
+    "  reply(state: EchoState) <string, any>",
+    "    { \"output\": ~helper.ask(state.input) }",
+    "```",
+    "",
+    "Two nodes never have the same name."
+   ],
+   "keys": [
+    "graph node"
+   ],
+   "links": [
+    {
+     "rel": "kind",
+     "to": "kind:backend.graph"
+    },
+    {
+     "rel": "theory",
+     "to": "concept:agents-and-graphs"
+    }
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "kinds": [
+     "graph",
+     "state"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:one-exec-per-use-case",
+   "type": "pitfall",
+   "title": "Pitfall: a use case with several methods, or whose `exec` returns a plain value",
+   "summary": "A `usecase` has exactly one method, `exec`, and it returns `Result<Error, T>`. A second operation is a second use case (`N0215`); a plain return type is `N0216`.",
+   "body": [
+    "```nuclear",
+    "usecase CreateReader(readers: ReaderRepository)",
+    "  exec(input: NewReader) Result<Error, Reader>",
+    "    Ok(~readers.save(Reader(name = input.name, email = input.email)))",
+    "```",
+    "",
+    "Errors of the business are returned, not thrown: `return Err(Conflict(\"${input.email} is taken\"))`."
+   ],
+   "keys": [
+    "exec"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0215"
+    },
+    {
+     "rel": "reported-as",
+     "to": "error:N0216"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.usecase"
+    }
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "code": "N0215",
+    "kinds": [
+     "usecase"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:named-arguments-use-equals",
+   "type": "pitfall",
+   "title": "Pitfall: named arguments written with a colon, or a constructor with `new`",
+   "summary": "A named argument is `name = value`: `Book(title = \"Dune\", year = 1965)`, `orderBy(\"year\", desc = true)`. Not `title: \"Dune\"`, not `{ title }`, and never `new Book(...)`.",
+   "body": [
+    "```nuclear",
+    "sample() Book",
+    "  Book(title = \"Dune\", author = \"Herbert\", year = 1965)",
+    "```",
+    "",
+    "A map literal keeps its colons: `{ \"author\": author }`."
+   ],
+   "keys": [
+    "named arguments"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "syntax",
+    "code": "N0022",
+    "kinds": [
+     "usecase",
+     "tests",
+     "controller",
+     "service",
+     "stateless"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:return-on-the-last-line",
+   "type": "pitfall",
+   "title": "Pitfall: braces, semicolons, `return` on the last line, `const`",
+   "summary": "Blocks are 2-space indentation, never braces; no semicolons; the last line of a function is its value (`return` only leaves early); a variable is declared by assigning it (`x = 1`); comments are `//`.",
+   "body": [
+    "```nuclear",
+    "label(n: int) string",
+    "  if n < 0",
+    "    return \"negative\"",
+    "  size = if n > 100",
+    "    \"large\"",
+    "  else",
+    "    \"small\"",
+    "  \"${size} number\"",
+    "```"
+   ],
+   "keys": [
+    "braces",
+    "semicolons"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0022"
+    },
+    {
+     "rel": "faq",
+     "to": "faq:learn-the-syntax"
+    }
+   ],
+   "sources": [
+    "spec/brief/nuclear-base.md#Rules that change"
+   ],
+   "meta": {
+    "family": "syntax",
+    "code": "N0022",
+    "kinds": [
+     "usecase",
+     "service",
+     "tools",
+     "tests"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:state-manager-shape",
+   "type": "pitfall",
+   "title": "Pitfall: a state manager without its state model, or with a method per state twice",
+   "summary": "A state manager has `@stateModel(State)` above it, its dependencies in the line under its name, and each method marked with the ONE state it emits (`@state(State.loaded)`). The error state is emitted by an `Err`: no method is written for it, and no method is declared twice.",
+   "body": [
+    "```nuclear",
+    "@stateModel(OrdersState)",
+    "statemanager OrdersManager",
+    "  (orders: OrdersComponent)",
+    "    load()",
+    "",
+    "  @state(OrdersState.loading)",
+    "  loading()",
+    "",
+    "  @before(loading)",
+    "  @state(OrdersState.loaded)",
+    "  load() Result<OrderError, Order[]>",
+    "    ~orders.all()",
+    "```",
+    "",
+    "The state model (`OrdersState`) is another file, in `state_models/`: it is not written here."
+   ],
+   "keys": [
+    "state manager shape"
+   ],
+   "links": [
+    {
+     "rel": "theory",
+     "to": "concept:state-management"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:mobile.statemanager"
+    },
+    {
+     "rel": "its-model",
+     "to": "pitfall:state-model-shape"
+    },
+    {
+     "rel": "twice-is",
+     "to": "error:N0102"
+    }
+   ],
+   "platforms": [
+    "mobile",
+    "web"
+   ],
+   "sources": [
+    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "kinds": [
+     "statemanager"
+    ]
+   }
+  },
+  {
+   "id": "pitfall:status-of-a-route",
+   "type": "pitfall",
+   "title": "Pitfall: the status of a route written inside its method",
+   "summary": "The status a route answers is part of its decorator, above the method: `@post(\"{bookId}\", status = 201)`. A `@post` already answers 201 and the others 200. A decorator is never written inside a method's body or after its last line.",
+   "body": [
+    "```nuclear",
+    "@controller(\"orders\")",
+    "controller OrdersController(orders: OrdersAppComponent)",
+    "  @post(\"{productId}\", status = 201)",
+    "  place(productId: int, buyer: string) Result<Error, Order>",
+    "    ~orders.place(productId, buyer)",
+    "",
+    "  @delete(\"{id}\", status = 204)",
+    "  cancel(id: int) Result<Error, Order>",
+    "    ~orders.cancel(id)",
+    "```",
+    "",
+    "The body of a route is only its call to the component's facade, awaited with `~`."
+   ],
+   "keys": [
+    "status code",
+    "route status"
+   ],
+   "links": [
+    {
+     "rel": "reported-as",
+     "to": "error:N0013"
+    },
+    {
+     "rel": "kind",
+     "to": "kind:backend.controller"
+    },
+    {
+     "rel": "playbook",
+     "to": "playbook:add-an-endpoint"
+    }
+   ],
+   "platforms": [
+    "backend"
+   ],
+   "sources": [
+    "dragonfly-backend/spec/brief/backend.md"
+   ],
+   "meta": {
+    "family": "shape",
+    "code": "N0013",
+    "kinds": [
+     "controller"
+    ]
+   }
+  }
+ ]
+}
