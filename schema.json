@@ -229,6 +229,19 @@
     "repo",
     "dialect"
    ]
+  },
+  "queries": {
+   "answers": "Which exact question is this, and what is its exact answer?",
+   "holds": "The catalogue of the questions with one right answer (every command of a tool, the parameters of an MCP tool, the commands that write a kind, a diagnostic by its code...): each row is one such question, the ways people ask it, and the query over the exact facts (SQLite) that answers it whole. A question is matched to its row by meaning and by the names it writes; the answer is never searched by meaning.",
+   "types": [
+    "query"
+   ],
+   "prefixes": [
+    "query"
+   ],
+   "meta": [
+    "entity"
+   ]
   }
  },
  "runtime_collections": [

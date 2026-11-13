@@ -727,7 +727,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/web.py"
+    "nuclear-graph/web.nuc"
    ],
    "meta": {
     "area": "agent",

@@ -546,7 +546,7 @@
    }
   },
   {
-   "id": "doc:spec/projects.md#2-files-and-names",
+   "id": "doc:spec/projects.md#2-files-and-names.0c2b99",
    "type": "spec",
    "title": "Multi-file projects — 2. Files and names",
    "summary": "`[project] sources = \"lib\"` in the dialect, `components/users/data/user_repository.nuc` → `lib/components/users/data/user_repository.dart`.",
@@ -558,7 +558,8 @@
     "- A name is declared only once in the whole project (`N0303`).",
     "- Every name declared in a file can be used in the others without `use`: the transpiler writes the import",
     "  of the file that declares it. The dialect's `project_import` template gives the import path (Dart:",
-    "  `package:{{project}}/{{path}}.dart`).",
+    "  `package:{{project}}/{{path}}.dart`; Python: `{{package}}.{{path}}`, where `package` is the folder the files go",
+    "  to: the manifest's `package`, else the dialect's `sources`).",
     "- A file is imported only if the generated code uses one of its names (comments and the text of strings do",
     "  not count; their interpolations do).",
     "- What holds for the declarations of one file holds across files: `Result` propagation, aliases",
@@ -566,7 +567,23 @@
     "  arguments.",
     "- The `Result` runtime is written once, in `<sources>/nuclear/result.<extension>`, and the files that use",
     "  it import it (if the dialect has its own runtime; Dart uses fpdart).",
-    "- `main` (the entry point) is never imported from another file.",
+    "- `main` (the entry point) is never imported from another file."
+   ],
+   "sources": [
+    "spec/projects.md"
+   ],
+   "meta": {
+    "section": "03-projects",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:spec/projects.md#2-files-and-names.4c10f3",
+   "type": "spec",
+   "title": "Multi-file projects — 2. Files and names",
+   "summary": "folder.",
+   "body": [
     "- What the files of a `[project.outputs]` folder declare (the tests) is only visible to files of that same",
     "  folder."
    ],

@@ -63,7 +63,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/workspace.py",
+    "nuclear-graph/workspace.nuc",
     "nuclear-developer/components/developer/ai/workbench.nuc"
    ],
    "meta": {

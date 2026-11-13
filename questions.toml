@@ -9,6 +9,11 @@
 # `request = true`: the text is an order or a spec, not a question: it is given to the strategy selection and its first
 # strategy must be the expected one; `existing` and `new` are the declarations it names that a project has or lacks.
 #
+# `exact = true`: the question has one right answer: it is given to the graph's query planner (`/v1/answer`) and the
+# first exact query it chooses must be the expected one (a row of `assets/queries/`). `exact = false`: an open
+# question that reads like an exact one (it writes the name of a tool, a kind, a component): besides finding its row,
+# the planner must run no query for it, so the chat does not end its answer with a list nobody asked for.
+#
 # `says`: the question is also asked to the local assistant (`eval/run.py chat` in nuclear-developer, the chat of the
 # editor): its answer must contain every one of these texts (the case does not matter).
 
@@ -16,17 +21,20 @@
 
 [[question]]
 ask = "what is nuclear"
+exact = false
 expect = ["concept:nuclearlang"]
 top = 1
 
 [[question]]
 ask = "que es nuclear"
+exact = false
 expect = ["concept:nuclearlang"]
 top = 1
 says = ["transpil"]
 
 [[question]]
 ask = "para que sirve nuclear"
+exact = false
 expect = ["concept:why-nuclear", "concept:nuclearlang"]
 top = 2
 
@@ -46,6 +54,7 @@ expect = ["concept:advantages", "concept:comparison"]
 
 [[question]]
 ask = "como funciona nuclear"
+exact = false
 expect = ["concept:how-it-works"]
 
 [[question]]
@@ -54,6 +63,7 @@ expect = ["concept:how-it-works", "concept:transpiler"]
 
 [[question]]
 ask = "what is dragonfly"
+exact = false
 expect = ["concept:dragonfly"]
 top = 1
 
@@ -68,10 +78,12 @@ expect = ["can:switch-dialect", "concept:platforms-and-dialects"]
 
 [[question]]
 ask = "what is a kind"
+exact = false
 expect = ["concept:kinds"]
 
 [[question]]
 ask = "how is a dragonfly project organized"
+exact = false
 expect = ["concept:project-architecture"]
 
 [[question]]
@@ -93,6 +105,7 @@ expect = ["faq:what-comes-out", "concept:platforms-and-dialects"]
 
 [[question]]
 ask = "como instalo nuclear"
+exact = false
 expect = ["faq:install"]
 
 [[question]]
@@ -114,12 +127,14 @@ top = 1
 
 [[question]]
 ask = "como funciona el MCP"
+exact = false
 expect = ["concept:mcp"]
 top = 1
 says = ["Model Context Protocol", "nuclear-graph mcp"]
 
 [[question]]
 ask = "how does the mcp work"
+exact = false
 expect = ["concept:mcp"]
 top = 1
 
@@ -129,6 +144,7 @@ expect = ["playbook:connect-an-mcp-client", "concept:mcp"]
 
 [[question]]
 ask = "what is the smart graph"
+exact = false
 expect = ["concept:smart-graph"]
 top = 1
 
@@ -185,6 +201,7 @@ says = ["nestjs"]
 
 [[question]]
 ask = "does the backend have authentication"
+exact = false
 expect = ["limit:backend-not-yet"]
 
 [[question]]
@@ -235,6 +252,7 @@ expect = ["playbook:database-resource"]
 
 [[question]]
 ask = "how do I add an endpoint"
+exact = false
 expect = ["playbook:add-an-endpoint"]
 top = 1
 
@@ -290,6 +308,7 @@ expect = ["error:N0114", "lib:list", "concept:standard-library", "pitfall:librar
 
 [[question]]
 ask = "dragonfly: command not found"
+exact = false
 expect = ["failure:a-command-is-not-found"]
 top = 1
 says = ["install"]
@@ -375,6 +394,7 @@ top = 1
 
 [[question]]
 ask = "what does generate_resource do"
+exact = false
 expect = ["mcp:generate_resource"]
 top = 1
 
@@ -385,6 +405,7 @@ top = 1
 
 [[question]]
 ask = "what does generate_usecase do"
+exact = false
 expect = ["mcp:generate_usecase"]
 top = 1
 
@@ -780,3 +801,101 @@ expect = ["limit:remote-agents-only"]
 [[question]]
 ask = "the setup says a smart graph started by hand already answers"
 expect = ["failure:a-service-started-by-hand-holds-its-port"]
+
+# ---- open questions that write the name of a tool: the planner runs no query (asked in the chat, 2026-11-13) ----
+
+[[question]]
+ask = "que es nuclear lang?"
+platform = "backend"
+exact = false
+expect = ["concept:nuclearlang"]
+
+[[question]]
+ask = "que es el mcp"
+exact = false
+expect = ["concept:mcp"]
+
+[[question]]
+ask = "que es nuclear-loop?"
+exact = false
+expect = ["concept:loop", "tool:nuclear-loop"]
+
+[[question]]
+ask = "que hace el mcp"
+exact = false
+expect = ["concept:mcp"]
+
+# ---- questions with one right answer: the planner reads the exact facts ----
+
+[[question]]
+ask = "que servicios ofrece el mcp?"
+exact = true
+expect = ["query:mcp.tools"]
+says = ["graph_search", "generate_resource", "developer_task", "nuclear_check"]
+
+[[question]]
+ask = "which tools does the mcp server have"
+exact = true
+expect = ["query:mcp.tools"]
+
+[[question]]
+ask = "Describeme a detalle que servicio y opciones tiene el mcp de generadores"
+exact = true
+expect = ["query:mcp.group"]
+says = ["generate_component", "generate_resource", "generate_screen", "generate_usecase"]
+
+[[question]]
+ask = "what parameters does generate_resource take"
+exact = true
+expect = ["query:mcp.tool"]
+
+[[question]]
+ask = "como creo un caso de uso"
+platform = "backend"
+exact = true
+expect = ["query:kind.create"]
+says = ["dragonfly make usecase", "dragonfly gen usecase"]
+
+[[question]]
+ask = "how do I create a repository"
+platform = "backend"
+exact = true
+expect = ["query:kind.create"]
+says = ["dragonfly make repository"]
+
+[[question]]
+ask = "cuales son los comandos de dragonfly"
+exact = true
+expect = ["query:cli.commands"]
+
+[[question]]
+ask = "what does N0114 mean"
+exact = true
+expect = ["query:diagnostic"]
+
+[[question]]
+ask = "cuales son las etapas del loop"
+exact = true
+expect = ["query:loop.stages"]
+
+[[question]]
+ask = "which decorators does the backend have"
+platform = "backend"
+exact = true
+expect = ["query:decorators"]
+
+[[question]]
+ask = "que metodos tiene una lista"
+exact = true
+expect = ["query:library.members"]
+
+[[question]]
+ask = "which generators are there"
+exact = true
+expect = ["query:generators"]
+
+[[question]]
+ask = "show me an example of a controller"
+platform = "backend"
+exact = true
+expect = ["query:examples"]

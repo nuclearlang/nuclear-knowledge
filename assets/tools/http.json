@@ -5,6 +5,41 @@
  "about": "The HTTP routes of the Smart Graph and of the Nuclear Developer.",
  "rows": [
   {
+   "id": "http:developer.accept",
+   "type": "http",
+   "title": "`POST /developer/accept` — the Nuclear Developer's HTTP API",
+   "summary": "Runs the local acceptor on one request: `accept(input: PieceRequest) PieceReply`. The Developer listens on `127.0.0.1:7879`.",
+   "body": [
+    "`POST /developer/accept` → `accept(input: PieceRequest) PieceReply`.",
+    "",
+    "Each request runs on a thread of its own, so nothing of one request reaches the next. Start it: `nuclear-developer` (or `dragonfly run` in its folder)."
+   ],
+   "keys": [
+    "post /developer/accept",
+    "/developer/accept"
+   ],
+   "links": [
+    {
+     "rel": "runs",
+     "to": "agent:acceptor"
+    }
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/api/developer_controller.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "POST /developer/accept"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/accept",
+    "scope": "",
+    "agent": "acceptor"
+   }
+  },
+  {
    "id": "http:developer.analyze",
    "type": "http",
    "title": "`POST /developer/analyze` — the Nuclear Developer's HTTP API",
@@ -30,6 +65,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/analyze"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/analyze",
+    "scope": "",
+    "agent": "analyst"
    }
   },
   {
@@ -58,6 +100,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/chat"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/chat",
+    "scope": "",
+    "agent": "assistant"
    }
   },
   {
@@ -86,6 +135,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/code"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/code",
+    "scope": "",
+    "agent": "coder"
    }
   },
   {
@@ -114,6 +170,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/diagnose"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/diagnose",
+    "scope": "",
+    "agent": "diagnoser"
    }
   },
   {
@@ -142,6 +205,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/document"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/document",
+    "scope": "",
+    "agent": "documenter"
    }
   },
   {
@@ -170,6 +240,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/plan"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/plan",
+    "scope": "",
+    "agent": "planner"
    }
   },
   {
@@ -198,6 +275,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/security"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/security",
+    "scope": "",
+    "agent": "security"
    }
   },
   {
@@ -226,6 +310,13 @@
    "meta": {
     "tool": "developer",
     "name": "POST /developer/test"
+   },
+   "data": {
+    "service": "developer",
+    "verb": "POST",
+    "path": "/developer/test",
+    "scope": "",
+    "agent": "tester"
    }
   },
   {
@@ -243,11 +334,17 @@
     "/v1/documents/{collection}/{doc_id}"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "DELETE /v1/documents/{collection}/{doc_id}"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "DELETE",
+    "path": "/v1/documents/{collection}/{doc_id}",
+    "scope": "write"
    }
   },
   {
@@ -265,11 +362,17 @@
     "/v1/access"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "GET /v1/access"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "GET",
+    "path": "/v1/access",
+    "scope": "admin"
    }
   },
   {
@@ -287,11 +390,17 @@
     "/v1/access/{rid}"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "GET /v1/access/{rid}"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "GET",
+    "path": "/v1/access/{rid}",
+    "scope": ""
    }
   },
   {
@@ -309,11 +418,17 @@
     "/v1/cards/{card_id:path}"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "GET /v1/cards/{card_id:path}"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "GET",
+    "path": "/v1/cards/{card_id:path}",
+    "scope": "read"
    }
   },
   {
@@ -331,11 +446,17 @@
     "/v1/health"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "GET /v1/health"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "GET",
+    "path": "/v1/health",
+    "scope": ""
    }
   },
   {
@@ -353,11 +474,17 @@
     "/v1/kinds/{platform}"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "GET /v1/kinds/{platform}"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "GET",
+    "path": "/v1/kinds/{platform}",
+    "scope": "read"
    }
   },
   {
@@ -375,11 +502,17 @@
     "/v1/prompts/{use_case}"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "GET /v1/prompts/{use_case}"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "GET",
+    "path": "/v1/prompts/{use_case}",
+    "scope": "read"
    }
   },
   {
@@ -397,11 +530,17 @@
     "/v1/stats"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "GET /v1/stats"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "GET",
+    "path": "/v1/stats",
+    "scope": "read"
    }
   },
   {
@@ -419,11 +558,17 @@
     "/v1/access"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "POST /v1/access"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/access",
+    "scope": ""
    }
   },
   {
@@ -441,11 +586,45 @@
     "/v1/access/{rid}/{decision}"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "POST /v1/access/{rid}/{decision}"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/access/{rid}/{decision}",
+    "scope": "admin"
+   }
+  },
+  {
+   "id": "http:graph.post.v1-answer",
+   "type": "http",
+   "title": "`POST /v1/answer` — the Smart Graph's HTTP API",
+   "summary": "What a question needs from the graph before a model answers it: `{question, platform, history, agents, k}` answers `{exact, needs, cards, facts, knowledge}`.",
+   "body": [
+    "What a question needs from the graph before a model answers it: `{question, platform, history, agents, k}` answers `{exact, needs, cards, facts, knowledge}`. `exact`: the questions with one right answer it is (matched to the catalogue of exact questions by meaning and by the names it writes), each run over the exact facts (SQLite) with its rows whole; `needs`: the exact questions it is close to that lack a name; `cards`: what the shelves answer by meaning; `facts` and `knowledge`: both as the text a prompt gets. No model is asked.",
+    "",
+    "Scope: `read`. The graph listens on `127.0.0.1:7878` only; every route but the health and the access request needs `Authorization: Bearer <token>`."
+   ],
+   "keys": [
+    "post /v1/answer",
+    "/v1/answer"
+   ],
+   "sources": [
+    "nuclear-graph/server.nuc"
+   ],
+   "meta": {
+    "tool": "graph",
+    "name": "POST /v1/answer"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/answer",
+    "scope": "read"
    }
   },
   {
@@ -463,11 +642,17 @@
     "/v1/applies"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "POST /v1/applies"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/applies",
+    "scope": "read"
    }
   },
   {
@@ -485,11 +670,17 @@
     "/v1/documents"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "POST /v1/documents"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/documents",
+    "scope": "write"
    }
   },
   {
@@ -507,11 +698,17 @@
     "/v1/ingest"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "POST /v1/ingest"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/ingest",
+    "scope": "admin"
    }
   },
   {
@@ -529,11 +726,17 @@
     "/v1/search"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "POST /v1/search"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/search",
+    "scope": "read"
    }
   },
   {
@@ -551,11 +754,17 @@
     "/v1/strategy"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/server.py"
+    "nuclear-graph/server.nuc"
    ],
    "meta": {
     "tool": "graph",
     "name": "POST /v1/strategy"
+   },
+   "data": {
+    "service": "graph",
+    "verb": "POST",
+    "path": "/v1/strategy",
+    "scope": "read"
    }
   }
  ]

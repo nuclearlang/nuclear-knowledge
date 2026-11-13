@@ -72,17 +72,18 @@
    "id": "concept:smart-graph",
    "type": "concept",
    "title": "The Nuclear Smart Graph: the knowledge base of the ecosystem",
-   "summary": "The Smart Graph is the local, private library of everything NuclearLang is: typed cards on shelves (concepts, language, platforms, tools, errors, capabilities, playbooks, examples, docs), linked to each other, searched by meaning and by exact name. Agents ask it instead of guessing.",
+   "summary": "The Smart Graph is the local, private library of everything NuclearLang is: typed cards on shelves (concepts, language, platforms, tools, errors, capabilities, playbooks, examples, docs), linked to each other, searched by meaning and by exact name, with the exact facts of the ecosystem in a relational database for the questions that have one right answer. Agents ask it instead of guessing.",
    "body": [
     "- **Shelves.** Each shelf answers one kind of question: *concepts* (what, why, how), *language* (how it is written), *platforms* (kinds, decorators, layout), *tools* (every command, MCP tool, route, generator, agent), *errors* (what went wrong and its fix), *capabilities* (what can and cannot be done), *playbooks* (how a task is done, step by step), *examples* (validated code) and *docs* (the long documents).",
     "- **Cards.** A row is one card with a stable id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`), a title, a summary, a body and links to other cards. A card can be fetched by its id, with no search.",
     "- **A graph.** Cards link to each other with typed edges: an error to the errors it comes with and to its fix, a kind to its decorators, a playbook to the tools of its steps.",
-    "- **Hybrid search.** A query is matched by meaning (a local embeddings model) and by the exact names it writes (`N0114`, `gen resource`, `usecase`), and a card is also found by the questions it answers.",
+    "- **Hybrid search.** A query is matched by meaning (a local embeddings model) and by the exact names it writes (`N0114`, `gen resource`, `usecase`), and a card is also found by the questions it answers. The search is exact: every card a filter matches is compared with the question, so a card the graph holds is always found.",
+    "- **Exact answers.** A question that asks which, how many or what are (every tool of the MCP server, the parameters of a tool, the commands that create a kind, what a diagnostic means, the stages of the Loop) is not answered by meaning: the graph keeps the names and structured fields of every card in a relational database (SQLite, in memory only, made from the sealed cards) and a catalogue of exact questions (the `queries` shelf), each with the query that answers it. A planner matches the question to the catalogue and to the shelves: the query runs only when its exact question is closer to what was asked than the closest card, so \"what is nuclear\" gets its card and not the commands of the tool of that name. It fills the query's parameters from the question's own words and runs it, with no model: the answer is every row, the same every time. The chat shows those rows as they are, under the assistant's explanation.",
     "- **Two readers.** A local agent reads only Nuclear (`agents`); a frontier model also reads the dialects underneath, the decisions and the state.",
     "- **Private.** It listens on `127.0.0.1` only, refuses web pages, gives nothing without a token the user allowed, and stores its texts encrypted.",
     "- **Versioned.** The base has a schema and a revision; a check fails when it is behind the code.",
     "",
-    "Use it: `nuclear-graph search \"<question>\"`, `nuclear-graph card <id>`, `nuclear-graph stats`; from an AI client, the MCP tools `graph_search` and `graph_card`."
+    "Use it: `nuclear-graph search \"<question>\"`, `nuclear-graph answer \"<question>\"` (the exact rows, then the cards), `nuclear-graph card <id>`, `nuclear-graph stats`; from an AI client, the MCP tools `graph_search`, `graph_answer` and `graph_card`. The graph itself is written in Nuclear (the `python` dialect)."
    ],
    "keys": [
     "smart graph",
@@ -99,7 +100,10 @@
     "how does the rag work",
     "where does the agent get its knowledge",
     "what does the knowledge base contain",
-    "is the knowledge base private"
+    "is the knowledge base private",
+    "how does the chat answer a question with one right answer",
+    "what is the query planner",
+    "is the smart graph written in nuclear"
    ],
    "links": [
     {
@@ -125,6 +129,7 @@
    ],
    "sources": [
     "docs/adr/0104-smart-graph-shelves.md",
+    "docs/adr/0107-exact-facts-and-the-planner.md",
     "nuclear-graph/README.md"
    ],
    "meta": {
@@ -176,7 +181,11 @@
     "what is the mcp of nuclear",
     "how do I connect claude code to nuclear",
     "which mcp tools does nuclear have",
-    "how do I use nuclear with cursor"
+    "how do I use nuclear with cursor",
+    "what is the mcp",
+    "que es el mcp",
+    "what does the mcp do",
+    "que hace el mcp"
    ],
    "links": [
     {
@@ -222,7 +231,7 @@
    ],
    "sources": [
     "nuclear-graph/README.md#Use it from an AI agent (MCP)",
-    "nuclear-graph/src/nuclear_graph/mcp_server.py",
+    "nuclear-graph/mcp_server.nuc",
     "docs/ai/mcp.md"
    ],
    "meta": {
@@ -406,7 +415,7 @@
    "id": "concept:loop",
    "type": "concept",
    "title": "The Nuclear Loop: the pipeline from a spec to deployed code",
-   "summary": "The Loop takes a spec through nine stages on your machine: specification, generate, plan, tests first, code, verification, security, artifacts and deploy. Each step shows who did it, every run is documented in a journal, and a failed run goes on from the step that failed.",
+   "summary": "The Loop takes a spec through nine stages on your machine: specification, generate, plan, tests first, code, verification, security, artifacts and deploy. A run is drawn as a graph: each step shows who did it, what it decided and why. Every run is documented in a journal, and any step, any stage or the whole run can run again.",
    "body": [
     "1. **Specification**: what you want, with at least one acceptance criterion. Written to `specs/<id>/spec.md`. It ends with the **analysis**: which kind of request the spec is (its strategy, `concept:strategies`), which decides the stages that run, what the generators write and what is asked of you first.",
     "2. **Generate**: `dragonfly gen` writes every resource the spec names, also in plain words, finished and compiling.",
@@ -421,7 +430,10 @@
     "- **Who leads**: the local agents only (`--lead local`), or Claude leading while the local developer writes (`--lead claude`).",
     "- **Where**: VS Code (`Ctrl+Alt+P`), Android Studio (`Alt+Shift+P`), a terminal (`nuclear-loop run specs/<id>/spec.md`), or over MCP (`developer_task`).",
     "- **The journal**: `.nuclear/loop/runs/<id>.md` says what was built, how it was checked and what is left.",
+    "- **The run's page**: a graph with a column per stage and a node per step, the steps its agent followed under it; a click on a node shows what it did, the decisions it took and why, its input, output and code.",
     "- **When it fails**: the diagnoser says why; `nuclear-loop retry <run>` goes on from the failed step. A run interrupted by a crash is recovered.",
+    "- **Anything runs again**: one step, passed or failed, with every step after it (`nuclear-loop retry <run> --step <id>`, *Run again from this step*); a whole stage (`--from <stage>`); the whole pipeline from scratch (`nuclear-loop restart <run>`, *Run again from scratch*). What the steps left out wrote is undone first; a file changed since is kept.",
+    "- **Acceptance**: after a passing verification each acceptance criterion is held against what the run left; the ones not shown met are listed for the reviewer. It informs, it does not fail the run.",
     "- **On a server**: `nuclear-loop export github|gitlab|bitbucket` writes the CI file that runs the same commands.",
     "",
     "Each stage has its row: `stage:spec`, `stage:generate`, `stage:plan`, `stage:test`, `stage:code`, `stage:verify`, `stage:security`, `stage:artifacts`, `stage:deploy`."
@@ -440,7 +452,12 @@
     "what are the stages of the pipeline",
     "how do I run a spec",
     "cuales son los pasos para completar un feature",
-    "how do I retry a failed run"
+    "how do I retry a failed run",
+    "can I retry a step of a run",
+    "how do I run the whole pipeline again from scratch",
+    "como reintento un paso del loop",
+    "what is nuclear-loop",
+    "que es nuclear-loop"
    ],
    "links": [
     {
@@ -547,8 +564,8 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py",
-    "nuclear-graph/src/nuclear_graph/prompts/plan.md",
+    "nuclear-graph/mcp_server.nuc",
+    "nuclear-graph/prompts/plan.md",
     "docs/adr/0103-generators.md#Context"
    ],
    "meta": {
@@ -613,7 +630,7 @@
    ],
    "sources": [
     "docs/adr/0104-smart-graph-shelves.md",
-    "nuclear-graph/src/nuclear_graph/knowledge.py"
+    "nuclear-graph/knowledge.nuc"
    ],
    "meta": {
     "topic": "ai"

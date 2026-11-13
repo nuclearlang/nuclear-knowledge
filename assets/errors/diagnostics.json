@@ -33,6 +33,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "parser",
+    "title": "reserved word used as a name",
+    "what": "Reserved word used as a name",
+    "fix": "another name",
+    "example": "`if = 3`"
+   },
    "links": [
     {
      "rel": "see-also",
@@ -71,6 +78,13 @@
     "code": "N0002",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "lexer",
+    "title": "tab in indentation",
+    "what": "Tab in the indentation",
+    "fix": "2 spaces per level",
+    "example": "`→x = 1`"
    },
    "links": [
     {
@@ -115,6 +129,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "lexer",
+    "title": "indentation does not match any block",
+    "what": "The indentation returns to no open block",
+    "fix": "",
+    "example": "a line at 2 when the blocks are at 0 and 4"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -155,6 +176,13 @@
     "code": "N0005",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "lexer",
+    "title": "indentation is not a multiple of 2",
+    "what": "Indentation that is not a multiple of 2",
+    "fix": "",
+    "example": "3 spaces"
    },
    "links": [
     {
@@ -199,6 +227,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "lexer",
+    "title": "unexpected character",
+    "what": "Unexpected character",
+    "fix": "",
+    "example": "`#`, `&`"
+   },
    "links": [
     {
      "rel": "often-is",
@@ -242,6 +277,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "lexer",
+    "title": "unterminated string",
+    "what": "Unclosed string",
+    "fix": "close it on the same line, or use `\"\"\"`",
+    "example": "`\"abc`"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -283,6 +325,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "lexer",
+    "title": "unmatched bracket",
+    "what": "Unmatched parenthesis, bracket or brace",
+    "fix": "",
+    "example": "`foo(1, 2`"
+   },
    "links": [
     {
      "rel": "often-with",
@@ -323,6 +372,13 @@
     "code": "N0009",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "lexer",
+    "title": "syntax from another language",
+    "what": "Syntax of another language",
+    "fix": "`and` `or` `not` `==` `!=` (and no `;`)",
+    "example": "`&&` `||` `!` `===` `!==` `;`"
    },
    "links": [
     {
@@ -367,6 +423,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "lexer",
+    "title": "invalid interpolation",
+    "what": "Invalid interpolation",
+    "fix": "`\"${expr}\"`",
+    "example": "`\"${}\"`, `\"${a\"`"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -409,6 +472,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "lexer",
+    "title": "invalid escape sequence",
+    "what": "Invalid escape sequence",
+    "fix": "`\\n \\t \\r \\0 \\\\ \\\" \\' \\$ \\u{hex}`",
+    "example": "`\"\\q\"`"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -447,6 +517,13 @@
     "code": "N0012",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "lexer",
+    "title": "invalid number",
+    "what": "Invalid number",
+    "fix": "`42`, `1_000`, `3.14`, `0xff`",
+    "example": "`10px`, `0x`"
    }
   },
   {
@@ -488,6 +565,13 @@
     "code": "N0013",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "parser",
+    "title": "unexpected token",
+    "what": "Unexpected token",
+    "fix": "the message says what was expected",
+    "example": "`x = = 1`"
    },
    "links": [
     {
@@ -536,6 +620,13 @@
     "code": "N0014",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "parser",
+    "title": "range followed by a method needs parentheses",
+    "what": "Range followed by a method without parentheses",
+    "fix": "`(1..10).map(...)`",
+    "example": "`1..10.map(...)`"
    }
   },
   {
@@ -566,6 +657,13 @@
     "code": "N0015",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "parser",
+    "title": "typed lambda parameter without a block",
+    "what": "Typed lambda parameter without a block",
+    "fix": "an indented block, or `users.filter((user: User) => ...)`",
+    "example": "`users.filter(user: User)` without a block"
    }
   },
   {
@@ -596,6 +694,13 @@
     "code": "N0016",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "parser",
+    "title": "function declared inside a body",
+    "what": "Function declared inside a body",
+    "fix": "`helper = (x: int) int` + block",
+    "example": "`helper(x: int) int` + block inside a function"
    },
    "links": [
     {
@@ -642,6 +747,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "parser",
+    "title": "statement in a module body",
+    "what": "Statement in the body of a module",
+    "fix": "field `localAttr: string = \"x\"` or assign it in the constructor",
+    "example": "`localAttr = \"x\"` inside `User`"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -685,6 +797,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "parser",
+    "title": "module declared inside a module",
+    "what": "Module declared inside another module",
+    "fix": "declare it at the top level",
+    "example": "`Inner` inside `User`"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -725,6 +844,13 @@
     "code": "N0019",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "parser",
+    "title": "invalid assignment target",
+    "what": "Invalid assignment target",
+    "fix": "a name, `$field`, `a.b` or `a[i]`; another name for the variable",
+    "example": "`f() = 1`; `pieces = ~pieces(raw)` inside a module with a method `pieces` (a method is not a variable)"
    },
    "links": [
     {
@@ -769,6 +895,13 @@
     "family": "syntax",
     "severity": "error"
    },
+   "data": {
+    "stage": "parser",
+    "title": "one-line function returning void",
+    "what": "One-line function returning void",
+    "fix": "an indented block",
+    "example": "`log(m: string) void = print(m)`"
+   },
    "links": [
     {
      "rel": "see-also",
@@ -807,6 +940,13 @@
     "code": "N0021",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "parser",
+    "title": "comment line without ` * `",
+    "what": "Comment line without ` * `",
+    "fix": "` * text`, with the `*` below the second `/` (the fix writes it)",
+    "example": "`// title` + a more indented `  text`"
    },
    "tags": [
     "comments"
@@ -855,6 +995,13 @@
     "code": "N0022",
     "family": "syntax",
     "severity": "error"
+   },
+   "data": {
+    "stage": "parser",
+    "title": "habit of another language",
+    "what": "Habit of another language (TypeScript, Dart, Python, Java, Go); the other errors of that line are not shown",
+    "fix": "the NuclearLang form; the fix writes it when it is exact (`f() int`, `~g()`, `x = 1`, `User()`, `A: B`, `f(x: int) int`, `else if`, `null`, `// note`, `i += 1`, `use x{ a }`)",
+    "example": "`f() int {`, `await g()`, `const x = 1`, `new User()`, `class A extends B`, `int f(int x)`, `def f(self):`, `elif`, `None`, `# note`, `i++`, `import { a } from \"x\"`"
    },
    "links": [
     {
@@ -916,6 +1063,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "duplicate declaration",
+    "what": "Duplicate declaration",
+    "fix": "",
+    "example": "two `User` in the same file; a member declared twice in one module (`load()` twice); a call to a method hidden by a local of the same name (`prompt(...)` inside `write(prompt: string)` of a module with a method `prompt`)"
+   },
    "links": [
     {
      "rel": "see-also",
@@ -959,6 +1113,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "if/match inside an expression needs one expression per branch",
+    "what": "`if`/`match` with multi-line branches inside an expression",
+    "fix": "",
+    "example": "`f(if a` + a two-line block `)`"
+   },
    "tags": [
     "expressions"
    ]
@@ -989,6 +1150,13 @@
     "code": "N0104",
     "family": "resolver",
     "severity": "error"
+   },
+   "data": {
+    "stage": "resolver",
+    "title": "invalid enum item",
+    "what": "Invalid enum item",
+    "fix": "",
+    "example": "an enum that mixes `user` with `name: string`"
    }
   },
   {
@@ -1019,6 +1187,13 @@
     "code": "N0105",
     "family": "resolver",
     "severity": "error"
+   },
+   "data": {
+    "stage": "resolver",
+    "title": "name used outside the block that created it",
+    "what": "Name used outside the block that created it",
+    "fix": "",
+    "example": "`text` created inside an `if` and read after it"
    },
    "links": [
     {
@@ -1059,6 +1234,13 @@
     "code": "N0106",
     "family": "resolver",
     "severity": "error"
+   },
+   "data": {
+    "stage": "resolver",
+    "title": "undefined name",
+    "what": "Undefined name",
+    "fix": "",
+    "example": "`page` not declared, not a parameter nor an import"
    },
    "links": [
     {
@@ -1109,6 +1291,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "destructuring pattern mixes new and existing names",
+    "what": "Pattern mixing new and existing names",
+    "fix": "",
+    "example": "`[a, b] = xs` with `a` already declared and `b` new"
+   },
    "tags": [
     "patterns"
    ]
@@ -1141,6 +1330,13 @@
     "code": "N0108",
     "family": "resolver",
     "severity": "error"
+   },
+   "data": {
+    "stage": "resolver",
+    "title": "result that can fail is not handled",
+    "what": "Unhandled `Result` outside a function that returns `Result`",
+    "fix": "",
+    "example": "`user = findUser(id)` in a function that returns `string`"
    },
    "links": [
     {
@@ -1195,6 +1391,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "propagated error has another type",
+    "what": "The propagated error has another type",
+    "fix": "",
+    "example": "`findUser` fails with `string` and the function returns `Result<AppError, Order>` (fix: `findUser(id).error(e => Err(AppError(e)))`)"
+   },
    "links": [
     {
      "rel": "concept",
@@ -1236,6 +1439,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "result cannot propagate from this position",
+    "what": "A `Result` that cannot be propagated from that position",
+    "fix": "",
+    "example": "`ok and findUser(id).active` (fix: assign it to a variable first)"
+   },
    "links": [
     {
      "rel": "concept",
@@ -1276,6 +1486,13 @@
     "code": "N0111",
     "family": "resolver",
     "severity": "error"
+   },
+   "data": {
+    "stage": "resolver",
+    "title": "invalid use of a Result",
+    "what": "Invalid use of a `Result`",
+    "fix": "",
+    "example": "a branch `Ok(1) ->` in a `match`; an `.error()` callback that returns `Ok(...)` only in some branches; `match load(id)` with an async `load` (missing `~`)"
    },
    "links": [
     {
@@ -1322,6 +1539,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "alias of a method that cannot be reached",
+    "what": "Alias of a method that cannot be reached",
+    "fix": "",
+    "example": "`find() = Repo.find` with `Repo(url: string)`: the alias creates a new `Repo()` and `url` has no default (fix: give it a default, or write `find` as a method)"
+   },
    "links": [
     {
      "rel": "see-also",
@@ -1362,6 +1586,13 @@
     "code": "N0113",
     "family": "resolver",
     "severity": "error"
+   },
+   "data": {
+    "stage": "resolver",
+    "title": "top-level statements in a file with main",
+    "what": "Top-level statements in a file with `main` (targets that run them in `main`, like Dart)",
+    "fix": "",
+    "example": "`print(\"hi\")` at the top level and `main() void` in the same file (fix: move the statement into `main`; a top-level variable `limit = 10` is allowed)"
    },
    "tags": [
     "structure"
@@ -1407,6 +1638,13 @@
     "code": "N0114",
     "family": "resolver",
     "severity": "error"
+   },
+   "data": {
+    "stage": "resolver",
+    "title": "not a member of Nuclear's standard library",
+    "what": "Not a member of Nuclear's standard library (library.md): a target's name on a base type, a function of a target (`len`, `str`, `parseInt`), a static of a target (`Math.floor`, `JSON.stringify`), a property called as a method or a method used as a property",
+    "fix": "",
+    "example": "`xs.push(x)` (fix: `add(x)`), `text.toUpperCase()` (fix: `upper()`), `len(xs)` (fix: `xs.length`), `xs.length()` (fix: `length` is a property); a kept `Result` read as its value (`found.length`, `found[0]` in a test: `found.value.length`)"
    },
    "links": [
     {
@@ -1482,6 +1720,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "the receiver's type is not known",
+    "what": "The receiver's type is not known and the member is written differently for each base type in this dialect",
+    "fix": "",
+    "example": "`items.length` where `items` comes from a value without a type (fix: declare it, `items: string[] = ...`); only in the dialects where the bases differ (TypeScript's `length` against `size`)"
+   },
    "links": [
     {
      "rel": "concept",
@@ -1532,6 +1777,13 @@
     "family": "resolver",
     "severity": "error"
    },
+   "data": {
+    "stage": "resolver",
+    "title": "unknown member of a declaration of the project",
+    "what": "A member that a declaration of the project does not have: the value's type is a model, class or kind whose members are all known (its own, its project bases' and those of the runtime classes it or its kind inherits when the type definitions list them; the kind's `method_members`), and the message names them as the `.nuc` writes them",
+    "fix": "rebuild (a contract) or fix the name",
+    "example": "`saved.done` when `Task` has `completed` (a contract the backend changed); `~loans.get(id)` on a repository (the runtime's is `find`); the message names the closest member and all of them"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -1580,6 +1832,13 @@
     "family": "dialect",
     "severity": "error"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "unknown header word for the dialect",
+    "what": "Header word unknown to the dialect",
+    "fix": "",
+    "example": "`stateless MyApp` with the `typescript` dialect"
+   },
    "links": [
     {
      "rel": "concept",
@@ -1625,6 +1884,13 @@
     "family": "dialect",
     "severity": "error"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "unknown clause for the dialect",
+    "what": "Clause unknown to the dialect",
+    "fix": "",
+    "example": "`Bird: Animal with Flyer` with the `typescript` dialect"
+   },
    "agents": false
   },
   {
@@ -1653,6 +1919,13 @@
     "code": "N0203",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "the dialect does not define a template",
+    "what": "The dialect does not define a template",
+    "fix": "",
+    "example": "`[syntax] while` is missing"
    },
    "agents": false
   },
@@ -1683,6 +1956,13 @@
     "family": "dialect",
     "severity": "error"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "shortcut collision",
+    "what": "Shortcut collision",
+    "fix": "",
+    "example": "`readFile` defined in two modules of `[auto_imports]`"
+   },
    "agents": false
   },
   {
@@ -1711,6 +1991,13 @@
     "code": "N0205",
     "family": "dialect",
     "severity": "warning"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "shortcut very similar to another",
+    "what": "Shortcut very similar to another (warning)",
+    "fix": "",
+    "example": "`material` and `materal`"
    },
    "agents": false
   },
@@ -1741,6 +2028,13 @@
     "family": "dialect",
     "severity": "error"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "invalid dialect file",
+    "what": "Invalid dialect file",
+    "fix": "",
+    "example": "malformed TOML, a value of the wrong type, a template with an unclosed `{{#x}}`"
+   },
    "agents": false
   },
   {
@@ -1770,6 +2064,13 @@
     "family": "dialect",
     "severity": "error"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "dialect not found",
+    "what": "Dialect not found or circular inheritance",
+    "fix": "",
+    "example": "`--dialect rubi`, `a extends b` and `b extends a`"
+   },
    "agents": false
   },
   {
@@ -1798,6 +2099,13 @@
     "code": "N0208",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "the target allows a single base",
+    "what": "The target allows only one base",
+    "fix": "",
+    "example": "`Admin: User, Person` in TypeScript or Dart"
    },
    "tags": [
     "inheritance"
@@ -1829,6 +2137,13 @@
     "code": "N0209",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "kind requires a member",
+    "what": "The kind requires a member",
+    "fix": "",
+    "example": "`stateless MyApp` without `build`"
    },
    "links": [
     {
@@ -1875,6 +2190,13 @@
     "family": "dialect",
     "severity": "warning"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "unknown template variable",
+    "what": "Unknown variable in a template (warning)",
+    "fix": "",
+    "example": "`{{nmae}}` in `[syntax] class`"
+   },
    "agents": false
   },
   {
@@ -1903,6 +2225,13 @@
     "code": "N0211",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "unknown use clause",
+    "what": "Unknown `use` clause",
+    "fix": "",
+    "example": "`use lib show foo` in TypeScript"
    },
    "agents": false
   },
@@ -1933,6 +2262,13 @@
     "family": "dialect",
     "severity": "error"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "shortcut named like a base keyword",
+    "what": "Shortcut named like a reserved word",
+    "fix": "",
+    "example": "`[imports] if = \"...\"`"
+   },
    "agents": false
   },
   {
@@ -1961,6 +2297,13 @@
     "code": "N0213",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "type definitions package not found",
+    "what": "Type definitions package not found or invalid",
+    "fix": "",
+    "example": "`defs = [\"flutter@9.9.9\"]` without that version in the `defs/` repository"
    },
    "agents": false,
    "links": [
@@ -1996,6 +2339,13 @@
     "code": "N0214",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "two versions of the same type definitions package",
+    "what": "Two versions of the same definitions package",
+    "fix": "",
+    "example": "`dart` asks for `dart@3.13.5` and a child dialect for `dart@3.12.0`"
    },
    "agents": false,
    "links": [
@@ -2036,6 +2386,13 @@
     "kinds": [
      "usecase"
     ]
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "method not allowed in this kind",
+    "what": "Method not allowed in the kind",
+    "fix": "",
+    "example": "a second method in a `usecase` (only `exec` is allowed)"
    },
    "links": [
     {
@@ -2094,6 +2451,13 @@
      "usecase"
     ]
    },
+   "data": {
+    "stage": "dialects",
+    "title": "the kind requires another return type",
+    "what": "The kind requires another return type",
+    "fix": "",
+    "example": "`exec() Character` in a `usecase` (it must return `Result<E, T>`)"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -2143,6 +2507,13 @@
     "family": "dialect",
     "severity": "error"
    },
+   "data": {
+    "stage": "dialects",
+    "title": "unknown or missing argument of a decorator",
+    "what": "Unknown or missing decorator argument (`[decorators.args]`)",
+    "fix": "",
+    "example": "`@screen(loggedIn = { })` (missing `forward`), `@screen(rute = \"/\")`"
+   },
    "links": [
     {
      "rel": "same-family",
@@ -2187,6 +2558,13 @@
      "statemanager"
     ]
    },
+   "data": {
+    "stage": "dialects",
+    "title": "the kind does not write that part of the declaration",
+    "what": "The kind does not write the declaration's generics (`<T>`) or interfaces (`> I`): they would be lost",
+    "fix": "",
+    "example": "`Page<T>` with a kind whose template does not use `generics`; `@stateModel(S) statemanager M > Comparable`"
+   },
    "tags": [
     "kinds",
     "generics"
@@ -2220,6 +2598,13 @@
     "code": "N0219",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "named argument the constructor does not have",
+    "what": "Named argument the constructor does not have (from the type definitions; files of a project)",
+    "fix": "the closest parameter (`style`); the message lists all of them",
+    "example": "`Text(\"a\", colour = c)`"
    },
    "links": [
     {
@@ -2265,6 +2650,13 @@
     "code": "N0220",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "unknown class",
+    "what": "PascalCase call that nothing defines (files of a project, dialects with type definitions); also a call's type argument (`inject<Missing>()`), not a generic parameter",
+    "fix": "the closest known name (`Column`); `nuclear defs search`",
+    "example": "`Collumn(children = [])`; `inject<BooksAppComponent>()` with no such class"
    },
    "links": [
     {
@@ -2329,6 +2721,13 @@
      "appcomponent"
     ]
    },
+   "data": {
+    "stage": "dialects",
+    "title": "a method of this kind needs a body",
+    "what": "A method of the kind needs a body",
+    "fix": "an alias `booksOf() = BooksOfAuthor.exec`, or a body",
+    "example": "`booksOf(author: string) Result<Error, Book[]>` alone in an `appcomponent` (it would be generated empty)"
+   },
    "links": [
     {
      "rel": "kind",
@@ -2387,6 +2786,13 @@
     "code": "N0222",
     "family": "dialect",
     "severity": "error"
+   },
+   "data": {
+    "stage": "dialects",
+    "title": "an asynchronous call used without `~`",
+    "what": "An asynchronous call used without `~`",
+    "fix": "`(~booksOfAuthor.exec(\"Ada\")).length`; `found = ~books.all()`",
+    "example": "`expect(booksOfAuthor.exec(\"Ada\").length > 0)` (the length of a promise); `found = books.all()` then `found.length` (the variable holds the call)"
    },
    "links": [
     {
@@ -2455,6 +2861,13 @@
     "family": "project",
     "severity": "error"
    },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "architecture: this declaration cannot use that one",
+    "what": "A declaration uses another one its kind does not allow (`[architecture] callers`), or a name its kind cannot use (`[architecture] names`)",
+    "fix": "",
+    "example": "a screen calls a `usecase` (only an `appcomponent` calls it); a `statemanager` receives a `BuildContext`"
+   },
    "links": [
     {
      "rel": "concept",
@@ -2506,6 +2919,13 @@
     "family": "project",
     "severity": "error"
    },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "architecture: private to its component",
+    "what": "A declaration uses something private of another component (`[architecture] public`)",
+    "fix": "",
+    "example": "`episodes` uses `CharacterRepository` of `characters` instead of `CharactersComponent`"
+   },
    "links": [
     {
      "rel": "concept",
@@ -2546,6 +2966,13 @@
     "code": "N0303",
     "family": "project",
     "severity": "error"
+   },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "invalid project",
+    "what": "Invalid project",
+    "fix": "",
+    "example": "`nuclear.toml` is missing, two files declare the same name, or the manifest in Nuclear (`config.nuc`) has another section, an unnamed argument or a value that is not a literal"
    },
    "links": [
     {
@@ -2602,6 +3029,13 @@
     "family": "project",
     "severity": "error"
    },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "a plugin the project has not enabled",
+    "what": "A kind or a name of a plugin the project does not enable (`[project.plugins]` of the dialect)",
+    "fix": "enable it in `config.nuc`: `plugins(genkit = true)`",
+    "example": "`flow Chat` or `Genkit(...)` without `plugins(genkit = true)` in `config.nuc`"
+   },
    "links": [
     {
      "rel": "concept",
@@ -2650,6 +3084,13 @@
     "family": "project",
     "severity": "error"
    },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "a dialect does not match its platform",
+    "what": "A dialect does not match its platform's contract (`dialects/<platform>/platform.toml`, ADR-0093): a kind missing or added, a consumed decorator or a plugin the platform does not declare (a plugin the dialect does not bring yet is a warning)",
+    "fix": "declare it in `platform.toml` and implement it in every dialect of the platform, or drop it",
+    "example": "`[kinds.widget]` in a backend dialect"
+   },
    "agents": false
   },
   {
@@ -2678,6 +3119,13 @@
     "code": "N0306",
     "family": "project",
     "severity": "error"
+   },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "kind package without an implementation for the dialect",
+    "what": "A kind package (`kinds/<name>/`, ADR-0095) enabled in `config.nuc` has no implementation for the project's dialect",
+    "fix": "",
+    "example": "`plugins(jobs = true)` with `kinds/jobs/fastapi/` only, built with `nestjs` (fix: build with fastapi, or add `kinds/jobs/nestjs/`)"
    },
    "links": [
     {
@@ -2722,6 +3170,13 @@
     "code": "N0307",
     "family": "project",
     "severity": "error"
+   },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "contract not available",
+    "what": "A contract the manifest declares (`contracts(name = \"../path\" | \"https://...\")`, ADR-0098) cannot be read: the backend at that path was never built, a url contract was never fetched, or the JSON is invalid",
+    "fix": "build the backend (`nuclear build ../tasks_api`) or run `nuclear contracts update`",
+    "example": "`contracts(tasks_api = \"https://api.x\")` without `nuclear contracts update`"
    },
    "links": [
     {
@@ -2791,6 +3246,13 @@
      "entity"
     ]
    },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "a field decorator's rule is not met",
+    "what": "A field decorator's rule is not met (`[decorators.fields]` of the platform, ADR-0100): a relation field is optional, its type is an entity (a list for `@oneToMany`/`@manyToMany`), `@manyToOne` needs its column `<name>Id`, `inverse` names a field of the related entity, one side of a `@manyToMany` has `@joinTable` and one side of a `@oneToOne` has `@joinColumn`",
+    "fix": "`@manyToOne project?: Project` + `projectId: int`",
+    "example": "`@manyToOne project: Project` (not optional, no `projectId`)"
+   },
    "links": [
     {
      "rel": "kind",
@@ -2836,6 +3298,13 @@
     "code": "N0309",
     "family": "project",
     "severity": "error"
+   },
+   "data": {
+    "stage": "projects and architecture",
+    "title": "not a decorator of the platform",
+    "what": "A project of a platform writes a decorator in lower case its platform does not declare (`decorators` of `platform.toml`): the dialect would drop it or write it as something else. The message names the closest one, or what replaced a removed one (`[decorators.replaced]`)",
+    "fix": "`@primary(generated = true)`",
+    "example": "`@generated()` on a backend entity field"
    },
    "links": [
     {

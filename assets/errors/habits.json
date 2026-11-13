@@ -32,6 +32,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`a.contains(x)` / `a.includes(x)`",
+    "right": "`x in a`",
+    "note": "also `key in map`"
    }
   },
   {
@@ -58,6 +63,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`&&` `||` `!x` `===`",
+    "right": "`and` `or` `not x` `==`",
+    "note": "comparisons are always strict"
    }
   },
   {
@@ -88,6 +98,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`await load()`, `async`",
+    "right": "`~load()`",
+    "note": "a function that uses `~` is async by itself"
    }
   },
   {
@@ -114,6 +129,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "bitwise `& | ^ ~ << >> >>>`",
+    "right": "`& | ^ ^x << >> >>>`",
+    "note": "`^x` is the complement (`~` is await)"
    }
   },
   {
@@ -140,6 +160,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`{ ... }` blocks, `;`",
+    "right": "a 2-space indented block, no `;`",
+    "note": "a tab is N0002"
    }
   },
   {
@@ -171,6 +196,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`class User extends Person implements Named`",
+    "right": "`User(name: string) : Person > Named` + block",
+    "note": "the header holds the constructor"
    }
   },
   {
@@ -197,6 +227,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`cond ? a : b` statements",
+    "right": "`if`/`match` are values",
+    "note": "`x = if c` + branches"
    }
   },
   {
@@ -229,6 +264,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`const x = 1`, `let`, `var`, `final`",
+    "right": "`x = 1`",
+    "note": "const or mutable is decided by the transpiler"
    }
   },
   {
@@ -255,6 +295,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`f(name: \"Ana\")`, `f({ name })`",
+    "right": "`f(name = \"Ana\")`",
+    "note": "named arguments use `=`"
    }
   },
   {
@@ -284,6 +329,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`function f(a: number): string`",
+    "right": "`f(a: int) string`",
+    "note": "the return type goes after `)`"
    }
   },
   {
@@ -310,6 +360,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`` `Hi ${name}` ``",
+    "right": "`\"Hi ${name}\"` (both quotes are the same)",
+    "note": "`r\"\\d+\"` = raw text (regex)"
    }
   },
   {
@@ -339,6 +394,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`import`",
+    "right": "nothing: the target's library names are imported automatically; `use path{ a, b }` for others",
+    "note": ""
    }
   },
   {
@@ -369,6 +429,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`interface`, `enum`",
+    "right": "the shape decides: only signatures = interface; only names (or `name(\"value\")`) = enum",
+    "note": ""
    }
   },
   {
@@ -398,6 +463,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`Math.pow(a, b)`, `a ~/ b`",
+    "right": "`a  b`, `a ~/ b` (integer division)",
+    "note": "`-2  2` is -4"
    }
   },
   {
@@ -427,6 +497,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`new User(\"Ana\")`",
+    "right": "`User(\"Ana\")`",
+    "note": "no `new`"
    }
   },
   {
@@ -456,6 +531,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`return x` at the end",
+    "right": "the last line is the value",
+    "note": "`return` only to leave early; `void` returns nothing"
    }
   },
   {
@@ -485,6 +565,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`switch`",
+    "right": "`match value` + `pattern -> value`, `_` = else",
+    "note": "`is Type ->`, `a | b ->`"
    }
   },
   {
@@ -514,6 +599,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`this.name`",
+    "right": "`name`; `$name` when a parameter hides it",
+    "note": ""
    }
   },
   {
@@ -543,6 +633,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`try/catch (e)`",
+    "right": "`try` / `catch e` / `finally`",
+    "note": "as the last line, its value is returned"
    }
   },
   {
@@ -569,6 +664,11 @@
    "meta": {
     "family": "habit",
     "code": "N0022"
+   },
+   "data": {
+    "wrong": "`x!`, `x?.y`, `x ?? y`",
+    "right": "the same",
+    "note": ""
    }
   }
  ]

@@ -5,6 +5,39 @@
  "about": "The local agents of the Nuclear Developer, from their sources.",
  "rows": [
   {
+   "id": "agent:acceptor",
+   "type": "agent",
+   "title": "Acceptor — a local agent of the Nuclear Developer",
+   "summary": "The acceptor: holds each acceptance criterion of a spec against what a run left.",
+   "body": [
+    "The acceptor: holds each acceptance criterion of a spec against what a run left. The facts come from the Loop (the files of the run, how many tests they declare, the commands that passed); the model says, per criterion, whether they show it met and where. It changes nothing, and its verdict is evidence for the reviewer, never a gate. Prompt: agents/accept.md.",
+    "",
+    "Its steps, always in this order: judge.",
+    "",
+    "Its model: `gemma4:e2b` (on Ollama, at most 3B parameters)."
+   ],
+   "keys": [
+    "acceptor",
+    "acceptor agent"
+   ],
+   "sources": [
+    "nuclear-developer/components/developer/ai/acceptor.nuc"
+   ],
+   "meta": {
+    "tool": "developer",
+    "name": "Acceptor"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "judge"
+    ],
+    "models": [
+     "gemma4:e2b"
+    ]
+   }
+  },
+  {
    "id": "agent:analyst",
    "type": "agent",
    "title": "Analyst — a local agent of the Nuclear Developer",
@@ -26,15 +59,26 @@
    "meta": {
     "tool": "developer",
     "name": "Analyst"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "read",
+     "classify",
+     "derive"
+    ],
+    "models": [
+     "gemma4:e2b"
+    ]
    }
   },
   {
    "id": "agent:assistant",
    "type": "agent",
    "title": "Assistant — a local agent of the Nuclear Developer",
-   "summary": "The assistant: answers a message of the chat about the project or about NuclearLang, with the cards of the graph closest to the question (every shelf: what it is, how it is done, what can and cannot be done), the project's map and the last messages of the session.",
+   "summary": "The assistant: answers a message of the chat about the project or about NuclearLang.",
    "body": [
-    "The assistant: answers a message of the chat about the project or about NuclearLang, with the cards of the graph closest to the question (every shelf: what it is, how it is done, what can and cannot be done), the project's map and the last messages of the session. It explains and proposes Nuclear; it changes no file (an order to change the project is a Loop run). Prompt: agents/chat.md.",
+    "The assistant: answers a message of the chat about the project or about NuclearLang. The graph's query planner reads the message first, without a model: a question with one right answer (every command of a tool, the tools of the MCP server and their parameters, the commands that write a kind...) gets the rows of the graph's database, whole (`facts`), and the rest the cards of the shelves closest to it (`knowledge`). The model writes the answer from both, the project's map and the last messages of the session; the rows then end the answer as the graph gave them, put there by this code: a model retells a long list in part, so the list never depends on it. It explains and proposes Nuclear; it changes no file (an order to change the project is a Loop run). Prompt: agents/chat.md.",
     "",
     "Its steps, always in this order: recall → answer.",
     "",
@@ -50,6 +94,16 @@
    "meta": {
     "tool": "developer",
     "name": "Assistant"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "recall",
+     "answer"
+    ],
+    "models": [
+     "gemma4:e2b"
+    ]
    }
   },
   {
@@ -74,6 +128,16 @@
    "meta": {
     "tool": "developer",
     "name": "Coder"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "recall",
+     "write"
+    ],
+    "models": [
+     "qwen2.5-coder:3b"
+    ]
    }
   },
   {
@@ -98,6 +162,16 @@
    "meta": {
     "tool": "developer",
     "name": "Diagnoser"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "gather",
+     "explain"
+    ],
+    "models": [
+     "gemma4:e2b"
+    ]
    }
   },
   {
@@ -122,6 +196,16 @@
    "meta": {
     "tool": "developer",
     "name": "Documenter"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "recall",
+     "write"
+    ],
+    "models": [
+     "gemma4:e2b"
+    ]
    }
   },
   {
@@ -146,6 +230,16 @@
    "meta": {
     "tool": "developer",
     "name": "Planner"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "recall",
+     "split"
+    ],
+    "models": [
+     "gemma4:e2b"
+    ]
    }
   },
   {
@@ -170,6 +264,16 @@
    "meta": {
     "tool": "developer",
     "name": "Security"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "recall",
+     "review"
+    ],
+    "models": [
+     "gemma4:e2b"
+    ]
    }
   },
   {
@@ -194,6 +298,16 @@
    "meta": {
     "tool": "developer",
     "name": "Tester"
+   },
+   "data": {
+    "kind": "graph",
+    "steps": [
+     "recall",
+     "write"
+    ],
+    "models": [
+     "qwen2.5-coder:3b"
+    ]
    }
   },
   {
@@ -201,7 +315,7 @@
    "type": "agent",
    "title": "Workbench — a local agent of the Nuclear Developer",
    "summary": "What every local agent shares: the Nuclear Smart Graph, the NuclearLang tools and the models.",
-   "body": "What every local agent shares: the Nuclear Smart Graph, the NuclearLang tools and the models. No method has a doc comment, so none is offered to a model as a tool: the graphs call them in a fixed order, because a small model follows steps better than it chooses tools.  The prompts are files of the graph (`nuclear-graph/src/nuclear_graph/prompts/agents/<name>.md`), read with `prompt(name, values)`: nothing a model reads is written inside this code.",
+   "body": "What every local agent shares: the Nuclear Smart Graph, the NuclearLang tools and the models. No method has a doc comment, so none is offered to a model as a tool: the graphs call them in a fixed order, because a small model follows steps better than it chooses tools.  The prompts are files of the graph (`nuclear-graph/prompts/agents/<name>.md`), read with `prompt(name, values)`: nothing a model reads is written inside this code.",
    "keys": [
     "workbench",
     "workbench agent"
@@ -212,6 +326,11 @@
    "meta": {
     "tool": "developer",
     "name": "Workbench"
+   },
+   "data": {
+    "kind": "tools",
+    "steps": [],
+    "models": []
    }
   }
  ]

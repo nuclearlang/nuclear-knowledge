@@ -15,7 +15,7 @@
     "icons the other two read), `nuclear-jetbrains/` and `nuclear-zed/`, each its own git inside the working tree; the",
     "Dragonfly parts move later to `dragonfly-flutter-vscode` / `dragonfly-flutter-jetbrains` (ADR-0083). Extensions run",
     "`nuclear-lsp` as an external binary and talk to it only through LSP (+ `nuclear/*` requests). Installed version:",
-    "**0.48.0** (all three; the Loop in VS Code and Android Studio only, ADR-0102). No commits unless the user asks."
+    "**0.49.0** (all three; the Loop in VS Code and Android Studio only, ADR-0102). No commits unless the user asks."
    ],
    "sources": [
     "docs/context/editors/CONTEXT.md"
@@ -344,7 +344,8 @@
    "body": [
     "- First public version.",
     "- 0.46.0: the version of the three extensions (the Loop's analysis step is in `nuclear-loop`, ADR-0105).",
-    "- 0.48.0: the version of the three extensions (the set-up of the AI services is `nuclear-loop setup`, ADR-0106)."
+    "- 0.48.0: the version of the three extensions (the set-up of the AI services is `nuclear-loop setup`, ADR-0106).",
+    "- 0.49.0: the version of the three extensions (the Loop's graph of a run, any step run again and a run from scratch are in VS Code and `nuclear-loop`; the language server reads `[project] package` of `nuclear.toml`)."
    ],
    "sources": [
     "nuclear-jetbrains/CHANGELOG.md"
@@ -610,6 +611,36 @@
     "- 0.47.0: right-click menu in the Nuclear workspace file tree: New File/Folder, Rename and Delete (to the trash), and *New with Dragonfly* (`dragonfly make`/`gen`) limited to what the clicked folder and the platform allow; build/, node_modules/ and the files that make a project are protected.",
     "- 0.48.0: the set-up of the AI services (ADR-0106). *Nuclear: Set Up the AI Services* is a wizard in four steps: this machine (processor, memory, GPU, disk) and where the agents run (here, or remote agents only); the profile (`lite`, `medium`, `hard`: what each downloads, the memory it wants, what works and what does not, one suggested for the machine); what it needs (NuclearLang, uv, Ollama: found by itself once installed, or installed in a terminal); the installation with its progress and *Try again*. Offered once on a machine never set up; *Set-up…* in *Settings and integrations*, whose Start and Restart now go through the system's services. `nuclear-loop setup [--profile <id>] [--yes] | --status | --remove` is the same set-up in a terminal. The services start at every login (systemd user units, launch agents, the Startup folder). The Loop's and the editor's default models are the ones of the machine's profile (`~/.config/nuclearlang/ai.env`)."
    ],
+   "sources": [
+    "nuclear-vscode/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/CHANGELOG.md#unreleased.7b7e87",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "Unreleased",
+   "body": "- 0.49.0: the Loop shows a run as a graph and lets any of it run again. A column per stage, a node per step in the order it ran and, under each step, the steps its agent followed; a click on a node opens it beside the graph: what it did, the decisions it took and why (each step now keeps them: which strategy and by which signs, why a stage is left out, why a file goes to the tester, why a planned piece is dropped), its input, its output and its code. *Run again from this step* on every step, passed or failed (it and every step after it; the steps before it are kept), *Run <stage> again* on every stage, *Run again from scratch* on the run; what the steps left out wrote is undone first, and a file changed since the run wrote it is kept (`nuclear-loop retry <run> --step <id>`, `nuclear-loop restart <run>`). A run made by an older version (no analysis, no Generate stage) gets today's stages and starts from scratch at any retry. A plan made again drops the pieces a planner gave and keeps the ones written in the form. When the verification passes, each acceptance criterion is held against what the run left (`/developer/accept`): the ones not shown met are listed as left for the reviewer, in the page and in the journal. The local planner is given the spec alone (the context files' words are not the request's). The set-up builds the Smart Graph, now written in Nuclear, before it instal",
+   "sources": [
+    "nuclear-vscode/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/CHANGELOG.md#unreleased.e4f764",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "ls it.",
+   "body": "ls it. A run of an older version whose record says a file \"was\" what an earlier attempt of the same run wrote removes that file when it starts from scratch (it came back and broke the compile). A failed command's line in the log is the compiler's first error and where, not the last line of its output; a full disk names the folder that is full; the skipped *Tests first* says whether the generators wrote tests.",
    "sources": [
     "nuclear-vscode/CHANGELOG.md"
    ],
@@ -1544,23 +1575,23 @@
    }
   },
   {
-   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.086121",
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.1b8854",
    "type": "context",
    "title": "VS Code extension (`nuclear-vscode`) — `src/loopEngine.ts`, `src/loopPanel.ts` — the Loop tool (ADR-0102)",
-   "summary": "`generate` calls join the spec's in `generateStage` through `gen()`, its `pieces` are the plan when the tools gave them and a piece with `code` is written as it is, `wire()` runs `dragonfly gen usecase` for each use case the coder wrote, `verifyStage` repairs the file a failure names for `mode:…",
+   "summary": "plan → tests first → code → verify → security → artifacts → deploy (generate, ADR-0103: `specResources` — the spec's `## Resources` or its `GET <url>` lines — through `dragonfly gen resource ... --from-spec`, the changed files found by `nucFiles` snapshots and put in the write ledger,…",
    "body": [
+    "plan → tests first → code → verify → security → artifacts → deploy (generate, ADR-0103: `specResources` — the spec's",
+    "`## Resources` or its `GET <url>` lines — through `dragonfly gen resource ... --from-spec`, the changed files found by",
+    "`nucFiles` snapshots and put in the write ledger, `Step.files`; the planner gets `generatedNote()` and",
+    "`withoutGenerated` drops a piece that repeats one; the strategy of the request, ADR-0105: `analyze()` is the last",
+    "step of the spec stage and asks `/developer/analyze`, `Run.analysis` — its `stages` skip the others in `stages()`, its",
     "`generate` calls join the spec's in `generateStage` through `gen()`, its `pieces` are the plan when the tools gave them",
     "and a piece with `code` is written as it is, `wire()` runs `dragonfly gen usecase` for each use case the coder wrote,",
     "`verifyStage` repairs the file a failure names for `mode: fix`, never a test; `Spec.strategy` is the spec's `- Strategy:`",
     "line) and saves `.nuclear/loop/runs/<id>.json` on every step (`change` event);",
     "`specs/<id>/spec.md` is written by the spec stage. Agents: the Nuclear Developer over HTTP (`developerUrl`), Claude",
     "through `claude -p --output-format stream-json` with the Nuclear MCP (`graphCommand mcp`, `--strict-mcp-config`,",
-    "`--tools` limited to the stage's built-ins): every tool call is a step, `developer_*` calls drawn as the local agent.",
-    "Code stage: each piece by the coder (Claude takes the ones it leaves with errors and keeps the fix as a graph",
-    "example), then `commands.check`; a project error gets one local repair per file (`repairProject`), then Claude.",
-    "Commands are data: `.nuclear/loop.json` (`defaultConfig(platform)`), exported by `ciFile()` to GitHub Actions, GitLab",
-    "CI or Bitbucket Pipelines (the deterministic stages). Sources: `jiraIssue`/`jiraMine` (REST v3, ADF to text; the",
-    "site, email and API token in VS Code secret storage `nuclear.loop.jira`), `githubIssue` (`gh issue view`);"
+    "`--tools` limited to the stage's built-ins): every tool call is a step, `developer_*` calls drawn as the local agent."
    ],
    "sources": [
     "nuclear-vscode/docs/context/editors/vscode.md"
@@ -1572,21 +1603,16 @@
    }
   },
   {
-   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.19c4c5",
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.285030",
    "type": "context",
    "title": "VS Code extension (`nuclear-vscode`) — `src/loopEngine.ts`, `src/loopPanel.ts` — the Loop tool (ADR-0102)",
-   "summary": "`criteriaOf` reads the list under \"Acceptance criteria\".",
+   "summary": "`retryStep`, `retryStage`, `scratch`.",
    "body": [
-    "`criteriaOf` reads the list under \"Acceptance criteria\". `suggestContext` ranks the project's and the user's `.md`",
-    "(agent instructions first, then specs, context, ADRs, skills, agent definitions) by the words of the spec.",
-    "`loopPanel.ts` draws it: the runs, the spec form (use case → spec written or imported → context → who leads, with an",
-    "optional plan preview by the local planner), and a run as a C4-like pipeline: level 1 the stages, a click zooms",
-    "(`transform-origin` at the clicked node) into a stage's steps, another into a step (trace, code, output, input);",
-    "`Escape` zooms out.",
+    "`retryStep`, `retryStage`, `scratch`.",
     "",
     "`src/loopCli.ts` is `nuclear-loop` (`npm run loop` → `out/nuclear-loop.js`, also part of `compile`; `stage.sh` puts",
     "it in the installation's `bin/` with a `node` wrapper): `run [spec.md] [--lead]` (`parseSpecMarkdown`, the inverse of",
-    "`specMarkdown`; no file = the spec changed last; the project is the closest folder up with `config.nuc`), `ci",
+    "`specMarkdown`; no file = the spec changed last; the project is the closest folder up with `config.nuc`), `retry <run> [--from <stage> | --step <id>]`, `restart <run>`, `ci",
     "[stage...]` (`ciCommands`, the same grouping `ciFile` exports), `export <provider>`, `runs`. The JetBrains tool window",
     "drives the Loop through it (no Zed: the Loop is for VS Code and Android Studio only, decided by the user)."
    ],
@@ -1600,7 +1626,7 @@
    }
   },
   {
-   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.87118a",
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.a8518d",
    "type": "context",
    "title": "VS Code extension (`nuclear-vscode`) — `src/loopEngine.ts`, `src/loopPanel.ts` — the Loop tool (ADR-0102)",
    "summary": "A tool of the workspace strip (`Ctrl+Alt+P`, id `loop`), one full-screen webview like Devices and HTTP.",
@@ -1608,14 +1634,43 @@
     "A tool of the workspace strip (`Ctrl+Alt+P`, id `loop`), one full-screen webview like Devices and HTTP.",
     "`loopEngine.ts` has no VS Code import (a node script drives it; `npm test` runs `test/loop.test.ts` with node:test):",
     "retries (`backoff`: exponential with full jitter, capped, `Retry-After` wins; `transientStatus`; `config.retry`),",
-    "`start(from?)` resumes a failed run from its first failed stage (earlier attempt in `run.previous`, `restoreWritten`",
-    "reads the files back), `diagnose()` asks `/developer/diagnose` when a stage fails (`run.diagnosis`); `Spec`, `Run`, `Stage`, `Step` (each with an",
-    "`Actor`: you, claude, planner, coder, tester, security, shell, graph), `LoopEngine.start()` runs spec → generate →",
-    "plan → tests first → code → verify → security → artifacts → deploy (generate, ADR-0103: `specResources` — the spec's",
-    "`## Resources` or its `GET <url>` lines — through `dragonfly gen resource ... --from-spec`, the changed files found by",
-    "`nucFiles` snapshots and put in the write ledger, `Step.files`; the planner gets `generatedNote()` and",
-    "`withoutGenerated` drops a piece that repeats one; the strategy of the request, ADR-0105: `analyze()` is the last",
-    "step of the spec stage and asks `/developer/analyze`, `Run.analysis` — its `stages` skip the others in `stages()`, its"
+    "`start(from?, step?)` runs a run again: from its first failed stage, from a stage (`from`), or from one step by its",
+    "id (`step`: it and every step after it; the ones before it are kept), `restart()` from scratch; `guard()` refuses a",
+    "run that is running, `undo()` puts back what the steps left out wrote (`loopSafety.rollback`: a file whose `digest`",
+    "is not the one the write left is kept and named), `forget()` moves them to `run.previous` with the reason, `planKept()`",
+    "keeps the pieces the user wrote and drops the planner's; `upgradeRun()` gives a run of an older `ENGINE` today's",
+    "stages and makes its next retry a restart; `decide()` records a step's `decisions` (`Decision`: what, why); `accept()`",
+    "asks `/developer/accept` after a passing verification (`Run.acceptance`, never a gate); `restoreWritten`",
+    "reads the files back, `diagnose()` asks `/developer/diagnose` when a stage fails (`run.diagnosis`); `Spec`, `Run`, `Stage`, `Step` (each with an",
+    "`Actor`: you, claude, planner, coder, tester, security, shell, graph), `LoopEngine.start()` runs spec → generate →"
+   ],
+   "sources": [
+    "nuclear-vscode/docs/context/editors/vscode.md"
+   ],
+   "meta": {
+    "section": "09-editors",
+    "repo": "nuclear-vscode",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-vscode/docs/context/editors/vscode.md#src-loopengine-ts-src-looppanel-ts-the-loop-tool-adr-0102.c87832",
+   "type": "context",
+   "title": "VS Code extension (`nuclear-vscode`) — `src/loopEngine.ts`, `src/loopPanel.ts` — the Loop tool (ADR-0102)",
+   "summary": "Code stage: each piece by the coder (Claude takes the ones it leaves with errors and keeps the fix as a graph example), then `commands.check`; a project error gets one local repair per file (`repairProject`), then Claude.",
+   "body": [
+    "Code stage: each piece by the coder (Claude takes the ones it leaves with errors and keeps the fix as a graph",
+    "example), then `commands.check`; a project error gets one local repair per file (`repairProject`), then Claude.",
+    "Commands are data: `.nuclear/loop.json` (`defaultConfig(platform)`), exported by `ciFile()` to GitHub Actions, GitLab",
+    "CI or Bitbucket Pipelines (the deterministic stages). Sources: `jiraIssue`/`jiraMine` (REST v3, ADF to text; the",
+    "site, email and API token in VS Code secret storage `nuclear.loop.jira`), `githubIssue` (`gh issue view`);",
+    "`criteriaOf` reads the list under \"Acceptance criteria\". `suggestContext` ranks the project's and the user's `.md`",
+    "(agent instructions first, then specs, context, ADRs, skills, agent definitions) by the words of the spec.",
+    "`loopPanel.ts` draws it: the runs, the spec form (use case → spec written or imported → context → who leads, with an",
+    "optional plan preview by the local planner), and a run as a graph: a column per stage, a node per step in the order it ran, the",
+    "steps its agent followed as nodes under it, edges between them; a click on a node opens a drawer beside the graph",
+    "(*What it did*, its decisions, input, output, code) with *Run again from this step*; each stage has *Run <stage>",
+    "again* and the run *Run again from scratch* (a modal confirmation: it undoes files). The messages are `retry`,"
    ],
    "sources": [
     "nuclear-vscode/docs/context/editors/vscode.md"
@@ -1926,7 +1981,8 @@
    "body": [
     "- First public version.",
     "- 0.46.0: the version of the three extensions (the Loop's analysis step is in `nuclear-loop`, ADR-0105).",
-    "- 0.48.0: the version of the three extensions (the set-up of the AI services is `nuclear-loop setup`, ADR-0106)."
+    "- 0.48.0: the version of the three extensions (the set-up of the AI services is `nuclear-loop setup`, ADR-0106).",
+    "- 0.49.0: the version of the three extensions (the Loop's graph of a run, any step run again and a run from scratch are in VS Code and `nuclear-loop`; the language server reads `[project] package` of `nuclear.toml`)."
    ],
    "sources": [
     "nuclear-zed/CHANGELOG.md"

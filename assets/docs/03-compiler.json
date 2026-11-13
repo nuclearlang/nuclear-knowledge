@@ -587,7 +587,28 @@
    }
   },
   {
-   "id": "doc:docs/context/nuclear/emitter.md#constructs.382119",
+   "id": "doc:docs/context/nuclear/emitter.md#constructs.9e8dde",
+   "type": "context",
+   "title": "The emitter — Constructs",
+   "summary": "stays top-level; other statements plus an own `main` → N0113. `options.cascade_statements` (TS) `x = T()..a = 1` becomes declaration + statements.",
+   "body": [
+    "- Dart top level (`toplevel_main`): statements go in a generated `main`; a variable that a declaration uses",
+    "  stays top-level; other statements plus an own `main` → N0113.",
+    "- `if` in lists → `list_if`. Cascades → `cascade` + `cascade_self` (Dart \"\", TS \"$\"); with",
+    "  `options.cascade_statements` (TS) `x = T()..a = 1` becomes declaration + statements."
+   ],
+   "agents": false,
+   "sources": [
+    "docs/context/nuclear/emitter.md"
+   ],
+   "meta": {
+    "section": "03-compiler",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/context/nuclear/emitter.md#constructs.c22249",
    "type": "context",
    "title": "The emitter — Constructs",
    "summary": "`{{#mods.get}}`.",
@@ -606,27 +627,8 @@
     "  `tinfo`: TS writes `typeof`/`Number.isInteger`/`Array.isArray`). `for_entries` gets `map`. Constructed",
     "  `Map/Set/List<...>()` locals record their type.",
     "- `try` as the last line returns the last line of `try` and `catch` (`try_stmt` with the tail).",
-    "- Dart top level (`toplevel_main`): statements go in a generated `main`; a variable that a declaration uses",
-    "  stays top-level; other statements plus an own `main` → N0113."
-   ],
-   "agents": false,
-   "sources": [
-    "docs/context/nuclear/emitter.md"
-   ],
-   "meta": {
-    "section": "03-compiler",
-    "repo": "nuclearlang",
-    "dialect": ""
-   }
-  },
-  {
-   "id": "doc:docs/context/nuclear/emitter.md#constructs.a3b11c",
-   "type": "context",
-   "title": "The emitter — Constructs",
-   "summary": "`options.cascade_statements` (TS) `x = T()..a = 1` becomes declaration + statements.",
-   "body": [
-    "- `if` in lists → `list_if`. Cascades → `cascade` + `cascade_self` (Dart \"\", TS \"$\"); with",
-    "  `options.cascade_statements` (TS) `x = T()..a = 1` becomes declaration + statements."
+    "- The `try` template gets `catch_used` when the `catch` block names the caught value (`contains_word` over the emitted",
+    "  block): Python binds no name otherwise (`except Exception:`)."
    ],
    "agents": false,
    "sources": [
@@ -730,7 +732,7 @@
    }
   },
   {
-   "id": "doc:docs/context/nuclear/emitter.md#targets-without-braces-python-adr-0089.5a0c98",
+   "id": "doc:docs/context/nuclear/emitter.md#targets-without-braces-python-adr-0089.0fe1dc",
    "type": "context",
    "title": "The emitter — Targets without braces (Python, ADR-0089)",
    "summary": "Operator templates also get `left_infix`/`right_infix` (parenthesized only where the operator's precedence needs it) and, for `eq`/`not_eq`, `null` (a side is `null`: Python `is None`).",
@@ -741,7 +743,9 @@
     "from `ClassDef.results` (index.json), so `x = ~repo.find(id)` unwraps; an error type that extends the function's",
     "(`NotFound` of `AppError`, `is_subtype`) propagates without N0109. A kind's `inherits` count as bases.",
     "",
-    "ADR-0091: `project_import` gets `relative` (from the output file to the import, `ProjectCtx::relative`);",
+    "ADR-0091: `project_import` gets `relative` (from the output file to the import, `ProjectCtx::relative`) and `package`",
+    "(the folder the project's files go to as a module: `Manifest::sources`, the `[project] package` of `nuclear.toml`, else",
+    "the dialect's `sources`; Python writes `{{package}}.{{path}}`);",
     "`alias_via = \"constructor\"` (alias.rs adds the target modules as constructor parameters and calls `field.method`);",
     "`params_list` entries get `route` (named in a decorator's route string, `route_params`); kinds get `field_decor`;",
     "`field` gets `tinfo`; `methods` entries get `doc_text`/`doc_literal`; project templates get `components` and `uses`;",

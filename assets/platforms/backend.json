@@ -23,6 +23,11 @@
    ],
    "meta": {
     "name": "column"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "column",
+    "args": []
    }
   },
   {
@@ -44,6 +49,11 @@
    ],
    "meta": {
     "name": "consumer"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "consumer",
+    "args": []
    }
   },
   {
@@ -65,6 +75,11 @@
    ],
    "meta": {
     "name": "controller"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "controller",
+    "args": []
    }
   },
   {
@@ -86,6 +101,11 @@
    ],
    "meta": {
     "name": "created"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "created",
+    "args": []
    }
   },
   {
@@ -107,6 +127,11 @@
    ],
    "meta": {
     "name": "delete"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "delete",
+    "args": []
    }
   },
   {
@@ -128,6 +153,11 @@
    ],
    "meta": {
     "name": "email"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "email",
+    "args": []
    }
   },
   {
@@ -149,6 +179,11 @@
    ],
    "meta": {
     "name": "entity"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "entity",
+    "args": []
    }
   },
   {
@@ -170,6 +205,11 @@
    ],
    "meta": {
     "name": "get"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "get",
+    "args": []
    }
   },
   {
@@ -195,6 +235,11 @@
    ],
    "meta": {
     "name": "joinColumn"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "joinColumn",
+    "args": []
    }
   },
   {
@@ -220,6 +265,11 @@
    ],
    "meta": {
     "name": "joinTable"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "joinTable",
+    "args": []
    }
   },
   {
@@ -251,6 +301,11 @@
    ],
    "meta": {
     "name": "key"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "key",
+    "args": []
    }
   },
   {
@@ -278,6 +333,13 @@
    ],
    "meta": {
     "name": "manyToMany"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "manyToMany",
+    "args": [
+     "inverse"
+    ]
    }
   },
   {
@@ -311,6 +373,14 @@
    ],
    "meta": {
     "name": "manyToOne"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "manyToOne",
+    "args": [
+     "inverse",
+     "onDelete"
+    ]
    }
   },
   {
@@ -332,6 +402,11 @@
    ],
    "meta": {
     "name": "max"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "max",
+    "args": []
    }
   },
   {
@@ -353,6 +428,11 @@
    ],
    "meta": {
     "name": "maxLength"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "maxLength",
+    "args": []
    }
   },
   {
@@ -374,6 +454,11 @@
    ],
    "meta": {
     "name": "min"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "min",
+    "args": []
    }
   },
   {
@@ -395,6 +480,11 @@
    ],
    "meta": {
     "name": "minLength"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "minLength",
+    "args": []
    }
   },
   {
@@ -416,6 +506,11 @@
    ],
    "meta": {
     "name": "next"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "next",
+    "args": []
    }
   },
   {
@@ -447,6 +542,13 @@
    ],
    "meta": {
     "name": "oneToMany"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "oneToMany",
+    "args": [
+     "inverse!"
+    ]
    }
   },
   {
@@ -473,6 +575,14 @@
    ],
    "meta": {
     "name": "oneToOne"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "oneToOne",
+    "args": [
+     "inverse",
+     "onDelete"
+    ]
    }
   },
   {
@@ -494,6 +604,11 @@
    ],
    "meta": {
     "name": "patch"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "patch",
+    "args": []
    }
   },
   {
@@ -515,6 +630,11 @@
    ],
    "meta": {
     "name": "pattern"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "pattern",
+    "args": []
    }
   },
   {
@@ -536,6 +656,11 @@
    ],
    "meta": {
     "name": "post"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "post",
+    "args": []
    }
   },
   {
@@ -562,6 +687,14 @@
    ],
    "meta": {
     "name": "primary"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "primary",
+    "args": [
+     "generated",
+     "length"
+    ]
    }
   },
   {
@@ -583,6 +716,11 @@
    ],
    "meta": {
     "name": "put"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "put",
+    "args": []
    }
   },
   {
@@ -604,6 +742,11 @@
    ],
    "meta": {
     "name": "repository"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "repository",
+    "args": []
    }
   },
   {
@@ -625,6 +768,11 @@
    ],
    "meta": {
     "name": "required"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "required",
+    "args": []
    }
   },
   {
@@ -646,6 +794,11 @@
    ],
    "meta": {
     "name": "start"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "start",
+    "args": []
    }
   },
   {
@@ -667,6 +820,11 @@
    ],
    "meta": {
     "name": "state"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "state",
+    "args": []
    }
   },
   {
@@ -688,6 +846,11 @@
    ],
    "meta": {
     "name": "test"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "test",
+    "args": []
    }
   },
   {
@@ -722,6 +885,11 @@
    ],
    "meta": {
     "name": "transactional"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "transactional",
+    "args": []
    }
   },
   {
@@ -743,6 +911,11 @@
    ],
    "meta": {
     "name": "updated"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "updated",
+    "args": []
    }
   },
   {
@@ -764,6 +937,11 @@
    ],
    "meta": {
     "name": "url"
+   },
+   "data": {
+    "platform": "backend",
+    "decorator": "url",
+    "args": []
    }
   },
   {
@@ -813,6 +991,12 @@
    "meta": {
     "kind": "agent",
     "name": "agent"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/ai/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -833,7 +1017,10 @@
     "```"
    ],
    "keys": [
-    "aggregate"
+    "aggregate",
+    "agregado",
+    "agregados",
+    "aggregates"
    ],
    "platforms": [
     "backend"
@@ -851,6 +1038,12 @@
    "meta": {
     "kind": "aggregate",
     "name": "aggregate"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/domain/aggregates/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -898,6 +1091,15 @@
    "meta": {
     "kind": "appConfig",
     "name": "appConfig"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "config/project_config.nuc",
+    "aliases": [
+     "app config",
+     "application config"
+    ],
+    "decorators": []
    }
   },
   {
@@ -930,7 +1132,10 @@
    "keys": [
     "app component",
     "appcomponent",
-    "application component"
+    "application component",
+    "fachada",
+    "facade",
+    "componente de aplicacion"
    ],
    "platforms": [
     "backend"
@@ -948,6 +1153,15 @@
    "meta": {
     "kind": "appcomponent",
     "name": "appcomponent"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/{component}_appcomponent.nuc",
+    "aliases": [
+     "app component",
+     "application component"
+    ],
+    "decorators": []
    }
   },
   {
@@ -1000,6 +1214,12 @@
    "meta": {
     "kind": "config",
     "name": "config"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/config/{component}_config.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1037,7 +1257,10 @@
     "```"
    ],
    "keys": [
-    "controller"
+    "controller",
+    "controlador",
+    "controladores",
+    "controllers"
    ],
    "platforms": [
     "backend"
@@ -1079,6 +1302,19 @@
    "meta": {
     "kind": "controller",
     "name": "controller"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/api/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "controller",
+     "delete",
+     "get",
+     "patch",
+     "post",
+     "put"
+    ]
    }
   },
   {
@@ -1118,7 +1354,10 @@
     "```"
    ],
    "keys": [
-    "entity"
+    "entity",
+    "entidad",
+    "entidades",
+    "entities"
    ],
    "platforms": [
     "backend"
@@ -1180,6 +1419,24 @@
    "meta": {
     "kind": "entity",
     "name": "entity"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/data/entities/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "column",
+     "created",
+     "entity",
+     "joinColumn",
+     "joinTable",
+     "manyToMany",
+     "manyToOne",
+     "oneToMany",
+     "oneToOne",
+     "primary",
+     "updated"
+    ]
    }
   },
   {
@@ -1240,6 +1497,16 @@
    "meta": {
     "kind": "graph",
     "name": "graph"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/ai/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "next",
+     "start",
+     "state"
+    ]
    }
   },
   {
@@ -1271,7 +1538,8 @@
     "```"
    ],
    "keys": [
-    "listener"
+    "listener",
+    "listeners"
    ],
    "platforms": [
     "backend"
@@ -1293,6 +1561,14 @@
    "meta": {
     "kind": "listener",
     "name": "listener"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/events/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "consumer"
+    ]
    }
   },
   {
@@ -1377,6 +1653,21 @@
    "meta": {
     "kind": "model",
     "name": "model"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/domain/models/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "email",
+     "max",
+     "maxLength",
+     "min",
+     "minLength",
+     "pattern",
+     "required",
+     "url"
+    ]
    }
   },
   {
@@ -1423,7 +1714,10 @@
     "```"
    ],
    "keys": [
-    "repository"
+    "repository",
+    "repositorio",
+    "repositorios",
+    "repositories"
    ],
    "platforms": [
     "backend"
@@ -1465,6 +1759,19 @@
    "meta": {
     "kind": "repository",
     "name": "repository"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/data/repositories/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "delete",
+     "get",
+     "patch",
+     "post",
+     "put",
+     "repository"
+    ]
    }
   },
   {
@@ -1503,6 +1810,12 @@
    "meta": {
     "kind": "service",
     "name": "service"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/domain/services/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1571,6 +1884,16 @@
    "meta": {
     "kind": "state",
     "name": "state"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/ai/states/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "next",
+     "start",
+     "state"
+    ]
    }
   },
   {
@@ -1627,6 +1950,14 @@
    "meta": {
     "kind": "tests",
     "name": "tests"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "test/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "test"
+    ]
    }
   },
   {
@@ -1678,6 +2009,12 @@
    "meta": {
     "kind": "tools",
     "name": "tools"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/ai/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1724,7 +2061,10 @@
    ],
    "keys": [
     "use case",
-    "usecase"
+    "usecase",
+    "caso de uso",
+    "casos de uso",
+    "use cases"
    ],
    "platforms": [
     "backend"
@@ -1746,6 +2086,16 @@
    "meta": {
     "kind": "usecase",
     "name": "usecase"
+   },
+   "data": {
+    "platform": "backend",
+    "file": "components/{component}/domain/usecases/{file}.nuc",
+    "aliases": [
+     "use case"
+    ],
+    "decorators": [
+     "primary"
+    ]
    }
   },
   {
@@ -1785,6 +2135,75 @@
    ],
    "meta": {
     "name": "layout"
+   },
+   "data": {
+    "platform": "backend",
+    "files": [
+     {
+      "kind": "agent",
+      "file": "components/{component}/ai/{file}.nuc"
+     },
+     {
+      "kind": "aggregate",
+      "file": "components/{component}/domain/aggregates/{file}.nuc"
+     },
+     {
+      "kind": "appConfig",
+      "file": "config/project_config.nuc"
+     },
+     {
+      "kind": "appcomponent",
+      "file": "components/{component}/{component}_appcomponent.nuc"
+     },
+     {
+      "kind": "config",
+      "file": "components/{component}/config/{component}_config.nuc"
+     },
+     {
+      "kind": "controller",
+      "file": "components/{component}/api/{file}.nuc"
+     },
+     {
+      "kind": "entity",
+      "file": "components/{component}/data/entities/{file}.nuc"
+     },
+     {
+      "kind": "graph",
+      "file": "components/{component}/ai/{file}.nuc"
+     },
+     {
+      "kind": "listener",
+      "file": "components/{component}/events/{file}.nuc"
+     },
+     {
+      "kind": "model",
+      "file": "components/{component}/domain/models/{file}.nuc"
+     },
+     {
+      "kind": "repository",
+      "file": "components/{component}/data/repositories/{file}.nuc"
+     },
+     {
+      "kind": "service",
+      "file": "components/{component}/domain/services/{file}.nuc"
+     },
+     {
+      "kind": "state",
+      "file": "components/{component}/ai/states/{file}.nuc"
+     },
+     {
+      "kind": "tests",
+      "file": "test/{file}.nuc"
+     },
+     {
+      "kind": "tools",
+      "file": "components/{component}/ai/{file}.nuc"
+     },
+     {
+      "kind": "usecase",
+      "file": "components/{component}/domain/usecases/{file}.nuc"
+     }
+    ]
    },
    "asks": [
     "where does the file of each kind go in a backend project",
@@ -1902,6 +2321,81 @@
    ],
    "meta": {
     "name": "backend"
+   },
+   "data": {
+    "platform": "backend",
+    "default_dialect": "fastapi",
+    "dialects": [
+     "fastapi",
+     "nestjs"
+    ],
+    "kinds": [
+     "appConfig",
+     "config",
+     "entity",
+     "repository",
+     "model",
+     "usecase",
+     "appcomponent",
+     "service",
+     "aggregate",
+     "controller",
+     "listener",
+     "tools",
+     "agent",
+     "state",
+     "graph",
+     "tests"
+    ],
+    "decorators": [
+     "entity",
+     "primary",
+     "column",
+     "created",
+     "updated",
+     "repository",
+     "manyToOne",
+     "oneToMany",
+     "manyToMany",
+     "oneToOne",
+     "joinTable",
+     "joinColumn",
+     "transactional",
+     "controller",
+     "get",
+     "post",
+     "put",
+     "patch",
+     "delete",
+     "status",
+     "consumer",
+     "start",
+     "next",
+     "state",
+     "test",
+     "required",
+     "email",
+     "url",
+     "minLength",
+     "maxLength",
+     "min",
+     "max",
+     "pattern",
+     "key"
+    ],
+    "plugins": [
+     "sqlite",
+     "postgres",
+     "mysql",
+     "mariadb",
+     "redis",
+     "kafka",
+     "events",
+     "ai",
+     "openai",
+     "ollama",
+     "chroma"
+    ]
    }
   },
   {
@@ -1935,6 +2429,17 @@
    ],
    "meta": {
     "name": "ai"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "ai",
+    "kinds": [
+     "tools",
+     "agent",
+     "state",
+     "graph"
+    ],
+    "requires": []
    }
   },
   {
@@ -1968,6 +2473,14 @@
    ],
    "meta": {
     "name": "chroma"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "chroma",
+    "kinds": [],
+    "requires": [
+     "ai"
+    ]
    }
   },
   {
@@ -2001,6 +2514,14 @@
    ],
    "meta": {
     "name": "events"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "events",
+    "kinds": [
+     "listener"
+    ],
+    "requires": []
    }
   },
   {
@@ -2032,6 +2553,12 @@
    ],
    "meta": {
     "name": "kafka"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "kafka",
+    "kinds": [],
+    "requires": []
    }
   },
   {
@@ -2063,6 +2590,12 @@
    ],
    "meta": {
     "name": "mariadb"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "mariadb",
+    "kinds": [],
+    "requires": []
    }
   },
   {
@@ -2094,6 +2627,12 @@
    ],
    "meta": {
     "name": "mysql"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "mysql",
+    "kinds": [],
+    "requires": []
    }
   },
   {
@@ -2127,6 +2666,14 @@
    ],
    "meta": {
     "name": "ollama"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "ollama",
+    "kinds": [],
+    "requires": [
+     "ai"
+    ]
    }
   },
   {
@@ -2160,6 +2707,14 @@
    ],
    "meta": {
     "name": "openai"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "openai",
+    "kinds": [],
+    "requires": [
+     "ai"
+    ]
    }
   },
   {
@@ -2191,6 +2746,12 @@
    ],
    "meta": {
     "name": "postgres"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "postgres",
+    "kinds": [],
+    "requires": []
    }
   },
   {
@@ -2222,6 +2783,12 @@
    ],
    "meta": {
     "name": "redis"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "redis",
+    "kinds": [],
+    "requires": []
    }
   },
   {
@@ -2253,6 +2820,12 @@
    ],
    "meta": {
     "name": "sqlite"
+   },
+   "data": {
+    "platform": "backend",
+    "plugin": "sqlite",
+    "kinds": [],
+    "requires": []
    }
   }
  ]

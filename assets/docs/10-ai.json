@@ -495,13 +495,35 @@
    }
   },
   {
-   "id": "doc:docs/adr/0102-ai-loop.md#decision.61feab",
+   "id": "doc:docs/adr/0102-ai-loop.md#decision.828b72",
    "type": "adr",
    "title": "ADR-0102: The AI loop — Nuclear Smart Graph, Nuclear Developer and the Loop tool — Decision",
-   "summary": "of the graph (`prompts/agents/<step>.md`, `{{name}}` placeholders, an empty section dropped), served as the prompt `agent.<step>`; the agents' code holds no prompt text.",
+   "summary": "generator wrote it, a file sent to the tester, a repair given to the frontier model), and the agents' recall steps name the cards they read.",
    "body": [
-    "of the graph (`prompts/agents/<step>.md`, `{{name}}` placeholders, an empty section dropped), served as the prompt",
-    "    `agent.<step>`; the agents' code holds no prompt text.",
+    "generator wrote it, a file sent to the tester, a repair given to the frontier model), and the agents' recall",
+    "    steps name the cards they read. **The page is a graph**: a column per stage, a node per step in the order it ran,",
+    "    the steps its agent followed under it; a click opens the node beside the graph (what it did, its decisions, its",
+    "    input, output and code). **Acceptance**: when the verification passes, each acceptance criterion is held against",
+    "    what the run left (`POST /developer/accept`); the ones not shown met are listed as left for the reviewer. It",
+    "    informs, it never fails a run: a 3B model's verdict is evidence for a person, not a gate."
+   ],
+   "sources": [
+    "docs/adr/0102-ai-loop.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/adr/0102-ai-loop.md#decision.9d5b70",
+   "type": "adr",
+   "title": "ADR-0102: The AI loop — Nuclear Smart Graph, Nuclear Developer and the Loop tool — Decision",
+   "summary": "of the graph (`prompts/agents/<step>.md`, `{{name}}` placeholders, a section whose values are all empty dropped), served as the prompt `agent.<step>`; the agents' code holds no prompt text.",
+   "body": [
+    "of the graph (`prompts/agents/<step>.md`, `{{name}}` placeholders, a section whose values are all empty dropped),",
+    "    served as the prompt `agent.<step>`; the agents' code holds no prompt text.",
     "16. **A chat with the local agents in the editor** (asked by the user, 2026-11-11): the workspace tool *Nuclear agent*",
     "    (VS Code) talks to the Developer's assistant (`POST /developer/chat`) about the active project; `/task` runs the",
     "    Loop with the local agents; templates from the project's map; sessions in `.nuclear/chat/`.",
@@ -512,6 +534,34 @@
     "    never retried blindly — it goes to the repair rounds or the diagnoser. The diagnoser (`POST /developer/diagnose`)",
     "    classifies by rules, gathers evidence with the tools and explains with the local model. The user retries a failed",
     "    run from its failed stage (panel, chat, `nuclear-loop retry`, MCP `developer_retry`); the earlier attempt is kept."
+   ],
+   "sources": [
+    "docs/adr/0102-ai-loop.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/adr/0102-ai-loop.md#decision.bc925c",
+   "type": "adr",
+   "title": "ADR-0102: The AI loop — Nuclear Smart Graph, Nuclear Developer and the Loop tool — Decision",
+   "summary": "23. Anything of a run can run again, and a run says what it decided (asked by the user, 2026-11-13: \"I cannot retry a step whether it passed or failed; it must always be possible to retry anything; the logs say nothing; show the steps the agent followed and the decisions it took and why, as a…",
+   "body": [
+    "23. **Anything of a run can run again, and a run says what it decided** (asked by the user, 2026-11-13: \"I cannot",
+    "    retry a step whether it passed or failed; it must always be possible to retry anything; the logs say nothing; show",
+    "    the steps the agent followed and the decisions it took and why, as a graph, and a click on a node shows it\"; \"or",
+    "    the option to run the whole pipeline from scratch\"). **Retries**: any step, passed or failed, runs again with",
+    "    every step after it (the steps before it are kept); any stage runs again whole; the run runs again from scratch.",
+    "    What the steps left out wrote is undone first (the write ledger keeps each file's content after the write: a file",
+    "    changed since is kept and said), and the attempt left behind is kept with its reason (`previous`). A run saved by",
+    "    an older engine (`Run.engine`) is given today's stages and starts from scratch at any retry: its plan and its",
+    "    files answer to a pipeline that no longer exists. A plan made again drops the pieces a planner gave and keeps the",
+    "    ones the user wrote. `nuclear-loop retry <run> [--from <stage> | --step <id>]`, `nuclear-loop restart <run>`, MCP",
+    "    `developer_retry(run, from_stage, from_step, scratch)`. **Decisions**: every step keeps what it chose and why",
+    "    (`Step.decisions`: the strategy and the signs it was recognised by, a stage left out, a piece dropped because a"
    ],
    "sources": [
     "docs/adr/0102-ai-loop.md"
@@ -852,6 +902,29 @@
    }
   },
   {
+   "id": "doc:docs/adr/0104-smart-graph-shelves.md#decision.1e62f3",
+   "type": "adr",
+   "title": "ADR-0104: The Smart Graph is a library of typed, linked, versioned rows — Decision",
+   "summary": "9. What agents write at run time survives.",
+   "body": [
+    "9. **What agents write at run time survives.** `POST /v1/documents` writes only `memory` and `examples`, as rows of",
+    "   `origin: runtime` that an ingest keeps; the rows of the knowledge base are written by ingest alone.",
+    "",
+    "10. **Retrieval is tested with people's questions.** `questions.toml` of the knowledge base lists questions and",
+    "    the row each must return among the first (English and Spanish); `nuclear-graph knowledge ask` runs them against",
+    "    the running graph. A question a change answers is added with the change. Every ```nuclear block of a hand-written",
+    "    row is compiled by `nuclear-graph knowledge examples`."
+   ],
+   "sources": [
+    "docs/adr/0104-smart-graph-shelves.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
    "id": "doc:docs/adr/0104-smart-graph-shelves.md#decision.23e654",
    "type": "adr",
    "title": "ADR-0104: The Smart Graph is a library of typed, linked, versioned rows — Decision",
@@ -870,34 +943,6 @@
     "   The procedure is itself a row (`playbook:update-the-knowledge-base`): build, review the rows whose sources changed",
     "   (update them, or `knowledge review <id>` when they still hold), check, ingest. A row written by hand is reviewed",
     "   when it is written or changed."
-   ],
-   "sources": [
-    "docs/adr/0104-smart-graph-shelves.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclearlang",
-    "dialect": ""
-   }
-  },
-  {
-   "id": "doc:docs/adr/0104-smart-graph-shelves.md#decision.729900",
-   "type": "adr",
-   "title": "ADR-0104: The Smart Graph is a library of typed, linked, versioned rows — Decision",
-   "summary": "3. Search is by meaning and by exact name, over several shelves (`retrieve.py`).",
-   "body": [
-    "3. **Search is by meaning and by exact name, over several shelves** (`retrieve.py`). The query is embedded once and",
-    "   every shelf asked answers its closest rows. The runs of one to four words of the query are looked up in the rows'",
-    "   `keys` (`$contains`): a row that carries one is brought in and moves up (0.12 for a word, 0.22 for a longer name or",
-    "   a code), so `N0114`, `gen resource`, `usecase` or `mcp` reach their card whatever the rest of the sentence says and",
-    "   whatever its language. Entries are ranked together, each card once; a `docs` row yields to a card (0.04) and a",
-    "   document gives at most two sections. `expand` adds to each card the title and summary of the rows it links to.",
-    "   Filters: `agents`, `platform`, and any metadata (`type`, `kind`, `code`). A card is also read by id",
-    "   (`GET /v1/cards/{id}`, `nuclear-graph card`, MCP `graph_card`).",
-    "",
-    "4. **Two readers, one flag.** `agents: false` marks what only frontier models and people read: the target languages,",
-    "   the dialects underneath, the runtimes, the decisions, the state. A row the local agents read holds no code of a",
-    "   target language: document sections lose those blocks, and a hand-written row that has one fails the build."
    ],
    "sources": [
     "docs/adr/0104-smart-graph-shelves.md"
@@ -936,18 +981,23 @@
    }
   },
   {
-   "id": "doc:docs/adr/0104-smart-graph-shelves.md#decision.894bc3",
+   "id": "doc:docs/adr/0104-smart-graph-shelves.md#decision.a438b9",
    "type": "adr",
    "title": "ADR-0104: The Smart Graph is a library of typed, linked, versioned rows — Decision",
-   "summary": "9. What agents write at run time survives.",
+   "summary": "3. Search is by meaning and by exact name, over several shelves (`retrieve.py`).",
    "body": [
-    "9. **What agents write at run time survives.** `POST /v1/documents` writes only `memory` and `examples`, as rows of",
-    "   `origin: runtime` that an ingest keeps; the rows of the knowledge base are written by ingest alone.",
-    "",
-    "10. **Retrieval is tested with people's questions.** `questions.toml` of the knowledge base lists questions and",
-    "    the row each must return among the first (English and Spanish); `nuclear-graph knowledge ask` runs them against",
-    "    the running graph. A question a change answers is added with the change. Every ```nuclear block of a hand-written",
-    "    row is compiled by `nuclear-graph/tests/check_examples.py`."
+    "3. **Search is by meaning and by exact name, over several shelves** (`retrieve.py`). The query is embedded once and",
+    "   every shelf asked answers its closest rows. The runs of one to four words of the query are looked up in the rows'",
+    "   `keys` (`$contains`): a row that carries one is brought in and moves up (0.12 for a word, 0.22 for a longer name or",
+    "   a code), so `N0114`, `gen resource`, `usecase` or `mcp` reach their card whatever the rest of the sentence says and",
+    "   whatever its language. Entries are ranked together, each card once; a `docs` row yields to a card (0.04) and a",
+    "   document gives at most two sections. `expand` adds to each card the title and summary of the rows it links to.",
+    "   Filters: `agents`, `platform`, and any metadata (`type`, `kind`, `code`). A card is also read by id",
+    "   (`GET /v1/cards/{id}`, `nuclear-graph card`, MCP `graph_card`). **The search is exact** (2026-11-13): the vector",
+    "   Chroma keeps of every item a filter matches is compared with the query's (`Store.near`, `Store.measure`); Chroma's",
+    "   own index (HNSW) is not asked. It is approximate, and once rows were replaced it did not reach every item it held:",
+    "   after an ingest 3 cards of 2 617 could not be found, and which ones changed at every start. A shelf holds hundreds",
+    "   of items, so comparing them all costs milliseconds (173 questions in 42 s, the embedding of each included). A"
    ],
    "sources": [
     "docs/adr/0104-smart-graph-shelves.md"
@@ -1007,6 +1057,27 @@
     "6. **The base is valid or it is not built.** `build` and `ingest` refuse: a link to a row that does not exist, a",
     "   duplicated id, a prefix or a type of another shelf, a filter the shelf does not have, a missing title, summary or",
     "   body, target-language code in an agents' row, a diagnostic without documentation, a document no section claims."
+   ],
+   "sources": [
+    "docs/adr/0104-smart-graph-shelves.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/adr/0104-smart-graph-shelves.md#decision.e0f5d4",
+   "type": "adr",
+   "title": "ADR-0104: The Smart Graph is a library of typed, linked, versioned rows — Decision",
+   "summary": "result's `distance` is the closest the card came by meaning, by its text or by any question it answers.",
+   "body": [
+    "result's `distance` is the closest the card came by meaning, by its text or by any question it answers.",
+    "",
+    "4. **Two readers, one flag.** `agents: false` marks what only frontier models and people read: the target languages,",
+    "   the dialects underneath, the runtimes, the decisions, the state. A row the local agents read holds no code of a",
+    "   target language: document sections lose those blocks, and a hand-written row that has one fails the build."
    ],
    "sources": [
     "docs/adr/0104-smart-graph-shelves.md"
@@ -1211,25 +1282,24 @@
    }
   },
   {
-   "id": "doc:docs/ai/loop.md#3-follow-the-run.1724c2",
+   "id": "doc:docs/ai/loop.md#3-follow-the-run.211029",
    "type": "guide",
    "title": "AI loop: specs to deployed code, with local agents — 3. Follow the run",
-   "summary": "Deploy.",
+   "summary": "with `--dry-run` first.",
    "body": [
-    "- **Level 1**, the stages: Specification → Generate → Plan → Tests first → Code → Verification → Security → Artifacts →",
-    "  Deploy. Each shows its",
-    "  state, its time and the agents that took part.",
-    "- **Specification** ends with the **analysis**: which kind of request the spec is and the strategy the run follows",
-    "  ([the strategy of a request](#the-strategy-of-a-request)). The step says what it understood and why; a fact it",
-    "  lacks is asked there, before anything is written.",
-    "- **Generate** comes before any agent: `dragonfly gen resource` writes, already compiling, every resource the spec",
-    "  names (a `## Resources` section, one `dragonfly gen resource` argument line per item, or else each `GET <url>` line",
-    "  of the description: `GET https://rickandmortyapi.com/api/character` is `characters Character`), and every resource",
-    "  the analysis read in plain words (\"each supplier has a name and a phone; we add and list them\"), each call tried",
-    "  with `--dry-run` first. The fields come from",
+    "with `--dry-run` first. The fields come from",
     "  the spec's example answer or its `Key | Type` table, or from the API's own answer. The planner then plans only what",
     "  is left (often nothing), and a crash undoes the generated files like an agent's.",
-    "- **Plan** shows the work as a tree: the big parts (one per component), the tasks of each (a layer: data, domain, the"
+    "- **Plan** shows the work as a tree: the big parts (one per component), the tasks of each (a layer: data, domain, the",
+    "  facade, the entry points, the tests) and the pieces of each task (one file). It also says, before any code, what",
+    "  of the spec is beyond the platform or the local agents (the graph's capabilities whose trigger words the spec",
+    "  writes: \"authentication\" on a backend, \"form\" on the web; a spec too long for a local model; a plan without pieces):",
+    "  split the task, give the missing facts, or let a frontier model lead.",
+    "- **Tests first** is skipped when the generators wrote every file of the run: they wrote its tests too, and the step",
+    "  says which. A resource that reads another API gets no generated test (it would call the real one): the step says",
+    "  so, and only the acceptance step holds the criteria against the result.",
+    "- **Anything runs again.** *Run again from this step* on every step, passed or failed: it and every step after it",
+    "  run again, the steps before it are kept. *Run <stage> again* on every stage. *Run again from scratch* on the run:"
    ],
    "sources": [
     "docs/ai/loop.md"
@@ -1356,11 +1426,11 @@
    }
   },
   {
-   "id": "doc:docs/ai/loop.md#3-follow-the-run.ce9530",
+   "id": "doc:docs/ai/loop.md#3-follow-the-run.dd0d20",
    "type": "guide",
    "title": "AI loop: specs to deployed code, with local agents — 3. Follow the run",
-   "summary": "The run is a pipeline you can zoom into like a C4 diagram:",
-   "body": "The run is a pipeline you can zoom into like a C4 diagram:",
+   "summary": "The run is drawn as a graph, left to right:",
+   "body": "The run is drawn as a graph, left to right:",
    "sources": [
     "docs/ai/loop.md"
    ],
@@ -1371,20 +1441,47 @@
    }
   },
   {
-   "id": "doc:docs/ai/loop.md#3-follow-the-run.f0551d",
+   "id": "doc:docs/ai/loop.md#3-follow-the-run.ec7089",
    "type": "guide",
    "title": "AI loop: specs to deployed code, with local agents — 3. Follow the run",
-   "summary": "facade, the entry points, the tests) and the pieces of each task (one file).",
+   "summary": "the whole pipeline from the specification.",
    "body": [
-    "facade, the entry points, the tests) and the pieces of each task (one file). It also says, before any code, what",
-    "  of the spec is beyond the platform or the local agents (the graph's capabilities whose trigger words the spec",
-    "  writes: \"authentication\" on a backend, \"form\" on the web; a spec too long for a local model; a plan without pieces):",
-    "  split the task, give the missing facts, or let a frontier model lead.",
-    "- **Tests first** is skipped when the generators wrote every file of the run: they wrote its tests too.",
-    "- Click a stage for **level 2**, its steps: each piece the coder wrote, each command the shell ran, each tool Claude",
-    "  called.",
-    "- Click a step for **level 3**, what that agent did: its trace (recall from the graph → write → repair with the",
-    "  compiler), the code, the output, the input. `Escape` zooms out."
+    "the whole pipeline from the specification. What the steps left out wrote is undone first; a file you changed since",
+    "  the run wrote it is kept, and the page says so. The attempt left behind stays under the run with its reason. From a",
+    "  terminal: `nuclear-loop retry <run> [--from <stage> | --step <id>]`, `nuclear-loop restart <run>`. A run made by an",
+    "  older version of the Loop starts from scratch at any retry.",
+    "- **Acceptance.** When the verification passes, each acceptance criterion is held against what the run left: the",
+    "  ones the result does not show met are listed as left for the reviewer (in the page and in the journal). It informs;",
+    "  it does not fail the run."
+   ],
+   "sources": [
+    "docs/ai/loop.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/ai/loop.md#3-follow-the-run.f8de13",
+   "type": "guide",
+   "title": "AI loop: specs to deployed code, with local agents — 3. Follow the run",
+   "summary": "Deploy.",
+   "body": [
+    "- **A column per stage**: Specification → Generate → Plan → Tests first → Code → Verification → Security → Artifacts →",
+    "  Deploy. Each shows its state, its time and the agents that took part; a stage the strategy leaves out says why.",
+    "- **A node per step**, in the order it ran, and under it the steps its agent followed (recall from the graph, with",
+    "  the cards it read by name → write → repair with the compiler).",
+    "- **Click a node** and it opens beside the graph: what it did, **the decisions it took and why** (which strategy and",
+    "  by which signs, why a piece was dropped or a file went to the tester), its input, its output and its code.",
+    "- **Specification** ends with the **analysis**: which kind of request the spec is and the strategy the run follows",
+    "  ([the strategy of a request](#the-strategy-of-a-request)). The step says what it understood and why; a fact it",
+    "  lacks is asked there, before anything is written.",
+    "- **Generate** comes before any agent: `dragonfly gen resource` writes, already compiling, every resource the spec",
+    "  names (a `## Resources` section, one `dragonfly gen resource` argument line per item, or else each `GET <url>` line",
+    "  of the description: `GET https://rickandmortyapi.com/api/character` is `characters Character`), and every resource",
+    "  the analysis read in plain words (\"each supplier has a name and a phone; we add and list them\"), each call tried"
    ],
    "sources": [
     "docs/ai/loop.md"
@@ -1732,7 +1829,7 @@
     "| Tool | What it does |",
     "|---|---|",
     "| `developer_task(project, title, description, criteria, use_case)` | **the first step of every task that writes `.nuc`**: the local agents do the whole task in the project (plan, tests first, code, verification, security, artifacts) and answer the run's journal. `use_case`: `feature`, `bug`, `refactor`, `test` |",
-    "| `developer_retry(project, run, from_stage)` | a run that failed, again from the step that failed, every step that passed kept; or the whole of `from_stage` |",
+    "| `developer_retry(project, run, from_stage, from_step, scratch)` | a run again: from the step that failed, every step that passed kept; the whole of `from_stage`; from one step (`from_step`: its id in the journal, passed or failed) and every step after it; or from scratch (`scratch`: every stage again). What the steps left out wrote is undone first |",
     "| `developer_review(project, run, notes, files)` | **the last step**: the lead's corrections, kept in the journal; each corrected file goes to the graph's examples |",
     "| `developer_code(task, platform, path, kind, context, project)` | one `.nuc` file outside a task, written, checked and repaired by the local model. It returns the file; it does not write it |",
     "| `developer_test(task, code, platform)` | the Nuclear tests of a piece of code |",
@@ -1748,7 +1845,22 @@
    }
   },
   {
-   "id": "doc:docs/ai/mcp.md#3-the-tools-the-smart-graph",
+   "id": "doc:docs/ai/mcp.md#3-the-tools-the-smart-graph.b5ba0c",
+   "type": "guide",
+   "title": "The MCP server of NuclearLang — The Smart Graph",
+   "summary": "The Smart Graph",
+   "body": "| `graph_remember(id, text, collection, project)` | keeps a decision (`memory`) or a solved example (`examples`) for the local developer and later sessions |",
+   "sources": [
+    "docs/ai/mcp.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclearlang",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:docs/ai/mcp.md#3-the-tools-the-smart-graph.f3e67e",
    "type": "guide",
    "title": "The MCP server of NuclearLang — The Smart Graph",
    "summary": "The Smart Graph",
@@ -1756,10 +1868,10 @@
     "| Tool | What it does |",
     "|---|---|",
     "| `graph_strategy(request, platform)` | **the first call for any request**: which kind of request it is (a whole system, a component, one screen, a use case, a rename, a failing test, a question...), the signs that say so, and the plan of that kind, step by step with the tool of each step |",
+    "| `graph_answer(question, platform)` | the exact answer of a question that has one (every command of a tool, the tools of this server and their parameters, the commands that write a kind, a diagnostic by its code, the stages of the Loop, a version...): the rows of the graph's database, whole, never recalled; then the cards the shelves answer by meaning. For \"which\", \"list\", \"what are the\" questions |",
     "| `graph_search(query, shelf, k, platform, kind, type)` | the cards that answer a question, by meaning and by exact name (a diagnostic code, a command, a kind), each with the rows it links to. `shelf`: `concepts`, `language`, `platforms`, `tools`, `errors`, `capabilities`, `playbooks`, `examples`, `docs`, `memory`; empty searches all |",
     "| `graph_card(id)` | one row by its id: `error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.usecase`, `mcp:generate_usecase`, `playbook:add-a-use-case` |",
-    "| `graph_prompt(use_case)` | the validated prompt of `feature`, `refactor`, `bug`, `docs`, `diagram`, `test`, `security`, `piece`, `plan` |",
-    "| `graph_remember(id, text, collection, project)` | keeps a decision (`memory`) or a solved example (`examples`) for the local developer and later sessions |"
+    "| `graph_prompt(use_case)` | the validated prompt of `feature`, `refactor`, `bug`, `docs`, `diagram`, `test`, `security`, `piece`, `plan` |"
    ],
    "sources": [
     "docs/ai/mcp.md"
@@ -2172,22 +2284,14 @@
    }
   },
   {
-   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.335faa",
+   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.0c3fbd",
    "type": "changelog",
    "title": "Changelog — Unreleased (2026-11-11)",
-   "summary": "plans anything it says which kind of request the spec is (a strategy row of the graph), the stages that run, the generator calls a request in plain words asks for (each kept only if its dry run accepts it), the pieces the tools already gave (the files that declare what changes; every file of a…",
+   "summary": "against what a run left (met or not, with the evidence), for the Loop's last step; it informs, it never gates.",
    "body": [
-    "- The **analyst** (ADR-0105; `analyst.nuc`, `POST /developer/analyze`, prompt `agents/analyze.md`): before a run generates or",
-    "  plans anything it says which kind of request the spec is (a strategy row of the graph), the stages that run, the generator",
-    "  calls a request in plain words asks for (each kept only if its dry run accepts it), the pieces the tools already gave (the",
-    "  files that declare what changes; every file of a rename, rewritten) and the facts the request lacks. 4 Nuclear tests;",
-    "  `eval/run.py analyze` measures its one model call.",
-    "- The planner knows the project (`PlanRequest.root`): what the project already declares and the spec only uses is not planned",
-    "  again, what the spec introduces with its kind's word is a change of its file, and new pieces go to the component of the",
-    "  declarations the spec uses (it had planned an existing entity and its repository again, in a component of its own).",
-    "- The set-up of the AI services installs and starts it (ADR-0106): the `nuclear-developer` command starts with the",
-    "  models of the machine's profile (`~/.config/nuclearlang/ai.env`) unless its caller gives others. README: the",
-    "  profiles and what each was measured to do."
+    "against what a run left (met or not, with the evidence), for the Loop's last step; it informs, it never gates.",
+    "- The planner keeps every piece a spec in plain words needs: only the test rows are left to the tester (it had kept",
+    "  one piece of ten for \"implements list character feature\")."
    ],
    "sources": [
     "nuclear-developer/CHANGELOG.md"
@@ -2199,18 +2303,39 @@
    }
   },
   {
-   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.5ed4cd",
+   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.0d330a",
    "type": "changelog",
    "title": "Changelog — Unreleased (2026-11-11)",
-   "summary": "`NUCLEAR_DEVELOPER_URL` chooses the Developer it measures.",
+   "summary": "them (`Workbench.prompt`); before, only a section left with nothing under its heading was.",
    "body": [
-    "- `eval/run.py distill` builds and ingests the knowledge base (the solved tasks are its rows `solved:`);",
-    "  `NUCLEAR_DEVELOPER_URL` chooses the Developer it measures.",
-    "- Agents: coder, tester, security reviewer, planner (2026-11-10); documenter (`/developer/document`), assistant",
-    "  (`/developer/chat`, the editor's chat), diagnoser (`/developer/diagnose`: kind by rules, evidence by the tools, the",
-    "  next step) (2026-11-11).",
-    "- Every prompt a model reads is a file of the graph (`prompts/agents/*.md`, `Workbench.prompt`); the agents hold no",
-    "  prompt text.",
+    "- A section of a prompt file all of whose values are empty is dropped whole, with the words the file writes around",
+    "  them (`Workbench.prompt`); before, only a section left with nothing under its heading was. The chat's prompt kept",
+    "  \"Exact facts\" and what to do with its rows when the graph gave none, and the 2B model ended its answer with those",
+    "  instructions. With the graph's planner no longer running a query for an open question (\"que es nuclear lang?\" was",
+    "  answered with every command of `nuclear`), such an answer is the explanation alone.",
+    "- The type check is clean again (pyright strict over `build/`, 0 errors): `nuclear_graph` 0.2.0 says it is typed, and",
+    "  a `catch` that does not name what it caught binds no variable in Python.",
+    "- The agents read the graph as a library (ADR-0104): the coder and the tester get the card of the kind they write, the",
+    "  pitfalls of that kind, solved tasks and an example file of that kind; a repair gets the card of each error code the",
+    "  compiler named (prompt `agents/repair.md`); the assistant searches every shelf and answers in the developer's",
+    "  language; the diagnoser gets the cards of the codes in a log and the closest known failures. `defs/` regenerated for",
+    "  the new client (`search(shelves, platform, kind, type, agents, expand, kinds)`, `card(id)`)."
+   ],
+   "sources": [
+    "nuclear-developer/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-developer",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.19eff3",
+   "type": "changelog",
+   "title": "Changelog — Unreleased (2026-11-11)",
+   "summary": "line (no scratch-file path), the diagnoser reads failures told in Nuclear.",
+   "body": [
     "- The agents write only Nuclear: `platform` instead of `dialect`, the graph's `nuclear` collection, a piece's errors by",
     "  line (no scratch-file path), the diagnoser reads failures told in Nuclear.",
     "- The planner builds paths from the platform's `[layout]`, takes kinds and forgotten pieces from the spec's words and",
@@ -2219,7 +2344,12 @@
     "  and its search no longer leans on `inject`.",
     "- The assistant reports the size of the prompt it read (`context` in its trace) for the editor's context meter.",
     "- Evaluation: 45 tasks (18 held out), rounds 1–23. Rounds 22 and 23: 43 of 45 against Sonnet's 39, 16 of 18 held",
-    "  out against 17; one, then two of the three features by the local agents alone."
+    "  out against 17; one, then two of the three features by the local agents alone.",
+    "- The **analyst** (ADR-0105; `analyst.nuc`, `POST /developer/analyze`, prompt `agents/analyze.md`): before a run generates or",
+    "  plans anything it says which kind of request the spec is (a strategy row of the graph), the stages that run, the generator",
+    "  calls a request in plain words asks for (each kept only if its dry run accepts it), the pieces the tools already gave (the",
+    "  files that declare what changes; every file of a rename, rewritten) and the facts the request lacks. 4 Nuclear tests;",
+    "  `eval/run.py analyze` measures its one model call."
    ],
    "sources": [
     "nuclear-developer/CHANGELOG.md"
@@ -2231,16 +2361,11 @@
    }
   },
   {
-   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.a12a4f",
+   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.22161b",
    "type": "changelog",
    "title": "Changelog — Unreleased (2026-11-11)",
-   "summary": "pitfalls of that kind, solved tasks and an example file of that kind; a repair gets the card of each error code the compiler named (prompt `agents/repair.md`); the assistant searches every shelf and answers in the developer's language; the diagnoser gets the cards of the codes in a log and the…",
+   "summary": "`agents/faithful.md`) and, given the project's folder (`root` in a request; the Loop and the chat send it), reads by itself the files that declare the names of its task (`nuclear_graph.workspace.Workspace`, read-only).",
    "body": [
-    "- The agents read the graph as a library (ADR-0104): the coder and the tester get the card of the kind they write, the",
-    "  pitfalls of that kind, solved tasks and an example file of that kind; a repair gets the card of each error code the",
-    "  compiler named (prompt `agents/repair.md`); the assistant searches every shelf and answers in the developer's",
-    "  language; the diagnoser gets the cards of the codes in a log and the closest known failures. `defs/` regenerated for",
-    "  the new client (`search(shelves, platform, kind, type, agents, expand, kinds)`, `card(id)`).",
     "- The coder holds its answer to the task's own words (quoted texts, decorators, calls, status codes; prompt",
     "  `agents/faithful.md`) and, given the project's folder (`root` in a request; the Loop and the chat send it), reads by",
     "  itself the files that declare the names of its task (`nuclear_graph.workspace.Workspace`, read-only).",
@@ -2248,7 +2373,43 @@
     "  plan also as a tree (parts, tasks, pieces) and says what of the spec is beyond the platform or the local agents",
     "  (`limits`: the capabilities whose trigger words the spec writes, a spec too long, a plan without pieces).",
     "- `eval/run.py chat` asks the assistant the questions of `data/questions.toml` that carry `says`; both quote styles",
-    "  score as the same string."
+    "  score as the same string.",
+    "- `eval/run.py distill` builds and ingests the knowledge base (the solved tasks are its rows `solved:`);",
+    "  `NUCLEAR_DEVELOPER_URL` chooses the Developer it measures.",
+    "- Agents: coder, tester, security reviewer, planner (2026-11-10); documenter (`/developer/document`), assistant",
+    "  (`/developer/chat`, the editor's chat), diagnoser (`/developer/diagnose`: kind by rules, evidence by the tools, the",
+    "  next step) (2026-11-11).",
+    "- Every prompt a model reads is a file of the graph (`prompts/agents/*.md`, `Workbench.prompt`); the agents hold no",
+    "  prompt text."
+   ],
+   "sources": [
+    "nuclear-developer/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-developer",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-developer/CHANGELOG.md#unreleased-2026-11-11.d103bb",
+   "type": "changelog",
+   "title": "Changelog — Unreleased (2026-11-11)",
+   "summary": "again, what the spec introduces with its kind's word is a change of its file, and new pieces go to the component of the declarations the spec uses (it had planned an existing entity and its repository again, in a component of its own).",
+   "body": [
+    "- The planner knows the project (`PlanRequest.root`): what the project already declares and the spec only uses is not planned",
+    "  again, what the spec introduces with its kind's word is a change of its file, and new pieces go to the component of the",
+    "  declarations the spec uses (it had planned an existing entity and its repository again, in a component of its own).",
+    "- The set-up of the AI services installs and starts it (ADR-0106): the `nuclear-developer` command starts with the",
+    "  models of the machine's profile (`~/.config/nuclearlang/ai.env`) unless its caller gives others. README: the",
+    "  profiles and what each was measured to do.",
+    "- The assistant asks the graph's query planner before the model (ADR-0107): a question with one right answer gets the",
+    "  rows of the graph's exact facts, whole (`Workbench.answer`, the prompt's \"Exact facts\"; the rows end the answer as",
+    "  they are, put there by code, whatever the model wrote of them), and the trace says which",
+    "  queries ran (`exact`) and which cards were read, by title (`recall`; also the coder's, the tester's and the",
+    "  planner's). `eval/run.py chat` asks the `says` questions of the catalogue. `defs/` regenerated for",
+    "  `nuclear_graph` 0.2.0 (the graph is written in Nuclear).",
+    "- `POST /developer/accept` (the acceptor, prompt `agents/accept.md`): each acceptance criterion of a spec held"
    ],
    "sources": [
     "nuclear-developer/CHANGELOG.md"
@@ -2507,21 +2668,6 @@
    }
   },
   {
-   "id": "doc:nuclear-developer/README.md#how-an-agent-works.05183c",
-   "type": "readme",
-   "title": "Nuclear Developer — How an agent works",
-   "summary": "How an agent works",
-   "body": "| Planner | `gemma4:e2b` | `POST /developer/plan` | splits a spec into pieces of one file, in order; each path comes from the platform's layout (`nuclear help layout`), each kind and forgotten piece from the spec's own words | choose a folder, or plan what the spec does not name |",
-   "sources": [
-    "nuclear-developer/README.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclear-developer",
-    "dialect": ""
-   }
-  },
-  {
    "id": "doc:nuclear-developer/README.md#how-an-agent-works.08ef1c",
    "type": "readme",
    "title": "Nuclear Developer — How an agent works",
@@ -2541,31 +2687,6 @@
     "Each request runs on a thread of its own. **The agents write only Nuclear**: they name a platform (`backend`, `mobile`,",
     "`web`), never a dialect, read only the graph's rows for agents (`agents`: no target-language code) and check with",
     "`nuclear check --platform` (ADR-0102 §11)."
-   ],
-   "sources": [
-    "nuclear-developer/README.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclear-developer",
-    "dialect": ""
-   }
-  },
-  {
-   "id": "doc:nuclear-developer/README.md#how-an-agent-works.148466",
-   "type": "readme",
-   "title": "Nuclear Developer — How an agent works",
-   "summary": "The sources: `components/developer/ai/` (`workbench.nuc` — what every agent shares —, `coder.nuc`, `tester.nuc`, `security.nuc`, `documenter.nuc`, `assistant.nuc`, `diagnoser.nuc`, `planner.nuc`, `analyst.nuc`, `states/piece_state.nuc`), `components/developer/domain/models/`,…",
-   "body": [
-    "The sources: `components/developer/ai/` (`workbench.nuc` — what every agent shares —, `coder.nuc`, `tester.nuc`,",
-    "`security.nuc`, `documenter.nuc`, `assistant.nuc`, `diagnoser.nuc`, `planner.nuc`, `analyst.nuc`, `states/piece_state.nuc`), `components/developer/domain/models/`,",
-    "`components/developer/api/developer_controller.nuc`, `config/project_config.nuc` (the two Ollama models),",
-    "`config.nuc` (`dependencies(nuclear_graph = \"../nuclear-graph\")`), `defs/` (the type definitions of",
-    "`nuclear_graph.client`, `nuclear_graph.toolchain` and `nuclear_graph.workspace`, generated with `tools/defs/python/gen.py`).",
-    "",
-    "**The prompts are files**, never strings in the code: every prompt a model reads is",
-    "`nuclear-graph/src/nuclear_graph/prompts/agents/<step>.md` (`{{name}}` filled by `Workbench.prompt`, an empty `## `",
-    "section dropped; the list is that folder's README), over the use-case guides `prompts/<use case>.md`."
    ],
    "sources": [
     "nuclear-developer/README.md"
@@ -2634,19 +2755,20 @@
    }
   },
   {
-   "id": "doc:nuclear-developer/README.md#how-an-agent-works.9bbe13",
+   "id": "doc:nuclear-developer/README.md#how-an-agent-works.97946c",
    "type": "readme",
    "title": "Nuclear Developer — How an agent works",
-   "summary": "How an agent works",
+   "summary": "The sources: `components/developer/ai/` (`workbench.nuc` — what every agent shares —, `coder.nuc`, `tester.nuc`, `security.nuc`, `documenter.nuc`, `assistant.nuc`, `diagnoser.nuc`, `acceptor.nuc`, `planner.nuc`, `analyst.nuc`, `states/piece_state.nuc`), `components/developer/domain/models/`,…",
    "body": [
-    "| Agent | Model | Route | Does | Does not |",
-    "|---|---|---|---|---|",
-    "| Coder | `qwen2.5-coder:3b` | `POST /developer/code` | writes ONE `.nuc` file from a precise task, repairs it with the compiler | choose names, data or architecture |",
-    "| Tester | `qwen2.5-coder:3b` | `POST /developer/test` | writes the Nuclear tests (`tests` kind) of a piece of code | delete a failing test |",
-    "| Security | `gemma4:e2b` | `POST /developer/security` | reviews code against the platform's security rules + the compiler | change the code |",
-    "| Documenter | `gemma4:e2b` | `POST /developer/document` | reads a run's journal and writes what was done: what it built, how it checked it, what is left (only facts of the journal) | change the code |",
-    "| Assistant | `gemma4:e2b` | `POST /developer/chat` | answers a message of the editor's chat about the project, from the project's map, the session's last messages and the graph | change a file (an order is a Loop run) |",
-    "| Diagnoser | `gemma4:e2b` | `POST /developer/diagnose` | when a pipeline stage fails: the kind of failure by fixed rules (transient, environment, code, test, spec), the evidence from the tools (`nuclear check`, `dragonfly doctor`) and the next step in plain words | change anything |"
+    "The sources: `components/developer/ai/` (`workbench.nuc` — what every agent shares —, `coder.nuc`, `tester.nuc`,",
+    "`security.nuc`, `documenter.nuc`, `assistant.nuc`, `diagnoser.nuc`, `acceptor.nuc`, `planner.nuc`, `analyst.nuc`, `states/piece_state.nuc`), `components/developer/domain/models/`,",
+    "`components/developer/api/developer_controller.nuc`, `config/project_config.nuc` (the two Ollama models),",
+    "`config.nuc` (`dependencies(nuclear_graph = \"../nuclear-graph\")`), `defs/` (the type definitions of",
+    "`nuclear_graph.client`, `nuclear_graph.toolchain` and `nuclear_graph.workspace`, generated with `tools/defs/python/gen.py`).",
+    "",
+    "**The prompts are files**, never strings in the code: every prompt a model reads is",
+    "`nuclear-graph/prompts/agents/<step>.md` (`{{name}}` filled by `Workbench.prompt`, an empty `## `",
+    "section dropped; the list is that folder's README), over the use-case guides `prompts/<use case>.md`."
    ],
    "sources": [
     "nuclear-developer/README.md"
@@ -2675,6 +2797,48 @@
     "  (`tree`: the big parts, one per component; the tasks of each, a layer; the pieces of each task, a file) and",
     "  `limits`: the rows of the graph's capabilities whose trigger words the spec writes (\"authentication\" on the",
     "  backend, \"form\" on the web), a spec longer than a local model reads at once, a plan without pieces or with too"
+   ],
+   "sources": [
+    "nuclear-developer/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-developer",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-developer/README.md#how-an-agent-works.c614fd",
+   "type": "readme",
+   "title": "Nuclear Developer — How an agent works",
+   "summary": "How an agent works",
+   "body": [
+    "| Acceptor | `gemma4:e2b` | `POST /developer/accept` | after a run's verification passes: holds each acceptance criterion against what the run left (its files, its tests, the commands that passed) and says which are shown met, with the evidence | fail a run (its verdict is for the reviewer) |",
+    "| Planner | `gemma4:e2b` | `POST /developer/plan` | splits a spec into pieces of one file, in order; each path comes from the platform's layout (`nuclear help layout`), each kind and forgotten piece from the spec's own words | choose a folder, or plan what the spec does not name |"
+   ],
+   "sources": [
+    "nuclear-developer/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-developer",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-developer/README.md#how-an-agent-works.ee7445",
+   "type": "readme",
+   "title": "Nuclear Developer — How an agent works",
+   "summary": "How an agent works",
+   "body": [
+    "| Agent | Model | Route | Does | Does not |",
+    "|---|---|---|---|---|",
+    "| Coder | `qwen2.5-coder:3b` | `POST /developer/code` | writes ONE `.nuc` file from a precise task, repairs it with the compiler | choose names, data or architecture |",
+    "| Tester | `qwen2.5-coder:3b` | `POST /developer/test` | writes the Nuclear tests (`tests` kind) of a piece of code | delete a failing test |",
+    "| Security | `gemma4:e2b` | `POST /developer/security` | reviews code against the platform's security rules + the compiler | change the code |",
+    "| Documenter | `gemma4:e2b` | `POST /developer/document` | reads a run's journal and writes what was done: what it built, how it checked it, what is left (only facts of the journal) | change the code |",
+    "| Assistant | `gemma4:e2b` | `POST /developer/chat` | answers a message of the editor's chat about the project, from the project's map, the session's last messages and the graph; a question with one right answer (which, how many, what are) gets the rows of the graph's exact facts, which end the answer as they are (ADR-0107) | change a file (an order is a Loop run) |",
+    "| Diagnoser | `gemma4:e2b` | `POST /developer/diagnose` | when a pipeline stage fails: the kind of failure by fixed rules (transient, environment, code, test, spec), the evidence from the tools (`nuclear check`, `dragonfly doctor`) and the next step in plain words | change anything |"
    ],
    "sources": [
     "nuclear-developer/README.md"
@@ -2720,7 +2884,7 @@
    "body": [
     "Local AI agents for [NuclearLang](https://github.com/nuclearlang/nuclear) and Dragonfly, on models of at most 3B",
     "parameters, as the junior developer of a frontier model: **coder**, **tester**, **security reviewer**, **planner**,",
-    "**analyst**, **documenter**, **diagnoser** and **assistant**.",
+    "**analyst**, **documenter**, **diagnoser**, **acceptor** and **assistant**.",
     "What a small model cannot hold in its head comes from the [Nuclear Smart Graph](https://github.com/nuclearlang/nuclear-graph)",
     "(the ecosystem's private knowledge base); what it writes is checked by the Nuclear compiler before it answers.",
     "",
@@ -2922,17 +3086,25 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/AGENTS.md#agents-md-nuclear-graph.58b240",
+   "id": "doc:nuclear-graph/AGENTS.md#agents-md-nuclear-graph.01a9b8",
    "type": "readme",
    "title": "AGENTS.md — nuclear-graph",
-   "summary": "The Nuclear Smart Graph: the private library of NuclearLang and Dragonfly (one Chroma collection per shelf of typed, linked rows; EmbeddingGemma), its HTTP server with access control, and the MCP server of the ecosystem.",
+   "summary": "of the base) to make something easier: build the access the right way (`connect`, a request the user allows).",
    "body": [
-    "The Nuclear Smart Graph: the private library of NuclearLang and Dragonfly (one Chroma collection per shelf of typed,",
-    "linked rows; EmbeddingGemma), its HTTP server with access control, and the MCP server of the ecosystem. Read README.md",
-    "first; the decisions are ADR-0104 (the library) and ADR-0102 (the AI loop) of the `nuclear` repository.",
-    "",
-    "This repository is a folder of the NuclearLang working tree (`nuclear/nuclear-graph`); the platform's rules are the",
-    "working tree's `../AGENTS.md` and its state is `../STATUS.md`."
+    "- Never weaken a security rule (token on every route, no `Origin`, encryption at rest, only ingest writes the shelves",
+    "  of the base) to make something easier: build the access the right way (`connect`, a request the user allows). The",
+    "  exact facts are never written to disk: the database is made in memory from the sealed cards (`facts.nuc`).",
+    "- The knowledge base is rows, not copied documents. What has a structured source is generated (the `extract_*.nuc`",
+    "  modules), never written by hand; what is written by hand names its sources. `shelves.nuc` is the schema: a new",
+    "  shelf, type or filter is added there, with a test.",
+    "- A question with one right answer (which, how many, what are) is a row of `assets/queries/` over the views of",
+    "  `facts.nuc`, never a card someone keeps in step by hand: a new kind of fact is a view, a new question a row with",
+    "  its parameters, and an entry of `questions.toml` with `exact = true`.",
+    "- After any change here or in the tree: `nuclear-graph knowledge build`, `knowledge check`, `ingest`,",
+    "  `knowledge ask` (every question finds its row), and `knowledge examples` (every Nuclear example compiles).",
+    "- The prompts in `prompts/` are measured (`nuclear-developer/eval`): a change is a new round of the",
+    "  evaluation, recorded in its report.",
+    "- Checks: `nuclear check . && nuclear build . && uv sync --extra server --extra test && .venv/bin/python -m pytest -q`"
    ],
    "sources": [
     "nuclear-graph/AGENTS.md"
@@ -2944,21 +3116,23 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/AGENTS.md#agents-md-nuclear-graph.69cefe",
+   "id": "doc:nuclear-graph/AGENTS.md#agents-md-nuclear-graph.0fa05a",
    "type": "readme",
    "title": "AGENTS.md — nuclear-graph",
-   "summary": "of the base) to make something easier: build the access the right way (`connect`, a request the user allows).",
+   "summary": "The Nuclear Smart Graph: the private library of NuclearLang and Dragonfly (one Chroma collection per shelf of typed, linked rows; EmbeddingGemma; the exact facts in SQLite, in memory), its HTTP server with access control, and the MCP server of the ecosystem.",
    "body": [
-    "- Never weaken a security rule (token on every route, no `Origin`, encryption at rest, only ingest writes the shelves",
-    "  of the base) to make something easier: build the access the right way (`connect`, a request the user allows).",
-    "- The knowledge base is rows, not copied documents. What has a structured source is generated (`extract.py`), never",
-    "  written by hand; what is written by hand names its sources. `shelves.py` is the schema: a new shelf, type or filter",
-    "  is added there, with a test.",
-    "- After any change here or in the tree: `nuclear-graph knowledge build`, `knowledge check`, `ingest`,",
-    "  `knowledge ask` (every question finds its row), and `python tests/check_examples.py`.",
-    "- The prompts in `src/nuclear_graph/prompts/` are measured (`nuclear-developer/eval`): a change is a new round of the",
-    "  evaluation, recorded in its report.",
-    "- Checks: `uv sync --extra server --extra test && .venv/bin/python -m pytest -q`."
+    "The Nuclear Smart Graph: the private library of NuclearLang and Dragonfly (one Chroma collection per shelf of typed,",
+    "linked rows; EmbeddingGemma; the exact facts in SQLite, in memory), its HTTP server with access control, and the MCP",
+    "server of the ecosystem. Read README.md first; the decisions are ADR-0104 (the library), ADR-0107 (the exact facts and",
+    "the query planner; the graph written in Nuclear) and ADR-0102 (the AI loop) of the `nuclear` repository.",
+    "",
+    "**It is written in Nuclear** (the `python` dialect; `nuclear.toml`): the `.nuc` files of this folder are the source,",
+    "`nuclear build .` writes the Python package into `build/nuclear_graph` (never edited, never committed) and",
+    "`pyproject.toml` packages that folder. After a change: `nuclear check .`, `nuclear build .`, the tests. What Nuclear",
+    "cannot express is a finding of the compiler for `../STATUS.md`, never a `.py` file written by hand.",
+    "",
+    "This repository is a folder of the NuclearLang working tree (`nuclear/nuclear-graph`); the platform's rules are the",
+    "working tree's `../AGENTS.md` and its state is `../STATUS.md`."
    ],
    "sources": [
     "nuclear-graph/AGENTS.md"
@@ -2985,41 +3159,19 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.4a1225",
+   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.0a1ee6",
    "type": "changelog",
    "title": "Changelog — Unreleased",
-   "summary": "`capabilities`, `playbooks`, `examples`, `docs`) of rows with a stable id, keys, questions, typed links and sources, instead of two collections of document pieces (`knowledge` and `nuclear` are removed by the first ingest).",
+   "summary": "diagnostics, library, platforms, the CLIs' help, MCP tools, routes, stages, agents, editor, versions, examples, documents), merges the overlays, validates everything and raises the revision; `knowledge check` fails when the base is behind the tree; `knowledge review` confirms a hand-written row…",
    "body": [
-    "- The graph is a library (ADR-0104): nine shelves (`concepts`, `language`, `platforms`, `tools`, `errors`,",
-    "  `capabilities`, `playbooks`, `examples`, `docs`) of rows with a stable id, keys, questions, typed links and sources,",
-    "  instead of two collections of document pieces (`knowledge` and `nuclear` are removed by the first ingest). Search by",
-    "  meaning and by exact name over several shelves; `GET /v1/cards/{id}`; `nuclear-graph card`, `search -p --agents`;",
-    "  MCP `graph_search` by shelf and `graph_card`.",
-    "- The knowledge base is asset files: `knowledge build` generates the rows from the working tree (`extract.py`:",
-    "  diagnostics, library, platforms, the CLIs' help, MCP tools, routes, stages, agents, editor, versions, examples,",
+    "diagnostics, library, platforms, the CLIs' help, MCP tools, routes, stages, agents, editor, versions, examples,",
     "  documents), merges the overlays, validates everything and raises the revision; `knowledge check` fails when the",
     "  base is behind the tree; `knowledge review` confirms a hand-written row whose source changed; `knowledge ask` runs",
     "  the questions of `questions.toml`. `ingest` takes the knowledge folder only, embeds what changed and keeps what",
     "  agents wrote at run time. A client writes only `memory` and `examples`.",
     "- For the agents: `POST /v1/applies` (what of a spec the platform cannot do yet, by the capabilities' trigger words),",
-    "  `GET /v1/kinds/{platform}` (how people write each kind), `GraphClient.applies | kinds | brief | card`, and"
-   ],
-   "sources": [
-    "nuclear-graph/CHANGELOG.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclear-graph",
-    "dialect": ""
-   }
-  },
-  {
-   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.643251",
-   "type": "changelog",
-   "title": "Changelog — Unreleased",
-   "summary": "`workspace.py`: a project's files, read-only and confined to the project (`read`, `list`, `find`, `grep`, `outline`, `declarations`, `context`).",
-   "body": [
-    "`workspace.py`: a project's files, read-only and confined to the project (`read`, `list`, `find`, `grep`, `outline`,",
+    "  `GET /v1/kinds/{platform}` (how people write each kind), `GraphClient.applies | kinds | brief | card`, and",
+    "  `workspace.py`: a project's files, read-only and confined to the project (`read`, `list`, `find`, `grep`, `outline`,",
     "  `declarations`, `context`). MCP `developer_code` takes `project` and the local coder reads the project by itself."
    ],
    "sources": [
@@ -3032,18 +3184,76 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.8f122f",
+   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.13f45c",
    "type": "changelog",
    "title": "Changelog — Unreleased",
-   "summary": "meaning; no model), `POST /v1/strategy`, `GraphClient.strategy`, `nuclear-graph strategy \"<request>\"`, MCP `graph_strategy` (the first call the server's instructions ask for); `knowledge ask` gives a `request = true` entry of `questions.toml` to the selection; `Workspace.renamed(old, new)`: a…",
+   "summary": "owner's token and made another one in a file (every `nuclear-graph` command was answered 401; the same on the documents' key would open no card).",
    "body": [
-    "meaning; no model), `POST /v1/strategy`, `GraphClient.strategy`, `nuclear-graph strategy \"<request>\"`, MCP `graph_strategy`",
-    "  (the first call the server's instructions ask for); `knowledge ask` gives a `request = true` entry of `questions.toml` to",
-    "  the selection; `Workspace.renamed(old, new)`: a rename as a tool; the prompt `agents/analyze.md`.",
-    "- A machine set up for remote agents only (ADR-0106; `NUCLEAR_AI_MODE=remote` in `~/.config/nuclearlang/ai.env`, or in the",
-    "  environment): the MCP server offers no `graph_*` nor `developer_*` tool and tells the model to write what the",
-    "  generators do not. The extra `mcp` installs the MCP server alone (`nuclear-graph[mcp]`); `paths.machine()` reads the",
-    "  set-up's file."
+    "owner's token and made another one in a file (every `nuclear-graph` command was answered 401; the same on the",
+    "  documents' key would open no card). The names the keyring keeps are written down (`.keyring`); a secret of a closed",
+    "  keyring is waited for, then refused, and never made again.",
+    "- Every MCP tool's card answers \"what does <tool> do\" (a generated question of its row): the planner gave that",
+    "  question the 15 rows of `query:mcp.commands`. `query:examples` answers \"an example of a <kind>\"; \"que hace el mcp\"",
+    "  is a question of `concept:mcp`, no longer of `query:mcp.tools`.",
+    "- The package is typed (`py.typed`): a project that uses it is checked against it.",
+    "- The graph is a library (ADR-0104): nine shelves (`concepts`, `language`, `platforms`, `tools`, `errors`,",
+    "  `capabilities`, `playbooks`, `examples`, `docs`) of rows with a stable id, keys, questions, typed links and sources,",
+    "  instead of two collections of document pieces (`knowledge` and `nuclear` are removed by the first ingest). Search by",
+    "  meaning and by exact name over several shelves; `GET /v1/cards/{id}`; `nuclear-graph card`, `search -p --agents`;",
+    "  MCP `graph_search` by shelf and `graph_card`.",
+    "- The knowledge base is asset files: `knowledge build` generates the rows from the working tree (`extract.py`:"
+   ],
+   "sources": [
+    "nuclear-graph/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.3eb47e",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "closest card of the shelves (ADR-0107 §4): \"que es nuclear lang?\" was answered with every command of `nuclear`, because the question writes the tool's name; so were \"what is the smart graph\" (47 rows) and \"how does the mcp work\" (27).",
+   "body": [
+    "- The planner runs a query of the exact facts only when its exact question is closer to what was asked than the",
+    "  closest card of the shelves (ADR-0107 §4): \"que es nuclear lang?\" was answered with every command of `nuclear`,",
+    "  because the question writes the tool's name; so were \"what is the smart graph\" (47 rows) and \"how does the mcp",
+    "  work\" (27). `knowledge ask` holds the open questions marked `exact = false` in `questions.toml` to no query.",
+    "- **The search is exact** (ADR-0104 §3): `Store.near` and `Store.measure` compare the vector the store keeps of every",
+    "  item a filter matches; Chroma's approximate index is not asked. Once rows were replaced that index did not reach",
+    "  every item it held, and which ones changed at every start of the graph (after an ingest: three cards of 2 617, and",
+    "  \"ModuleNotFoundError: No module named ...\" no longer found its failure). `numpy` is a dependency of the server.",
+    "- A search result's `distance` is the closest the card came by meaning, by its text or by any question it answers;",
+    "  it was the distance of whichever of them ranked it, so a card brought in by a name hid a question of its own that",
+    "  was the same as the one asked.",
+    "- **A closed keyring is waited for** (ADR-0106 §9): a graph started at login ran before the keyring opened, found no"
+   ],
+   "sources": [
+    "nuclear-graph/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.696822",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "every ingest; nothing is written to disk), with a view per thing a question can list (`facts.nuc`); the shelf `queries`, the catalogue of questions with one right answer, checked at build time; the planner (`planner.nuc`): `POST /v1/answer`, `nuclear-graph answer \"<question>\" [-p platform]`,…",
+   "body": [
+    "every ingest; nothing is written to disk), with a view per thing a question can list (`facts.nuc`); the shelf",
+    "  `queries`, the catalogue of questions with one right answer, checked at build time; the planner (`planner.nuc`):",
+    "  `POST /v1/answer`, `nuclear-graph answer \"<question>\" [-p platform]`, `GraphClient.answer`, MCP `graph_answer`. The",
+    "  generated rows carry what the views read as structured `data`; `knowledge ask` gives an `exact = true` entry of",
+    "  `questions.toml` to the planner.",
+    "- MCP `developer_retry(project, run, from_stage, from_step, scratch)`: a run again from any step, or from scratch.",
+    "- The prompts `chat.md` and `agents/chat.md` have an \"Exact facts\" section the assistant copies from;",
+    "  `agents/accept.md` holds the acceptance criteria against a run."
    ],
    "sources": [
     "nuclear-graph/CHANGELOG.md"
@@ -3072,6 +3282,35 @@
     "  page (`docs/ai/mcp.md` of `nuclear`), so a new tool is documented in the same change.",
     "- Strategies (ADR-0105): the row type `strategy` on the playbooks shelf (`meta`: `family`, `scope`, `triggers`; `data`: `signals`,",
     "  `target`, `mode`, `stages`, `pieces`, `generators`, `needs`, `lead`); the selection `retrieve.strategy` (exact signs, then"
+   ],
+   "sources": [
+    "nuclear-graph/CHANGELOG.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/CHANGELOG.md#unreleased.c82f23",
+   "type": "changelog",
+   "title": "Changelog — Unreleased",
+   "summary": "meaning; no model), `POST /v1/strategy`, `GraphClient.strategy`, `nuclear-graph strategy \"<request>\"`, MCP `graph_strategy` (the first call the server's instructions ask for); `knowledge ask` gives a `request = true` entry of `questions.toml` to the selection; `Workspace.renamed(old, new)`: a…",
+   "body": [
+    "meaning; no model), `POST /v1/strategy`, `GraphClient.strategy`, `nuclear-graph strategy \"<request>\"`, MCP `graph_strategy`",
+    "  (the first call the server's instructions ask for); `knowledge ask` gives a `request = true` entry of `questions.toml` to",
+    "  the selection; `Workspace.renamed(old, new)`: a rename as a tool; the prompt `agents/analyze.md`.",
+    "- A machine set up for remote agents only (ADR-0106; `NUCLEAR_AI_MODE=remote` in `~/.config/nuclearlang/ai.env`, or in the",
+    "  environment): the MCP server offers no `graph_*` nor `developer_*` tool and tells the model to write what the",
+    "  generators do not. The extra `mcp` installs the MCP server alone (`nuclear-graph[mcp]`); `paths.machine()` reads the",
+    "  set-up's file.",
+    "- 0.2.0: **written in Nuclear** (ADR-0107; the `python` dialect, `nuclear.toml`). The `.nuc` files of the repository",
+    "  are the source, `nuclear build .` writes the package `build/nuclear_graph` that `pyproject.toml` packages; `src/`",
+    "  and the Python tests are gone (`tests/*.nuc`); the prompts are `prompts/`. `nuclear-graph knowledge examples`",
+    "  replaces `tests/check_examples.py`.",
+    "- **Exact facts and the query planner** (ADR-0107): the names, summaries, links and structured fields of every row in",
+    "  a SQLite database kept in the memory of the graph's process only (made from the sealed cards at the start and at"
    ],
    "sources": [
     "nuclear-graph/CHANGELOG.md"
@@ -3153,18 +3392,25 @@
    "id": "doc:nuclear-graph/README.md#development",
    "type": "readme",
    "title": "Nuclear Smart Graph — Development",
-   "summary": "uv sync --extra server --extra test .venv/bin/python -m pytest -q # access, encryption at rest, the search, the knowledge base's build and check .venv/bin/python tests/check_examples.py # every ```nuclear block of the hand-written rows compiles Layout: `src/nuclear_graph/` — `shelves.py` (the…",
+   "summary": "The graph is written in Nuclear (the `python` dialect): the `.nuc` files of this folder are the source, and `nuclear build .` writes the Python package `build/nuclear_graph` that `pyproject.toml` packages (`[project] package` of `nuclear.toml` names it).",
    "body": [
+    "The graph is written in Nuclear (the `python` dialect): the `.nuc` files of this folder are the source, and",
+    "`nuclear build .` writes the Python package `build/nuclear_graph` that `pyproject.toml` packages (`[project] package`",
+    "of `nuclear.toml` names it). `build/` is never edited and never committed.",
+    "",
     "```sh",
+    "nuclear check . && nuclear build .          # the .nuc files → build/nuclear_graph",
     "uv sync --extra server --extra test",
-    ".venv/bin/python -m pytest -q               # access, encryption at rest, the search, the knowledge base's build and check",
-    ".venv/bin/python tests/check_examples.py    # every ```nuclear block of the hand-written rows compiles",
+    ".venv/bin/python -m pytest -q               # tests/*.nuc: access, encryption at rest, the search, the exact facts, the planner, the knowledge base's build and check",
+    "nuclear-graph knowledge examples            # every ```nuclear block of the hand-written rows compiles",
     "```",
     "",
-    "Layout: `src/nuclear_graph/` — `shelves.py` (the schema), `assets.py` (a row: validation, what is embedded, what is",
-    "stored), `extract.py` (the generated rows), `knowledge.py` (build, check, review), `store.py` (Chroma + encryption +",
-    "embeddings), `retrieve.py` (the search), `ingest.py`, `access.py`, `server.py`, `mcp_server.py`, `client.py`,",
-    "`toolchain.py`, `workspace.py` (a project's files for an agent), `web.py`, `secrets_store.py`, `prompts/` (the prompt files, ingested into `prompts`), `cli.py`."
+    "Layout: `shelves.nuc` (the schema), `assets.nuc` (a row: validation, what is embedded, what is stored),",
+    "`extract*.nuc` (the generated rows), `knowledge.nuc` (build, check, review), `store.nuc` (Chroma + encryption +",
+    "embeddings), `retrieve.nuc` (the search), `facts.nuc` (the exact facts: the tables and their views), `planner.nuc`",
+    "(the query planner), `ingest.nuc`, `access.nuc`, `server.nuc`, `mcp_server.nuc`, `client.nuc`, `toolchain.nuc`,",
+    "`workspace.nuc` (a project's files for an agent), `web.nuc`, `secrets_store.nuc`, `crypto.nuc`, `paths.nuc`,",
+    "`cli.nuc`, `prompts/` (the prompt files, ingested into `prompts`), `tests/`."
    ],
    "sources": [
     "nuclear-graph/README.md"
@@ -3191,22 +3437,7 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#http-api.612bef",
-   "type": "readme",
-   "title": "Nuclear Smart Graph — HTTP API",
-   "summary": "All routes need `Authorization: Bearer <token>` except `GET /v1/health`, `POST /v1/access` and `GET /v1/access/{id}`.",
-   "body": "All routes need `Authorization: Bearer <token>` except `GET /v1/health`, `POST /v1/access` and `GET /v1/access/{id}`.",
-   "sources": [
-    "nuclear-graph/README.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclear-graph",
-    "dialect": ""
-   }
-  },
-  {
-   "id": "doc:nuclear-graph/README.md#http-api.b4f7b6",
+   "id": "doc:nuclear-graph/README.md#http-api.211b3b",
    "type": "readme",
    "title": "Nuclear Smart Graph — HTTP API",
    "summary": "HTTP API",
@@ -3215,11 +3446,8 @@
     "|---|---|---|",
     "| `POST /v1/search` | read | `{query, collection \\| shelves, k = 5, platform, agents, where, expand}` → `{items: [{id, shelf, text, meta, distance, score, via, card, related}]}`; without a collection, every shelf of the base; `where` filters by metadata (`{\"type\": \"kind\"}`, `{\"kinds\": \"usecase\"}`) |",
     "| `GET /v1/cards/{id}` | read | one card by its id, with the title and summary of the rows it links to |",
-    "| `POST /v1/strategy` | read | `{text, platform, existing, new, runnable, only}` → the strategies that fit a request, best first (at most three): `{id, title, summary, score, why, data, text}`. `existing` and `new`: the declarations the request names that a project has, and the ones it has not; `runnable`: for a run of the Loop; `only`: the strategy the request itself names |",
-    "| `POST /v1/applies` | read | `{text, platform}` → the capabilities rows whose trigger words a spec writes: what the platform cannot do yet, limits, parts never run for real (exact, never by meaning) |",
-    "| `GET /v1/kinds/{platform}` | read | every way a kind of the platform is written (`use case`, `application component`) and the kind it means |",
-    "| `GET /v1/prompts/{use_case}` | read | the prompt document |",
-    "| `POST /v1/documents` | write | `{collection: \"memory\" \\| \"examples\", id, text, meta}`: what an agent keeps at run time |"
+    "| `POST /v1/answer` | read | `{question, platform, history, agents, k}` → `{exact, needs, cards, facts, knowledge}`: what a question needs before a model answers it. `exact`: the exact queries it is, each with its parameters and its rows; `needs`: the ones it is close to that lack a name; `cards`: the shelves' answer by meaning; `facts` and `knowledge`: both as the text a prompt gets. No model is asked |",
+    "| `POST /v1/strategy` | read | `{text, platform, existing, new, runnable, only}` → the strategies that fit a request, best first (at most three): `{id, title, summary, score, why, data, text}`. `existing` and `new`: the declarations the request names that a project has, and the ones it has not; `runnable`: for a run of the Loop; `only`: the strategy the request itself names |"
    ],
    "sources": [
     "nuclear-graph/README.md"
@@ -3231,11 +3459,15 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#http-api.f7afba",
+   "id": "doc:nuclear-graph/README.md#http-api.32d573",
    "type": "readme",
    "title": "Nuclear Smart Graph — HTTP API",
    "summary": "HTTP API",
    "body": [
+    "| `POST /v1/applies` | read | `{text, platform}` → the capabilities rows whose trigger words a spec writes: what the platform cannot do yet, limits, parts never run for real (exact, never by meaning) |",
+    "| `GET /v1/kinds/{platform}` | read | every way a kind of the platform is written (`use case`, `application component`) and the kind it means |",
+    "| `GET /v1/prompts/{use_case}` | read | the prompt document |",
+    "| `POST /v1/documents` | write | `{collection: \"memory\" \\| \"examples\", id, text, meta}`: what an agent keeps at run time |",
     "| `DELETE /v1/documents/{collection}/{id}` | write | |",
     "| `GET /v1/stats` | read | the rows of each collection; the schema and revision of the base the graph holds |",
     "| `POST /v1/ingest` | admin | `{roots: [<knowledge folder>]}` |",
@@ -3243,6 +3475,21 @@
     "| `GET /v1/access/{request}` | — | `{status}`; once allowed, the token, a single time |",
     "| `GET /v1/access`, `POST /v1/access/{request}/allow\\|deny` | admin | manage requests |"
    ],
+   "sources": [
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/README.md#http-api.612bef",
+   "type": "readme",
+   "title": "Nuclear Smart Graph — HTTP API",
+   "summary": "All routes need `Authorization: Bearer <token>` except `GET /v1/health`, `POST /v1/access` and `GET /v1/access/{id}`.",
+   "body": "All routes need `Authorization: Bearer <token>` except `GET /v1/health`, `POST /v1/access` and `GET /v1/access/{id}`.",
    "sources": [
     "nuclear-graph/README.md"
    ],
@@ -3267,6 +3514,7 @@
     "",
     "```sh",
     "ollama pull embeddinggemma",
+    "nuclear build nuclear-graph                               # the graph is written in Nuclear: its Python package",
     "uv tool install --editable './nuclear-graph[server]'     # nuclear-graph on the PATH",
     "nuclear-graph serve &                                     # the graph, on 127.0.0.1:7878",
     "nuclear-graph knowledge build                             # the knowledge base: nuclear-developer/data/assets",
@@ -3346,6 +3594,35 @@
    }
   },
   {
+   "id": "doc:nuclear-graph/README.md#the-knowledge-base-assets-versions-and-how-it-stays-current.18c9ca",
+   "type": "readme",
+   "title": "Nuclear Smart Graph — The knowledge base: assets, versions, and how it stays current",
+   "summary": "A base is valid or it is not built: a link to a row that does not exist, a duplicated id, a diagnostic without documentation, a document no section claims, or code of a target language in a row the local agents read stops the build.",
+   "body": [
+    "| Command | What it does |",
+    "|---|---|",
+    "| `nuclear-graph knowledge build` | writes the generated assets, validates the whole base and raises the revision when a row changed |",
+    "| `nuclear-graph knowledge check` | fails when an asset is not what the tree gives now, a row is invalid, a curated row's source changed since its review, or the running graph holds another revision |",
+    "| `nuclear-graph knowledge review [id...]` | records that curated rows still hold after their sources changed |",
+    "| `nuclear-graph knowledge ask [word...]` | asks the running graph the questions of `questions.toml` and fails when one does not find its row (`exact = true`: its exact query) |",
+    "| `nuclear-graph knowledge examples` | compiles every ```` ```nuclear ```` block of the hand-written rows |",
+    "| `nuclear-graph ingest` | makes the folder what the graph knows: only what changed is embedded again; what an agent wrote at run time is kept |",
+    "",
+    "A base is valid or it is not built: a link to a row that does not exist, a duplicated id, a diagnostic without",
+    "documentation, a document no section claims, or code of a target language in a row the local agents read stops the",
+    "build. `manifest.json` holds the schema, the revision and each row's hash; `revisions.json` is the log; the graph",
+    "remembers the revision it ingested (`nuclear-graph stats`)."
+   ],
+   "sources": [
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
    "id": "doc:nuclear-graph/README.md#the-knowledge-base-assets-versions-and-how-it-stays-current.2bf1f0",
    "type": "readme",
    "title": "Nuclear Smart Graph — The knowledge base: assets, versions, and how it stays current",
@@ -3375,23 +3652,15 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#the-knowledge-base-assets-versions-and-how-it-stays-current.356e94",
+   "id": "doc:nuclear-graph/README.md#the-knowledge-base-assets-versions-and-how-it-stays-current.a102dd",
    "type": "readme",
    "title": "Nuclear Smart Graph — The knowledge base: assets, versions, and how it stays current",
-   "summary": "A base is valid or it is not built: a link to a row that does not exist, a duplicated id, a diagnostic without documentation, a document no section claims, or code of a target language in a row the local agents read stops the build.",
+   "summary": "working tree runs the check.",
    "body": [
-    "| Command | What it does |",
-    "|---|---|",
-    "| `nuclear-graph knowledge build` | writes the generated assets, validates the whole base and raises the revision when a row changed |",
-    "| `nuclear-graph knowledge check` | fails when an asset is not what the tree gives now, a row is invalid, a curated row's source changed since its review, or the running graph holds another revision |",
-    "| `nuclear-graph knowledge review [id...]` | records that curated rows still hold after their sources changed |",
-    "| `nuclear-graph knowledge ask [word...]` | asks the running graph the questions of `questions.toml` and fails when one does not find its row |",
-    "| `nuclear-graph ingest` | makes the folder what the graph knows: only what changed is embedded again; what an agent wrote at run time is kept |",
-    "",
-    "A base is valid or it is not built: a link to a row that does not exist, a duplicated id, a diagnostic without",
-    "documentation, a document no section claims, or code of a target language in a row the local agents read stops the",
-    "build. `manifest.json` holds the schema, the revision and each row's hash; `revisions.json` is the log; the graph",
-    "remembers the revision it ingested (`nuclear-graph stats`)."
+    "**After every change of the ecosystem**: build, review what it names, check, ingest. The end-of-turn hook of the",
+    "working tree runs the check. A new tool, error, kind or version reaches the base by building it; a new capability,",
+    "limit, failure or procedure gets its row written by hand. The teaching material (`docs/aprende`, CodeBuilder) and",
+    "`STATUS.md` are never part of the base."
    ],
    "sources": [
     "nuclear-graph/README.md"
@@ -3403,15 +3672,100 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#the-knowledge-base-assets-versions-and-how-it-stays-current.a102dd",
+   "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links-exact-facts-and-the-query-planner.2218b5",
    "type": "readme",
-   "title": "Nuclear Smart Graph — The knowledge base: assets, versions, and how it stays current",
-   "summary": "working tree runs the check.",
+   "title": "Nuclear Smart Graph — Exact facts and the query planner",
+   "summary": "cards; the names the query writes (`N0114`, `gen resource`, `usecase`, `mcp`) are looked up in the cards' keys, so a code or a command reaches its card whatever the rest of the sentence says, in any language; a card is also found by the questions its author wrote for it.",
    "body": [
-    "**After every change of the ecosystem**: build, review what it names, check, ingest. The end-of-turn hook of the",
-    "working tree runs the check. A new tool, error, kind or version reaches the base by building it; a new capability,",
-    "limit, failure or procedure gets its row written by hand. The teaching material (`docs/aprende`, CodeBuilder) and",
-    "`STATUS.md` are never part of the base."
+    "**Search** is by meaning and by exact name at once: the query is embedded once and each shelf answers its closest",
+    "cards; the names the query writes (`N0114`, `gen resource`, `usecase`, `mcp`) are looked up in the cards' keys, so a",
+    "code or a command reaches its card whatever the rest of the sentence says, in any language; a card is also found by",
+    "the questions its author wrote for it. The search is exact: the stored vector of every item a filter matches is",
+    "compared with the query's (the store's own index is approximate and is not asked). A card is read directly by its id, with a line for each card it links to.",
+    "",
+    "```sh",
+    "nuclear-graph search \"como funciona el MCP\"                # every shelf",
+    "nuclear-graph search \"how do I declare an entity\" -c platforms -p backend --agents",
+    "nuclear-graph card error:N0114                             # one card and what it links to",
+    "```",
+    "",
+    "**A strategy** is the row of one kind of request a user makes (`strategy:resource-db`, `strategy:refactor-rename`,",
+    "`strategy:bug-failing-test`...: 31 of them, ADR-0105). `nuclear-graph strategy` says which one a request is, and why.",
+    "It asks no model: an exact sign of the request (a diagnostic code, a test's output, `rename A to B`, a `GET <url>`",
+    "line) outweighs any closeness of meaning, and meaning decides when there is none."
+   ],
+   "sources": [
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links-exact-facts-and-the-query-planner.5e3e1b",
+   "type": "readme",
+   "title": "Nuclear Smart Graph — Exact facts and the query planner",
+   "summary": "A search by meaning gives the closest cards, never *all* of something: asked for every tool of the MCP server, it gives four cards and a model fills in the rest.",
+   "body": [
+    "A search by meaning gives the closest cards, never *all* of something: asked for every tool of the MCP server, it",
+    "gives four cards and a model fills in the rest. So the graph also holds **the exact facts** of the base in a relational",
+    "database (SQLite): every row's names, summary, links and structured fields (`meta`, `data`), with a view per thing a",
+    "question can list (`commands`, `mcp_tools`, `mcp_params`, `routes`, `kinds`, `decorators`, `plugins`, `generator_pieces`,",
+    "`diagnostics`, `library`, `stages`, `agents`, `components`, `strategies`...). The database lives in the memory of the",
+    "graph's process only: it is made from the cards the store keeps sealed when the graph starts, and again at every",
+    "ingest; nothing of it is written to disk, and it holds no row's body and nothing an agent kept at run time."
+   ],
+   "sources": [
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links-exact-facts-and-the-query-planner.9f2b33",
+   "type": "readme",
+   "title": "Nuclear Smart Graph — Exact facts and the query planner",
+   "summary": "nuclear-graph strategy \"renombra Book a Title\" # → strategy:refactor-rename (it writes \"renombra\"; ...) nuclear-graph strategy \"un CRUD de pedidos\" -p backend --full # with the plan of the strategy Two more collections are not part of the base: `prompts` (the prompt files of this package:…",
+   "body": [
+    "```sh",
+    "nuclear-graph strategy \"renombra Book a Title\"             # → strategy:refactor-rename (it writes \"renombra\"; ...)",
+    "nuclear-graph strategy \"un CRUD de pedidos\" -p backend --full   # with the plan of the strategy",
+    "```",
+    "",
+    "Two more collections are not part of the base: `prompts` (the prompt files of this package: `prompts/<use case>.md`",
+    "and `prompts/agents/<step>.md`) and `memory` (what an agent keeps about a project while it works)."
+   ],
+   "sources": [
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links-exact-facts-and-the-query-planner.eeaa26",
+   "type": "readme",
+   "title": "Nuclear Smart Graph — Exact facts and the query planner",
+   "summary": "The `queries` shelf is the catalogue: one row per question with one right answer (`query:mcp.tools`, `query:mcp.group`, `query:kind.create`, `query:cli.commands`, `query:diagnostic`...), with the ways people ask it, its parameters (each with the query that lists the words people write and the…",
+   "body": [
+    "The `queries` shelf is the catalogue: one row per question with one right answer (`query:mcp.tools`, `query:mcp.group`,",
+    "`query:kind.create`, `query:cli.commands`, `query:diagnostic`...), with the ways people ask it, its parameters (each",
+    "with the query that lists the words people write and the value each means: `generadores` → `generate`, `caso de uso` →",
+    "`usecase`) and its SQL, checked at build time against the views. **The planner** (`POST /v1/answer`, `nuclear-graph",
+    "answer \"<question>\"`, MCP `graph_answer`) asks no model: it matches the question to the catalogue (by meaning and by",
+    "the names it writes), fills the parameters from the question's own words (or, for a follow-up, from the user's earlier",
+    "messages), runs the queries, and searches the shelves for what is left. The shelves also decide whether a question is",
+    "exact at all: a query runs only when its exact question is closer to what was asked than the closest card, so \"what is",
+    "nuclear\" gets the card of the language and not the commands of the tool of that name. It answers `facts` (the rows,",
+    "whole), `knowledge` (the cards) and `needs` (an exact question it is close to that lacks a name). The local assistant",
+    "explains them, and the rows end its answer as they are, put there by code: a list never depends on a model."
    ],
    "sources": [
     "nuclear-graph/README.md"
@@ -3448,34 +3802,6 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links.9f39e1",
-   "type": "readme",
-   "title": "Nuclear Smart Graph — The library: shelves, cards, links",
-   "summary": "A card has a stable id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`, `concept:mcp`), a title, a summary, a body, the exact names it is known by (`keys`), the questions it answers (`asks`), typed links to other cards, the platforms it belongs to, whether the local agents…",
-   "body": [
-    "| `examples` | What does the code look like? | every `.nuc` of the example projects by kind and platform; solved tasks |",
-    "| `docs` | What does the full document say? | the long form: the dialects underneath, the target languages, the runtimes, the decisions, the context files, the guides |",
-    "",
-    "A card has a stable id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`, `concept:mcp`), a title,",
-    "a summary, a body, the exact names it is known by (`keys`), the questions it answers (`asks`), typed links to other",
-    "cards, the platforms it belongs to, whether the local agents read it, and the sources it was written from. The whole",
-    "format is `nuclear_graph/shelves.py`, written into the base as `schema.json`.",
-    "",
-    "**Search** is by meaning and by exact name at once: the query is embedded once and each shelf answers its closest",
-    "cards; the names the query writes (`N0114`, `gen resource`, `usecase`, `mcp`) are looked up in the cards' keys, so a",
-    "code or a command reaches its card whatever the rest of the sentence says, in any language; a card is also found by",
-    "the questions its author wrote for it. A card is read directly by its id, with a line for each card it links to."
-   ],
-   "sources": [
-    "nuclear-graph/README.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclear-graph",
-    "dialect": ""
-   }
-  },
-  {
    "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links.be32e9",
    "type": "readme",
    "title": "Nuclear Smart Graph — The library: shelves, cards, links",
@@ -3491,29 +3817,19 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links.d389d5",
+   "id": "doc:nuclear-graph/README.md#the-library-shelves-cards-links.da90e1",
    "type": "readme",
    "title": "Nuclear Smart Graph — The library: shelves, cards, links",
-   "summary": "nuclear-graph search \"como funciona el MCP\" # every shelf nuclear-graph search \"how do I declare an entity\" -c platforms -p backend --agents nuclear-graph card error:N0114 # one card and what it links to `strategy:bug-failing-test`...: 31 of them, ADR-0105).",
+   "summary": "A card has a stable id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`, `concept:mcp`), a title, a summary, a body, the exact names it is known by (`keys`), the questions it answers (`asks`), typed links to other cards, the platforms it belongs to, whether the local agents…",
    "body": [
-    "```sh",
-    "nuclear-graph search \"como funciona el MCP\"                # every shelf",
-    "nuclear-graph search \"how do I declare an entity\" -c platforms -p backend --agents",
-    "nuclear-graph card error:N0114                             # one card and what it links to",
-    "```",
+    "| `examples` | What does the code look like? | every `.nuc` of the example projects by kind and platform; solved tasks |",
+    "| `docs` | What does the full document say? | the long form: the dialects underneath, the target languages, the runtimes, the decisions, the context files, the guides |",
+    "| `queries` | Which, how many, what are: a question with one right answer | the catalogue of exact questions: each row is a question, its parameters and the query that answers it over the exact facts |",
     "",
-    "**A strategy** is the row of one kind of request a user makes (`strategy:resource-db`, `strategy:refactor-rename`,",
-    "`strategy:bug-failing-test`...: 31 of them, ADR-0105). `nuclear-graph strategy` says which one a request is, and why.",
-    "It asks no model: an exact sign of the request (a diagnostic code, a test's output, `rename A to B`, a `GET <url>`",
-    "line) outweighs any closeness of meaning, and meaning decides when there is none.",
-    "",
-    "```sh",
-    "nuclear-graph strategy \"renombra Book a Title\"             # → strategy:refactor-rename (it writes \"renombra\"; ...)",
-    "nuclear-graph strategy \"un CRUD de pedidos\" -p backend --full   # with the plan of the strategy",
-    "```",
-    "",
-    "Two more collections are not part of the base: `prompts` (the prompt files of this package: `prompts/<use case>.md`",
-    "and `prompts/agents/<step>.md`) and `memory` (what an agent keeps about a project while it works)."
+    "A card has a stable id (`error:N0114`, `kind:backend.usecase`, `tool:dragonfly.gen.resource`, `concept:mcp`), a title,",
+    "a summary, a body, the exact names it is known by (`keys`), the questions it answers (`asks`), typed links to other",
+    "cards, the platforms it belongs to, whether the local agents read it, and the sources it was written from. The whole",
+    "format is `shelves.nuc`, written into the base as `schema.json`."
    ],
    "sources": [
     "nuclear-graph/README.md"
@@ -3525,13 +3841,62 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#use-it-from-an-ai-agent-mcp.2808d3",
+   "id": "doc:nuclear-graph/README.md#use-it-from-an-ai-agent-mcp.612ab1",
    "type": "readme",
    "title": "Nuclear Smart Graph — Use it from an AI agent (MCP)",
    "summary": "Use it from an AI agent (MCP)",
    "body": [
+    "| Tool | What it gives |",
+    "|---|---|",
+    "| `graph_strategy(request, platform)` | **the first call for any request**: which kind of request it is (a whole system, one screen, a rename, a failing test...), the signs that say so, and the plan of that kind (ADR-0105) |",
+    "| `graph_answer(question, platform)` | the exact answer of a question that has one (every command of a tool, the tools of this server and their parameters, the commands that write a kind, a diagnostic by its code...): the rows of the exact facts (SQLite), whole, then the cards the shelves answer by meaning |",
+    "| `graph_search(query, shelf, k, platform, kind, type)` | the cards that answer a query, each with the rows it links to; `shelf`: one or several of the shelves above, or `memory` |",
+    "| `graph_card(id)` | one card by its id (`error:N0114`, `kind:backend.usecase`, `playbook:feature-from-a-spec`) |",
+    "| `graph_prompt(use_case)` | the validated prompt of `feature`, `refactor`, `bug`, `docs`, `diagram`, `test`, `security`, `piece`, `plan` |",
+    "| `graph_remember(id, text, collection, project)` | keeps a decision (`memory`), or a solved example (`examples`) the local developer will find |",
+    "| `nuclear_check(code \\| path, dialect)` | `ok`, or one line per error with its fix |",
+    "| `nuclear_build`, `nuclear_fmt`, `nuclear_help`, `nuclear_brief`, `nuclear_defs` | the compiler and its documentation |"
+   ],
+   "sources": [
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/README.md#use-it-from-an-ai-agent-mcp.6e1dc9",
+   "type": "readme",
+   "title": "Nuclear Smart Graph — Use it from an AI agent (MCP)",
+   "summary": "Use it from an AI agent (MCP)",
+   "body": [
+    "| `dragonfly(project, command, args)` | `new`, `build`, `install`, `test`, `check`, `analyze`, `make`, `migrate`, `add`, `explain` in a project |",
+    "| `project_inspect(project)` | what the project has: platform, dialect, components with their declarations by kind (`dragonfly gen inspect`) |",
+    "| `generate_resource(project, component, name, from_json \\| from_spec \\| fields, source, path, actions, screen, plural, dry_run)` | the finished, compiling code of a resource (`dragonfly gen resource`, ADR-0103): models, repository, a use case per action, the facade, the controller or the screen, the tests |",
+    "| `generate_usecase(project, component, name, calls, route, dry_run)` | a use case wired into its component (`dragonfly gen usecase`): its alias in the facade and, with `route` (backend, `\"POST orders/{id}/cancel\"`), its route in the controller; with `calls` (`\"OrderRepository.pending\"`) the use case is written too, because it only calls that method |",
+    "| `generate_component(project, component)`, `generate_screen(project, component, screen, route)` | a component with its facade; a screen that is not a resource's list (mobile, web) |",
+    "| `api_inspect(url, project, component, name)` | a public API's answer as a shape (keys, types, nested objects, a page); with a project, the files `generate_resource` would write |"
+   ],
+   "sources": [
+    "nuclear-graph/README.md"
+   ],
+   "meta": {
+    "section": "10-ai",
+    "repo": "nuclear-graph",
+    "dialect": ""
+   }
+  },
+  {
+   "id": "doc:nuclear-graph/README.md#use-it-from-an-ai-agent-mcp.790a5c",
+   "type": "readme",
+   "title": "Nuclear Smart Graph — Use it from an AI agent (MCP)",
+   "summary": "Use it from an AI agent (MCP)",
+   "body": [
+    "| `web_search(query, pages)`, `web_read(url)` | the internet: an API's documentation when neither the spec nor the API's answer gives the fields (SearXNG with `NUCLEAR_SEARXNG_URL`, Brave with `nuclear-graph web-key brave`, else Wikipedia) |",
     "| `developer_task(project, title, description, criteria, use_case)` | **the first step of every task**: the local developer does the whole task in the project (`nuclear-loop run --lead local`: plan, tests first, code, verification, security, artifacts) and answers the run's journal |",
-    "| `developer_retry(project, run, from_stage)` | a run that failed, again from the step that failed (every step that passed is kept), or the whole of `from_stage` |",
+    "| `developer_retry(project, run, from_stage, from_step, scratch)` | a run again: from the step that failed (every step that passed is kept), the whole of `from_stage`, from one step and every step after it (`from_step`, passed or failed), or from scratch (`scratch`); what the steps left out wrote is undone first |",
     "| `developer_review(project, run, notes, files)` | **the last step**: the lead's corrections, appended to `.nuclear/loop/runs/<run>.review.md`; each corrected file (once the project's check is `ok`) goes to the graph's `examples` |",
     "| `developer_code`, `developer_test`, `developer_security` | the [Nuclear Developer](https://github.com/nuclearlang/nuclear-developer): one file written, checked and repaired by the local 3B model (`platform`: backend, mobile or web; it writes only Nuclear) |"
    ],
@@ -3573,27 +3938,6 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#use-it-from-an-ai-agent-mcp.c86752",
-   "type": "readme",
-   "title": "Nuclear Smart Graph — Use it from an AI agent (MCP)",
-   "summary": "Use it from an AI agent (MCP)",
-   "body": [
-    "| `generate_resource(project, component, name, from_json \\| from_spec \\| fields, source, path, actions, screen, plural, dry_run)` | the finished, compiling code of a resource (`dragonfly gen resource`, ADR-0103): models, repository, a use case per action, the facade, the controller or the screen, the tests |",
-    "| `generate_usecase(project, component, name, calls, route, dry_run)` | a use case wired into its component (`dragonfly gen usecase`): its alias in the facade and, with `route` (backend, `\"POST orders/{id}/cancel\"`), its route in the controller; with `calls` (`\"OrderRepository.pending\"`) the use case is written too, because it only calls that method |",
-    "| `generate_component(project, component)`, `generate_screen(project, component, screen, route)` | a component with its facade; a screen that is not a resource's list (mobile, web) |",
-    "| `api_inspect(url, project, component, name)` | a public API's answer as a shape (keys, types, nested objects, a page); with a project, the files `generate_resource` would write |",
-    "| `web_search(query, pages)`, `web_read(url)` | the internet: an API's documentation when neither the spec nor the API's answer gives the fields (SearXNG with `NUCLEAR_SEARXNG_URL`, Brave with `nuclear-graph web-key brave`, else Wikipedia) |"
-   ],
-   "sources": [
-    "nuclear-graph/README.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclear-graph",
-    "dialect": ""
-   }
-  },
-  {
    "id": "doc:nuclear-graph/README.md#use-it-from-an-ai-agent-mcp.d7c25d",
    "type": "readme",
    "title": "Nuclear Smart Graph — Use it from an AI agent (MCP)",
@@ -3619,43 +3963,17 @@
    }
   },
   {
-   "id": "doc:nuclear-graph/README.md#use-it-from-an-ai-agent-mcp.e677d2",
-   "type": "readme",
-   "title": "Nuclear Smart Graph — Use it from an AI agent (MCP)",
-   "summary": "Use it from an AI agent (MCP)",
-   "body": [
-    "| Tool | What it gives |",
-    "|---|---|",
-    "| `graph_strategy(request, platform)` | **the first call for any request**: which kind of request it is (a whole system, one screen, a rename, a failing test...), the signs that say so, and the plan of that kind (ADR-0105) |",
-    "| `graph_search(query, shelf, k, platform, kind, type)` | the cards that answer a query, each with the rows it links to; `shelf`: one or several of the shelves above, or `memory` |",
-    "| `graph_card(id)` | one card by its id (`error:N0114`, `kind:backend.usecase`, `playbook:feature-from-a-spec`) |",
-    "| `graph_prompt(use_case)` | the validated prompt of `feature`, `refactor`, `bug`, `docs`, `diagram`, `test`, `security`, `piece`, `plan` |",
-    "| `graph_remember(id, text, collection, project)` | keeps a decision (`memory`), or a solved example (`examples`) the local developer will find |",
-    "| `nuclear_check(code \\| path, dialect)` | `ok`, or one line per error with its fix |",
-    "| `nuclear_build`, `nuclear_fmt`, `nuclear_help`, `nuclear_brief`, `nuclear_defs` | the compiler and its documentation |",
-    "| `dragonfly(project, command, args)` | `new`, `build`, `install`, `test`, `check`, `analyze`, `make`, `migrate`, `add`, `explain` in a project |",
-    "| `project_inspect(project)` | what the project has: platform, dialect, components with their declarations by kind (`dragonfly gen inspect`) |"
-   ],
-   "sources": [
-    "nuclear-graph/README.md"
-   ],
-   "meta": {
-    "section": "10-ai",
-    "repo": "nuclear-graph",
-    "dialect": ""
-   }
-  },
-  {
-   "id": "doc:nuclear-graph/README.md#who-may-read-it.cefc06",
+   "id": "doc:nuclear-graph/README.md#who-may-read-it.265529",
    "type": "readme",
    "title": "Nuclear Smart Graph — Who may read it",
-   "summary": "constant time, and an allowed request hands its token once; (`secret-tool`, libsecret), or in `0600` files of the data folder when there is no keyring; documentation.",
+   "summary": "constant time, and an allowed request hands its token once; (`secret-tool`, libsecret), or in `0600` files of the data folder when there is no keyring; a graph that starts while its keyring is closed (a service at login) waits for it and never makes a second key or token; documentation.",
    "body": [
     "- the server listens on `127.0.0.1` only; a request with an `Origin` header (a web page) is refused;",
     "- every route but `/v1/health` and the access request needs a token; tokens are stored as SHA-256 hashes, compared in",
     "  constant time, and an allowed request hands its token once;",
     "- documents are encrypted at rest (AES-256-GCM); the key and the owner token live in the desktop keyring",
-    "  (`secret-tool`, libsecret), or in `0600` files of the data folder when there is no keyring;",
+    "  (`secret-tool`, libsecret), or in `0600` files of the data folder when there is no keyring; a graph that starts",
+    "  while its keyring is closed (a service at login) waits for it and never makes a second key or token;",
     "- the data folder (`$XDG_DATA_HOME/nuclear-graph`, `0700`) is opened only by the server process;",
     "- only `ingest` writes the shelves of the base: a client writes `memory` and `examples` and cannot plant false",
     "  documentation.",

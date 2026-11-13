@@ -1,0 +1,53 @@
+{
+ "shelf": "platforms",
+ "origin": "overlay",
+ "about": "How people write the kinds of the web platform besides each kind's own word (in Spanish, in the plural): a question or a spec that writes one of them means that kind. Only words that mean nothing else are here.",
+ "rows": [
+  {
+   "id": "kind:web.aggregate",
+   "keys": [
+    "agregado",
+    "agregados",
+    "aggregates"
+   ]
+  },
+  {
+   "id": "kind:web.appcomponent",
+   "keys": [
+    "fachada",
+    "facade",
+    "componente de aplicacion"
+   ]
+  },
+  {
+   "id": "kind:web.repository",
+   "keys": [
+    "repositorio",
+    "repositorios",
+    "repositories"
+   ]
+  },
+  {
+   "id": "kind:web.statemanager",
+   "keys": [
+    "gestor de estado",
+    "state managers"
+   ]
+  },
+  {
+   "id": "kind:web.statemodel",
+   "keys": [
+    "modelo de estado",
+    "state models"
+   ]
+  },
+  {
+   "id": "kind:web.usecase",
+   "keys": [
+    "caso de uso",
+    "casos de uso",
+    "use cases"
+   ]
+  }
+ ]
+}

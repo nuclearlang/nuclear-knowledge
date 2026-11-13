@@ -21,6 +21,11 @@
     "not installed",
     "exit 127"
    ],
+   "asks": [
+    "nuclear: command not found",
+    "the terminal says dragonfly is not a command",
+    "no encuentra el comando dragonfly"
+   ],
    "links": [
     {
      "rel": "tool",
@@ -138,14 +143,17 @@
     "",
     "**Cause.** Each client has its own token, kept in your keyring, with scopes: `read` (search, prompts), `write` (remember, examples), `admin` (ingest: only the owner).",
     "",
-    "**Next step.** `nuclear-graph connect nuclear-developer --scopes read,write` (the local agents), `nuclear-graph connect mcp --scopes read,write` (the MCP server); `nuclear-graph requests` shows who asked; `nuclear-graph allow <request>`. Restart the client so it reads its token."
+    "**Next step.** `nuclear-graph connect nuclear-developer --scopes read,write` (the local agents), `nuclear-graph connect mcp --scopes read,write` (the MCP server); `nuclear-graph requests` shows who asked; `nuclear-graph allow <request>`. Restart the client so it reads its token.",
+    "",
+    "**The keyring was closed.** A graph that starts at login runs before the keyring opens: it waits for it (its log says `the keyring that keeps the graph's `owner` is closed` when it gives up, and the service starts again by itself). A graph of before 2026-11-13 made a second owner's token instead and answered 401 to your own commands until it was restarted: `systemctl --user restart nuclear-graph`."
    ],
    "keys": [
     "no access",
     "401",
     "403",
     "token is needed",
-    "has no access"
+    "has no access",
+    "keyring is closed"
    ],
    "links": [
     {
@@ -203,7 +211,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "family": "transient",
@@ -357,7 +365,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "family": "environment",
@@ -659,13 +667,16 @@
    "title": "Failure: no space left on the device",
    "summary": "A run, a build or the evaluation stops because the temporary folder or the disk is full. Builds of example projects and Flutter leave large temporary folders: free the space and retry from the failed step.",
    "body": [
-    "**Looks like.** `No space left on device`, a run whose files are cut short.",
+    "**Looks like.** `No space left on device`, a run whose files are cut short; or a run that stops at its first step, *Check the connections*, with `278 MB free in /tmp (at least 500 MB are needed: free some space there)`: the message names the folder that is full (the project's, or the temporary one, which on many systems is memory with a size of its own).",
     "",
-    "**Next step.** `df -h /tmp ~`; remove scratch projects and old temporary build folders; `nuclear-loop retry <run>`. A run checks the free disk before it starts."
+    "**Next step.** `df -h /tmp ~`; remove scratch projects and old temporary build folders (`flutter_tools.*`, `nuclear-lsp-*`, `nuclear-web-device-*` in the temporary folder); `nuclear-loop retry <run>`. A run checks the free disk before it starts, and the diagnoser names this kind of failure `disk`: no retry helps until space is freed."
    ],
    "keys": [
     "no space left",
-    "disk full"
+    "disk full",
+    "mb free",
+    "free some space",
+    "enospc"
    ],
    "links": [
     {
@@ -676,7 +687,11 @@
    "meta": {
     "family": "environment",
     "severity": "error"
-   }
+   },
+   "sources": [
+    "nuclear-vscode/src/loopSafety.ts",
+    "nuclear-developer/components/developer/ai/diagnoser.nuc"
+   ]
   },
   {
    "id": "failure:the-knowledge-base-is-stale",
@@ -707,7 +722,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/knowledge.py"
+    "nuclear-graph/knowledge.nuc"
    ],
    "meta": {
     "family": "environment",

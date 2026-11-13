@@ -35,7 +35,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",
@@ -81,7 +81,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",
@@ -122,7 +122,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",
@@ -162,7 +162,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "scope",
@@ -189,7 +189,7 @@
     "exact names"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "scope",
@@ -226,7 +226,7 @@
     "several declarations"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "scope",
@@ -276,7 +276,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md",
+    "nuclear-graph/prompts/piece.md",
     "spec/library.md#Rules"
    ],
    "meta": {
@@ -314,7 +314,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "library",
@@ -403,7 +403,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+    "nuclear-graph/prompts/test.md"
    ],
    "meta": {
     "family": "result",
@@ -439,7 +439,7 @@
     "backend"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+    "nuclear-graph/prompts/test.md"
    ],
    "meta": {
     "family": "test",
@@ -476,7 +476,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+    "nuclear-graph/prompts/test.md"
    ],
    "meta": {
     "family": "test",
@@ -518,7 +518,7 @@
     "backend"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",
@@ -559,7 +559,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",
@@ -603,7 +603,7 @@
     "web"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",
@@ -677,7 +677,7 @@
     "backend"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",
@@ -860,7 +860,7 @@
     "web"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/piece.md"
+    "nuclear-graph/prompts/piece.md"
    ],
    "meta": {
     "family": "shape",

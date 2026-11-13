@@ -39,6 +39,11 @@
    ],
    "meta": {
     "name": "acl"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "acl",
+    "args": []
    }
   },
   {
@@ -69,6 +74,11 @@
    ],
    "meta": {
     "name": "after"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "after",
+    "args": []
    }
   },
   {
@@ -100,6 +110,11 @@
    ],
    "meta": {
     "name": "before"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "before",
+    "args": []
    }
   },
   {
@@ -128,6 +143,11 @@
    ],
    "meta": {
     "name": "body"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "body",
+    "args": []
    }
   },
   {
@@ -160,6 +180,11 @@
    ],
    "meta": {
     "name": "created"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "created",
+    "args": []
    }
   },
   {
@@ -189,6 +214,11 @@
    ],
    "meta": {
     "name": "delete"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "delete",
+    "args": []
    }
   },
   {
@@ -218,6 +248,11 @@
    ],
    "meta": {
     "name": "email"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "email",
+    "args": []
    }
   },
   {
@@ -251,6 +286,11 @@
    ],
    "meta": {
     "name": "entity"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "entity",
+    "args": []
    }
   },
   {
@@ -272,6 +312,11 @@
    ],
    "meta": {
     "name": "flow"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "flow",
+    "args": []
    }
   },
   {
@@ -300,6 +345,11 @@
    ],
    "meta": {
     "name": "form"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "form",
+    "args": []
    }
   },
   {
@@ -338,6 +388,11 @@
    ],
    "meta": {
     "name": "get"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "get",
+    "args": []
    }
   },
   {
@@ -367,6 +422,11 @@
    ],
    "meta": {
     "name": "key"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "key",
+    "args": []
    }
   },
   {
@@ -398,6 +458,11 @@
    ],
    "meta": {
     "name": "matches"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "matches",
+    "args": []
    }
   },
   {
@@ -426,6 +491,11 @@
    ],
    "meta": {
     "name": "max"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "max",
+    "args": []
    }
   },
   {
@@ -455,6 +525,11 @@
    ],
    "meta": {
     "name": "maxLength"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "maxLength",
+    "args": []
    }
   },
   {
@@ -483,6 +558,11 @@
    ],
    "meta": {
     "name": "min"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "min",
+    "args": []
    }
   },
   {
@@ -511,6 +591,11 @@
    ],
    "meta": {
     "name": "minLength"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "minLength",
+    "args": []
    }
   },
   {
@@ -541,6 +626,11 @@
    ],
    "meta": {
     "name": "mock"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "mock",
+    "args": []
    }
   },
   {
@@ -573,6 +663,11 @@
    ],
    "meta": {
     "name": "offline"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "offline",
+    "args": []
    }
   },
   {
@@ -603,6 +698,11 @@
    ],
    "meta": {
     "name": "on"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "on",
+    "args": []
    }
   },
   {
@@ -632,6 +732,11 @@
    ],
    "meta": {
     "name": "patch"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "patch",
+    "args": []
    }
   },
   {
@@ -660,6 +765,11 @@
    ],
    "meta": {
     "name": "path"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "path",
+    "args": []
    }
   },
   {
@@ -689,6 +799,11 @@
    ],
    "meta": {
     "name": "pattern"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "pattern",
+    "args": []
    }
   },
   {
@@ -720,6 +835,11 @@
    ],
    "meta": {
     "name": "post"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "post",
+    "args": []
    }
   },
   {
@@ -757,6 +877,14 @@
    ],
    "meta": {
     "name": "primary"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "primary",
+    "args": [
+     "generated",
+     "length"
+    ]
    }
   },
   {
@@ -786,6 +914,11 @@
    ],
    "meta": {
     "name": "put"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "put",
+    "args": []
    }
   },
   {
@@ -815,6 +948,11 @@
    ],
    "meta": {
     "name": "query"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "query",
+    "args": []
    }
   },
   {
@@ -836,6 +974,11 @@
    ],
    "meta": {
     "name": "remote"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "remote",
+    "args": []
    }
   },
   {
@@ -870,6 +1013,11 @@
    ],
    "meta": {
     "name": "repository"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "repository",
+    "args": []
    }
   },
   {
@@ -898,6 +1046,11 @@
    ],
    "meta": {
     "name": "required"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "required",
+    "args": []
    }
   },
   {
@@ -932,6 +1085,11 @@
    ],
    "meta": {
     "name": "requires"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "requires",
+    "args": []
    }
   },
   {
@@ -994,6 +1152,11 @@
    ],
    "meta": {
     "name": "screen"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "screen",
+    "args": []
    }
   },
   {
@@ -1039,6 +1202,11 @@
    ],
    "meta": {
     "name": "splash"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "splash",
+    "args": []
    }
   },
   {
@@ -1074,6 +1242,11 @@
    ],
    "meta": {
     "name": "state"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "state",
+    "args": []
    }
   },
   {
@@ -1104,6 +1277,11 @@
    ],
    "meta": {
     "name": "stateModel"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "stateModel",
+    "args": []
    }
   },
   {
@@ -1136,6 +1314,11 @@
    ],
    "meta": {
     "name": "states"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "states",
+    "args": []
    }
   },
   {
@@ -1157,6 +1340,11 @@
    ],
    "meta": {
     "name": "stream"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "stream",
+    "args": []
    }
   },
   {
@@ -1187,6 +1375,11 @@
    ],
    "meta": {
     "name": "test"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "test",
+    "args": []
    }
   },
   {
@@ -1211,6 +1404,11 @@
    ],
    "meta": {
     "name": "updated"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "updated",
+    "args": []
    }
   },
   {
@@ -1240,6 +1438,11 @@
    ],
    "meta": {
     "name": "url"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "url",
+    "args": []
    }
   },
   {
@@ -1274,6 +1477,11 @@
    ],
    "meta": {
     "name": "validate"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "validate",
+    "args": []
    }
   },
   {
@@ -1304,6 +1512,11 @@
    ],
    "meta": {
     "name": "widget"
+   },
+   "data": {
+    "platform": "mobile",
+    "decorator": "widget",
+    "args": []
    }
   },
   {
@@ -1328,7 +1541,10 @@
     "Its file: `components/{component}/domain/aggregates/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
    ],
    "keys": [
-    "aggregate"
+    "aggregate",
+    "agregado",
+    "agregados",
+    "aggregates"
    ],
    "platforms": [
     "mobile"
@@ -1346,6 +1562,12 @@
    "meta": {
     "kind": "aggregate",
     "name": "aggregate"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/domain/aggregates/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1417,6 +1639,18 @@
    "meta": {
     "kind": "appConfig",
     "name": "appConfig"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "config/project_config.nuc",
+    "aliases": [
+     "app config",
+     "application config"
+    ],
+    "decorators": [
+     "primary",
+     "repository"
+    ]
    }
   },
   {
@@ -1452,7 +1686,10 @@
    "keys": [
     "app component",
     "appcomponent",
-    "application component"
+    "application component",
+    "fachada",
+    "facade",
+    "componente de aplicacion"
    ],
    "platforms": [
     "mobile"
@@ -1470,6 +1707,15 @@
    "meta": {
     "kind": "appcomponent",
     "name": "appcomponent"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/{component}_component.nuc",
+    "aliases": [
+     "app component",
+     "application component"
+    ],
+    "decorators": []
    }
   },
   {
@@ -1506,6 +1752,12 @@
    "meta": {
     "kind": "chat",
     "name": "chat"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/ai/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1557,6 +1809,14 @@
    "meta": {
     "kind": "component",
     "name": "component"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "shared/components/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "on"
+    ]
    }
   },
   {
@@ -1601,6 +1861,12 @@
    "meta": {
     "kind": "config",
     "name": "config"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/config/{component}_config.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1655,6 +1921,12 @@
    "meta": {
     "kind": "converter",
     "name": "converter"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "shared/converters/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1713,6 +1985,14 @@
    "meta": {
     "kind": "event",
     "name": "event"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "shared/events/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "on"
+    ]
    }
   },
   {
@@ -1750,6 +2030,12 @@
    "meta": {
     "kind": "flow",
     "name": "flow"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/ai/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1788,7 +2074,9 @@
     "Its file: `components/{component}/presentation/{screen}/forms/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
    ],
    "keys": [
-    "form"
+    "form",
+    "formulario",
+    "formularios"
    ],
    "platforms": [
     "mobile"
@@ -1846,6 +2134,23 @@
    "meta": {
     "kind": "form",
     "name": "form"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/presentation/{screen}/forms/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "email",
+     "matches",
+     "max",
+     "maxLength",
+     "min",
+     "minLength",
+     "pattern",
+     "required",
+     "url",
+     "validate"
+    ]
    }
   },
   {
@@ -1883,7 +2188,8 @@
    ],
    "keys": [
     "form manager",
-    "formmanager"
+    "formmanager",
+    "gestor de formulario"
    ],
    "platforms": [
     "mobile"
@@ -1909,6 +2215,17 @@
    "meta": {
     "kind": "formmanager",
     "name": "formmanager"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/presentation/{screen}/managers/{file}.nuc",
+    "aliases": [
+     "form manager"
+    ],
+    "decorators": [
+     "form",
+     "validate"
+    ]
    }
   },
   {
@@ -1963,6 +2280,15 @@
    "meta": {
     "kind": "guard",
     "name": "guard"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "shared/guards/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "acl",
+     "screen"
+    ]
    }
   },
   {
@@ -2010,6 +2336,14 @@
    "meta": {
     "kind": "integration",
     "name": "integration"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "integration_test/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "widget"
+    ]
    }
   },
   {
@@ -2047,6 +2381,12 @@
    "meta": {
     "kind": "knowledge",
     "name": "knowledge"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/ai/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -2111,6 +2451,16 @@
    "meta": {
     "kind": "model",
     "name": "model"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/domain/models/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "entity",
+     "key",
+     "primary"
+    ]
    }
   },
   {
@@ -2164,6 +2514,16 @@
    "meta": {
     "kind": "remote",
     "name": "remote"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/data/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "flow",
+     "remote",
+     "stream"
+    ]
    }
   },
   {
@@ -2225,7 +2585,10 @@
     "Its file: `components/{component}/data/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
    ],
    "keys": [
-    "repository"
+    "repository",
+    "repositorio",
+    "repositorios",
+    "repositories"
    ],
    "platforms": [
     "mobile"
@@ -2283,6 +2646,23 @@
    "meta": {
     "kind": "repository",
     "name": "repository"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/data/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "body",
+     "delete",
+     "get",
+     "patch",
+     "path",
+     "post",
+     "primary",
+     "put",
+     "query",
+     "repository"
+    ]
    }
   },
   {
@@ -2323,6 +2703,12 @@
    "meta": {
     "kind": "service",
     "name": "service"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/domain/services/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -2393,6 +2779,14 @@
    "meta": {
     "kind": "stateful",
     "name": "stateful"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/presentation/{screen}/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "screen"
+    ]
    }
   },
   {
@@ -2449,6 +2843,14 @@
    "meta": {
     "kind": "stateless",
     "name": "stateless"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/presentation/{screen}/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "screen"
+    ]
    }
   },
   {
@@ -2491,7 +2893,9 @@
    ],
    "keys": [
     "state manager",
-    "statemanager"
+    "statemanager",
+    "gestor de estado",
+    "state managers"
    ],
    "platforms": [
     "mobile"
@@ -2525,6 +2929,19 @@
    "meta": {
     "kind": "statemanager",
     "name": "statemanager"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/presentation/{screen}/managers/{file}.nuc",
+    "aliases": [
+     "state manager"
+    ],
+    "decorators": [
+     "before",
+     "screen",
+     "state",
+     "stateModel"
+    ]
    }
   },
   {
@@ -2564,7 +2981,9 @@
    ],
    "keys": [
     "state model",
-    "statemodel"
+    "statemodel",
+    "modelo de estado",
+    "state models"
    ],
    "platforms": [
     "mobile"
@@ -2582,6 +3001,14 @@
    "meta": {
     "kind": "statemodel",
     "name": "statemodel"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/presentation/{screen}/state_models/{file}.nuc",
+    "aliases": [
+     "state model"
+    ],
+    "decorators": []
    }
   },
   {
@@ -2661,6 +3088,17 @@
    "meta": {
     "kind": "tests",
     "name": "tests"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "test/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "mock",
+     "states",
+     "test",
+     "widget"
+    ]
    }
   },
   {
@@ -2702,6 +3140,12 @@
    "meta": {
     "kind": "tools",
     "name": "tools"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/ai/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -2738,7 +3182,10 @@
    ],
    "keys": [
     "use case",
-    "usecase"
+    "usecase",
+    "caso de uso",
+    "casos de uso",
+    "use cases"
    ],
    "platforms": [
     "mobile"
@@ -2764,6 +3211,17 @@
    "meta": {
     "kind": "usecase",
     "name": "usecase"
+   },
+   "data": {
+    "platform": "mobile",
+    "file": "components/{component}/domain/usecases/{file}.nuc",
+    "aliases": [
+     "use case"
+    ],
+    "decorators": [
+     "acl",
+     "requires"
+    ]
    }
   },
   {
@@ -2812,6 +3270,111 @@
    ],
    "meta": {
     "name": "layout"
+   },
+   "data": {
+    "platform": "mobile",
+    "files": [
+     {
+      "kind": "aggregate",
+      "file": "components/{component}/domain/aggregates/{file}.nuc"
+     },
+     {
+      "kind": "appConfig",
+      "file": "config/project_config.nuc"
+     },
+     {
+      "kind": "appcomponent",
+      "file": "components/{component}/{component}_component.nuc"
+     },
+     {
+      "kind": "chat",
+      "file": "components/{component}/ai/{file}.nuc"
+     },
+     {
+      "kind": "component",
+      "file": "shared/components/{file}.nuc"
+     },
+     {
+      "kind": "config",
+      "file": "components/{component}/config/{component}_config.nuc"
+     },
+     {
+      "kind": "converter",
+      "file": "shared/converters/{file}.nuc"
+     },
+     {
+      "kind": "event",
+      "file": "shared/events/{file}.nuc"
+     },
+     {
+      "kind": "flow",
+      "file": "components/{component}/ai/{file}.nuc"
+     },
+     {
+      "kind": "form",
+      "file": "components/{component}/presentation/{screen}/forms/{file}.nuc"
+     },
+     {
+      "kind": "formmanager",
+      "file": "components/{component}/presentation/{screen}/managers/{file}.nuc"
+     },
+     {
+      "kind": "guard",
+      "file": "shared/guards/{file}.nuc"
+     },
+     {
+      "kind": "integration",
+      "file": "integration_test/{file}.nuc"
+     },
+     {
+      "kind": "knowledge",
+      "file": "components/{component}/ai/{file}.nuc"
+     },
+     {
+      "kind": "model",
+      "file": "components/{component}/domain/models/{file}.nuc"
+     },
+     {
+      "kind": "remote",
+      "file": "components/{component}/data/{file}.nuc"
+     },
+     {
+      "kind": "repository",
+      "file": "components/{component}/data/{file}.nuc"
+     },
+     {
+      "kind": "service",
+      "file": "components/{component}/domain/services/{file}.nuc"
+     },
+     {
+      "kind": "stateful",
+      "file": "components/{component}/presentation/{screen}/{file}.nuc"
+     },
+     {
+      "kind": "stateless",
+      "file": "components/{component}/presentation/{screen}/{file}.nuc"
+     },
+     {
+      "kind": "statemanager",
+      "file": "components/{component}/presentation/{screen}/managers/{file}.nuc"
+     },
+     {
+      "kind": "statemodel",
+      "file": "components/{component}/presentation/{screen}/state_models/{file}.nuc"
+     },
+     {
+      "kind": "tests",
+      "file": "test/{file}.nuc"
+     },
+     {
+      "kind": "tools",
+      "file": "components/{component}/ai/{file}.nuc"
+     },
+     {
+      "kind": "usecase",
+      "file": "components/{component}/domain/usecases/{file}.nuc"
+     }
+    ]
    },
    "asks": [
     "where does the file of each kind go in a mobile project",
@@ -2974,6 +3537,92 @@
    ],
    "meta": {
     "name": "mobile"
+   },
+   "data": {
+    "platform": "mobile",
+    "default_dialect": "flutter",
+    "dialects": [
+     "flutter"
+    ],
+    "kinds": [
+     "stateless",
+     "stateful",
+     "appConfig",
+     "config",
+     "repository",
+     "usecase",
+     "appcomponent",
+     "service",
+     "aggregate",
+     "statemanager",
+     "statemodel",
+     "model",
+     "converter",
+     "form",
+     "formmanager",
+     "component",
+     "guard",
+     "event",
+     "tests",
+     "integration",
+     "tools",
+     "flow",
+     "chat",
+     "remote",
+     "knowledge"
+    ],
+    "decorators": [
+     "repository",
+     "get",
+     "post",
+     "put",
+     "patch",
+     "delete",
+     "path",
+     "query",
+     "body",
+     "stateModel",
+     "state",
+     "before",
+     "after",
+     "screen",
+     "on",
+     "requires",
+     "acl",
+     "mock",
+     "test",
+     "widget",
+     "states",
+     "offline",
+     "splash",
+     "form",
+     "validate",
+     "required",
+     "email",
+     "url",
+     "minLength",
+     "maxLength",
+     "min",
+     "max",
+     "pattern",
+     "matches",
+     "key",
+     "remote",
+     "flow",
+     "stream",
+     "entity",
+     "primary",
+     "created",
+     "updated"
+    ],
+    "plugins": [
+     "genkit",
+     "firebaseAI",
+     "googleAI",
+     "vertexAI",
+     "openAI",
+     "anthropic"
+    ]
    }
   },
   {
@@ -3007,6 +3656,14 @@
    ],
    "meta": {
     "name": "anthropic"
+   },
+   "data": {
+    "platform": "mobile",
+    "plugin": "anthropic",
+    "kinds": [],
+    "requires": [
+     "genkit"
+    ]
    }
   },
   {
@@ -3040,6 +3697,14 @@
    ],
    "meta": {
     "name": "firebaseAI"
+   },
+   "data": {
+    "platform": "mobile",
+    "plugin": "firebaseAI",
+    "kinds": [],
+    "requires": [
+     "genkit"
+    ]
    }
   },
   {
@@ -3073,6 +3738,18 @@
    ],
    "meta": {
     "name": "genkit"
+   },
+   "data": {
+    "platform": "mobile",
+    "plugin": "genkit",
+    "kinds": [
+     "tools",
+     "flow",
+     "chat",
+     "remote",
+     "knowledge"
+    ],
+    "requires": []
    }
   },
   {
@@ -3106,6 +3783,14 @@
    ],
    "meta": {
     "name": "googleAI"
+   },
+   "data": {
+    "platform": "mobile",
+    "plugin": "googleAI",
+    "kinds": [],
+    "requires": [
+     "genkit"
+    ]
    }
   },
   {
@@ -3139,6 +3824,14 @@
    ],
    "meta": {
     "name": "openAI"
+   },
+   "data": {
+    "platform": "mobile",
+    "plugin": "openAI",
+    "kinds": [],
+    "requires": [
+     "genkit"
+    ]
    }
   },
   {
@@ -3172,6 +3865,14 @@
    ],
    "meta": {
     "name": "vertexAI"
+   },
+   "data": {
+    "platform": "mobile",
+    "plugin": "vertexAI",
+    "kinds": [],
+    "requires": [
+     "genkit"
+    ]
    }
   }
  ]

@@ -20,7 +20,7 @@ exclude = [
   "**/icon-themes/**", "**/icons/atom/**", "**/vendor/**",
   "tools/defs/flutter_project/**",
   "nuclear-developer/data/**",    # this repository
-  "nuclear-graph/src/**",         # the prompt files: the graph's `prompts` collection
+  "nuclear-graph/prompts/**",     # the prompt files: the graph's `prompts` collection
   "spec/diagnostics.md",          # one row per diagnostic, read from the compiler (assets/errors/diagnostics.json)
   "STATUS.md",                    # the state and the log change with every task: what matters of them for a reader of
                                   # the graph is in `capabilities` rows that name STATUS.md's sections as their sources

@@ -1,0 +1,61 @@
+{
+ "shelf": "platforms",
+ "origin": "overlay",
+ "about": "How people write the kinds of the backend platform besides each kind's own word (in Spanish, in the plural): a question or a spec that writes one of them means that kind. Only words that mean nothing else are here.",
+ "rows": [
+  {
+   "id": "kind:backend.aggregate",
+   "keys": [
+    "agregado",
+    "agregados",
+    "aggregates"
+   ]
+  },
+  {
+   "id": "kind:backend.appcomponent",
+   "keys": [
+    "fachada",
+    "facade",
+    "componente de aplicacion"
+   ]
+  },
+  {
+   "id": "kind:backend.controller",
+   "keys": [
+    "controlador",
+    "controladores",
+    "controllers"
+   ]
+  },
+  {
+   "id": "kind:backend.entity",
+   "keys": [
+    "entidad",
+    "entidades",
+    "entities"
+   ]
+  },
+  {
+   "id": "kind:backend.listener",
+   "keys": [
+    "listeners"
+   ]
+  },
+  {
+   "id": "kind:backend.repository",
+   "keys": [
+    "repositorio",
+    "repositorios",
+    "repositories"
+   ]
+  },
+  {
+   "id": "kind:backend.usecase",
+   "keys": [
+    "caso de uso",
+    "casos de uso",
+    "use cases"
+   ]
+  }
+ ]
+}

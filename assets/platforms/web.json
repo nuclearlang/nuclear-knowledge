@@ -33,6 +33,11 @@
    ],
    "meta": {
     "name": "acl"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "acl",
+    "args": []
    }
   },
   {
@@ -63,6 +68,11 @@
    ],
    "meta": {
     "name": "after"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "after",
+    "args": []
    }
   },
   {
@@ -93,6 +103,11 @@
    ],
    "meta": {
     "name": "before"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "before",
+    "args": []
    }
   },
   {
@@ -121,6 +136,11 @@
    ],
    "meta": {
     "name": "body"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "body",
+    "args": []
    }
   },
   {
@@ -149,6 +169,11 @@
    ],
    "meta": {
     "name": "delete"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "delete",
+    "args": []
    }
   },
   {
@@ -178,6 +203,11 @@
    ],
    "meta": {
     "name": "get"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "get",
+    "args": []
    }
   },
   {
@@ -207,6 +237,11 @@
    ],
    "meta": {
     "name": "key"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "key",
+    "args": []
    }
   },
   {
@@ -238,6 +273,11 @@
    ],
    "meta": {
     "name": "mock"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "mock",
+    "args": []
    }
   },
   {
@@ -267,6 +307,11 @@
    ],
    "meta": {
     "name": "on"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "on",
+    "args": []
    }
   },
   {
@@ -295,6 +340,11 @@
    ],
    "meta": {
     "name": "patch"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "patch",
+    "args": []
    }
   },
   {
@@ -323,6 +373,11 @@
    ],
    "meta": {
     "name": "path"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "path",
+    "args": []
    }
   },
   {
@@ -352,6 +407,11 @@
    ],
    "meta": {
     "name": "post"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "post",
+    "args": []
    }
   },
   {
@@ -380,6 +440,11 @@
    ],
    "meta": {
     "name": "put"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "put",
+    "args": []
    }
   },
   {
@@ -408,6 +473,11 @@
    ],
    "meta": {
     "name": "query"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "query",
+    "args": []
    }
   },
   {
@@ -436,6 +506,11 @@
    ],
    "meta": {
     "name": "repository"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "repository",
+    "args": []
    }
   },
   {
@@ -469,6 +544,11 @@
    ],
    "meta": {
     "name": "requires"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "requires",
+    "args": []
    }
   },
   {
@@ -513,6 +593,11 @@
    ],
    "meta": {
     "name": "screen"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "screen",
+    "args": []
    }
   },
   {
@@ -546,6 +631,11 @@
    ],
    "meta": {
     "name": "state"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "state",
+    "args": []
    }
   },
   {
@@ -574,6 +664,11 @@
    ],
    "meta": {
     "name": "stateModel"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "stateModel",
+    "args": []
    }
   },
   {
@@ -604,6 +699,11 @@
    ],
    "meta": {
     "name": "states"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "states",
+    "args": []
    }
   },
   {
@@ -634,6 +734,11 @@
    ],
    "meta": {
     "name": "test"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "test",
+    "args": []
    }
   },
   {
@@ -665,6 +770,11 @@
    ],
    "meta": {
     "name": "widget"
+   },
+   "data": {
+    "platform": "web",
+    "decorator": "widget",
+    "args": []
    }
   },
   {
@@ -684,7 +794,10 @@
     "Its file: `components/{component}/domain/aggregates/{file}.nuc` (`{component}`: the component's folder, `{file}`: the name in snake_case)."
    ],
    "keys": [
-    "aggregate"
+    "aggregate",
+    "agregado",
+    "agregados",
+    "aggregates"
    ],
    "platforms": [
     "web"
@@ -702,6 +815,12 @@
    "meta": {
     "kind": "aggregate",
     "name": "aggregate"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/domain/aggregates/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -749,6 +868,15 @@
    "meta": {
     "kind": "appConfig",
     "name": "appConfig"
+   },
+   "data": {
+    "platform": "web",
+    "file": "config/project_config.nuc",
+    "aliases": [
+     "app config",
+     "application config"
+    ],
+    "decorators": []
    }
   },
   {
@@ -780,7 +908,10 @@
    "keys": [
     "app component",
     "appcomponent",
-    "application component"
+    "application component",
+    "fachada",
+    "facade",
+    "componente de aplicacion"
    ],
    "platforms": [
     "web"
@@ -798,6 +929,15 @@
    "meta": {
     "kind": "appcomponent",
     "name": "appcomponent"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/{component}_component.nuc",
+    "aliases": [
+     "app component",
+     "application component"
+    ],
+    "decorators": []
    }
   },
   {
@@ -843,6 +983,14 @@
    "meta": {
     "kind": "component",
     "name": "component"
+   },
+   "data": {
+    "platform": "web",
+    "file": "shared/components/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "on"
+    ]
    }
   },
   {
@@ -882,6 +1030,12 @@
    "meta": {
     "kind": "config",
     "name": "config"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/config/{component}_config.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -930,6 +1084,14 @@
    "meta": {
     "kind": "event",
     "name": "event"
+   },
+   "data": {
+    "platform": "web",
+    "file": "shared/events/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "on"
+    ]
    }
   },
   {
@@ -974,6 +1136,14 @@
    "meta": {
     "kind": "guard",
     "name": "guard"
+   },
+   "data": {
+    "platform": "web",
+    "file": "shared/guards/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "acl"
+    ]
    }
   },
   {
@@ -1028,6 +1198,14 @@
    "meta": {
     "kind": "model",
     "name": "model"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/domain/models/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "key"
+    ]
    }
   },
   {
@@ -1070,7 +1248,10 @@
     "```"
    ],
    "keys": [
-    "repository"
+    "repository",
+    "repositorio",
+    "repositorios",
+    "repositories"
    ],
    "platforms": [
     "web"
@@ -1100,6 +1281,16 @@
    "meta": {
     "kind": "repository",
     "name": "repository"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/data/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "get",
+     "post",
+     "repository"
+    ]
    }
   },
   {
@@ -1144,6 +1335,12 @@
    "meta": {
     "kind": "service",
     "name": "service"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/domain/services/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1196,6 +1393,12 @@
    "meta": {
     "kind": "stateful",
     "name": "stateful"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/presentation/{screen}/{file}.nuc",
+    "aliases": [],
+    "decorators": []
    }
   },
   {
@@ -1255,6 +1458,14 @@
    "meta": {
     "kind": "stateless",
     "name": "stateless"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/presentation/{screen}/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "screen"
+    ]
    }
   },
   {
@@ -1286,7 +1497,9 @@
    ],
    "keys": [
     "state manager",
-    "statemanager"
+    "statemanager",
+    "gestor de estado",
+    "state managers"
    ],
    "platforms": [
     "web"
@@ -1320,6 +1533,19 @@
    "meta": {
     "kind": "statemanager",
     "name": "statemanager"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/presentation/{screen}/managers/{file}.nuc",
+    "aliases": [
+     "state manager"
+    ],
+    "decorators": [
+     "before",
+     "screen",
+     "state",
+     "stateModel"
+    ]
    }
   },
   {
@@ -1350,7 +1576,9 @@
    ],
    "keys": [
     "state model",
-    "statemodel"
+    "statemodel",
+    "modelo de estado",
+    "state models"
    ],
    "platforms": [
     "web"
@@ -1368,6 +1596,14 @@
    "meta": {
     "kind": "statemodel",
     "name": "statemodel"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/presentation/{screen}/state_models/{file}.nuc",
+    "aliases": [
+     "state model"
+    ],
+    "decorators": []
    }
   },
   {
@@ -1438,6 +1674,16 @@
    "meta": {
     "kind": "tests",
     "name": "tests"
+   },
+   "data": {
+    "platform": "web",
+    "file": "test/{file}.nuc",
+    "aliases": [],
+    "decorators": [
+     "mock",
+     "test",
+     "widget"
+    ]
    }
   },
   {
@@ -1474,7 +1720,10 @@
    ],
    "keys": [
     "use case",
-    "usecase"
+    "usecase",
+    "caso de uso",
+    "casos de uso",
+    "use cases"
    ],
    "platforms": [
     "web"
@@ -1496,6 +1745,16 @@
    "meta": {
     "kind": "usecase",
     "name": "usecase"
+   },
+   "data": {
+    "platform": "web",
+    "file": "components/{component}/domain/usecases/{file}.nuc",
+    "aliases": [
+     "use case"
+    ],
+    "decorators": [
+     "requires"
+    ]
    }
   },
   {
@@ -1535,6 +1794,75 @@
    ],
    "meta": {
     "name": "layout"
+   },
+   "data": {
+    "platform": "web",
+    "files": [
+     {
+      "kind": "aggregate",
+      "file": "components/{component}/domain/aggregates/{file}.nuc"
+     },
+     {
+      "kind": "appConfig",
+      "file": "config/project_config.nuc"
+     },
+     {
+      "kind": "appcomponent",
+      "file": "components/{component}/{component}_component.nuc"
+     },
+     {
+      "kind": "component",
+      "file": "shared/components/{file}.nuc"
+     },
+     {
+      "kind": "config",
+      "file": "components/{component}/config/{component}_config.nuc"
+     },
+     {
+      "kind": "event",
+      "file": "shared/events/{file}.nuc"
+     },
+     {
+      "kind": "guard",
+      "file": "shared/guards/{file}.nuc"
+     },
+     {
+      "kind": "model",
+      "file": "components/{component}/domain/models/{file}.nuc"
+     },
+     {
+      "kind": "repository",
+      "file": "components/{component}/data/{file}.nuc"
+     },
+     {
+      "kind": "service",
+      "file": "components/{component}/domain/services/{file}.nuc"
+     },
+     {
+      "kind": "stateful",
+      "file": "components/{component}/presentation/{screen}/{file}.nuc"
+     },
+     {
+      "kind": "stateless",
+      "file": "components/{component}/presentation/{screen}/{file}.nuc"
+     },
+     {
+      "kind": "statemanager",
+      "file": "components/{component}/presentation/{screen}/managers/{file}.nuc"
+     },
+     {
+      "kind": "statemodel",
+      "file": "components/{component}/presentation/{screen}/state_models/{file}.nuc"
+     },
+     {
+      "kind": "tests",
+      "file": "test/{file}.nuc"
+     },
+     {
+      "kind": "usecase",
+      "file": "components/{component}/domain/usecases/{file}.nuc"
+     }
+    ]
    },
    "asks": [
     "where does the file of each kind go in a web project",
@@ -1652,6 +1980,56 @@
    ],
    "meta": {
     "name": "web"
+   },
+   "data": {
+    "platform": "web",
+    "default_dialect": "react",
+    "dialects": [
+     "react"
+    ],
+    "kinds": [
+     "stateless",
+     "stateful",
+     "appConfig",
+     "config",
+     "repository",
+     "usecase",
+     "appcomponent",
+     "service",
+     "aggregate",
+     "statemanager",
+     "statemodel",
+     "model",
+     "component",
+     "guard",
+     "event",
+     "tests"
+    ],
+    "decorators": [
+     "repository",
+     "get",
+     "post",
+     "put",
+     "patch",
+     "delete",
+     "path",
+     "query",
+     "body",
+     "stateModel",
+     "state",
+     "before",
+     "after",
+     "screen",
+     "on",
+     "requires",
+     "acl",
+     "mock",
+     "test",
+     "widget",
+     "states",
+     "key"
+    ],
+    "plugins": []
    }
   }
  ]

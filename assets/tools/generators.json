@@ -35,6 +35,19 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen component"
+   },
+   "data": {
+    "platform": "backend",
+    "command": "dragonfly gen component",
+    "pieces": [
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}AppComponent",
+      "when": "",
+      "each": "",
+      "merge": true
+     }
+    ]
    }
   },
   {
@@ -76,6 +89,75 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen resource"
+   },
+   "data": {
+    "platform": "backend",
+    "command": "dragonfly gen resource",
+    "pieces": [
+     {
+      "kind": "model",
+      "name": "{{Model}}",
+      "when": "rest",
+      "each": "models",
+      "merge": false
+     },
+     {
+      "kind": "entity",
+      "name": "{{Name}}",
+      "when": "db",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "model",
+      "name": "New{{Name}}",
+      "when": "db",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "repository",
+      "name": "{{Name}}Repository",
+      "when": "rest",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "repository",
+      "name": "{{Name}}Repository",
+      "when": "db",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "usecase",
+      "name": "{{UseCase}}",
+      "when": "",
+      "each": "each_action",
+      "merge": false
+     },
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}AppComponent",
+      "when": "",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "controller",
+      "name": "{{Names}}Controller",
+      "when": "",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "tests",
+      "name": "{{Names}}Test",
+      "when": "db",
+      "each": "",
+      "merge": false
+     }
+    ]
    }
   },
   {
@@ -112,6 +194,40 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen usecase"
+   },
+   "data": {
+    "platform": "backend",
+    "command": "dragonfly gen usecase",
+    "pieces": [
+     {
+      "kind": "usecase",
+      "name": "{{UseCase}}",
+      "when": "result",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "usecase",
+      "name": "{{UseCase}}",
+      "when": "plain",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}AppComponent",
+      "when": "",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "controller",
+      "name": "{{Controller}}",
+      "when": "route",
+      "each": "",
+      "merge": true
+     }
+    ]
    }
   },
   {
@@ -145,6 +261,19 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen component"
+   },
+   "data": {
+    "platform": "mobile",
+    "command": "dragonfly gen component",
+    "pieces": [
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}Component",
+      "when": "",
+      "each": "",
+      "merge": true
+     }
+    ]
    }
   },
   {
@@ -186,6 +315,75 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen resource"
+   },
+   "data": {
+    "platform": "mobile",
+    "command": "dragonfly gen resource",
+    "pieces": [
+     {
+      "kind": "model",
+      "name": "{{Model}}",
+      "when": "rest",
+      "each": "models",
+      "merge": false
+     },
+     {
+      "kind": "model",
+      "name": "{{Name}}Error",
+      "when": "rest",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "repository",
+      "name": "{{Name}}Repository",
+      "when": "rest",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "usecase",
+      "name": "{{UseCase}}",
+      "when": "",
+      "each": "each_action",
+      "merge": false
+     },
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}Component",
+      "when": "",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "statemodel",
+      "name": "{{Names}}State",
+      "when": "screen",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "statemanager",
+      "name": "{{Names}}Manager",
+      "when": "screen",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "stateless",
+      "name": "{{Names}}Screen",
+      "when": "screen",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "tests",
+      "name": "{{Names}}Test",
+      "when": "actions.list",
+      "each": "",
+      "merge": false
+     }
+    ]
    }
   },
   {
@@ -220,6 +418,26 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen usecase"
+   },
+   "data": {
+    "platform": "mobile",
+    "command": "dragonfly gen usecase",
+    "pieces": [
+     {
+      "kind": "usecase",
+      "name": "{{UseCase}}",
+      "when": "result",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}Component",
+      "when": "",
+      "each": "",
+      "merge": true
+     }
+    ]
    }
   },
   {
@@ -253,6 +471,19 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen component"
+   },
+   "data": {
+    "platform": "web",
+    "command": "dragonfly gen component",
+    "pieces": [
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}Component",
+      "when": "",
+      "each": "",
+      "merge": true
+     }
+    ]
    }
   },
   {
@@ -294,6 +525,75 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen resource"
+   },
+   "data": {
+    "platform": "web",
+    "command": "dragonfly gen resource",
+    "pieces": [
+     {
+      "kind": "model",
+      "name": "{{Model}}",
+      "when": "rest",
+      "each": "models",
+      "merge": false
+     },
+     {
+      "kind": "model",
+      "name": "{{Name}}Error",
+      "when": "rest",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "repository",
+      "name": "{{Name}}Repository",
+      "when": "rest",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "usecase",
+      "name": "{{UseCase}}",
+      "when": "",
+      "each": "each_action",
+      "merge": false
+     },
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}Component",
+      "when": "",
+      "each": "",
+      "merge": true
+     },
+     {
+      "kind": "statemodel",
+      "name": "{{Names}}State",
+      "when": "screen",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "statemanager",
+      "name": "{{Names}}Manager",
+      "when": "screen",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "stateless",
+      "name": "{{Names}}Screen",
+      "when": "screen",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "tests",
+      "name": "{{Names}}Test",
+      "when": "actions.list",
+      "each": "",
+      "merge": false
+     }
+    ]
    }
   },
   {
@@ -328,6 +628,26 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen usecase"
+   },
+   "data": {
+    "platform": "web",
+    "command": "dragonfly gen usecase",
+    "pieces": [
+     {
+      "kind": "usecase",
+      "name": "{{UseCase}}",
+      "when": "result",
+      "each": "",
+      "merge": false
+     },
+     {
+      "kind": "appcomponent",
+      "name": "{{Component}}Component",
+      "when": "",
+      "each": "",
+      "merge": true
+     }
+    ]
    }
   }
  ]

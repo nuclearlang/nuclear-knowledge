@@ -1,0 +1,1853 @@
+{
+ "shelf": "queries",
+ "origin": "curated",
+ "about": "The catalogue of exact questions: each row is a question with one right answer, the ways people ask it (in English and in Spanish), and the query over the exact facts (the graph's SQLite) that answers it whole. The planner of an answer matches a question to its row; the answer is never searched by meaning.",
+ "rows": [
+  {
+   "id": "query:agent",
+   "type": "query",
+   "title": "Exact: one local agent",
+   "summary": "One local agent of the Nuclear Developer by its name: its steps in order, its model and what it does.",
+   "body": [
+    "One local agent of the Nuclear Developer by its name: its steps in order, its model and what it does.",
+    "",
+    "It reads `agents` of the exact facts; its parameters: `agent` (needed).",
+    "",
+    "```text",
+    "SELECT agent, kind, steps, models, does FROM agents WHERE lower(agent) = lower(:agent)",
+    "```"
+   ],
+   "asks": [
+    "what does the planner do",
+    "what model does the coder use",
+    "steps of the analyst",
+    "que hace el planner",
+    "que modelo usa el coder",
+    "pasos del analyst",
+    "como trabaja el tester"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "agent"
+   },
+   "data": {
+    "sql": "SELECT agent, kind, steps, models, does FROM agents WHERE lower(agent) = lower(:agent)",
+    "columns": [
+     "agent",
+     "kind",
+     "its steps",
+     "model",
+     "what it does"
+    ],
+    "params": [
+     {
+      "name": "agent",
+      "values": "SELECT lower(agent), agent FROM agents",
+      "required": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:agents",
+   "type": "query",
+   "title": "Exact: the local agents of the Nuclear Developer",
+   "summary": "Every local agent of the Nuclear Developer (analyst, planner, coder, tester, security, diagnoser, documenter, acceptor, assistant): its steps in order, its model and what it does.",
+   "body": [
+    "Every local agent of the Nuclear Developer (analyst, planner, coder, tester, security, diagnoser, documenter, acceptor, assistant): its steps in order, its model and what it does.",
+    "",
+    "It reads `agents` of the exact facts.",
+    "",
+    "```text",
+    "SELECT agent, steps, models, does FROM agents WHERE kind = 'graph' ORDER BY agent",
+    "```"
+   ],
+   "keys": [
+    "agents",
+    "agentes"
+   ],
+   "asks": [
+    "which local agents are there",
+    "list the agents",
+    "what model does each agent use",
+    "que agentes locales hay",
+    "lista los agentes",
+    "que modelo usa cada agente",
+    "que hace cada agente"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "agent"
+   },
+   "data": {
+    "sql": "SELECT agent, steps, models, does FROM agents WHERE kind = 'graph' ORDER BY agent",
+    "columns": [
+     "agent",
+     "its steps",
+     "model",
+     "what it does"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:can",
+   "type": "query",
+   "title": "Exact: what can be done",
+   "summary": "Everything NuclearLang and Dragonfly can do today, by area; for one platform when it is named.",
+   "body": [
+    "Everything NuclearLang and Dragonfly can do today, by area; for one platform when it is named.",
+    "",
+    "It reads `capabilities`, `platforms` of the exact facts; its parameters: `platform`.",
+    "",
+    "```text",
+    "SELECT title, area, platforms, does FROM capabilities WHERE answer = 'can' AND (:platform = '' OR platforms = 'all' OR platforms LIKE '%' || :platform || '%') ORDER BY area, title",
+    "```"
+   ],
+   "keys": [
+    "capabilities",
+    "features"
+   ],
+   "asks": [
+    "what can it do",
+    "features of the backend",
+    "what is supported",
+    "que puede hacer",
+    "que soporta el backend",
+    "funcionalidades",
+    "que se puede hacer con dragonfly"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "capability"
+   },
+   "data": {
+    "sql": "SELECT title, area, platforms, does FROM capabilities WHERE answer = 'can' AND (:platform = '' OR platforms = 'all' OR platforms LIKE '%' || :platform || '%') ORDER BY area, title",
+    "columns": [
+     "what",
+     "area",
+     "platforms",
+     "detail"
+    ],
+    "params": [
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:cannot",
+   "type": "query",
+   "title": "Exact: what cannot be done yet, and the limits",
+   "summary": "Everything NuclearLang, Dragonfly or the local agents cannot do yet and their known limits, by area; for one platform when it is named.",
+   "body": [
+    "Everything NuclearLang, Dragonfly or the local agents cannot do yet and their known limits, by area; for one platform when it is named.",
+    "",
+    "It reads `capabilities`, `platforms` of the exact facts; its parameters: `platform`.",
+    "",
+    "```text",
+    "SELECT answer, title, area, platforms, does FROM capabilities WHERE answer IN ('cannot', 'limit', 'agent-limit') AND (:platform = '' OR platforms = 'all' OR platforms LIKE '%' || :platform || '%') ORDER BY answer, title",
+    "```"
+   ],
+   "keys": [
+    "limits",
+    "limites"
+   ],
+   "asks": [
+    "what can it not do",
+    "limits of the backend",
+    "what is missing",
+    "que no puede hacer",
+    "limites del backend",
+    "que falta",
+    "que no soporta todavia",
+    "limites de los agentes locales"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "capability"
+   },
+   "data": {
+    "sql": "SELECT answer, title, area, platforms, does FROM capabilities WHERE answer IN ('cannot', 'limit', 'agent-limit') AND (:platform = '' OR platforms = 'all' OR platforms LIKE '%' || :platform || '%') ORDER BY answer, title",
+    "columns": [
+     "kind",
+     "what",
+     "area",
+     "platforms",
+     "detail"
+    ],
+    "params": [
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:cli.command",
+   "type": "query",
+   "title": "Exact: one command, its usage and its options",
+   "summary": "The usage lines of one command (build, check, new, make, gen, test, migrate, retry, ingest...) with its options, in every tool that has it.",
+   "body": [
+    "The usage lines of one command (build, check, new, make, gen, test, migrate, retry, ingest...) with its options, in every tool that has it.",
+    "",
+    "It reads `commands` of the exact facts; its parameters: `what` (needed).",
+    "",
+    "```text",
+    "SELECT tool, usage, does FROM commands WHERE what = :what OR usage LIKE '% ' || :what || ' %' OR usage LIKE '% ' || :what ORDER BY tool, usage",
+    "```"
+   ],
+   "asks": [
+    "how do I use dragonfly gen resource",
+    "options of nuclear check",
+    "usage of the build command",
+    "como se usa dragonfly gen resource",
+    "que opciones tiene nuclear check",
+    "como uso el comando make",
+    "que hace dragonfly migrate"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "command"
+   },
+   "data": {
+    "sql": "SELECT tool, usage, does FROM commands WHERE what = :what OR usage LIKE '% ' || :what || ' %' OR usage LIKE '% ' || :what ORDER BY tool, usage",
+    "columns": [
+     "tool",
+     "usage",
+     "what it does"
+    ],
+    "params": [
+     {
+      "name": "what",
+      "values": "SELECT DISTINCT lower(what), what FROM commands WHERE what != 'kind'",
+      "required": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:cli.commands",
+   "type": "query",
+   "title": "Exact: every command of a command line tool",
+   "summary": "Every command of a command line tool (nuclear, dragonfly, nuclear-loop, nuclear-graph), each with its usage line and what it does; of every tool when none is named.",
+   "body": [
+    "Every command of a command line tool (nuclear, dragonfly, nuclear-loop, nuclear-graph), each with its usage line and what it does; of every tool when none is named.",
+    "",
+    "It reads `commands` of the exact facts; its parameters: `tool`.",
+    "",
+    "```text",
+    "SELECT tool, usage, does FROM commands WHERE (:tool = '' OR tool = :tool) ORDER BY tool, usage",
+    "```"
+   ],
+   "keys": [
+    "commands",
+    "comandos"
+   ],
+   "asks": [
+    "list the commands of dragonfly",
+    "what commands does nuclear have",
+    "all the commands",
+    "lista los comandos de dragonfly",
+    "que comandos tiene nuclear",
+    "cuales son todos los comandos que puedo usar",
+    "comandos de nuclear-loop",
+    "comandos de nuclear-graph"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "command"
+   },
+   "data": {
+    "sql": "SELECT tool, usage, does FROM commands WHERE (:tool = '' OR tool = :tool) ORDER BY tool, usage",
+    "columns": [
+     "tool",
+     "command",
+     "what it does"
+    ],
+    "params": [
+     {
+      "name": "tool",
+      "values": "SELECT DISTINCT lower(tool), tool FROM commands",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:cli.tools",
+   "type": "query",
+   "title": "Exact: the command line tools of the ecosystem",
+   "summary": "The command line tools of NuclearLang and Dragonfly (nuclear, dragonfly, nuclear-loop, nuclear-graph) and what each one is for.",
+   "body": [
+    "The command line tools of NuclearLang and Dragonfly (nuclear, dragonfly, nuclear-loop, nuclear-graph) and what each one is for.",
+    "",
+    "It reads `cards`, `field` of the exact facts.",
+    "",
+    "```text",
+    "SELECT t.value AS tool, c.summary AS does FROM cards c JOIN field t ON t.card = c.id AND t.name = 'tool' JOIN field n ON n.card = c.id AND n.name = 'name' WHERE c.type = 'cli' AND n.value = '' ORDER BY t.value",
+    "```"
+   ],
+   "keys": [
+    "cli tools",
+    "command line tools"
+   ],
+   "asks": [
+    "which command line tools are there",
+    "what CLIs does nuclear have",
+    "que herramientas de linea de comandos hay",
+    "cuales son los CLI de nuclear y dragonfly",
+    "que programas instala nuclearlang"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "command"
+   },
+   "data": {
+    "sql": "SELECT t.value AS tool, c.summary AS does FROM cards c JOIN field t ON t.card = c.id AND t.name = 'tool' JOIN field n ON n.card = c.id AND n.name = 'name' WHERE c.type = 'cli' AND n.value = '' ORDER BY t.value",
+    "columns": [
+     "tool",
+     "what it is for"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:components",
+   "type": "query",
+   "title": "Exact: every component of the ecosystem and its version",
+   "summary": "Every component of the ecosystem (the compiler, the Dragonfly CLI, the Smart Graph, the local agents, the editor extensions, the runtimes) with its version and the file that says it; or one of them.",
+   "body": [
+    "Every component of the ecosystem (the compiler, the Dragonfly CLI, the Smart Graph, the local agents, the editor extensions, the runtimes) with its version and the file that says it; or one of them.",
+    "",
+    "It reads `components` of the exact facts; its parameters: `component`.",
+    "",
+    "```text",
+    "SELECT component, version, what, file FROM components WHERE (:component = '' OR component = :component) ORDER BY component",
+    "```"
+   ],
+   "keys": [
+    "versions",
+    "versiones"
+   ],
+   "asks": [
+    "what version is nuclear",
+    "versions of everything",
+    "which version of dragonfly",
+    "que version es nuclear",
+    "versiones de todo",
+    "que version tengo de dragonfly",
+    "componentes del ecosistema"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "component"
+   },
+   "data": {
+    "sql": "SELECT component, version, what, file FROM components WHERE (:component = '' OR component = :component) ORDER BY component",
+    "columns": [
+     "component",
+     "version",
+     "what it is",
+     "read from"
+    ],
+    "params": [
+     {
+      "name": "component",
+      "values": "SELECT lower(component), component FROM components",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:create.commands",
+   "type": "query",
+   "title": "Exact: the commands that create or generate code",
+   "summary": "Every command that creates a project or writes code: `dragonfly new`, each `dragonfly make <what>` (a file from the platform's skeleton) and each `dragonfly gen <what>` (finished, compiling code from a resource's data), with what each writes.",
+   "body": [
+    "Every command that creates a project or writes code: `dragonfly new`, each `dragonfly make <what>` (a file from the platform's skeleton) and each `dragonfly gen <what>` (finished, compiling code from a resource's data), with what each writes.",
+    "",
+    "It reads `commands` of the exact facts.",
+    "",
+    "```text",
+    "SELECT usage, does FROM commands WHERE tool = 'dragonfly' AND (usage LIKE 'dragonfly make %' OR usage LIKE 'dragonfly gen %' OR usage LIKE 'dragonfly new %') ORDER BY CASE WHEN usage LIKE 'dragonfly new %' THEN 0 WHEN usage LIKE 'dragonfly gen %' THEN 1 ELSE 2 END, usage",
+    "```"
+   ],
+   "keys": [
+    "create commands",
+    "generate commands"
+   ],
+   "asks": [
+    "which commands create things",
+    "commands to generate code",
+    "list the creation commands",
+    "que comandos sirven para crear cosas",
+    "lista los comandos de creacion que puedo usar",
+    "con que comandos genero codigo",
+    "comandos para crear archivos",
+    "lista los comandos o equivalentes a todas estas creaciones"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "command"
+   },
+   "data": {
+    "sql": "SELECT usage, does FROM commands WHERE tool = 'dragonfly' AND (usage LIKE 'dragonfly make %' OR usage LIKE 'dragonfly gen %' OR usage LIKE 'dragonfly new %') ORDER BY CASE WHEN usage LIKE 'dragonfly new %' THEN 0 WHEN usage LIKE 'dragonfly gen %' THEN 1 ELSE 2 END, usage",
+    "columns": [
+     "command",
+     "what it writes"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:decorator",
+   "type": "query",
+   "title": "Exact: one decorator, its arguments and what it does",
+   "summary": "One decorator (@get, @entity, @primary, @column, @screen...) on each platform that has it: its arguments (`!` = required) and what it does.",
+   "body": [
+    "One decorator (@get, @entity, @primary, @column, @screen...) on each platform that has it: its arguments (`!` = required) and what it does.",
+    "",
+    "It reads `decorators` of the exact facts; its parameters: `decorator` (needed), `platform`.",
+    "",
+    "```text",
+    "SELECT platform, '@' || decorator AS decorator, args, does FROM decorators WHERE decorator = :decorator AND (:platform = '' OR platform = :platform) ORDER BY platform",
+    "```"
+   ],
+   "asks": [
+    "what does @get do",
+    "arguments of @column",
+    "how do I use @primary",
+    "que hace @get",
+    "que argumentos tiene @column",
+    "como se usa @primary",
+    "para que sirve @entity"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "decorator"
+   },
+   "data": {
+    "sql": "SELECT platform, '@' || decorator AS decorator, args, does FROM decorators WHERE decorator = :decorator AND (:platform = '' OR platform = :platform) ORDER BY platform",
+    "columns": [
+     "platform",
+     "decorator",
+     "arguments",
+     "what it does"
+    ],
+    "params": [
+     {
+      "name": "decorator",
+      "values": "SELECT '@' || lower(decorator), decorator FROM decorators",
+      "required": true
+     },
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:decorators",
+   "type": "query",
+   "title": "Exact: every decorator of a platform",
+   "summary": "Every decorator of a platform with its arguments and what it does; of the three platforms when none is named.",
+   "body": [
+    "Every decorator of a platform with its arguments and what it does; of the three platforms when none is named.",
+    "",
+    "It reads `decorators` of the exact facts; its parameters: `platform`.",
+    "",
+    "```text",
+    "SELECT platform, '@' || decorator AS decorator, args, does FROM decorators WHERE (:platform = '' OR platform = :platform) ORDER BY platform, decorator",
+    "```"
+   ],
+   "keys": [
+    "decorators",
+    "decoradores"
+   ],
+   "asks": [
+    "what decorators does the backend have",
+    "list the decorators",
+    "que decoradores tiene el backend",
+    "lista los decoradores de mobile",
+    "cuales son todos los decoradores"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "decorator"
+   },
+   "data": {
+    "sql": "SELECT platform, '@' || decorator AS decorator, args, does FROM decorators WHERE (:platform = '' OR platform = :platform) ORDER BY platform, decorator",
+    "columns": [
+     "platform",
+     "decorator",
+     "arguments",
+     "what it does"
+    ],
+    "params": [
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:diagnostic",
+   "type": "query",
+   "title": "Exact: one diagnostic of the compiler by its code",
+   "summary": "One diagnostic of the compiler by its code (N0114, N0106, N0022...): its stage, its severity, what it means, its example and its fix.",
+   "body": [
+    "One diagnostic of the compiler by its code (N0114, N0106, N0022...): its stage, its severity, what it means, its example and its fix.",
+    "",
+    "It reads `diagnostics` of the exact facts; its parameters: `code` (needed).",
+    "",
+    "```text",
+    "SELECT code, severity, stage, title, what, example, fix FROM diagnostics WHERE code = :code",
+    "```"
+   ],
+   "asks": [
+    "what is N0114",
+    "what does N0106 mean",
+    "how do I fix N0022",
+    "que es N0114",
+    "que significa N0106",
+    "como arreglo el error N0022",
+    "error N0301"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "diagnostic"
+   },
+   "data": {
+    "sql": "SELECT code, severity, stage, title, what, example, fix FROM diagnostics WHERE code = :code",
+    "columns": [
+     "code",
+     "severity",
+     "stage",
+     "title",
+     "what it is",
+     "example",
+     "fix"
+    ],
+    "params": [
+     {
+      "name": "code",
+      "values": "SELECT lower(code), code FROM diagnostics",
+      "required": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:diagnostics",
+   "type": "query",
+   "title": "Exact: every diagnostic of the compiler",
+   "summary": "Every diagnostic code of the compiler with its severity, its family (syntax, resolver, dialect, project) and its title; of one family when it is named.",
+   "body": [
+    "Every diagnostic code of the compiler with its severity, its family (syntax, resolver, dialect, project) and its title; of one family when it is named.",
+    "",
+    "It reads `diagnostics` of the exact facts; its parameters: `family`.",
+    "",
+    "```text",
+    "SELECT code, severity, family, title FROM diagnostics WHERE (:family = '' OR family = :family) ORDER BY code",
+    "```"
+   ],
+   "keys": [
+    "diagnostics",
+    "error codes"
+   ],
+   "asks": [
+    "list the error codes",
+    "all the diagnostics",
+    "which errors does the compiler have",
+    "lista los codigos de error",
+    "todos los diagnosticos",
+    "que errores da el compilador",
+    "errores de sintaxis"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "diagnostic"
+   },
+   "data": {
+    "sql": "SELECT code, severity, family, title FROM diagnostics WHERE (:family = '' OR family = :family) ORDER BY code",
+    "columns": [
+     "code",
+     "severity",
+     "family",
+     "title"
+    ],
+    "params": [
+     {
+      "name": "family",
+      "values": "SELECT DISTINCT family, family FROM diagnostics UNION SELECT 'sintaxis', 'syntax' UNION SELECT 'proyecto', 'project' UNION SELECT 'dialecto', 'dialect'",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:editor.commands",
+   "type": "query",
+   "title": "Exact: the commands of the VS Code extension and their shortcuts",
+   "summary": "Every command the Nuclear extension adds to VS Code with its keyboard shortcut and its id.",
+   "body": [
+    "Every command the Nuclear extension adds to VS Code with its keyboard shortcut and its id.",
+    "",
+    "It reads `editor_commands`, `keys` of the exact facts.",
+    "",
+    "```text",
+    "SELECT title, keys, command FROM editor_commands ORDER BY n",
+    "```"
+   ],
+   "keys": [
+    "shortcuts",
+    "atajos"
+   ],
+   "asks": [
+    "keyboard shortcuts",
+    "list the vscode commands",
+    "what is the shortcut for the loop",
+    "atajos de teclado",
+    "lista los comandos de vscode",
+    "cual es el atajo para abrir el loop",
+    "comandos de la extension"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "editor"
+   },
+   "data": {
+    "sql": "SELECT title, keys, command FROM editor_commands ORDER BY n",
+    "columns": [
+     "command",
+     "shortcut",
+     "id"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:editor.settings",
+   "type": "query",
+   "title": "Exact: the settings of the VS Code extension",
+   "summary": "Every setting of the Nuclear extension for VS Code with its default and what it does.",
+   "body": [
+    "Every setting of the Nuclear extension for VS Code with its default and what it does.",
+    "",
+    "It reads `editor_settings` of the exact facts.",
+    "",
+    "```text",
+    "SELECT setting, fallback, does FROM editor_settings ORDER BY setting",
+    "```"
+   ],
+   "keys": [
+    "settings",
+    "ajustes"
+   ],
+   "asks": [
+    "what settings does the extension have",
+    "list the vscode settings",
+    "que ajustes tiene la extension",
+    "lista la configuracion de vscode",
+    "opciones de nuclear.ai"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "editor"
+   },
+   "data": {
+    "sql": "SELECT setting, fallback, does FROM editor_settings ORDER BY setting",
+    "columns": [
+     "setting",
+     "default",
+     "what it does"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:examples",
+   "type": "query",
+   "title": "Exact: the example files of a kind",
+   "summary": "The files of the example projects that declare a kind (a usecase, an entity, a repository...), by project: read one with `nuclear-graph card example:<file>`.",
+   "body": [
+    "The files of the example projects that declare a kind (a usecase, an entity, a repository...), by project: read one with `nuclear-graph card example:<file>`.",
+    "",
+    "It reads `cards`, `field`, `platforms` of the exact facts; its parameters: `kind`, `platform`.",
+    "",
+    "```text",
+    "SELECT p.value AS project, k.value AS kind, substr(c.id, 9) AS file, c.summary AS what FROM cards c JOIN field k ON k.card = c.id AND k.name = 'kind' JOIN field p ON p.card = c.id AND p.name = 'project' WHERE c.type = 'file' AND (:kind = '' OR k.value = :kind) AND (:platform = '' OR EXISTS (SELECT 1 FROM platforms q WHERE q.card = c.id AND q.platform = :platform)) ORDER BY project, kind, file LIMIT 60",
+    "```"
+   ],
+   "keys": [
+    "examples",
+    "ejemplos"
+   ],
+   "asks": [
+    "examples of a usecase",
+    "show me an example repository",
+    "which example projects are there",
+    "ejemplos de un usecase",
+    "muestrame un repositorio de ejemplo",
+    "que proyectos de ejemplo hay",
+    "ejemplo de una entidad",
+    "an example of a use case",
+    "an example of an entity",
+    "un ejemplo de un controlador"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "example"
+   },
+   "data": {
+    "sql": "SELECT p.value AS project, k.value AS kind, substr(c.id, 9) AS file, c.summary AS what FROM cards c JOIN field k ON k.card = c.id AND k.name = 'kind' JOIN field p ON p.card = c.id AND p.name = 'project' WHERE c.type = 'file' AND (:kind = '' OR k.value = :kind) AND (:platform = '' OR EXISTS (SELECT 1 FROM platforms q WHERE q.card = c.id AND q.platform = :platform)) ORDER BY project, kind, file LIMIT 60",
+    "columns": [
+     "project",
+     "kind",
+     "file",
+     "what it is"
+    ],
+    "params": [
+     {
+      "name": "kind",
+      "values": "SELECT name, kind FROM kind_names UNION SELECT name || 's', kind FROM kind_names",
+      "default": ""
+     },
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:failures",
+   "type": "query",
+   "title": "Exact: the known failures of the tools and the services",
+   "summary": "Every known failure of the tools and the services (a service down, a model not pulled, a token missing...) with what it means.",
+   "body": [
+    "Every known failure of the tools and the services (a service down, a model not pulled, a token missing...) with what it means.",
+    "",
+    "It reads `cards` of the exact facts.",
+    "",
+    "```text",
+    "SELECT substr(id, instr(id, ':') + 1) AS failure, title, summary FROM cards WHERE type = 'failure' ORDER BY id",
+    "```"
+   ],
+   "keys": [
+    "failures",
+    "fallas"
+   ],
+   "asks": [
+    "known failures",
+    "what can go wrong",
+    "fallas conocidas",
+    "que puede fallar",
+    "errores de los servicios",
+    "problemas comunes"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "failure"
+   },
+   "data": {
+    "sql": "SELECT substr(id, instr(id, ':') + 1) AS failure, title, summary FROM cards WHERE type = 'failure' ORDER BY id",
+    "columns": [
+     "failure",
+     "title",
+     "what it means"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:generator",
+   "type": "query",
+   "title": "Exact: the files one generator writes, piece by piece",
+   "summary": "The pieces one generator writes on each platform: the kind of each file, its name (`{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component), whether there is one per action, when it is written and whether it is added to a file that exists.",
+   "body": [
+    "The pieces one generator writes on each platform: the kind of each file, its name (`{{Name}}` the resource, `{{Names}}` its plural, `{{Component}}` the component), whether there is one per action, when it is written and whether it is added to a file that exists.",
+    "",
+    "It reads `generator_pieces` of the exact facts; its parameters: `command` (needed), `platform`.",
+    "",
+    "```text",
+    "SELECT platform, kind, name, each AS one_per, condition AS written_when, CASE merge WHEN 'true' THEN 'added to the file when it exists' ELSE 'a new file' END AS file FROM generator_pieces WHERE command = :command AND (:platform = '' OR platform = :platform) ORDER BY platform, n",
+    "```"
+   ],
+   "asks": [
+    "what files does gen resource write",
+    "the pieces of gen usecase",
+    "que archivos escribe gen resource",
+    "que piezas genera gen usecase",
+    "detalle de lo que crea gen component",
+    "como quedaria el codigo usando el generador"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "generator"
+   },
+   "data": {
+    "sql": "SELECT platform, kind, name, each AS one_per, condition AS written_when, CASE merge WHEN 'true' THEN 'added to the file when it exists' ELSE 'a new file' END AS file FROM generator_pieces WHERE command = :command AND (:platform = '' OR platform = :platform) ORDER BY platform, n",
+    "columns": [
+     "platform",
+     "kind",
+     "name",
+     "one per",
+     "written when",
+     "file"
+    ],
+    "params": [
+     {
+      "name": "command",
+      "values": "SELECT DISTINCT replace(command, 'dragonfly ', ''), command FROM generator_pieces UNION SELECT DISTINCT 'generate_' || replace(command, 'dragonfly gen ', ''), command FROM generator_pieces",
+      "required": true
+     },
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:generators",
+   "type": "query",
+   "title": "Exact: what each generator writes on each platform",
+   "summary": "Every generator (`dragonfly gen component`, `gen resource`, `gen usecase`) on each platform, with the kinds of the files it writes.",
+   "body": [
+    "Every generator (`dragonfly gen component`, `gen resource`, `gen usecase`) on each platform, with the kinds of the files it writes.",
+    "",
+    "It reads `generator_pieces` of the exact facts; its parameters: `platform`.",
+    "",
+    "```text",
+    "SELECT platform, command, group_concat(kind, ', ') AS writes FROM (SELECT platform, command, kind, n FROM generator_pieces ORDER BY platform, command, n) WHERE (:platform = '' OR platform = :platform) GROUP BY platform, command ORDER BY platform, command",
+    "```"
+   ],
+   "keys": [
+    "generators",
+    "generadores"
+   ],
+   "asks": [
+    "what does each generator write",
+    "list the generators",
+    "what does gen resource create",
+    "que escribe cada generador",
+    "lista los generadores",
+    "que genera dragonfly gen",
+    "que archivos crea gen resource"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "generator"
+   },
+   "data": {
+    "sql": "SELECT platform, command, group_concat(kind, ', ') AS writes FROM (SELECT platform, command, kind, n FROM generator_pieces ORDER BY platform, command, n) WHERE (:platform = '' OR platform = :platform) GROUP BY platform, command ORDER BY platform, command",
+    "columns": [
+     "platform",
+     "generator",
+     "kinds it writes"
+    ],
+    "params": [
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:habits",
+   "type": "query",
+   "title": "Exact: what other languages write and the Nuclear form",
+   "summary": "Every habit of TypeScript, Dart or Python the compiler corrects (N0022): what is written by reflex and how Nuclear writes it.",
+   "body": [
+    "Every habit of TypeScript, Dart or Python the compiler corrects (N0022): what is written by reflex and how Nuclear writes it.",
+    "",
+    "It reads `habits` of the exact facts.",
+    "",
+    "```text",
+    "SELECT wrong AS other_languages, right AS nuclear, note FROM habits ORDER BY wrong",
+    "```"
+   ],
+   "keys": [
+    "habits",
+    "equivalences"
+   ],
+   "asks": [
+    "how is it written in nuclear instead of typescript",
+    "list the differences with typescript",
+    "habits the compiler corrects",
+    "como se escribe en nuclear lo que hago en typescript",
+    "lista las diferencias con dart",
+    "que habitos corrige el compilador",
+    "equivalencias con python"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "habit"
+   },
+   "data": {
+    "sql": "SELECT wrong AS other_languages, right AS nuclear, note FROM habits ORDER BY wrong",
+    "columns": [
+     "in other languages",
+     "in Nuclear",
+     "note"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:http.routes",
+   "type": "query",
+   "title": "Exact: the HTTP routes of the Smart Graph and of the Nuclear Developer",
+   "summary": "Every HTTP route of the Smart Graph (127.0.0.1:7878) and of the Nuclear Developer (127.0.0.1:7879): its verb, its path, the scope a token needs and what it answers.",
+   "body": [
+    "Every HTTP route of the Smart Graph (127.0.0.1:7878) and of the Nuclear Developer (127.0.0.1:7879): its verb, its path, the scope a token needs and what it answers.",
+    "",
+    "It reads `routes` of the exact facts; its parameters: `service`.",
+    "",
+    "```text",
+    "SELECT service, verb, path, scope, does FROM routes WHERE (:service = '' OR service = :service) ORDER BY service, path, verb",
+    "```"
+   ],
+   "keys": [
+    "http routes",
+    "endpoints"
+   ],
+   "asks": [
+    "what routes does the graph have",
+    "the http api of the developer",
+    "list the endpoints",
+    "que rutas tiene el grafo",
+    "cuales son los endpoints del developer",
+    "lista las rutas http",
+    "api http del smart graph"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "http"
+   },
+   "data": {
+    "sql": "SELECT service, verb, path, scope, does FROM routes WHERE (:service = '' OR service = :service) ORDER BY service, path, verb",
+    "columns": [
+     "service",
+     "verb",
+     "path",
+     "scope",
+     "what it answers"
+    ],
+    "params": [
+     {
+      "name": "service",
+      "values": "SELECT DISTINCT service, service FROM routes UNION SELECT 'grafo', 'graph' UNION SELECT 'smart graph', 'graph' UNION SELECT 'nuclear developer', 'developer' UNION SELECT 'desarrollador', 'developer'",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:kind",
+   "type": "query",
+   "title": "Exact: one kind on each platform that has it",
+   "summary": "One kind (usecase, entity, repository, controller, statemanager...) on each platform that has it: where its file goes, its decorators and what it is.",
+   "body": [
+    "One kind (usecase, entity, repository, controller, statemanager...) on each platform that has it: where its file goes, its decorators and what it is.",
+    "",
+    "It reads `decorators`, `kind_decorators`, `kinds` of the exact facts; its parameters: `kind` (needed), `platform`.",
+    "",
+    "```text",
+    "SELECT k.platform, k.kind, k.file, (SELECT group_concat('@' || d.decorator, ', ') FROM kind_decorators d WHERE d.platform = k.platform AND d.kind = k.kind) AS decorators, k.does FROM kinds k WHERE k.kind = :kind AND (:platform = '' OR k.platform = :platform) ORDER BY k.platform",
+    "```"
+   ],
+   "asks": [
+    "what is a usecase",
+    "where does an entity go",
+    "what is the repository kind",
+    "que es un usecase",
+    "donde va una entidad",
+    "que es el kind repository",
+    "que decoradores usa un controller"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "kind"
+   },
+   "data": {
+    "sql": "SELECT k.platform, k.kind, k.file, (SELECT group_concat('@' || d.decorator, ', ') FROM kind_decorators d WHERE d.platform = k.platform AND d.kind = k.kind) AS decorators, k.does FROM kinds k WHERE k.kind = :kind AND (:platform = '' OR k.platform = :platform) ORDER BY k.platform",
+    "columns": [
+     "platform",
+     "kind",
+     "its file",
+     "decorators",
+     "what it is"
+    ],
+    "params": [
+     {
+      "name": "kind",
+      "values": "SELECT name, kind FROM kind_names UNION SELECT name || 's', kind FROM kind_names",
+      "required": true
+     },
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:kind.create",
+   "type": "query",
+   "title": "Exact: how a kind is created (commands, generators and MCP tools)",
+   "summary": "Every way to create a declaration of a kind (a use case, an entity, a repository, a model, a controller, a screen...): the `dragonfly make` command that writes its file, the generators that write it finished, and the MCP tools that run them.",
+   "body": [
+    "Every way to create a declaration of a kind (a use case, an entity, a repository, a model, a controller, a screen...): the `dragonfly make` command that writes its file, the generators that write it finished, and the MCP tools that run them.",
+    "",
+    "It reads `commands`, `generator_pieces`, `mcp_tools` of the exact facts; its parameters: `kind` (needed), `platform`.",
+    "",
+    "```text",
+    "SELECT 'command' AS how, c.usage AS run, c.does AS writes FROM commands c WHERE c.tool = 'dragonfly' AND c.what = :kind UNION ALL SELECT 'command (any kind)', c.usage, c.does FROM commands c WHERE c.what = 'kind' AND c.usage LIKE 'dragonfly make %' UNION ALL SELECT 'generator on ' || g.platform, g.command, 'writes the ' || g.kind || ' ' || g.name || CASE WHEN g.each != '' THEN ', one per ' || g.each ELSE '' END || CASE WHEN g.condition != '' THEN ' (when ' || g.condition || ')' ELSE '' END FROM generator_pieces g WHERE g.kind = :kind AND (:platform = '' OR g.platform = :platform) UNION ALL SELECT 'MCP tool', t.tool, 'runs `' || t.runs || '`: ' || t.does FROM mcp_tools t WHERE t.runs != '' AND (t.runs = 'dragonfly make ' || :kind OR t.runs IN (SELECT g.command FROM generator_pieces g WHERE g.kind = :kind AND (:platform = '' OR g.platform = :platform)))",
+    "```"
+   ],
+   "asks": [
+    "which command creates a use case",
+    "how do I create an entity",
+    "how to make a repository",
+    "que comando sirve para crear un caso de uso",
+    "como creo una entidad",
+    "como podria crear un use case",
+    "con que comando creo un repositorio",
+    "como creo un modelo",
+    "como genero un controlador"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "kind"
+   },
+   "data": {
+    "sql": "SELECT 'command' AS how, c.usage AS run, c.does AS writes FROM commands c WHERE c.tool = 'dragonfly' AND c.what = :kind UNION ALL SELECT 'command (any kind)', c.usage, c.does FROM commands c WHERE c.what = 'kind' AND c.usage LIKE 'dragonfly make %' UNION ALL SELECT 'generator on ' || g.platform, g.command, 'writes the ' || g.kind || ' ' || g.name || CASE WHEN g.each != '' THEN ', one per ' || g.each ELSE '' END || CASE WHEN g.condition != '' THEN ' (when ' || g.condition || ')' ELSE '' END FROM generator_pieces g WHERE g.kind = :kind AND (:platform = '' OR g.platform = :platform) UNION ALL SELECT 'MCP tool', t.tool, 'runs `' || t.runs || '`: ' || t.does FROM mcp_tools t WHERE t.runs != '' AND (t.runs = 'dragonfly make ' || :kind OR t.runs IN (SELECT g.command FROM generator_pieces g WHERE g.kind = :kind AND (:platform = '' OR g.platform = :platform)))",
+    "columns": [
+     "how",
+     "run",
+     "what it writes"
+    ],
+    "params": [
+     {
+      "name": "kind",
+      "values": "SELECT name, kind FROM kind_names UNION SELECT name || 's', kind FROM kind_names",
+      "required": true
+     },
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:kinds",
+   "type": "query",
+   "title": "Exact: every kind of a platform",
+   "summary": "Every kind of a platform (backend, mobile, web) with where its file goes and what it is; of the three platforms when none is named.",
+   "body": [
+    "Every kind of a platform (backend, mobile, web) with where its file goes and what it is; of the three platforms when none is named.",
+    "",
+    "It reads `kinds` of the exact facts; its parameters: `platform`.",
+    "",
+    "```text",
+    "SELECT platform, kind, file, does FROM kinds WHERE (:platform = '' OR platform = :platform) ORDER BY platform, kind",
+    "```"
+   ],
+   "keys": [
+    "kinds"
+   ],
+   "asks": [
+    "what kinds does the backend have",
+    "list the kinds of mobile",
+    "all the kinds",
+    "que kinds tiene el backend",
+    "lista los tipos de declaracion de mobile",
+    "cuales son todos los kinds",
+    "que piezas tiene la plataforma web"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "kind"
+   },
+   "data": {
+    "sql": "SELECT platform, kind, file, does FROM kinds WHERE (:platform = '' OR platform = :platform) ORDER BY platform, kind",
+    "columns": [
+     "platform",
+     "kind",
+     "its file",
+     "what it is"
+    ],
+    "params": [
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:layout",
+   "type": "query",
+   "title": "Exact: where the file of each kind goes",
+   "summary": "The folder and file name of every kind in a project of a platform (`{component}`: the component's folder, `{file}`: the declaration's name in snake_case), or of one kind.",
+   "body": [
+    "The folder and file name of every kind in a project of a platform (`{component}`: the component's folder, `{file}`: the declaration's name in snake_case), or of one kind.",
+    "",
+    "It reads `layout` of the exact facts; its parameters: `platform`, `kind`.",
+    "",
+    "```text",
+    "SELECT platform, kind, file FROM layout WHERE (:platform = '' OR platform = :platform) AND (:kind = '' OR kind = :kind) ORDER BY platform, kind",
+    "```"
+   ],
+   "keys": [
+    "layout",
+    "folders",
+    "carpetas"
+   ],
+   "asks": [
+    "where does each file go",
+    "project layout of the backend",
+    "in which folder do I put a repository",
+    "donde va cada archivo",
+    "estructura de carpetas de un proyecto backend",
+    "en que carpeta pongo un repositorio",
+    "donde se guarda un caso de uso"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "kind"
+   },
+   "data": {
+    "sql": "SELECT platform, kind, file FROM layout WHERE (:platform = '' OR platform = :platform) AND (:kind = '' OR kind = :kind) ORDER BY platform, kind",
+    "columns": [
+     "platform",
+     "kind",
+     "its file"
+    ],
+    "params": [
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     },
+     {
+      "name": "kind",
+      "values": "SELECT name, kind FROM kind_names UNION SELECT name || 's', kind FROM kind_names",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:library.members",
+   "type": "query",
+   "title": "Exact: every member of one base type",
+   "summary": "Every member of one base type of Nuclear's standard library (string, list, map, Set, int, double, Regex, DateTime, Bytes...): whether it is a property or a method and what it gives.",
+   "body": [
+    "Every member of one base type of Nuclear's standard library (string, list, map, Set, int, double, Regex, DateTime, Bytes...): whether it is a property or a method and what it gives.",
+    "",
+    "It reads `library` of the exact facts; its parameters: `base` (needed).",
+    "",
+    "```text",
+    "SELECT member, shape, gives FROM library WHERE base = :base ORDER BY n",
+    "```"
+   ],
+   "asks": [
+    "members of string",
+    "what methods does a list have",
+    "methods of map",
+    "que metodos tiene un string",
+    "miembros de list",
+    "que puedo hacer con un map",
+    "metodos de datetime"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "library"
+   },
+   "data": {
+    "sql": "SELECT member, shape, gives FROM library WHERE base = :base ORDER BY n",
+    "columns": [
+     "member",
+     "property or method",
+     "gives"
+    ],
+    "params": [
+     {
+      "name": "base",
+      "values": "SELECT DISTINCT lower(base), base FROM library UNION SELECT 'lista', 'list' UNION SELECT 'listas', 'list' UNION SELECT 'lists', 'list' UNION SELECT 'mapa', 'map' UNION SELECT 'maps', 'map' UNION SELECT 'strings', 'string' UNION SELECT 'texto', 'string'",
+      "required": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:library.name",
+   "type": "query",
+   "title": "Exact: the Nuclear name of a name of another language",
+   "summary": "The Nuclear name for a member or function of another language (`push`, `len`, `toUpperCase`, `contains`, `console.log`): the compiler reports the foreign one as N0114 with this fix.",
+   "body": [
+    "The Nuclear name for a member or function of another language (`push`, `len`, `toUpperCase`, `contains`, `console.log`): the compiler reports the foreign one as N0114 with this fix.",
+    "",
+    "It reads `foreign_names` of the exact facts; its parameters: `name` (needed).",
+    "",
+    "```text",
+    "SELECT base AS on_type, name AS other_language, fix AS nuclear FROM foreign_names WHERE lower(name) = lower(:name) OR lower(name) LIKE lower(:name) || '(%' ORDER BY base",
+    "```"
+   ],
+   "asks": [
+    "what is push in nuclear",
+    "nuclear name for len",
+    "how do I write toUpperCase",
+    "como es push en nuclear",
+    "cual es el equivalente de len",
+    "como escribo toUpperCase en nuclear",
+    "contains en nuclear"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "library"
+   },
+   "data": {
+    "sql": "SELECT base AS on_type, name AS other_language, fix AS nuclear FROM foreign_names WHERE lower(name) = lower(:name) OR lower(name) LIKE lower(:name) || '(%' ORDER BY base",
+    "columns": [
+     "on",
+     "in other languages",
+     "in Nuclear"
+    ],
+    "params": [
+     {
+      "name": "name",
+      "values": "SELECT lower(name), name FROM foreign_names UNION SELECT lower(substr(name, 1, instr(name, '(') - 1)), substr(name, 1, instr(name, '(') - 1) FROM foreign_names WHERE instr(name, '(') > 0",
+      "required": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:library.types",
+   "type": "query",
+   "title": "Exact: the base types of Nuclear's standard library",
+   "summary": "The base types and objects of Nuclear's standard library (string, list, map, Set, int, double, Math, Json, Regex, DateTime, Bytes...) and how many members each has.",
+   "body": [
+    "The base types and objects of Nuclear's standard library (string, list, map, Set, int, double, Math, Json, Regex, DateTime, Bytes...) and how many members each has.",
+    "",
+    "It reads `library` of the exact facts.",
+    "",
+    "```text",
+    "SELECT base, count(*) AS members, group_concat(member, ', ') AS names FROM library GROUP BY base ORDER BY base",
+    "```"
+   ],
+   "keys": [
+    "standard library",
+    "libreria estandar"
+   ],
+   "asks": [
+    "which types does the standard library have",
+    "list the base types",
+    "que tipos tiene la libreria estandar",
+    "lista los tipos base de nuclear",
+    "que objetos trae la libreria"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "library"
+   },
+   "data": {
+    "sql": "SELECT base, count(*) AS members, group_concat(member, ', ') AS names FROM library GROUP BY base ORDER BY base",
+    "columns": [
+     "type",
+     "members",
+     "their names"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:loop.stages",
+   "type": "query",
+   "title": "Exact: the stages of the Nuclear Loop, in order",
+   "summary": "The stages of the Nuclear Loop in the order they run (specification, generate, plan, tests first, code, verification, security, artifacts, deploy): who takes part in each and what it does.",
+   "body": [
+    "The stages of the Nuclear Loop in the order they run (specification, generate, plan, tests first, code, verification, security, artifacts, deploy): who takes part in each and what it does.",
+    "",
+    "It reads `stages` of the exact facts.",
+    "",
+    "```text",
+    "SELECT position, title, stage, actors, does FROM stages ORDER BY position",
+    "```"
+   ],
+   "keys": [
+    "loop stages",
+    "pipeline",
+    "etapas"
+   ],
+   "asks": [
+    "what are the stages of the loop",
+    "steps of the pipeline",
+    "what does the loop do",
+    "cuales son las etapas del loop",
+    "pasos del pipeline",
+    "que hace el loop paso a paso",
+    "en que orden corre el loop"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "stage"
+   },
+   "data": {
+    "sql": "SELECT position, title, stage, actors, does FROM stages ORDER BY position",
+    "columns": [
+     "#",
+     "stage",
+     "id",
+     "who takes part",
+     "what it does"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:mcp.commands",
+   "type": "query",
+   "title": "Exact: each MCP tool and the command line it is the same as",
+   "summary": "The MCP tools that run a command line, each with that command: `generate_resource` is `dragonfly gen resource`, `nuclear_check` is `nuclear check`, `developer_task` is `nuclear-loop run`.",
+   "body": [
+    "The MCP tools that run a command line, each with that command: `generate_resource` is `dragonfly gen resource`, `nuclear_check` is `nuclear check`, `developer_task` is `nuclear-loop run`.",
+    "",
+    "It reads `mcp_tools` of the exact facts.",
+    "",
+    "```text",
+    "SELECT tool, runs FROM mcp_tools WHERE runs != '' ORDER BY runs, tool",
+    "```"
+   ],
+   "keys": [
+    "mcp equivalents"
+   ],
+   "asks": [
+    "which command is each mcp tool",
+    "cli equivalent of the mcp tools",
+    "which command does generate_resource run",
+    "a que comando equivale cada tool del mcp",
+    "equivalentes en comandos de las herramientas del mcp",
+    "que comando corre generate_resource"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "mcp"
+   },
+   "data": {
+    "sql": "SELECT tool, runs FROM mcp_tools WHERE runs != '' ORDER BY runs, tool",
+    "columns": [
+     "MCP tool",
+     "command line"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:mcp.group",
+   "type": "query",
+   "title": "Exact: the MCP tools of one group, with their parameters",
+   "summary": "The tools of one group of the MCP server (the generators `generate_*`, the graph `graph_*`, the compiler `nuclear_*`, the local developer `developer_*`, the internet `web_*`), each with every parameter, its type and its default, and the command it runs.",
+   "body": [
+    "The tools of one group of the MCP server (the generators `generate_*`, the graph `graph_*`, the compiler `nuclear_*`, the local developer `developer_*`, the internet `web_*`), each with every parameter, its type and its default, and the command it runs.",
+    "",
+    "It reads `mcp_params`, `mcp_tools` of the exact facts; its parameters: `grp` (needed).",
+    "",
+    "```text",
+    "SELECT t.tool, t.does, (SELECT group_concat(x.line, ' · ') FROM (SELECT p.name || ': ' || p.type || CASE WHEN p.required = 'true' THEN ' (required)' ELSE ' = ' || p.fallback END AS line FROM mcp_params p WHERE p.tool = t.tool ORDER BY p.n) x) AS parameters, t.runs FROM mcp_tools t WHERE t.grp = :grp ORDER BY t.tool",
+    "```"
+   ],
+   "asks": [
+    "describe the generator tools of the mcp",
+    "the mcp tools of the graph in detail",
+    "options of the mcp generators",
+    "describeme a detalle que servicio y opciones tiene el mcp de generadores",
+    "que opciones tienen los generadores del mcp",
+    "detalla las tools developer del mcp",
+    "herramientas del mcp para el grafo con sus parametros"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "mcp"
+   },
+   "data": {
+    "sql": "SELECT t.tool, t.does, (SELECT group_concat(x.line, ' · ') FROM (SELECT p.name || ': ' || p.type || CASE WHEN p.required = 'true' THEN ' (required)' ELSE ' = ' || p.fallback END AS line FROM mcp_params p WHERE p.tool = t.tool ORDER BY p.n) x) AS parameters, t.runs FROM mcp_tools t WHERE t.grp = :grp ORDER BY t.tool",
+    "columns": [
+     "tool",
+     "what it does",
+     "parameters",
+     "command it runs"
+    ],
+    "params": [
+     {
+      "name": "grp",
+      "values": "SELECT grp, grp FROM mcp_tools UNION SELECT grp || 's', grp FROM mcp_tools UNION SELECT 'generator', 'generate' UNION SELECT 'generators', 'generate' UNION SELECT 'generador', 'generate' UNION SELECT 'generadores', 'generate' UNION SELECT 'grafo', 'graph' UNION SELECT 'desarrollador', 'developer' UNION SELECT 'compiler', 'nuclear' UNION SELECT 'compilador', 'nuclear' UNION SELECT 'internet', 'web'",
+      "required": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:mcp.tool",
+   "type": "query",
+   "title": "Exact: the parameters of one MCP tool",
+   "summary": "Every parameter of one tool of the MCP server (generate_resource, graph_search, developer_task...): its name, its type, whether it is required and its default.",
+   "body": [
+    "Every parameter of one tool of the MCP server (generate_resource, graph_search, developer_task...): its name, its type, whether it is required and its default.",
+    "",
+    "It reads `mcp_params` of the exact facts; its parameters: `tool` (needed).",
+    "",
+    "```text",
+    "SELECT p.name, p.type, CASE p.required WHEN 'true' THEN 'yes' ELSE 'no' END AS required, p.fallback FROM mcp_params p WHERE p.tool = :tool ORDER BY p.n",
+    "```"
+   ],
+   "asks": [
+    "parameters of generate_resource",
+    "what does graph_search take",
+    "arguments of developer_task",
+    "que parametros tiene generate_resource",
+    "que recibe graph_search",
+    "argumentos de developer_task",
+    "opciones de generate_usecase"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "mcp"
+   },
+   "data": {
+    "sql": "SELECT p.name, p.type, CASE p.required WHEN 'true' THEN 'yes' ELSE 'no' END AS required, p.fallback FROM mcp_params p WHERE p.tool = :tool ORDER BY p.n",
+    "columns": [
+     "parameter",
+     "type",
+     "required",
+     "default"
+    ],
+    "params": [
+     {
+      "name": "tool",
+      "values": "SELECT lower(tool), tool FROM mcp_tools UNION SELECT replace(lower(tool), '_', ' '), tool FROM mcp_tools",
+      "required": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:mcp.tools",
+   "type": "query",
+   "title": "Exact: every tool of the Nuclear MCP server",
+   "summary": "Every tool the Nuclear MCP server (`nuclear-graph mcp`) offers an AI client, by group (graph, nuclear, dragonfly, project, generate, api, web, developer), with what each does and the command it runs.",
+   "body": [
+    "Every tool the Nuclear MCP server (`nuclear-graph mcp`) offers an AI client, by group (graph, nuclear, dragonfly, project, generate, api, web, developer), with what each does and the command it runs.",
+    "",
+    "It reads `mcp_tools` of the exact facts.",
+    "",
+    "```text",
+    "SELECT grp, tool, does, runs FROM mcp_tools ORDER BY grp, tool",
+    "```"
+   ],
+   "keys": [
+    "mcp tools",
+    "mcp services"
+   ],
+   "asks": [
+    "what tools does the mcp offer",
+    "list the mcp tools",
+    "what services does the mcp have",
+    "que servicios ofrece el mcp",
+    "que herramientas tiene el mcp",
+    "lista las tools del mcp",
+    "describe cada servicio del mcp"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "mcp"
+   },
+   "data": {
+    "sql": "SELECT grp, tool, does, runs FROM mcp_tools ORDER BY grp, tool",
+    "columns": [
+     "group",
+     "tool",
+     "what it does",
+     "command it runs"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:pitfalls",
+   "type": "query",
+   "title": "Exact: the mistakes small models repeat, by kind",
+   "summary": "Every mistake small models repeat when they write Nuclear, for one kind when it is named.",
+   "body": [
+    "Every mistake small models repeat when they write Nuclear, for one kind when it is named.",
+    "",
+    "It reads `cards`, `fields` of the exact facts; its parameters: `kind`.",
+    "",
+    "```text",
+    "SELECT c.title, c.summary FROM cards c WHERE c.type = 'pitfall' AND (:kind = '' OR EXISTS (SELECT 1 FROM fields k WHERE k.card = c.id AND k.name = 'kinds' AND k.value = :kind)) ORDER BY c.id",
+    "```"
+   ],
+   "keys": [
+    "pitfalls"
+   ],
+   "asks": [
+    "common mistakes with a usecase",
+    "pitfalls of the repository",
+    "errores comunes con un usecase",
+    "que errores repiten los modelos",
+    "trampas al escribir un repositorio"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "pitfall"
+   },
+   "data": {
+    "sql": "SELECT c.title, c.summary FROM cards c WHERE c.type = 'pitfall' AND (:kind = '' OR EXISTS (SELECT 1 FROM fields k WHERE k.card = c.id AND k.name = 'kinds' AND k.value = :kind)) ORDER BY c.id",
+    "columns": [
+     "mistake",
+     "the rule"
+    ],
+    "params": [
+     {
+      "name": "kind",
+      "values": "SELECT name, kind FROM kind_names UNION SELECT name || 's', kind FROM kind_names",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:platforms",
+   "type": "query",
+   "title": "Exact: the platforms of Dragonfly and the dialects that build each",
+   "summary": "The three platforms of Dragonfly (backend, mobile, web) and the dialects each one is built with, the default one marked.",
+   "body": [
+    "The three platforms of Dragonfly (backend, mobile, web) and the dialects each one is built with, the default one marked.",
+    "",
+    "It reads `dialects` of the exact facts.",
+    "",
+    "```text",
+    "SELECT platform, group_concat(dialect || CASE WHEN chosen != '' THEN ' (default)' ELSE '' END, ', ') AS dialects, does FROM dialects GROUP BY platform ORDER BY platform",
+    "```"
+   ],
+   "keys": [
+    "platforms",
+    "dialects",
+    "plataformas",
+    "dialectos"
+   ],
+   "asks": [
+    "which platforms are there",
+    "what dialects does the backend have",
+    "list the dialects",
+    "que plataformas hay",
+    "que dialectos tiene el backend",
+    "cuales son los dialectos",
+    "en que lenguajes sale un backend"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "platform"
+   },
+   "data": {
+    "sql": "SELECT platform, group_concat(dialect || CASE WHEN chosen != '' THEN ' (default)' ELSE '' END, ', ') AS dialects, does FROM dialects GROUP BY platform ORDER BY platform",
+    "columns": [
+     "platform",
+     "dialects",
+     "what it is"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:playbooks",
+   "type": "query",
+   "title": "Exact: the procedures (playbooks), roles and skills",
+   "summary": "Every procedure the graph has for a task (a feature from a spec, a bug, a refactor, a release...), and the roles and skills of the developer.",
+   "body": [
+    "Every procedure the graph has for a task (a feature from a spec, a bug, a refactor, a release...), and the roles and skills of the developer.",
+    "",
+    "It reads `cards` of the exact facts.",
+    "",
+    "```text",
+    "SELECT type, substr(id, instr(id, ':') + 1) AS name, title, summary FROM cards WHERE type IN ('playbook', 'role', 'skill') ORDER BY type, id",
+    "```"
+   ],
+   "keys": [
+    "playbooks",
+    "procedimientos"
+   ],
+   "asks": [
+    "which playbooks are there",
+    "list the procedures",
+    "que playbooks hay",
+    "lista los procedimientos",
+    "que roles existen",
+    "como se hace una tarea paso a paso"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "playbook"
+   },
+   "data": {
+    "sql": "SELECT type, substr(id, instr(id, ':') + 1) AS name, title, summary FROM cards WHERE type IN ('playbook', 'role', 'skill') ORDER BY type, id",
+    "columns": [
+     "kind",
+     "name",
+     "title",
+     "what it is"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:plugins",
+   "type": "query",
+   "title": "Exact: the plugins of a platform",
+   "summary": "Every plugin of a platform (sqlite, postgres, redis, kafka, ai, ollama, chroma, genkit...): the kinds it brings, the plugins it enables and what it is. A plugin is enabled in `config.nuc`: `plugins(<name> = true)`.",
+   "body": [
+    "Every plugin of a platform (sqlite, postgres, redis, kafka, ai, ollama, chroma, genkit...): the kinds it brings, the plugins it enables and what it is. A plugin is enabled in `config.nuc`: `plugins(<name> = true)`.",
+    "",
+    "It reads `kinds`, `plugins` of the exact facts; its parameters: `platform`.",
+    "",
+    "```text",
+    "SELECT platform, plugin, kinds, requires, does FROM plugins WHERE (:platform = '' OR platform = :platform) ORDER BY platform, plugin",
+    "```"
+   ],
+   "keys": [
+    "plugins"
+   ],
+   "asks": [
+    "what plugins does the backend have",
+    "list the plugins",
+    "which databases are supported",
+    "que plugins tiene el backend",
+    "lista los plugins",
+    "que bases de datos soporta",
+    "que plugins hay para mobile"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "plugin"
+   },
+   "data": {
+    "sql": "SELECT platform, plugin, kinds, requires, does FROM plugins WHERE (:platform = '' OR platform = :platform) ORDER BY platform, plugin",
+    "columns": [
+     "platform",
+     "plugin",
+     "kinds it brings",
+     "enables",
+     "what it is"
+    ],
+    "params": [
+     {
+      "name": "platform",
+      "from": "platform",
+      "values": "SELECT platform, platform FROM dialects UNION SELECT dialect, platform FROM dialects",
+      "default": ""
+     }
+    ]
+   }
+  },
+  {
+   "id": "query:shelves",
+   "type": "query",
+   "title": "Exact: what the Smart Graph holds",
+   "summary": "The rows of the knowledge base by shelf and type: how much the Smart Graph knows of each thing.",
+   "body": [
+    "The rows of the knowledge base by shelf and type: how much the Smart Graph knows of each thing.",
+    "",
+    "It reads `cards` of the exact facts.",
+    "",
+    "```text",
+    "SELECT shelf, type, count(*) AS rows FROM cards GROUP BY shelf, type ORDER BY shelf, rows DESC",
+    "```"
+   ],
+   "keys": [
+    "knowledge base",
+    "base de conocimiento"
+   ],
+   "asks": [
+    "what does the graph know",
+    "how many rows does the knowledge base have",
+    "que sabe el grafo",
+    "cuantas filas tiene la base de conocimiento",
+    "que contiene el smart graph"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "base"
+   },
+   "data": {
+    "sql": "SELECT shelf, type, count(*) AS rows FROM cards GROUP BY shelf, type ORDER BY shelf, rows DESC",
+    "columns": [
+     "shelf",
+     "type",
+     "rows"
+    ],
+    "params": []
+   }
+  },
+  {
+   "id": "query:strategies",
+   "type": "query",
+   "title": "Exact: the strategies, one per kind of request",
+   "summary": "Every strategy the graph has, one per kind of request a user makes (a whole system, a resource, a use case, a rename, a failing test, a question...): its family, its scope, how the Loop runs it, who leads and its stages.",
+   "body": [
+    "Every strategy the graph has, one per kind of request a user makes (a whole system, a resource, a use case, a rename, a failing test, a question...): its family, its scope, how the Loop runs it, who leads and its stages.",
+    "",
+    "It reads `stages`, `strategies` of the exact facts; its parameters: `family`.",
+    "",
+    "```text",
+    "SELECT strategy, family, scope, mode, lead, stages FROM strategies WHERE (:family = '' OR family = :family) ORDER BY family, strategy",
+    "```"
+   ],
+   "keys": [
+    "strategies",
+    "estrategias"
+   ],
+   "asks": [
+    "which strategies are there",
+    "list the kinds of request",
+    "que estrategias hay",
+    "lista los tipos de solicitud",
+    "como decide el loop que hacer",
+    "que tipos de tarea reconoce"
+   ],
+   "sources": [
+    "nuclear-graph/facts.nuc"
+   ],
+   "meta": {
+    "entity": "strategy"
+   },
+   "data": {
+    "sql": "SELECT strategy, family, scope, mode, lead, stages FROM strategies WHERE (:family = '' OR family = :family) ORDER BY family, strategy",
+    "columns": [
+     "strategy",
+     "family",
+     "scope",
+     "mode",
+     "lead",
+     "stages"
+    ],
+    "params": [
+     {
+      "name": "family",
+      "values": "SELECT DISTINCT family, family FROM strategies WHERE family IS NOT NULL",
+      "default": ""
+     }
+    ]
+   }
+  }
+ ]
+}

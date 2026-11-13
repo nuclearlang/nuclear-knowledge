@@ -83,7 +83,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/test.md"
+    "nuclear-graph/prompts/test.md"
    ],
    "meta": {
     "use_case": "test",
@@ -148,7 +148,7 @@
    ],
    "sources": [
     "spec/diagnostics.md",
-    "nuclear-graph/src/nuclear_graph/prompts/agents/repair.md"
+    "nuclear-graph/prompts/agents/repair.md"
    ],
    "meta": {
     "use_case": "bug",
@@ -243,7 +243,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/bug.md"
+    "nuclear-graph/prompts/bug.md"
    ],
    "meta": {
     "use_case": "bug",
@@ -285,7 +285,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/refactor.md"
+    "nuclear-graph/prompts/refactor.md"
    ],
    "meta": {
     "use_case": "refactor",
@@ -338,7 +338,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/security.md"
+    "nuclear-graph/prompts/security.md"
    ],
    "meta": {
     "use_case": "security",
@@ -377,7 +377,7 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/prompts/docs.md"
+    "nuclear-graph/prompts/docs.md"
    ],
    "meta": {
     "use_case": "docs",
@@ -631,9 +631,9 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py",
-    "nuclear-graph/src/nuclear_graph/prompts/plan.md",
-    "nuclear-graph/src/nuclear_graph/prompts/feature.md"
+    "nuclear-graph/mcp_server.nuc",
+    "nuclear-graph/prompts/plan.md",
+    "nuclear-graph/prompts/feature.md"
    ],
    "meta": {
     "use_case": "lead",

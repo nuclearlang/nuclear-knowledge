@@ -1,0 +1,66 @@
+{
+ "shelf": "platforms",
+ "origin": "overlay",
+ "about": "How people write the kinds of the mobile platform besides each kind's own word (in Spanish, in the plural): a question or a spec that writes one of them means that kind. Only words that mean nothing else are here.",
+ "rows": [
+  {
+   "id": "kind:mobile.aggregate",
+   "keys": [
+    "agregado",
+    "agregados",
+    "aggregates"
+   ]
+  },
+  {
+   "id": "kind:mobile.appcomponent",
+   "keys": [
+    "fachada",
+    "facade",
+    "componente de aplicacion"
+   ]
+  },
+  {
+   "id": "kind:mobile.form",
+   "keys": [
+    "formulario",
+    "formularios"
+   ]
+  },
+  {
+   "id": "kind:mobile.formmanager",
+   "keys": [
+    "gestor de formulario"
+   ]
+  },
+  {
+   "id": "kind:mobile.repository",
+   "keys": [
+    "repositorio",
+    "repositorios",
+    "repositories"
+   ]
+  },
+  {
+   "id": "kind:mobile.statemanager",
+   "keys": [
+    "gestor de estado",
+    "state managers"
+   ]
+  },
+  {
+   "id": "kind:mobile.statemodel",
+   "keys": [
+    "modelo de estado",
+    "state models"
+   ]
+  },
+  {
+   "id": "kind:mobile.usecase",
+   "keys": [
+    "caso de uso",
+    "casos de uso",
+    "use cases"
+   ]
+  }
+ ]
+}

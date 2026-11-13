@@ -23,6 +23,10 @@
     "api_inspect",
     "api inspect"
    ],
+   "asks": [
+    "what does api_inspect do",
+    "que hace api_inspect"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -30,11 +34,41 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "api_inspect"
+   },
+   "data": {
+    "group": "api",
+    "runs": "",
+    "params": [
+     {
+      "name": "url",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "project",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "component",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
@@ -58,6 +92,10 @@
     "developer_code",
     "developer code"
    ],
+   "asks": [
+    "what does developer_code do",
+    "que hace developer_code"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -65,30 +103,78 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "developer_code"
+   },
+   "data": {
+    "group": "developer",
+    "runs": "",
+    "params": [
+     {
+      "name": "task",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "platform",
+      "type": "string",
+      "required": false,
+      "default": "\"backend\""
+     },
+     {
+      "name": "path",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "kind",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "context",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "project",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
    "id": "mcp:developer_retry",
    "type": "mcp",
    "title": "`developer_retry` — a tool of the Nuclear MCP server",
-   "summary": "A developer_task run that failed, again from the step that failed (every step that passed is kept), or the whole of from_stage (plan, test, code, verify, security, artifacts, deploy), the stages before it kept.",
+   "summary": "A developer_task run again: from the step that failed (every step that passed is kept); the whole of from_stage (generate, plan, test, code, verify, security, artifacts, deploy), the stages before it kept; from one step (from_step: its id in the journal, `code-3`: that step and all after it, whether it passed or failed); or from scratch (scratch: every stage again, what the run wrote undone…",
    "body": [
-    "A developer_task run that failed, again from the step that failed (every step that passed is kept), or the whole of from_stage (plan, test, code, verify, security, artifacts, deploy), the stages before it kept. Read the journal's \"Why it failed\" first: retry when the failure was passing (a service down) or after you fixed its cause. Answers the journal again.",
+    "A developer_task run again: from the step that failed (every step that passed is kept); the whole of from_stage (generate, plan, test, code, verify, security, artifacts, deploy), the stages before it kept; from one step (from_step: its id in the journal, `code-3`: that step and all after it, whether it passed or failed); or from scratch (scratch: every stage again, what the run wrote undone first). Read the journal's \"Why it failed\" first: retry when the failure was passing (a service down) or after you fixed its cause. Answers the journal again.",
     "",
     "Parameters:",
     "",
     "- `project`: string",
     "- `run`: string",
-    "- `from_stage`: string = `\"\"`"
+    "- `from_stage`: string = `\"\"`",
+    "- `from_step`: string = `\"\"`",
+    "- `scratch`: boolean = `false`"
    ],
    "keys": [
     "developer_retry",
     "developer retry"
+   ],
+   "asks": [
+    "what does developer_retry do",
+    "que hace developer_retry"
    ],
    "links": [
     {
@@ -97,11 +183,47 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "developer_retry"
+   },
+   "data": {
+    "group": "developer",
+    "runs": "nuclear-loop retry",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "run",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "from_stage",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "from_step",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "scratch",
+      "type": "boolean",
+      "required": false,
+      "default": "false"
+     }
+    ]
    }
   },
   {
@@ -123,6 +245,10 @@
     "developer_review",
     "developer review"
    ],
+   "asks": [
+    "what does developer_review do",
+    "que hace developer_review"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -130,11 +256,41 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "developer_review"
+   },
+   "data": {
+    "group": "developer",
+    "runs": "nuclear check",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "run",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "notes",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "files",
+      "type": "any",
+      "required": false,
+      "default": "null"
+     }
+    ]
    }
   },
   {
@@ -154,6 +310,10 @@
     "developer_security",
     "developer security"
    ],
+   "asks": [
+    "what does developer_security do",
+    "que hace developer_security"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -161,11 +321,29 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "developer_security"
+   },
+   "data": {
+    "group": "developer",
+    "runs": "",
+    "params": [
+     {
+      "name": "code",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "platform",
+      "type": "string",
+      "required": false,
+      "default": "\"backend\""
+     }
+    ]
    }
   },
   {
@@ -188,6 +366,10 @@
     "developer_task",
     "developer task"
    ],
+   "asks": [
+    "what does developer_task do",
+    "que hace developer_task"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -195,11 +377,47 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "developer_task"
+   },
+   "data": {
+    "group": "developer",
+    "runs": "nuclear-loop run",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "description",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "criteria",
+      "type": "array",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "use_case",
+      "type": "string",
+      "required": false,
+      "default": "\"feature\""
+     }
+    ]
    }
   },
   {
@@ -220,6 +438,10 @@
     "developer_test",
     "developer test"
    ],
+   "asks": [
+    "what does developer_test do",
+    "que hace developer_test"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -227,11 +449,35 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "developer_test"
+   },
+   "data": {
+    "group": "developer",
+    "runs": "",
+    "params": [
+     {
+      "name": "task",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "code",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "platform",
+      "type": "string",
+      "required": false,
+      "default": "\"backend\""
+     }
+    ]
    }
   },
   {
@@ -252,6 +498,10 @@
     "dragonfly",
     "dragonfly"
    ],
+   "asks": [
+    "what does dragonfly do",
+    "que hace dragonfly"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -259,11 +509,35 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "dragonfly"
+   },
+   "data": {
+    "group": "dragonfly",
+    "runs": "dragonfly",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "command",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "args",
+      "type": "any",
+      "required": false,
+      "default": "null"
+     }
+    ]
    }
   },
   {
@@ -283,6 +557,10 @@
     "generate_component",
     "generate component"
    ],
+   "asks": [
+    "what does generate_component do",
+    "que hace generate_component"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -290,11 +568,29 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "generate_component"
+   },
+   "data": {
+    "group": "generate",
+    "runs": "dragonfly gen component",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "component",
+      "type": "string",
+      "required": true,
+      "default": ""
+     }
+    ]
    }
   },
   {
@@ -324,6 +620,10 @@
     "generate_resource",
     "generate resource"
    ],
+   "asks": [
+    "what does generate_resource do",
+    "que hace generate_resource"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -331,11 +631,89 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "generate_resource"
+   },
+   "data": {
+    "group": "generate",
+    "runs": "dragonfly gen resource",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "component",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "from_json",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "from_spec",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "fields",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "source",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "path",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "actions",
+      "type": "any",
+      "required": false,
+      "default": "null"
+     },
+     {
+      "name": "screen",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "plural",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "dry_run",
+      "type": "boolean",
+      "required": false,
+      "default": "false"
+     }
+    ]
    }
   },
   {
@@ -357,6 +735,10 @@
     "generate_screen",
     "generate screen"
    ],
+   "asks": [
+    "what does generate_screen do",
+    "que hace generate_screen"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -364,11 +746,41 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "generate_screen"
+   },
+   "data": {
+    "group": "generate",
+    "runs": "dragonfly make screen",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "component",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "screen",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "route",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
@@ -392,6 +804,10 @@
     "generate_usecase",
     "generate usecase"
    ],
+   "asks": [
+    "what does generate_usecase do",
+    "que hace generate_usecase"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -399,11 +815,106 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "generate_usecase"
+   },
+   "data": {
+    "group": "generate",
+    "runs": "dragonfly gen usecase",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "component",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "calls",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "route",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "dry_run",
+      "type": "boolean",
+      "required": false,
+      "default": "false"
+     }
+    ]
+   }
+  },
+  {
+   "id": "mcp:graph_answer",
+   "type": "mcp",
+   "title": "`graph_answer` — a tool of the Nuclear MCP server",
+   "summary": "The exact answer to a question that has one (every command of a tool, the tools of this server and their parameters, the commands that write a kind, a diagnostic by its code, the stages of the Loop, the members of a base type, a version...): the rows of the graph's database, whole, never recalled; then the cards the shelves answer by meaning.",
+   "body": [
+    "The exact answer to a question that has one (every command of a tool, the tools of this server and their parameters, the commands that write a kind, a diagnostic by its code, the stages of the Loop, the members of a base type, a version...): the rows of the graph's database, whole, never recalled; then the cards the shelves answer by meaning. Prefer it to graph_search for \"which\", \"list\", \"what are the\" questions. platform: backend, mobile or web.",
+    "",
+    "Parameters:",
+    "",
+    "- `question`: string",
+    "- `platform`: string = `\"\"`"
+   ],
+   "keys": [
+    "graph_answer",
+    "graph answer"
+   ],
+   "asks": [
+    "what does graph_answer do",
+    "que hace graph_answer"
+   ],
+   "links": [
+    {
+     "rel": "part-of",
+     "to": "mcp:server"
+    }
+   ],
+   "sources": [
+    "nuclear-graph/mcp_server.nuc"
+   ],
+   "meta": {
+    "tool": "mcp",
+    "name": "graph_answer"
+   },
+   "data": {
+    "group": "graph",
+    "runs": "",
+    "params": [
+     {
+      "name": "question",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "platform",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
@@ -422,6 +933,10 @@
     "graph_card",
     "graph card"
    ],
+   "asks": [
+    "what does graph_card do",
+    "que hace graph_card"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -429,11 +944,23 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "graph_card"
+   },
+   "data": {
+    "group": "graph",
+    "runs": "",
+    "params": [
+     {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "default": ""
+     }
+    ]
    }
   },
   {
@@ -452,6 +979,10 @@
     "graph_prompt",
     "graph prompt"
    ],
+   "asks": [
+    "what does graph_prompt do",
+    "que hace graph_prompt"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -459,11 +990,23 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "graph_prompt"
+   },
+   "data": {
+    "group": "graph",
+    "runs": "",
+    "params": [
+     {
+      "name": "use_case",
+      "type": "string",
+      "required": true,
+      "default": ""
+     }
+    ]
    }
   },
   {
@@ -485,6 +1028,10 @@
     "graph_remember",
     "graph remember"
    ],
+   "asks": [
+    "what does graph_remember do",
+    "que hace graph_remember"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -492,11 +1039,41 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "graph_remember"
+   },
+   "data": {
+    "group": "graph",
+    "runs": "",
+    "params": [
+     {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "text",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "collection",
+      "type": "string",
+      "required": false,
+      "default": "\"memory\""
+     },
+     {
+      "name": "project",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
@@ -520,6 +1097,10 @@
     "graph_search",
     "graph search"
    ],
+   "asks": [
+    "what does graph_search do",
+    "que hace graph_search"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -527,11 +1108,53 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "graph_search"
+   },
+   "data": {
+    "group": "graph",
+    "runs": "",
+    "params": [
+     {
+      "name": "query",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "shelf",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "k",
+      "type": "integer",
+      "required": false,
+      "default": "5"
+     },
+     {
+      "name": "platform",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "kind",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "type",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
@@ -551,6 +1174,10 @@
     "graph_strategy",
     "graph strategy"
    ],
+   "asks": [
+    "what does graph_strategy do",
+    "que hace graph_strategy"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -558,11 +1185,29 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "graph_strategy"
+   },
+   "data": {
+    "group": "graph",
+    "runs": "",
+    "params": [
+     {
+      "name": "request",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "platform",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
@@ -581,6 +1226,10 @@
     "nuclear_brief",
     "nuclear brief"
    ],
+   "asks": [
+    "what does nuclear_brief do",
+    "que hace nuclear_brief"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -588,11 +1237,23 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "nuclear_brief"
+   },
+   "data": {
+    "group": "nuclear",
+    "runs": "nuclear spec --brief",
+    "params": [
+     {
+      "name": "dialect",
+      "type": "string",
+      "required": false,
+      "default": "\"backend\""
+     }
+    ]
    }
   },
   {
@@ -612,6 +1273,10 @@
     "nuclear_build",
     "nuclear build"
    ],
+   "asks": [
+    "what does nuclear_build do",
+    "que hace nuclear_build"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -619,11 +1284,29 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "nuclear_build"
+   },
+   "data": {
+    "group": "nuclear",
+    "runs": "nuclear build",
+    "params": [
+     {
+      "name": "code",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "dialect",
+      "type": "string",
+      "required": false,
+      "default": "\"backend\""
+     }
+    ]
    }
   },
   {
@@ -644,6 +1327,10 @@
     "nuclear_check",
     "nuclear check"
    ],
+   "asks": [
+    "what does nuclear_check do",
+    "que hace nuclear_check"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -651,11 +1338,35 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "nuclear_check"
+   },
+   "data": {
+    "group": "nuclear",
+    "runs": "nuclear check",
+    "params": [
+     {
+      "name": "code",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "path",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     },
+     {
+      "name": "dialect",
+      "type": "string",
+      "required": false,
+      "default": "\"backend\""
+     }
+    ]
    }
   },
   {
@@ -675,6 +1386,10 @@
     "nuclear_defs",
     "nuclear defs"
    ],
+   "asks": [
+    "what does nuclear_defs do",
+    "que hace nuclear_defs"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -682,11 +1397,29 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "nuclear_defs"
+   },
+   "data": {
+    "group": "nuclear",
+    "runs": "nuclear defs show",
+    "params": [
+     {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "dialect",
+      "type": "string",
+      "required": true,
+      "default": ""
+     }
+    ]
    }
   },
   {
@@ -705,6 +1438,10 @@
     "nuclear_fmt",
     "nuclear fmt"
    ],
+   "asks": [
+    "what does nuclear_fmt do",
+    "que hace nuclear_fmt"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -712,11 +1449,23 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "nuclear_fmt"
+   },
+   "data": {
+    "group": "nuclear",
+    "runs": "nuclear fmt",
+    "params": [
+     {
+      "name": "code",
+      "type": "string",
+      "required": true,
+      "default": ""
+     }
+    ]
    }
   },
   {
@@ -736,6 +1485,10 @@
     "nuclear_help",
     "nuclear help"
    ],
+   "asks": [
+    "what does nuclear_help do",
+    "que hace nuclear_help"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -743,11 +1496,29 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "nuclear_help"
+   },
+   "data": {
+    "group": "nuclear",
+    "runs": "nuclear help",
+    "params": [
+     {
+      "name": "word",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "dialect",
+      "type": "string",
+      "required": false,
+      "default": "\"\""
+     }
+    ]
    }
   },
   {
@@ -766,6 +1537,10 @@
     "project_inspect",
     "project inspect"
    ],
+   "asks": [
+    "what does project_inspect do",
+    "que hace project_inspect"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -773,24 +1548,36 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "project_inspect"
+   },
+   "data": {
+    "group": "project",
+    "runs": "dragonfly gen inspect",
+    "params": [
+     {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "default": ""
+     }
+    ]
    }
   },
   {
    "id": "mcp:server",
    "type": "mcp",
    "title": "The Nuclear MCP server: its tools and how a client must work with them",
-   "summary": "`nuclear-graph mcp` speaks the Model Context Protocol over stdio and gives an AI client 26 tools: the Smart Graph, the compiler, the dragonfly commands, the generators, the internet and the local developer.",
+   "summary": "`nuclear-graph mcp` speaks the Model Context Protocol over stdio and gives an AI client 27 tools: the Smart Graph, the compiler, the dragonfly commands, the generators, the internet and the local developer.",
    "body": [
     "The instructions every client receives:",
     "",
     "NuclearLang and Dragonfly. The generators write the standard code, the local Nuclear Developer writes what is left; you lead, validate and correct. For any request, first call graph_strategy with the user's own words: it answers which kind of request it is (a whole system, one screen, a rename, a failing test...) and the plan of that kind; follow that plan. For a feature: 0) project_inspect the project; for every resource the spec names (a model and what is done with it: list, get, search, create, update, delete), call generate_resource. Its fields come from the API's answer (from_json with the url or a file: api_inspect shows its shape first), from the spec (from_spec: its example answer or its Key | Type table) or from fields; when neither the spec nor the API gives them, look up the API's documentation with web_search and web_read, and if it is still unclear ask the user, never guess. A use case that only calls a repository method is generate_usecase with calls. Then give developer_task only what the generators did not write (a use case with its own rules, a view's details), and wire each use case it wrote with generate_usecase (its alias in the facade, its route). For any task that writes or changes .nuc (a feature, a bug, a refactor, tests): 1) call developer_task first with the project folder, a title, the description and the acceptance criteria: the local agents plan, write the tests first, write the code, run the tests and the security review, and document everything they did in a journal it returns; 2) read the journal, then validate: nuclear_check of the project must say ok and dragonfly test must pass; 3) correct only what failed or is wrong, never rewrite what passed; before writing .nuc read nuclear_brief(<platform>: backend, mobile or web) and search the graph instead of guessing; If the run failed, read its 'Why it failed' (the local diagnoser): when the cause was passing or you fixed it, call developer_retry instead of starting again. 4) call developer_review with the run, what you corrected and why, and the corrected files, so the journal keeps your review and the local developer learns from it. Write the code yourself only when developer_task cannot run (the local developer is not running) and say so.",
     "",
-    "Its tools: `graph_search`, `graph_strategy`, `graph_card`, `graph_prompt`, `graph_remember`, `nuclear_check`, `nuclear_build`, `nuclear_help`, `nuclear_brief`, `nuclear_fmt`, `nuclear_defs`, `dragonfly`, `project_inspect`, `generate_component`, `generate_resource`, `generate_usecase`, `generate_screen`, `api_inspect`, `web_search`, `web_read`, `developer_task`, `developer_retry`, `developer_review`, `developer_code`, `developer_test`, `developer_security`."
+    "Its tools: `graph_search`, `graph_answer`, `graph_strategy`, `graph_card`, `graph_prompt`, `graph_remember`, `nuclear_check`, `nuclear_build`, `nuclear_help`, `nuclear_brief`, `nuclear_fmt`, `nuclear_defs`, `dragonfly`, `project_inspect`, `generate_component`, `generate_resource`, `generate_usecase`, `generate_screen`, `api_inspect`, `web_search`, `web_read`, `developer_task`, `developer_retry`, `developer_review`, `developer_code`, `developer_test`, `developer_security`."
    ],
    "keys": [
     "mcp",
@@ -799,7 +1586,7 @@
     "model context protocol"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
@@ -822,6 +1609,10 @@
     "web_read",
     "web read"
    ],
+   "asks": [
+    "what does web_read do",
+    "que hace web_read"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -829,11 +1620,23 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "web_read"
+   },
+   "data": {
+    "group": "web",
+    "runs": "",
+    "params": [
+     {
+      "name": "url",
+      "type": "string",
+      "required": true,
+      "default": ""
+     }
+    ]
    }
   },
   {
@@ -853,6 +1656,10 @@
     "web_search",
     "web search"
    ],
+   "asks": [
+    "what does web_search do",
+    "que hace web_search"
+   ],
    "links": [
     {
      "rel": "part-of",
@@ -860,11 +1667,29 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "tool": "mcp",
     "name": "web_search"
+   },
+   "data": {
+    "group": "web",
+    "runs": "",
+    "params": [
+     {
+      "name": "query",
+      "type": "string",
+      "required": true,
+      "default": ""
+     },
+     {
+      "name": "pages",
+      "type": "integer",
+      "required": false,
+      "default": "2"
+     }
+    ]
    }
   }
  ]

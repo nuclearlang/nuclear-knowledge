@@ -80,7 +80,7 @@
    ],
    "sources": [
     "docs/ai/loop.md#3. Follow the run",
-    "nuclear-graph/src/nuclear_graph/prompts/feature.md"
+    "nuclear-graph/prompts/feature.md"
    ],
    "meta": {
     "use_case": "feature",
@@ -159,7 +159,7 @@
    ],
    "sources": [
     "nuclear-developer/components/developer/ai/planner.nuc",
-    "nuclear-graph/src/nuclear_graph/prompts/plan.md"
+    "nuclear-graph/prompts/plan.md"
    ],
    "meta": {
     "use_case": "plan",
@@ -548,8 +548,8 @@
     }
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/web.py",
-    "nuclear-graph/src/nuclear_graph/mcp_server.py"
+    "nuclear-graph/web.nuc",
+    "nuclear-graph/mcp_server.nuc"
    ],
    "meta": {
     "use_case": "feature",

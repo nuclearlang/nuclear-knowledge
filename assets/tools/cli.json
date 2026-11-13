@@ -51,6 +51,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "add"
+   },
+   "data": {
+    "command": "dragonfly add",
+    "entries": [
+     {
+      "what": "add",
+      "usage": "dragonfly add <folder>",
+      "alias": "",
+      "note": "",
+      "does": "Install a kind package (kinds/<name>/, ADR-0095) for every project"
+     }
+    ]
    }
   },
   {
@@ -72,6 +84,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "agent"
+   },
+   "data": {
+    "command": "dragonfly agent",
+    "entries": [
+     {
+      "what": "agent",
+      "usage": "dragonfly agent init",
+      "alias": "",
+      "note": "",
+      "does": "AGENTS.md, CLAUDE.md, a Cursor rule and a check hook for AI agents"
+     }
+    ]
    }
   },
   {
@@ -93,6 +117,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "analyze"
+   },
+   "data": {
+    "command": "dragonfly analyze",
+    "entries": [
+     {
+      "what": "analyze",
+      "usage": "dragonfly analyze",
+      "alias": "",
+      "note": "",
+      "does": "Build and run flutter analyze on the generated app"
+     }
+    ]
    }
   },
   {
@@ -116,6 +152,25 @@
    "meta": {
     "tool": "dragonfly",
     "name": "build"
+   },
+   "data": {
+    "command": "dragonfly build",
+    "entries": [
+     {
+      "what": "build",
+      "usage": "dragonfly build [apk|appbundle|ios|ipa|web|macos|linux|windows] [-- <flutter build args>]",
+      "alias": "",
+      "note": "",
+      "does": "Transpile, pub get and build_runner (and flutter build <target>)"
+     },
+     {
+      "what": "build",
+      "usage": "dragonfly build",
+      "alias": "",
+      "note": "",
+      "does": "Transpile (nuclear build .)"
+     }
+    ]
    }
   },
   {
@@ -137,6 +192,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "check"
+   },
+   "data": {
+    "command": "dragonfly check",
+    "entries": [
+     {
+      "what": "check",
+      "usage": "dragonfly check [--json]",
+      "alias": "",
+      "note": "",
+      "does": "Errors and architecture rules of every .nuc (no Flutter needed)"
+     }
+    ]
    }
   },
   {
@@ -158,6 +225,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "clean"
+   },
+   "data": {
+    "command": "dragonfly clean",
+    "entries": [
+     {
+      "what": "clean",
+      "usage": "dragonfly clean",
+      "alias": "",
+      "note": "",
+      "does": "Flutter clean in the app"
+     }
+    ]
    }
   },
   {
@@ -179,6 +258,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "code"
+   },
+   "data": {
+    "command": "dragonfly code",
+    "entries": [
+     {
+      "what": "code",
+      "usage": "dragonfly code",
+      "alias": "",
+      "note": "",
+      "does": "Open the project in VS Code (Flutter run, debug, devices, hot reload)"
+     }
+    ]
    }
   },
   {
@@ -200,6 +291,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "credits"
+   },
+   "data": {
+    "command": "dragonfly credits",
+    "entries": [
+     {
+      "what": "credits",
+      "usage": "dragonfly credits | author",
+      "alias": "",
+      "note": "",
+      "does": "The intro animation, the author and the repository"
+     }
+    ]
    }
   },
   {
@@ -223,6 +326,25 @@
    "meta": {
     "tool": "dragonfly",
     "name": "device"
+   },
+   "data": {
+    "command": "dragonfly device",
+    "entries": [
+     {
+      "what": "device",
+      "usage": "dragonfly device [<device>] [--landscape] [-- <args>]",
+      "alias": "dv",
+      "note": "",
+      "does": "A test device in its own window, like an emulator (pixel7, iphone14pro, ipadair...; several at once: device 1, 2, 3)"
+     },
+     {
+      "what": "device",
+      "usage": "dragonfly device list",
+      "alias": "",
+      "note": "",
+      "does": "The running devices and the devices it can be"
+     }
+    ]
    }
   },
   {
@@ -244,6 +366,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "doctor"
+   },
+   "data": {
+    "command": "dragonfly doctor",
+    "entries": [
+     {
+      "what": "doctor",
+      "usage": "dragonfly doctor",
+      "alias": "",
+      "note": "",
+      "does": "What NuclearLang and Dragonfly need: CLIs, dialect, package, Flutter, VS Code"
+     }
+    ]
    }
   },
   {
@@ -265,6 +399,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "explain"
+   },
+   "data": {
+    "command": "dragonfly explain",
+    "entries": [
+     {
+      "what": "explain",
+      "usage": "dragonfly explain [--json]",
+      "alias": "",
+      "note": "",
+      "does": "A run-time error or a test's output (stdin) at its .nuc lines, explained"
+     }
+    ]
    }
   },
   {
@@ -296,6 +442,39 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen"
+   },
+   "data": {
+    "command": "dragonfly gen",
+    "entries": [
+     {
+      "what": "inspect",
+      "usage": "dragonfly gen inspect",
+      "alias": "",
+      "note": "",
+      "does": "What the project has (components, declarations by kind), as JSON"
+     },
+     {
+      "what": "component",
+      "usage": "dragonfly gen component <component>",
+      "alias": "",
+      "note": "",
+      "does": "A component and its facade"
+     },
+     {
+      "what": "resource",
+      "usage": "dragonfly gen resource <component> <Name>",
+      "alias": "",
+      "note": "",
+      "does": "Models, repository, a use case per action, the facade's aliases, the controller (backend) or the screen (mobile, web), the tests --from-json <file|url> | --from-spec <spec.md> | --fields \"id:int name:string origin:Origin?\" [--source rest[:<base url>]|db] [--path p] [--actions list,get,search,create,update,delete] (dragonfly gen alone prints every option)"
+     },
+     {
+      "what": "usecase",
+      "usage": "dragonfly gen usecase <component> <Name>",
+      "alias": "",
+      "note": "",
+      "does": "A use case wired into its component: its alias in the facade and, with --route, its route in the controller (backend) [--calls <Repository>.<method>] [--route \"POST orders/{id}/cancel\"] [--dry-run]"
+     }
+    ]
    }
   },
   {
@@ -318,6 +497,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen component"
+   },
+   "data": {
+    "command": "dragonfly gen component",
+    "entries": [
+     {
+      "what": "component",
+      "usage": "dragonfly gen component <component>",
+      "alias": "",
+      "note": "",
+      "does": "A component and its facade"
+     }
+    ]
    }
   },
   {
@@ -340,6 +531,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen inspect"
+   },
+   "data": {
+    "command": "dragonfly gen inspect",
+    "entries": [
+     {
+      "what": "inspect",
+      "usage": "dragonfly gen inspect",
+      "alias": "",
+      "note": "",
+      "does": "What the project has (components, declarations by kind), as JSON"
+     }
+    ]
    }
   },
   {
@@ -366,6 +569,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen resource"
+   },
+   "data": {
+    "command": "dragonfly gen resource",
+    "entries": [
+     {
+      "what": "resource",
+      "usage": "dragonfly gen resource <component> <Name>",
+      "alias": "",
+      "note": "",
+      "does": "Models, repository, a use case per action, the facade's aliases, the controller (backend) or the screen (mobile, web), the tests --from-json <file|url> | --from-spec <spec.md> | --fields \"id:int name:string origin:Origin?\" [--source rest[:<base url>]|db] [--path p] [--actions list,get,search,create,update,delete] (dragonfly gen alone prints every option)"
+     }
+    ]
    }
   },
   {
@@ -390,6 +605,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "gen usecase"
+   },
+   "data": {
+    "command": "dragonfly gen usecase",
+    "entries": [
+     {
+      "what": "usecase",
+      "usage": "dragonfly gen usecase <component> <Name>",
+      "alias": "",
+      "note": "",
+      "does": "A use case wired into its component: its alias in the facade and, with --route, its route in the controller (backend) [--calls <Repository>.<method>] [--route \"POST orders/{id}/cancel\"] [--dry-run]"
+     }
+    ]
    }
   },
   {
@@ -411,6 +638,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "install"
+   },
+   "data": {
+    "command": "dragonfly install",
+    "entries": [
+     {
+      "what": "install",
+      "usage": "dragonfly install",
+      "alias": "",
+      "note": "",
+      "does": "The runtime and the app's packages (a venv, npm install)"
+     }
+    ]
    }
   },
   {
@@ -453,6 +692,144 @@
    "meta": {
     "tool": "dragonfly",
     "name": "make"
+   },
+   "data": {
+    "command": "dragonfly make",
+    "entries": [
+     {
+      "what": "component",
+      "usage": "dragonfly make component <component>",
+      "alias": "c",
+      "note": "",
+      "does": "Facade + an example use case"
+     },
+     {
+      "what": "screen",
+      "usage": "dragonfly make screen <component> <screen>",
+      "alias": "s",
+      "note": "",
+      "does": "Screen + state manager + state model [--manager|-m Name] [--state|-st Name] [--route /path]"
+     },
+     {
+      "what": "statemanager",
+      "usage": "dragonfly make statemanager <component> <screen> <name>",
+      "alias": "sm",
+      "note": "",
+      "does": "A state manager (Cubit) + its state model, in a screen"
+     },
+     {
+      "what": "statemodel",
+      "usage": "dragonfly make statemodel <component> <screen> <name>",
+      "alias": "smo",
+      "note": "",
+      "does": "A state model, in a screen"
+     },
+     {
+      "what": "stateful",
+      "usage": "dragonfly make stateful <name>",
+      "alias": "sf",
+      "note": "",
+      "does": "A stateful widget in shared/widgets"
+     },
+     {
+      "what": "usecase",
+      "usage": "dragonfly make usecase <component> <name>",
+      "alias": "uc",
+      "note": "",
+      "does": "A use case"
+     },
+     {
+      "what": "repository",
+      "usage": "dragonfly make repository <component> <name>",
+      "alias": "r",
+      "note": "",
+      "does": "A repository and its model"
+     },
+     {
+      "what": "model",
+      "usage": "dragonfly make model <component> <name>",
+      "alias": "mo",
+      "note": "",
+      "does": "A model"
+     },
+     {
+      "what": "service",
+      "usage": "dragonfly make service <component> <name>",
+      "alias": "sv",
+      "note": "",
+      "does": "A service"
+     },
+     {
+      "what": "aggregate",
+      "usage": "dragonfly make aggregate <component> <name>",
+      "alias": "ag",
+      "note": "",
+      "does": "An aggregate"
+     },
+     {
+      "what": "config",
+      "usage": "dragonfly make config <component>",
+      "alias": "cf",
+      "note": "",
+      "does": "The config of a component"
+     },
+     {
+      "what": "test",
+      "usage": "dragonfly make test <component>",
+      "alias": "t",
+      "note": "",
+      "does": "Test/<component>_test.nuc"
+     },
+     {
+      "what": "event",
+      "usage": "dragonfly make event <name>",
+      "alias": "e",
+      "note": "",
+      "does": "A global event in shared/events"
+     },
+     {
+      "what": "widget",
+      "usage": "dragonfly make widget <name>",
+      "alias": "w",
+      "note": "",
+      "does": "A shared widget in shared/widgets"
+     },
+     {
+      "what": "guard",
+      "usage": "dragonfly make guard <name>",
+      "alias": "gd",
+      "note": "",
+      "does": "An access check (canActivate) in shared/guards"
+     },
+     {
+      "what": "global",
+      "usage": "dragonfly make global <name>",
+      "alias": "gl",
+      "note": "",
+      "does": "A global component (@on an event) + its event"
+     },
+     {
+      "what": "page",
+      "usage": "dragonfly make page <name> [--route /x|--not-found]",
+      "alias": "pg",
+      "note": "",
+      "does": "A screen shared by the app in shared/screens"
+     },
+     {
+      "what": "integration",
+      "usage": "dragonfly make integration <name>",
+      "alias": "it",
+      "note": "",
+      "does": "An integration test in integration_test/"
+     },
+     {
+      "what": "kind",
+      "usage": "dragonfly make <kind> <component> <Name> [--screen <screen>]",
+      "alias": "",
+      "note": "backend and web projects",
+      "does": "Any kind of the platform, at its place (`nuclear help layout --platform <p>`), from the platform's skeleton (e.g. `make entity books Book`)"
+     }
+    ]
    }
   },
   {
@@ -475,6 +852,25 @@
    "meta": {
     "tool": "dragonfly",
     "name": "migrate"
+   },
+   "data": {
+    "command": "dragonfly migrate",
+    "entries": [
+     {
+      "what": "migrate",
+      "usage": "dragonfly migrate make <message>",
+      "alias": "",
+      "note": "",
+      "does": "One migration of the database: the entities minus the last one"
+     },
+     {
+      "what": "migrate",
+      "usage": "dragonfly migrate [up] | migrate down",
+      "alias": "",
+      "note": "",
+      "does": "Applies the pending migrations, or reverts the last one"
+     }
+    ]
    }
   },
   {
@@ -497,6 +893,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "new"
+   },
+   "data": {
+    "command": "dragonfly new",
+    "entries": [
+     {
+      "what": "new",
+      "usage": "dragonfly new <name> [-p mobile] [-d flutter]",
+      "alias": "n",
+      "note": "",
+      "does": "New project of a platform (mobile: flutter; backend: fastapi, nestjs; web: react): only .nuc files (+ the Flutter app in build/app for mobile)"
+     }
+    ]
    }
   },
   {
@@ -525,6 +933,46 @@
    "meta": {
     "tool": "dragonfly",
     "name": "packages"
+   },
+   "data": {
+    "command": "dragonfly packages",
+    "entries": [
+     {
+      "what": "flutter",
+      "usage": "dragonfly flutter add <package>[:version]... [--dev]",
+      "alias": "",
+      "note": "",
+      "does": "Add a package to config.nuc and the app, and generate its type definitions (cached in ~/.cache/nuclearlang/defs)"
+     },
+     {
+      "what": "flutter",
+      "usage": "dragonfly flutter remove <package>...",
+      "alias": "",
+      "note": "",
+      "does": "Remove it from config.nuc and the app (its definitions stay cached)"
+     },
+     {
+      "what": "pub",
+      "usage": "dragonfly pub get|upgrade|outdated",
+      "alias": "",
+      "note": "",
+      "does": "(pub add|remove = flutter add|remove)"
+     },
+     {
+      "what": "devices",
+      "usage": "dragonfly devices | emulators | logs | install | screenshot | attach | gen-l10n",
+      "alias": "",
+      "note": "",
+      "does": ""
+     },
+     {
+      "what": "flutter",
+      "usage": "dragonfly flutter <any flutter command>",
+      "alias": "",
+      "note": "",
+      "does": "Run any flutter command inside the app"
+     }
+    ]
    }
   },
   {
@@ -548,6 +996,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "repair"
+   },
+   "data": {
+    "command": "dragonfly repair",
+    "entries": [
+     {
+      "what": "repair",
+      "usage": "dragonfly repair",
+      "alias": "",
+      "note": "",
+      "does": "When the build or the app fails: build, then pub get + build_runner from scratch, then flutter clean + everything again, until flutter analyze finds no errors (exit 2: the .nuc have errors)"
+     }
+    ]
    }
   },
   {
@@ -570,6 +1030,25 @@
    "meta": {
     "tool": "dragonfly",
     "name": "run"
+   },
+   "data": {
+    "command": "dragonfly run",
+    "entries": [
+     {
+      "what": "run",
+      "usage": "dragonfly run [-- <flutter run args>]",
+      "alias": "",
+      "note": "",
+      "does": "Build and run on a device (flutter run, -d <device>)"
+     },
+     {
+      "what": "run",
+      "usage": "dragonfly run [-- <args>]",
+      "alias": "",
+      "note": "",
+      "does": "The server (uvicorn, npm run dev)"
+     }
+    ]
    }
   },
   {
@@ -591,6 +1070,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "setup"
+   },
+   "data": {
+    "command": "dragonfly setup",
+    "entries": [
+     {
+      "what": "setup",
+      "usage": "dragonfly setup [--dir ~/develop]",
+      "alias": "",
+      "note": "",
+      "does": "Install Flutter step by step (system packages, SDK, PATH)"
+     }
+    ]
    }
   },
   {
@@ -613,6 +1104,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "terminal-device"
+   },
+   "data": {
+    "command": "dragonfly terminal-device",
+    "entries": [
+     {
+      "what": "terminal-device",
+      "usage": "dragonfly terminal-device [<device>] [--render kitty|sixel|text|blocks]",
+      "alias": "",
+      "note": "",
+      "does": "The Dragonfly Terminal device: the app inside this terminal"
+     }
+    ]
    }
   },
   {
@@ -635,6 +1138,25 @@
    "meta": {
     "tool": "dragonfly",
     "name": "test"
+   },
+   "data": {
+    "command": "dragonfly test",
+    "entries": [
+     {
+      "what": "test",
+      "usage": "dragonfly test [--integration] [-- <args>]",
+      "alias": "",
+      "note": "",
+      "does": "Build and run test/, or integration_test/ on a device"
+     },
+     {
+      "what": "test",
+      "usage": "dragonfly test [-- <args>]",
+      "alias": "",
+      "note": "",
+      "does": "The tests written in Nuclear (pytest, node:test)"
+     }
+    ]
    }
   },
   {
@@ -656,6 +1178,18 @@
    "meta": {
     "tool": "dragonfly",
     "name": "watch"
+   },
+   "data": {
+    "command": "dragonfly watch",
+    "entries": [
+     {
+      "what": "watch",
+      "usage": "dragonfly watch",
+      "alias": "",
+      "note": "",
+      "does": "Transpile every time a .nuc changes (VS Code starts it by itself)"
+     }
+    ]
    }
   },
   {
@@ -739,25 +1273,29 @@
    "id": "tool:nuclear-graph",
    "type": "cli",
    "title": "`nuclear-graph` — run, fill and guard the Nuclear Smart Graph",
-   "summary": "Runs the graph's server and its MCP server, builds and checks the knowledge base, ingests it, searches it and decides which programs may read it. Commands: serve, mcp, knowledge, ingest, search, strategy, card, stats, connect, allow, deny, web-key, requests, revoke.",
+   "summary": "Runs the graph's server and its MCP server, builds and checks the knowledge base, ingests it, searches it, answers the exact questions and decides which programs may read it. Commands: serve, mcp, knowledge, ingest, search, answer, strategy, card, stats, connect, allow, deny, web-key, requests, revoke.",
    "body": [
     "```text",
     "usage: nuclear-graph [-h]",
-    "                     {serve,mcp,knowledge,ingest,search,strategy,card,stats,connect,allow,deny,web-key,requests,revoke} ...",
+    "                     {serve,mcp,knowledge,ingest,search,answer,strategy,card,stats,connect,allow,deny,web-key,requests,revoke} ...",
     "",
     "`nuclear-graph`: run, fill and guard the Nuclear Smart Graph.",
     "",
     "positional arguments:",
-    "  {serve,mcp,knowledge,ingest,search,strategy,card,stats,connect,allow,deny,web-key,requests,revoke}",
+    "  {serve,mcp,knowledge,ingest,search,answer,strategy,card,stats,connect,allow,deny,web-key,requests,revoke}",
     "    serve               run the graph on 127.0.0.1 (NUCLEAR_GRAPH_PORT, default 7878)",
     "    mcp                 the MCP server on stdio (for Claude Code, Codex, Cursor...)",
     "    knowledge           the knowledge base folder (nuclear-developer/data): build its assets from",
     "                        the working tree, check that they are what the tree gives now, record the",
-    "                        review of a hand-written row, or ask the running graph the questions of",
-    "                        questions.toml and see that each finds its row",
+    "                        review of a hand-written row, ask the running graph the questions of",
+    "                        questions.toml and see that each finds its row, or compile every Nuclear",
+    "                        example of the hand-written rows",
     "    ingest              make the knowledge base folder what the graph knows (only what changed is",
     "                        embedded again)",
     "    search              search the graph: by meaning and by exact name (a code, a command, a kind)",
+    "    answer              what the graph gives for a question before a model answers it: the exact",
+    "                        facts of every question with one right answer it is (from the graph's",
+    "                        database), then the cards the shelves answer by meaning",
     "    strategy            which kind of request a text is (a whole system, one screen, a rename, a",
     "                        failing test...) and its plan",
     "    card                one row of the knowledge base by its id (error:N0114,",
@@ -782,7 +1320,7 @@
     "graph cli"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
@@ -803,11 +1341,42 @@
     "nuclear-graph allow"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "allow"
+   },
+   "data": {
+    "command": "nuclear-graph allow",
+    "entries": []
+   }
+  },
+  {
+   "id": "tool:nuclear-graph.answer",
+   "type": "cli",
+   "title": "`nuclear-graph answer` — What the graph gives for a question before a model answers it: the exact facts of every question…",
+   "summary": "What the graph gives for a question before a model answers it: the exact facts of every question with one right answer it is (from the graph's database), then the cards the shelves answer by meaning",
+   "body": [
+    "```text",
+    "nuclear-graph answer              what the graph gives for a question before a model answers it: the exact",
+    "                        facts of every question with one right answer it is (from the graph's",
+    "                        database), then the cards the shelves answer by meaning",
+    "```"
+   ],
+   "keys": [
+    "nuclear-graph answer"
+   ],
+   "sources": [
+    "nuclear-graph/cli.nuc"
+   ],
+   "meta": {
+    "tool": "nuclear-graph",
+    "name": "answer"
+   },
+   "data": {
+    "command": "nuclear-graph answer",
+    "entries": []
    }
   },
   {
@@ -825,11 +1394,15 @@
     "nuclear-graph card"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "card"
+   },
+   "data": {
+    "command": "nuclear-graph card",
+    "entries": []
    }
   },
   {
@@ -846,11 +1419,15 @@
     "nuclear-graph connect"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "connect"
+   },
+   "data": {
+    "command": "nuclear-graph connect",
+    "entries": []
    }
   },
   {
@@ -867,11 +1444,15 @@
     "nuclear-graph deny"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "deny"
+   },
+   "data": {
+    "command": "nuclear-graph deny",
+    "entries": []
    }
   },
   {
@@ -889,35 +1470,44 @@
     "nuclear-graph ingest"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "ingest"
+   },
+   "data": {
+    "command": "nuclear-graph ingest",
+    "entries": []
    }
   },
   {
    "id": "tool:nuclear-graph.knowledge",
    "type": "cli",
    "title": "`nuclear-graph knowledge` — The knowledge base folder (nuclear-developer/data): build its assets from the working tree, check…",
-   "summary": "The knowledge base folder (nuclear-developer/data): build its assets from the working tree, check that they are what the tree gives now, record the review of a hand-written row, or ask the running graph the questions of questions.toml and see that each finds its row",
+   "summary": "The knowledge base folder (nuclear-developer/data): build its assets from the working tree, check that they are what the tree gives now, record the review of a hand-written row, ask the running graph the questions of questions.toml and see that each finds its row, or compile every Nuclear example of the hand-written rows",
    "body": [
     "```text",
     "nuclear-graph knowledge           the knowledge base folder (nuclear-developer/data): build its assets from",
     "                        the working tree, check that they are what the tree gives now, record the",
-    "                        review of a hand-written row, or ask the running graph the questions of",
-    "                        questions.toml and see that each finds its row",
+    "                        review of a hand-written row, ask the running graph the questions of",
+    "                        questions.toml and see that each finds its row, or compile every Nuclear",
+    "                        example of the hand-written rows",
     "```"
    ],
    "keys": [
     "nuclear-graph knowledge"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "knowledge"
+   },
+   "data": {
+    "command": "nuclear-graph knowledge",
+    "entries": []
    }
   },
   {
@@ -934,11 +1524,15 @@
     "nuclear-graph mcp"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "mcp"
+   },
+   "data": {
+    "command": "nuclear-graph mcp",
+    "entries": []
    }
   },
   {
@@ -955,11 +1549,15 @@
     "nuclear-graph requests"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "requests"
+   },
+   "data": {
+    "command": "nuclear-graph requests",
+    "entries": []
    }
   },
   {
@@ -976,11 +1574,15 @@
     "nuclear-graph revoke"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "revoke"
+   },
+   "data": {
+    "command": "nuclear-graph revoke",
+    "entries": []
    }
   },
   {
@@ -997,11 +1599,15 @@
     "nuclear-graph search"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "search"
+   },
+   "data": {
+    "command": "nuclear-graph search",
+    "entries": []
    }
   },
   {
@@ -1018,11 +1624,15 @@
     "nuclear-graph serve"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "serve"
+   },
+   "data": {
+    "command": "nuclear-graph serve",
+    "entries": []
    }
   },
   {
@@ -1040,11 +1650,15 @@
     "nuclear-graph stats"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "stats"
+   },
+   "data": {
+    "command": "nuclear-graph stats",
+    "entries": []
    }
   },
   {
@@ -1062,11 +1676,15 @@
     "nuclear-graph strategy"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "strategy"
+   },
+   "data": {
+    "command": "nuclear-graph strategy",
+    "entries": []
    }
   },
   {
@@ -1084,18 +1702,22 @@
     "nuclear-graph web-key"
    ],
    "sources": [
-    "nuclear-graph/src/nuclear_graph/cli.py"
+    "nuclear-graph/cli.nuc"
    ],
    "meta": {
     "tool": "nuclear-graph",
     "name": "web-key"
+   },
+   "data": {
+    "command": "nuclear-graph web-key",
+    "entries": []
    }
   },
   {
    "id": "tool:nuclear-loop",
    "type": "cli",
    "title": "`nuclear-loop` — the Nuclear Loop without the editor",
-   "summary": "Runs a spec through the pipeline (generate, plan, tests first, code, verification, security, artifacts, deploy), retries a failed run and exports the CI file.",
+   "summary": "Runs a spec through the pipeline (generate, plan, tests first, code, verification, security, artifacts, deploy), retries a run from any of its steps or from scratch, and exports the CI file.",
    "body": [
     "```text",
     "nuclear-loop — the Nuclear Loop without the editor",
@@ -1103,10 +1725,14 @@
     "  nuclear-loop run [spec.md] [--lead local|claude]   spec → generate → plan → tests → code → verify → security →",
     "                                                     artifacts → deploy",
     "                                                     (no file: the spec of specs/ changed last)",
-    "  nuclear-loop retry <run> [--from <stage>]          a failed run again from the step that failed (the steps that",
-    "                                                     passed are kept); --from restarts that whole stage;",
-    "                                                     calls to the local agents already retry by themselves with",
-    "                                                     exponential backoff (.nuclear/loop.json \"retry\")",
+    "  nuclear-loop retry <run> [--from <stage> | --step <id>]",
+    "                                                     a run again from the step that failed (the steps that passed are",
+    "                                                     kept); --from runs that whole stage again; --step runs that step",
+    "                                                     (`code-3`: passed or failed) and every step after it. What the",
+    "                                                     steps left out wrote is undone first. Calls to the local agents",
+    "                                                     already retry by themselves (.nuclear/loop.json \"retry\")",
+    "  nuclear-loop restart <run>                         the whole pipeline again from the specification: every file the",
+    "                                                     run wrote goes back to what it was, then every stage runs",
     "  nuclear-loop ci [check|test|security|artifacts|deploy ...]   the commands of .nuclear/loop.json (all by default)",
     "  nuclear-loop export github|gitlab|bitbucket        writes the CI file that runs `nuclear-loop ci`",
     "  nuclear-loop runs                                  the runs kept in .nuclear/loop/runs",
@@ -1155,6 +1781,18 @@
    "meta": {
     "tool": "nuclear-loop",
     "name": "ci"
+   },
+   "data": {
+    "command": "nuclear-loop ci",
+    "entries": [
+     {
+      "what": "ci",
+      "usage": "nuclear-loop ci [check|test|security|artifacts|deploy ...]",
+      "alias": "",
+      "note": "",
+      "does": "The commands of .nuclear/loop.json (all by default)"
+     }
+    ]
    }
   },
   {
@@ -1176,19 +1814,67 @@
    "meta": {
     "tool": "nuclear-loop",
     "name": "export"
+   },
+   "data": {
+    "command": "nuclear-loop export",
+    "entries": [
+     {
+      "what": "export",
+      "usage": "nuclear-loop export github|gitlab|bitbucket",
+      "alias": "",
+      "note": "",
+      "does": "Writes the CI file that runs `nuclear-loop ci`"
+     }
+    ]
+   }
+  },
+  {
+   "id": "tool:nuclear-loop.restart",
+   "type": "cli",
+   "title": "`nuclear-loop restart` — The whole pipeline again from the specification: every file the run wrote goes back to what it…",
+   "summary": "The whole pipeline again from the specification: every file the run wrote goes back to what it was, then every stage runs",
+   "body": [
+    "```text",
+    "  nuclear-loop restart <run>                         the whole pipeline again from the specification: every file the",
+    "                                                     run wrote goes back to what it was, then every stage runs",
+    "```"
+   ],
+   "keys": [
+    "nuclear-loop restart"
+   ],
+   "sources": [
+    "nuclear-vscode/src/loopCli.ts"
+   ],
+   "meta": {
+    "tool": "nuclear-loop",
+    "name": "restart"
+   },
+   "data": {
+    "command": "nuclear-loop restart",
+    "entries": [
+     {
+      "what": "restart",
+      "usage": "nuclear-loop restart <run>",
+      "alias": "",
+      "note": "",
+      "does": "The whole pipeline again from the specification: every file the run wrote goes back to what it was, then every stage runs"
+     }
+    ]
    }
   },
   {
    "id": "tool:nuclear-loop.retry",
    "type": "cli",
-   "title": "`nuclear-loop retry` — A failed run again from the step that failed (the steps that passed are kept); --from restarts…",
-   "summary": "A failed run again from the step that failed (the steps that passed are kept); --from restarts that whole stage; calls to the local agents already retry by themselves with exponential backoff (.nuclear/loop.json \"retry\")",
+   "title": "`nuclear-loop retry` — A run again from the step that failed (the steps that passed are kept); --from runs that whole…",
+   "summary": "A run again from the step that failed (the steps that passed are kept); --from runs that whole stage again; --step runs that step (`code-3`: passed or failed) and every step after it. What the steps left out wrote is undone first. Calls to the local agents already retry by themselves (.nuclear/loop.json \"retry\")",
    "body": [
     "```text",
-    "  nuclear-loop retry <run> [--from <stage>]          a failed run again from the step that failed (the steps that",
-    "                                                     passed are kept); --from restarts that whole stage;",
-    "                                                     calls to the local agents already retry by themselves with",
-    "                                                     exponential backoff (.nuclear/loop.json \"retry\")",
+    "  nuclear-loop retry <run> [--from <stage> | --step <id>]",
+    "                                                     a run again from the step that failed (the steps that passed are",
+    "                                                     kept); --from runs that whole stage again; --step runs that step",
+    "                                                     (`code-3`: passed or failed) and every step after it. What the",
+    "                                                     steps left out wrote is undone first. Calls to the local agents",
+    "                                                     already retry by themselves (.nuclear/loop.json \"retry\")",
     "```"
    ],
    "keys": [
@@ -1200,6 +1886,18 @@
    "meta": {
     "tool": "nuclear-loop",
     "name": "retry"
+   },
+   "data": {
+    "command": "nuclear-loop retry",
+    "entries": [
+     {
+      "what": "retry",
+      "usage": "nuclear-loop retry <run> [--from <stage> | --step <id>]",
+      "alias": "",
+      "note": "",
+      "does": "A run again from the step that failed (the steps that passed are kept); --from runs that whole stage again; --step runs that step (`code-3`: passed or failed) and every step after it. What the steps left out wrote is undone first. Calls to the local agents already retry by themselves (.nuclear/loop.json \"retry\")"
+     }
+    ]
    }
   },
   {
@@ -1223,6 +1921,18 @@
    "meta": {
     "tool": "nuclear-loop",
     "name": "run"
+   },
+   "data": {
+    "command": "nuclear-loop run",
+    "entries": [
+     {
+      "what": "run",
+      "usage": "nuclear-loop run [spec.md] [--lead local|claude]",
+      "alias": "",
+      "note": "",
+      "does": "Spec → generate → plan → tests → code → verify → security → artifacts → deploy (no file: the spec of specs/ changed last)"
+     }
+    ]
    }
   },
   {
@@ -1244,6 +1954,18 @@
    "meta": {
     "tool": "nuclear-loop",
     "name": "runs"
+   },
+   "data": {
+    "command": "nuclear-loop runs",
+    "entries": [
+     {
+      "what": "runs",
+      "usage": "nuclear-loop runs",
+      "alias": "",
+      "note": "",
+      "does": "The runs kept in .nuclear/loop/runs"
+     }
+    ]
    }
   },
   {
@@ -1273,6 +1995,18 @@
    "meta": {
     "tool": "nuclear-loop",
     "name": "setup"
+   },
+   "data": {
+    "command": "nuclear-loop setup",
+    "entries": [
+     {
+      "what": "setup",
+      "usage": "nuclear-loop setup [--profile remote|lite|medium|hard] [--yes] | --status | --remove",
+      "alias": "",
+      "note": "",
+      "does": "The AI services of this machine, step by step: it reads the hardware, suggests a profile (which models are downloaded and how far each works), installs what is missing (uv, Ollama), the Smart Graph and the Nuclear Developer, downloads the models, loads the knowledge base and starts the services, now and at every login (--yes: no questions, the suggested profile; --status: what is installed and running; --remove: takes the services away, Ollama and its models stay)"
+     }
+    ]
    }
   },
   {
@@ -1295,6 +2029,25 @@
    "meta": {
     "tool": "nuclear",
     "name": "agent"
+   },
+   "data": {
+    "command": "nuclear agent",
+    "entries": [
+     {
+      "what": "agent",
+      "usage": "nuclear agent init [--dialect <name>]",
+      "alias": "",
+      "note": "",
+      "does": "AGENTS.md, CLAUDE.md, a Cursor rule and a Claude Code hook for AI agents"
+     },
+     {
+      "what": "agent",
+      "usage": "nuclear agent hook",
+      "alias": "",
+      "note": "",
+      "does": "(the hook: checks the .nuc an agent edited; reads the tool call on stdin)"
+     }
+    ]
    }
   },
   {
@@ -1316,6 +2069,18 @@
    "meta": {
     "tool": "nuclear",
     "name": "ast"
+   },
+   "data": {
+    "command": "nuclear ast",
+    "entries": [
+     {
+      "what": "ast",
+      "usage": "nuclear ast <file.nuc>",
+      "alias": "",
+      "note": "",
+      "does": "Print the syntax tree"
+     }
+    ]
    }
   },
   {
@@ -1338,6 +2103,25 @@
    "meta": {
     "tool": "nuclear",
     "name": "build"
+   },
+   "data": {
+    "command": "nuclear build",
+    "entries": [
+     {
+      "what": "build",
+      "usage": "nuclear build <file.nuc> --dialect <name|path> [-o <out>]",
+      "alias": "",
+      "note": "",
+      "does": "Transpile (prints to stdout without -o)"
+     },
+     {
+      "what": "build",
+      "usage": "nuclear build <folder> [-o <out>]",
+      "alias": "",
+      "note": "",
+      "does": "Transpile a project (folder with nuclear.toml)"
+     }
+    ]
    }
   },
   {
@@ -1360,6 +2144,25 @@
    "meta": {
     "tool": "nuclear",
     "name": "check"
+   },
+   "data": {
+    "command": "nuclear check",
+    "entries": [
+     {
+      "what": "check",
+      "usage": "nuclear check <folder> [--json]",
+      "alias": "",
+      "note": "",
+      "does": "Report the errors of every file of a project"
+     },
+     {
+      "what": "check",
+      "usage": "nuclear check <file.nuc> [--dialect <name|path>] [--json]",
+      "alias": "",
+      "note": "",
+      "does": "Report errors (JSON for agents and the LSP)"
+     }
+    ]
    }
   },
   {
@@ -1383,6 +2186,25 @@
    "meta": {
     "tool": "nuclear",
     "name": "contracts"
+   },
+   "data": {
+    "command": "nuclear contracts",
+    "entries": [
+     {
+      "what": "contracts",
+      "usage": "nuclear contracts list",
+      "alias": "",
+      "note": "",
+      "does": "The contracts the project (current folder) declares and their state"
+     },
+     {
+      "what": "contracts",
+      "usage": "nuclear contracts update [<name>...]",
+      "alias": "",
+      "note": "",
+      "does": "Fetch each contract (a url: GET <url>/.nuclear/contract.json; a path: its .nuclear/contract.json) and regenerate contracts/<name>/*.nuc"
+     }
+    ]
    }
   },
   {
@@ -1407,6 +2229,32 @@
    "meta": {
     "tool": "nuclear",
     "name": "defs"
+   },
+   "data": {
+    "command": "nuclear defs",
+    "entries": [
+     {
+      "what": "defs",
+      "usage": "nuclear defs list [--dialect <name>]",
+      "alias": "",
+      "note": "",
+      "does": "List the type definitions packages (all, or the dialect's)"
+     },
+     {
+      "what": "defs",
+      "usage": "nuclear defs show <Name|Name.member> --dialect <name> [--json] [--inherited]",
+      "alias": "",
+      "note": "",
+      "does": "Print a declaration of the type definitions"
+     },
+     {
+      "what": "defs",
+      "usage": "nuclear defs search <text> --dialect <name>",
+      "alias": "",
+      "note": "",
+      "does": "Find declarations whose name contains <text>"
+     }
+    ]
    }
   },
   {
@@ -1429,6 +2277,25 @@
    "meta": {
     "tool": "nuclear",
     "name": "dialect"
+   },
+   "data": {
+    "command": "nuclear dialect",
+    "entries": [
+     {
+      "what": "dialect",
+      "usage": "nuclear dialect list",
+      "alias": "",
+      "note": "",
+      "does": "List the dialects found"
+     },
+     {
+      "what": "dialect",
+      "usage": "nuclear dialect check <name|path> [--json]",
+      "alias": "",
+      "note": "",
+      "does": "Validate a dialect's files"
+     }
+    ]
    }
   },
   {
@@ -1451,6 +2318,18 @@
    "meta": {
     "tool": "nuclear",
     "name": "fix"
+   },
+   "data": {
+    "command": "nuclear fix",
+    "entries": [
+     {
+      "what": "fix",
+      "usage": "nuclear fix <folder|file.nuc> [--dialect|--platform]",
+      "alias": "",
+      "note": "",
+      "does": "Apply every exact fix of the errors (the editor's quick fixes), then report what is left"
+     }
+    ]
    }
   },
   {
@@ -1474,6 +2353,18 @@
    "meta": {
     "tool": "nuclear",
     "name": "fmt"
+   },
+   "data": {
+    "command": "nuclear fmt",
+    "entries": [
+     {
+      "what": "fmt",
+      "usage": "nuclear fmt <file.nuc|folder>... [--check]",
+      "alias": "",
+      "note": "",
+      "does": "Rewrite the files in the canonical layout (spacing, indentation, blank lines; never reorders); --check only lists the files that would change (exit 1)"
+     }
+    ]
    }
   },
   {
@@ -1496,6 +2387,25 @@
    "meta": {
     "tool": "nuclear",
     "name": "help"
+   },
+   "data": {
+    "command": "nuclear help",
+    "entries": [
+     {
+      "what": "help",
+      "usage": "nuclear help [<topic>|<command>]",
+      "alias": "",
+      "note": "",
+      "does": "This help, a documentation topic or the usage of a command"
+     },
+     {
+      "what": "help",
+      "usage": "nuclear help <word>|words|layout --dialect <name>",
+      "alias": "",
+      "note": "",
+      "does": "A kind, decorator or header word of the dialect (words: all; layout: where each kind's file goes)"
+     }
+    ]
    }
   },
   {
@@ -1517,6 +2427,18 @@
    "meta": {
     "tool": "nuclear",
     "name": "kind"
+   },
+   "data": {
+    "command": "nuclear kind",
+    "entries": [
+     {
+      "what": "kind",
+      "usage": "nuclear kind new <name> -p <platform> -d <dialect>",
+      "alias": "",
+      "note": "",
+      "does": "A kind package skeleton in kinds/<name>/ (ADR-0095)"
+     }
+    ]
    }
   },
   {
@@ -1540,6 +2462,18 @@
    "meta": {
     "tool": "nuclear",
     "name": "spec"
+   },
+   "data": {
+    "command": "nuclear spec",
+    "entries": [
+     {
+      "what": "spec",
+      "usage": "nuclear spec [--dialect <name>|--platform <p>] [--brief]",
+      "alias": "",
+      "note": "",
+      "does": "Print the base language and dialect format (for agents); with --dialect, also the spec of the dialect and its parents; --brief: the short sheet (what changes from TS/Dart)"
+     }
+    ]
    }
   },
   {
@@ -1561,6 +2495,18 @@
    "meta": {
     "tool": "nuclear",
     "name": "tokens"
+   },
+   "data": {
+    "command": "nuclear tokens",
+    "entries": [
+     {
+      "what": "tokens",
+      "usage": "nuclear tokens <file.nuc>",
+      "alias": "",
+      "note": "",
+      "does": "Print the tokens produced by the lexer"
+     }
+    ]
    }
   }
  ]
